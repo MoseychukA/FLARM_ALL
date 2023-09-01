@@ -1,0 +1,41 @@
+Прошивки извлечены из модулей 
+Вшивый питон. в строке НЕ НУЖНО УКАЗЫВАТЬ ОКОНЧАНИЕ py
+Сайт с инструкциями https://cyberblogspot.com/how-to-save-and-restore-esp8266-and-esp32-firmware/
+
+Программа esptool установлена здесь. 
+Набрать в командной строке (черный экран)
+C:\Users\Alex\AppData\Local\Programs\Python\Python311\Scripts
+
+Узнать параметры модуля
+C:\Users\Alex\AppData\Local\Programs\Python\Python311\Scripts>esptool flash_id
+Определить порт и размер памяти
+Скачать прошивки
+Заводские прошивки скачал из двух модулей
+1 модуль esptool --baud 115200 --port COM4 read_flash 0x0 0x400000 rf_soft01-backup-4M.bin
+2 модуль esptool --baud 115200 --port COM5 read_flash 0x0 0x400000 rf_soft02-backup-4M.bin
+
+Прошивка bin файла
+
+
+C:\Users\Alex\AppData\Local\Programs\Python\Python311\Scripts>esptool --baud 115200 --port COM5 write_flash 0x0 rf_soft02-backup-4M.bin
+esptool.py v4.6.2
+Serial port COM5
+Connecting.......
+Detecting chip type... Unsupported detection protocol, switching and trying again...
+Connecting..........
+Detecting chip type... ESP32
+Chip is ESP32-D0WDQ6-V3 (revision v3.1)
+Features: WiFi, BT, Dual Core, 240MHz, VRef calibration in efuse, Coding Scheme None
+Crystal is 40MHz
+MAC: 34:98:7a:6c:6c:90
+Uploading stub...
+Running stub...
+Stub running...
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x003fffff...
+Compressed 4194304 bytes to 1265243...
+Wrote 4194304 bytes (1265243 compressed) at 0x00000000 in 121.6 seconds (effective 275.9 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
