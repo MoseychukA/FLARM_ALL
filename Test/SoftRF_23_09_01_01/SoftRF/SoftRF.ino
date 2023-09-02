@@ -6,74 +6,7 @@
  *
  * Web: http://github.com/lyusupov/SoftRF
  *
- * Credits:
- *   Arduino core for ESP8266 is developed/supported by ESP8266 Community (support-esp8266@esp8266.com)
- *   AVR/Arduino nRF905 Library/Driver is developed by Zak Kemble, contact@zakkemble.co.uk
- *   flarm_decode is developed by Stanislaw Pusep, http://github.com/creaktive
- *   Arduino Time Library is developed by Paul Stoffregen, http://github.com/PaulStoffregen
- *   "Aircraft" and MAVLink Libraries are developed by Andy Little
- *   TinyGPS++ and PString Libraries are developed by Mikal Hart
- *   Adafruit NeoPixel Library is developed by Phil Burgess, Michael Miller and others
- *   TrueRandom Library is developed by Peter Knight
- *   IBM LMIC and Semtech Basic MAC frameworks for Arduino are maintained by Matthijs Kooijman
- *   ESP8266FtpServer is developed by David Paiva
- *   Lib_crc is developed by Lammert Bies
- *   OGN library is developed by Pawel Jalocha
- *   NMEA library is developed by Timur Sinitsyn, Tobias Simon, Ferry Huberts
- *   ADS-B encoder C++ library is developed by yangbinbin (yangbinbin_ytu@163.com)
- *   Arduino Core for ESP32 is developed by Hristo Gochkov
- *   ESP32 BT SPP library is developed by Evandro Copercini
- *   Adafruit BMP085 library is developed by Limor Fried and Ladyada
- *   Adafruit BMP280 library is developed by Kevin Townsend
- *   Adafruit MPL3115A2 library is developed by Limor Fried and Kevin Townsend
- *   U8g2 monochrome LCD, OLED and eInk library is developed by Oliver Kraus
- *   NeoPixelBus library is developed by Michael Miller
- *   jQuery library is developed by JS Foundation
- *   EGM96 data is developed by XCSoar team
- *   BCM2835 C library is developed by Mike McCauley
- *   SimpleNetwork library is developed by Dario Longobardi
- *   ArduinoJson library is developed by Benoit Blanchon
- *   Flashrom library is part of the flashrom.org project
- *   Arduino Core for TI CC13X0 and CC13X2 is developed by Robert Wessels
- *   EasyLink library is developed by Robert Wessels and Tony Cave
- *   Dump978 library is developed by Oliver Jowett
- *   FEC library is developed by Phil Karn
- *   PCF8563, AXP20X, XPowersLib and SensorsLib libraries are developed by Lewis He
- *   Arduino Core for STM32 is developed by Frederic Pillon
- *   TFT library is developed by Bodmer
- *   STM32duino Low Power and RTC libraries are developed by Wi6Labs
- *   Basic MAC library is developed by Michael Kuyper
- *   LowPowerLab SPIFlash library is maintained by Felix Rusu
- *   Arduino Core for ASR6x0x is developed by Aaron Lee (HelTec Automation)
- *   ADXL362 library is developed by Klaas-Jan Winkel
- *   Arduino Core for nRF52 and TinyUSB library are developed by Ha Thach
- *   Arduino-NVM library is developed by Frank Holtz
- *   AceButton library is developed by Brian Park
- *   GxEPD2 library is developed by Jean-Marc Zingg
- *   Adafruit GFX library is developed by Adafruit Industries
- *   U8g2 fonts for Adafruit GFX are developed by Oliver Kraus
- *   Adafruit SPIFlash and SleepyDog libraries are developed by Adafruit Industries
- *   SdFat library is developed by Bill Greiman
- *   Arduino MIDI library is developed by Francois Best (Forty Seven Effects)
- *   Arduino uCDB library is developed by Ioulianos Kakoulidis
- *   Arduino Core for Atmel SAMD and FlashStorage library are developed by Arduino LLC
- *   USB host library 2.0 for Zero/M0/SAMD is developed by gdsports625@gmail.com
- *   Arduino Core for Raspberry Pi RP2040 is developed by Earle Philhower
- *   MPU-9250 9 DoF sensor library is developed by Kris Winer and Hideaki Tai
- *   Pico PIO USB library is developed by sekigon-gonnoc
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
  */
 
 #include "src/system/OTA.h"
@@ -134,7 +67,7 @@ void setup()
 {
   rst_info *resetInfo;
 
-  hw_info.soc = SoC_setup(); // Has to be very first procedure in the execution order
+  hw_info.soc = SoC_setup(); // ������ ���� ����� ������ ���������� � ������� ����������
 
   resetInfo = (rst_info *) SoC->getResetInfoPtr();
 

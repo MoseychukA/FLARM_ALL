@@ -291,7 +291,7 @@ struct rst_info {
 #define USE_OLED
 #define EXCLUDE_OLED_049
 //#define EXCLUDE_OLED_BARO_PAGE
-#define USE_TFT
+//#define USE_TFT
 #define USE_NMEA_CFG
 #define USE_BASICMAC
 
