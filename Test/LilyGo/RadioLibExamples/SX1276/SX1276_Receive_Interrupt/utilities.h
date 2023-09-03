@@ -5,7 +5,7 @@
 * This sample program only supports SX1276
 * */
 // #define LILYGO_TBeam_V0_7
-// #define LILYGO_TBeam_V1_X
+ #define LILYGO_TBeam_V1_X
 // #define LILYGO_T3_V1_0
 // #define LILYGO_T3_V1_3
 // #define LILYGO_T3_V1_6
@@ -20,7 +20,7 @@
 * */
 
 // #define LoRa_frequency      915.0
-
+#define LoRa_frequency     868.8
 
 #define UNUSE_PIN                   (0)
 
@@ -203,12 +203,3 @@
 #else
 #error "For the first use, please define the board version and model in <utilities. h>"
 #endif
-
-
-
-
-
-
-
-
-

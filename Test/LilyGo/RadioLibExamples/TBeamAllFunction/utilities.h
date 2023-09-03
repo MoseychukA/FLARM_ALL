@@ -5,7 +5,7 @@
 * This sample program only supports T-Beam
 * */
 // #define LILYGO_TBeam_V0_7
-// #define LILYGO_TBeam_V1_X
+ #define LILYGO_TBeam_V1_X
 
 
 /*
@@ -14,7 +14,7 @@
 * please open this note and change to the frequency you need to test
 * */
 
-// #define LoRa_frequency      433.0
+ #define LoRa_frequency      868.8
 
 /*
 Replace the model according to the actual situation
@@ -164,12 +164,3 @@ RADIO_TYPE option:
 #else
 #error "For the first use, please define the board version and model in <utilities. h>"
 #endif
-
-
-
-
-
-
-
-
-

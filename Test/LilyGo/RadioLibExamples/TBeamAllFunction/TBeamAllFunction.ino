@@ -385,14 +385,14 @@ void DrawFrame3(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int1
 #ifndef LILYGO_TBeam_V0_7
 void DrawFrame4(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, int16_t y)
 {
-    bool batteryConnect = PMU.isBatteryConnect();
+    bool batteryConnect = PMU->isBatteryConnect();
     snprintf(buff[0], sizeof(buff[0]), "BATTERY:%s", batteryConnect ? "CONNECT" : "DISCONNECT");
     if (batteryConnect) {
-        snprintf(buff[1], sizeof(buff[1]), "VOLTAGE:%.2f", PMU.getBattVoltage());
-        snprintf(buff[2], sizeof(buff[2]), "CURRENT:%.2f", PMU.getBattDischargeCurrent());
+        snprintf(buff[1], sizeof(buff[1]), "VOLTAGE:%.2f", PMU->getBattVoltage());
+        snprintf(buff[2], sizeof(buff[2]), "CURRENT:%.2f", PMU->getBatteryPercent());
     } else {
-        snprintf(buff[1], sizeof(buff[1]), "VOLTAGE:%.2f", PMU.getVbusVoltage());
-        snprintf(buff[2], sizeof(buff[2]), "CURRENT:%.2f", PMU.getVbusCurrent());
+        snprintf(buff[1], sizeof(buff[1]), "VOLTAGE:%.2f", PMU->getVbusVoltage());
+        snprintf(buff[2], sizeof(buff[2]), "CURRENT:%.2f", PMU->getVbusCurrentLimit());
     }
     display->setFont(ArialMT_Plain_10);
     display->setTextAlignment(TEXT_ALIGN_CENTER);
