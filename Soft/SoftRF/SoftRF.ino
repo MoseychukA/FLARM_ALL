@@ -3,77 +3,7 @@
  * Copyright (C) 2016-2022 Linar Yusupov
  *
  * Author: Linar Yusupov, linar.r.yusupov@gmail.com
- *
- * Web: http://github.com/lyusupov/SoftRF
- *
- * Credits:
- *   Arduino core for ESP8266 is developed/supported by ESP8266 Community (support-esp8266@esp8266.com)
- *   AVR/Arduino nRF905 Library/Driver is developed by Zak Kemble, contact@zakkemble.co.uk
- *   flarm_decode is developed by Stanislaw Pusep, http://github.com/creaktive
- *   Arduino Time Library is developed by Paul Stoffregen, http://github.com/PaulStoffregen
- *   "Aircraft" and MAVLink Libraries are developed by Andy Little
- *   TinyGPS++ and PString Libraries are developed by Mikal Hart
- *   Adafruit NeoPixel Library is developed by Phil Burgess, Michael Miller and others
- *   TrueRandom Library is developed by Peter Knight
- *   IBM LMIC and Semtech Basic MAC frameworks for Arduino are maintained by Matthijs Kooijman
- *   ESP8266FtpServer is developed by David Paiva
- *   Lib_crc is developed by Lammert Bies
- *   OGN library is developed by Pawel Jalocha
- *   NMEA library is developed by Timur Sinitsyn, Tobias Simon, Ferry Huberts
- *   ADS-B encoder C++ library is developed by yangbinbin (yangbinbin_ytu@163.com)
- *   Arduino Core for ESP32 is developed by Hristo Gochkov
- *   ESP32 BT SPP library is developed by Evandro Copercini
- *   Adafruit BMP085 library is developed by Limor Fried and Ladyada
- *   Adafruit BMP280 library is developed by Kevin Townsend
- *   Adafruit MPL3115A2 library is developed by Limor Fried and Kevin Townsend
- *   U8g2 monochrome LCD, OLED and eInk library is developed by Oliver Kraus
- *   NeoPixelBus library is developed by Michael Miller
- *   jQuery library is developed by JS Foundation
- *   EGM96 data is developed by XCSoar team
- *   BCM2835 C library is developed by Mike McCauley
- *   SimpleNetwork library is developed by Dario Longobardi
- *   ArduinoJson library is developed by Benoit Blanchon
- *   Flashrom library is part of the flashrom.org project
- *   Arduino Core for TI CC13X0 and CC13X2 is developed by Robert Wessels
- *   EasyLink library is developed by Robert Wessels and Tony Cave
- *   Dump978 library is developed by Oliver Jowett
- *   FEC library is developed by Phil Karn
- *   PCF8563, AXP20X, XPowersLib and SensorsLib libraries are developed by Lewis He
- *   Arduino Core for STM32 is developed by Frederic Pillon
- *   TFT library is developed by Bodmer
- *   STM32duino Low Power and RTC libraries are developed by Wi6Labs
- *   Basic MAC library is developed by Michael Kuyper
- *   LowPowerLab SPIFlash library is maintained by Felix Rusu
- *   Arduino Core for ASR6x0x is developed by Aaron Lee (HelTec Automation)
- *   ADXL362 library is developed by Anne Mahaffey
- *   Arduino Core for nRF52 and TinyUSB library are developed by Ha Thach
- *   Arduino-NVM library is developed by Frank Holtz
- *   AceButton library is developed by Brian Park
- *   GxEPD2 library is developed by Jean-Marc Zingg
- *   Adafruit GFX library is developed by Adafruit Industries
- *   U8g2 fonts for Adafruit GFX are developed by Oliver Kraus
- *   Adafruit SPIFlash and SleepyDog libraries are developed by Adafruit Industries
- *   SdFat library is developed by Bill Greiman
- *   Arduino MIDI library is developed by Francois Best (Forty Seven Effects)
- *   Arduino uCDB library is developed by Ioulianos Kakoulidis
- *   Arduino Core for Atmel SAMD and FlashStorage library are developed by Arduino LLC
- *   USB host library 2.0 for Zero/M0/SAMD is developed by gdsports625@gmail.com
- *   EspTinyUSB library is developed by Dariusz Krempa <esp32@esp32.eu.org>
- *   Arduino Core for Raspberry Pi RP2040 is developed by Earle Philhower
- *   MPU-9250 9 DoF sensor library is developed by Kris Winer and Hideaki Tai
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
  */
 
 #include "src/system/OTA.h"
@@ -81,7 +11,7 @@
 #include "src/driver/LED.h"
 #include "src/driver/GNSS.h"
 #include "src/driver/RF.h"
-#include "src/driver/Sound.h"
+//#include "src/driver/Sound.h"
 #include "src/driver/EEPROM.h"
 #include "src/driver/Battery.h"
 #include "src/protocol/data/MAVLink.h"
@@ -91,7 +21,7 @@
 #include "src/system/SoC.h"
 #include "src/driver/WiFi.h"
 #include "src/ui/Web.h"
-#include "src/driver/Baro.h"
+//#include "src/driver/Baro.h"
 #include "src/TTNHelper.h"
 #include "src/TrafficHelper.h"
 
@@ -121,7 +51,7 @@ hardware_info_t hw_info = {
   .soc      = SOC_NONE,
   .rf       = RF_IC_NONE,
   .gnss     = GNSS_MODULE_NONE,
-  .baro     = BARO_MODULE_NONE,
+  //.baro     = BARO_MODULE_NONE,
   .display  = DISPLAY_NONE,
   .storage  = STORAGE_NONE,
   .rtc      = RTC_NONE,
@@ -178,7 +108,7 @@ void setup()
 
   delay(100);
 
-  hw_info.baro = Baro_setup();
+ // hw_info.baro = Baro_setup();
 #if defined(ENABLE_AHRS)
   hw_info.imu = AHRS_setup();
 #endif /* ENABLE_AHRS */
@@ -231,8 +161,8 @@ void setup()
     LED_test();
   }
 
-  Sound_setup();
-  SoC->Sound_test(resetInfo->reason);
+ // Sound_setup();
+ // SoC->Sound_test(resetInfo->reason);
 
   switch (settings->mode)
   {
@@ -335,7 +265,7 @@ void shutdown(int reason)
 
   SoC->swSer_enableRx(false);
 
-  Sound_fini();
+//    Sound_fini();
 
   NMEA_fini();
 
@@ -357,7 +287,7 @@ void shutdown(int reason)
 
   SoC->Display_fini(reason);
 
-  Baro_fini();
+ // Baro_fini();
 
   RF_Shutdown();
 
@@ -370,7 +300,7 @@ void normal()
 {
   bool success;
 
-  Baro_loop();
+ // Baro_loop();
 
 #if defined(ENABLE_AHRS)
   AHRS_loop();
@@ -430,7 +360,7 @@ void normal()
     LEDTimeMarker = millis();
   }
 
-  Sound_loop();
+//  Sound_loop();
 
   if (isTimeToExport()) {
     NMEA_Export();
@@ -558,6 +488,7 @@ unsigned long TxPosUpdMarker = 0;
 void txrx_test()
 {
   bool success = false;
+  /*
 #if DEBUG_TIMING
   unsigned long baro_start_ms, baro_end_ms;
   unsigned long tx_start_ms, tx_end_ms, rx_start_ms, rx_end_ms;
@@ -565,6 +496,7 @@ void txrx_test()
   unsigned long export_start_ms, export_end_ms;
   unsigned long oled_start_ms, oled_end_ms;
 #endif
+*/
   ThisAircraft.timestamp = now();
 
   if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 4000 ) {
@@ -577,28 +509,32 @@ void txrx_test()
   ThisAircraft.course = TXRX_TEST_COURSE;
   ThisAircraft.speed = TXRX_TEST_SPEED;
   ThisAircraft.vs = TXRX_TEST_VS;
-
+/*
 #if DEBUG_TIMING
   baro_start_ms = millis();
 #endif
-  Baro_loop();
-#if DEBUG_TIMING
-  baro_end_ms = millis();
-#endif
-
+//  Baro_loop();
+//#if DEBUG_TIMING
+ // baro_end_ms = millis();
+//#endif
+*/
 #if defined(ENABLE_AHRS)
   AHRS_loop();
 #endif /* ENABLE_AHRS */
-
+/*
 #if DEBUG_TIMING
   tx_start_ms = millis();
 #endif
+*/
   RF_Transmit(RF_Encode(&ThisAircraft), true);
+  /*
 #if DEBUG_TIMING
   tx_end_ms = millis();
   rx_start_ms = millis();
 #endif
+*/
   success = RF_Receive();
+  /*
 #if DEBUG_TIMING
   rx_end_ms = millis();
 #endif
@@ -606,33 +542,40 @@ void txrx_test()
 #if DEBUG_TIMING
   parse_start_ms = millis();
 #endif
+*/
   if (success) ParseData();
+  /*
 #if DEBUG_TIMING
   parse_end_ms = millis();
 #endif
-
+*/
 #if defined(ENABLE_TTN)
   TTN_loop();
 #endif
 
   Traffic_loop();
-
+/*
 #if DEBUG_TIMING
   led_start_ms = millis();
 #endif
+*/
+
   if (isTimeToDisplay()) {
     LED_DisplayTraffic();
     LEDTimeMarker = millis();
   }
+
+ /* 
 #if DEBUG_TIMING
   led_end_ms = millis();
 #endif
-
-  Sound_loop();
-
+*/
+//  Sound_loop();
+/*
 #if DEBUG_TIMING
   export_start_ms = millis();
 #endif
+*/
   if (isTimeToExport()) {
 #if defined(USE_NMEALIB)
     NMEA_Position();
@@ -642,6 +585,8 @@ void txrx_test()
     D1090_Export();
     ExportTimeMarker = millis();
   }
+
+/*  
 #if DEBUG_TIMING
   export_end_ms = millis();
 #endif
@@ -653,7 +598,9 @@ void txrx_test()
 #if DEBUG_TIMING
   oled_end_ms = millis();
 #endif
+*/
 
+/*
 #if DEBUG_TIMING
   if (baro_start_ms - baro_end_ms) {
     Serial.print(F("Baro start: "));
@@ -698,7 +645,7 @@ void txrx_test()
     Serial.println(oled_end_ms);
   }
 #endif
-
+*/
   // Handle Air Connect
   NMEA_loop();
 

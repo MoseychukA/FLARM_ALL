@@ -74,7 +74,7 @@
 
 #define GPS_BAUD_RATE               9600
 #define HAS_GPS
-#define HAS_DISPLAY                 //Optional, bring your own board, no OLED !!
+//#define HAS_DISPLAY                 //Optional, bring your own board, no OLED !!
 #define HAS_PMU
 
 #elif defined(LILYGO_T3_V1_0)
