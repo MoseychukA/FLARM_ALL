@@ -16,7 +16,7 @@
 //#include "src/driver/GNSS.h"
 //#include "src/driver/RF.h"
 //#include "src/driver/Sound.h"
-//#include "src/driver/EEPROM.h"
+#include "src/driver/EEPROM.h"
 //#include "src/driver/Battery.h"
 //#include "src/protocol/data/MAVLink.h"
 //#include "src/protocol/data/GDL90.h"

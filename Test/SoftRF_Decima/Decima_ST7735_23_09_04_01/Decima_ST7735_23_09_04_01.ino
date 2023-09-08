@@ -10,7 +10,7 @@ int counter = 0;
 float p = 3.1415926;
 
 void setup()
-{
+{ 
     initBoard();
  
     delay(1000);
@@ -161,4 +161,3 @@ void tftPrintTest() {
     tft.setTextColor(TFT_WHITE);
     tft.print(" seconds.");
 }
-
