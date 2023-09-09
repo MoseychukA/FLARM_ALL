@@ -6,7 +6,7 @@
  *
  * Web: http://github.com/lyusupov/SoftRF
  *
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -45,7 +45,6 @@
 #define isTimeToDisplay() (millis() - LEDTimeMarker     > 1000)
 #define isTimeToExport()  (millis() - ExportTimeMarker  > 1000)
 
-
 ufo_t ThisAircraft;
 
 hardware_info_t hw_info = {
@@ -66,8 +65,6 @@ hardware_info_t hw_info = {
 unsigned long LEDTimeMarker = 0;
 unsigned long ExportTimeMarker = 0;
 
-const int ledPin = 13;//
-
 void setup()
 {
   rst_info *resetInfo;
@@ -75,10 +72,7 @@ void setup()
   hw_info.soc = SoC_setup(); // Has to be very first procedure in the execution order
 
   resetInfo = (rst_info *) SoC->getResetInfoPtr();
-  
-   pinMode(ledPin, OUTPUT);
-    digitalWrite(ledPin, HIGH);
-    
+
   Serial.println();
   Serial.print(F(SOFTRF_IDENT "-"));
   Serial.print(SoC->name);

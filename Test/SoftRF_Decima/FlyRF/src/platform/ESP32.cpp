@@ -108,8 +108,7 @@ void TFT_off()
 
 void TFT_backlight_adjust(uint8_t level)
 {
-    ledcWrite(BACKLIGHT_CHANNEL, HIGH);
-   // ledcWrite(BACKLIGHT_CHANNEL, level);
+    ledcWrite(BACKLIGHT_CHANNEL, level);
 }
 
 bool TFT_isBacklightOn()
@@ -124,7 +123,7 @@ void TFT_backlight_off()
 
 void TFT_backlight_on()
 {
-   // ledcWrite(BACKLIGHT_CHANNEL, 250);
+    ledcWrite(BACKLIGHT_CHANNEL, 250);
 }
 #endif /* USE_TFT */
 
@@ -529,8 +528,7 @@ static void ESP32_setup()
     ledcSetup(LEDC_CHANNEL_BUZZER, 0, LEDC_RESOLUTION_BUZZER);
   }
 
-  if (hw_info.model == SOFTRF_MODEL_SKYWATCH) 
-  {
+  if (hw_info.model == SOFTRF_MODEL_SKYWATCH) {
     esp32_board = ESP32_TTGO_T_WATCH;
     hw_info.rtc = RTC_PCF8563;
     hw_info.imu = ACC_BMA423;
@@ -565,19 +563,17 @@ static void ESP32_setup()
     } else {
       WIRE_FINI(Wire1);
     }
-  }
-  else if (hw_info.model == SOFTRF_MODEL_PRIME_MK2) 
-  {
+  } else if (hw_info.model == SOFTRF_MODEL_PRIME_MK2) {
     esp32_board = ESP32_TTGO_T_BEAM;
 
     Wire1.begin(TTGO_V2_OLED_PIN_SDA , TTGO_V2_OLED_PIN_SCL);
     Wire1.beginTransmission(AXP192_SLAVE_ADDRESS);
     bool has_axp = (Wire1.endTransmission() == 0);
 
-    bool has_axp192 = has_axp &&(axp_xxx.begin(Wire1, AXP192_SLAVE_ADDRESS) == AXP_PASS);
+    bool has_axp192 = has_axp &&
+                      (axp_xxx.begin(Wire1, AXP192_SLAVE_ADDRESS) == AXP_PASS);
 
-    if (has_axp192) 
-    {
+    if (has_axp192) {
 
       hw_info.revision = 8;
       hw_info.pmu = PMU_AXP192;
@@ -601,9 +597,7 @@ static void ESP32_setup()
 
       axp_xxx.enableIRQ(AXP202_PEK_LONGPRESS_IRQ | AXP202_PEK_SHORTPRESS_IRQ, true);
       axp_xxx.clearIRQ();
-    } 
-    else 
-    {
+    } else {
       bool has_axp2101 = has_axp && axp_2xxx.begin(Wire1,
                                                    AXP2101_SLAVE_ADDRESS,
                                                    TTGO_V2_OLED_PIN_SDA,

@@ -880,10 +880,10 @@ static void sx12xx_channel(int8_t channel)
 
     if (rf_chip->type == RF_IC_SX1276) {
       /* correction of not more than 30 kHz is allowed */
-      if (fc > 250) {
-        fc = 250;
-      } else if (fc < -250) {
-        fc = -250;
+      if (fc > 30) {
+        fc = 30;
+      } else if (fc < -30) {
+        fc = -30;
       };
     } else {
       /* Most of SX1262 designs use TCXO */
@@ -2227,8 +2227,8 @@ static void ognrf_setup()
     if (TxPower > 20)
       TxPower = 20;
 #if 1
-    if (TxPower > 20)
-      TxPower = 20;
+    if (TxPower > 20) // 17
+      TxPower = 20;   // 17
 #endif
 
 #ifdef WITH_RFM69

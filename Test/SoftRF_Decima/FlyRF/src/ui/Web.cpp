@@ -83,7 +83,7 @@ static const char about_html[] PROGMEM = "<html>\
   </head>\
 <body>\
 <h1 align=center>About</h1>\
-<p>This firmware is a part of FlytRF project</p>\
+<p>This firmware is a part of FlyRF project</p>\
 <p>URL: http://github.com/lyusupov/SoftRF</p>\
 <p>Author: <b>Linar Yusupov</b></p>\
 <p>E-mail: linar.r.yusupov@gmail.com</p>\
@@ -273,8 +273,8 @@ void handleSettings() {
 <th align=left>Tx Power</th>\
 <td align=right>\
 <select name='txpower'>\
-<option %s value='%d'>20</option>\
-<option %s value='%d'>17</option>\
+<option %s value='%d'>Full</option>\
+<option %s value='%d'>Low</option>\
 <option %s value='%d'>Off</option>\
 </select>\
 </td>\
@@ -619,7 +619,7 @@ void handleSettings() {
 <tr>\
 <th align=left>Radio CF correction (&#177;, kHz)</th>\
 <td align=right>\
-<INPUT type='number' name='rfc' min='-200' max='200' value='%d'>\
+<INPUT type='number' name='rfc' min='-30' max='30' value='%d'>\
 </td>\
 </tr>"),
     settings->freq_corr);

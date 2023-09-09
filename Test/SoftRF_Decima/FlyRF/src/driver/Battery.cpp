@@ -64,8 +64,7 @@ void Battery_loop()
     float voltage = SoC->Battery_param(BATTERY_PARAM_VOLTAGE);
 
     if (voltage > BATTERY_THRESHOLD_INVALID && voltage < Battery_cutoff()) {
-      if (Battery_cutoff_count > 20) 
-      {
+      if (Battery_cutoff_count > 2) {
         shutdown(SOFTRF_SHUTDOWN_LOWBAT);
       } else {
         Battery_cutoff_count++;

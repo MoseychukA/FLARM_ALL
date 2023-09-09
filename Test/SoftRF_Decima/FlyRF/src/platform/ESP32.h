@@ -37,8 +37,6 @@
 #define SoftwareSerial          HardwareSerial
 #define Serial_GNSS_In          Serial1
 #define Serial_GNSS_Out         Serial_GNSS_In
-#define AXP2101_SLAVE_ADDRESS    (0x34)
-#define USE_TFT
 
 #if defined(CONFIG_IDF_TARGET_ESP32)
 #define UATSerial               Serial2
@@ -109,7 +107,7 @@ extern Adafruit_NeoPixel strip;
 #endif /* USE_NEOPIXELBUS_LIBRARY */
 
 #define LEDC_CHANNEL_BUZZER     0
-#define BACKLIGHT_CHANNEL       ((uint8_t)13)
+#define BACKLIGHT_CHANNEL       ((uint8_t)1)
 #define LEDC_RESOLUTION_BUZZER  8
 
 /* Peripherals */
