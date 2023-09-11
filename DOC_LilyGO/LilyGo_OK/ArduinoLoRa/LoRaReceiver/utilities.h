@@ -19,7 +19,7 @@
 * Option: 433E6,470E6,868E6,915E6
 * */
 
-#define LoRa_frequency      868E6
+#define LoRa_frequency      868800000 //868E6
 
 
 #define UNUSE_PIN                   (0)

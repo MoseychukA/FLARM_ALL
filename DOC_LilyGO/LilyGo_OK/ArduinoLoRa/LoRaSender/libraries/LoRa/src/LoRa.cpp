@@ -136,7 +136,7 @@ int LoRaClass::begin(long frequency)
   writeRegister(REG_MODEM_CONFIG_3, 0x04);
 
   // set output power to 17 dBm
-  setTxPower(17);
+ // setTxPower(20);  // было 17
 
   // put in standby mode
   idle();
@@ -393,7 +393,9 @@ void LoRaClass::sleep()
 
 void LoRaClass::setTxPower(int level, int outputPin)
 {
-  if (PA_OUTPUT_RFO_PIN == outputPin) {
+
+  if (PA_OUTPUT_RFO_PIN == outputPin) 
+   {
     // RFO
     if (level < 0) {
       level = 0;
@@ -402,10 +404,14 @@ void LoRaClass::setTxPower(int level, int outputPin)
     }
 
     writeRegister(REG_PA_CONFIG, 0x70 | level);
-  } else {
+  }
+  else
+  {
     // PA BOOST
-    if (level > 17) {
-      if (level > 20) {
+    if (level > 17) 
+    {
+      if (level > 20) 
+      {
         level = 20;
       }
 
@@ -414,17 +420,31 @@ void LoRaClass::setTxPower(int level, int outputPin)
 
       // High Power +20 dBm Operation (Semtech SX1276/77/78/79 5.4.3.)
       writeRegister(REG_PA_DAC, 0x87);
-      setOCP(140);
-    } else {
-      if (level < 2) {
+      setOCP(240);
+    }
+	
+    else 
+    {
+      if (level < 2) 
+      {
         level = 2;
       }
       //Default value PA_HF/LF or +17dBm
-      writeRegister(REG_PA_DAC, 0x84);
+      writeRegister(REG_PA_DAC, 0x87);
       setOCP(100);
     }
 
-    writeRegister(REG_PA_CONFIG, PA_BOOST | (level - 2));
+    writeRegister(REG_PA_CONFIG, PA_BOOST | (level-2));
+	Serial.print("REG_PA_CONFIG = ");
+	Serial.println(readRegister(REG_PA_CONFIG),HEX);
+	Serial.println(readRegister(REG_PA_CONFIG),BIN);
+	Serial.print("REG_OCP = ");
+	Serial.println(readRegister(REG_OCP),HEX);
+	Serial.println(readRegister(REG_OCP),BIN);
+	
+	
+	
+	  delay(2000);
   }
 }
 
@@ -577,9 +597,12 @@ void LoRaClass::setOCP(uint8_t mA)
 {
   uint8_t ocpTrim = 27;
 
-  if (mA <= 120) {
+  if (mA <= 120) 
+  {
     ocpTrim = (mA - 45) / 5;
-  } else if (mA <=240) {
+  }
+  else if (mA <=240) 
+  {
     ocpTrim = (mA + 30) / 10;
   }
 

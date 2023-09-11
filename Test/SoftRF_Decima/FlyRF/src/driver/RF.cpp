@@ -19,19 +19,24 @@
 #include <SPI.h>
 #endif /* ARDUINO */
 
+/*
+MAVLink или Micro Air Vehicle Link — это протокол информационного взаимодействия с дронами
+ или малыми беспилотными аппаратами (летающими, плавающими, ползающими и т.д)
+*/
+
 #include "RF.h"
 #include "../system/SoC.h"
 #include "EEPROM.h"
 #include "Battery.h"
 #include "../ui/Web.h"
-#if !defined(EXCLUDE_MAVLINK)
+#if !defined(EXCLUDE_MAVLINK) // Если MAVLINK не исключен
 #include "../protocol/data/MAVLink.h"
 #endif /* EXCLUDE_MAVLINK */
 #include <fec.h>
 
 #include <LibAPRSesp.h>
 #if defined(USE_SA8X8)
-#include <SA818.h>
+#include <SA818.h>  // Радиомодуль
 #include <SA818Controller.h>
 #include <cppQueue.h>
 #endif /* USE_SA8X8 */
@@ -54,13 +59,17 @@ const rfchip_ops_t *rf_chip = NULL;
 bool RF_SX12XX_RST_is_connected = true;
 
 const char *Protocol_ID[] = {
-  [RF_PROTOCOL_LEGACY]    = "LEG",
-  [RF_PROTOCOL_OGNTP]     = "OGN",
+  [RF_PROTOCOL_LEGACY]    = "LEG", 
+  [RF_PROTOCOL_OGNTP]     = "OGN", // Устройства OGNTP (Open Glider Network protocol) способны посылать радиосигнал приемникам на земле, которые могут
+                                   // обмениваться информацией через Интернет с серверами, но они не могут взаимодействовать друг с другом, поэтому они могут быть видны, только если их видит приемник.
   [RF_PROTOCOL_P3I]       = "P3I",
-  [RF_PROTOCOL_ADSB_1090] = "ADS",
-  [RF_PROTOCOL_ADSB_UAT]  = "UAT",
-  [RF_PROTOCOL_FANET]     = "FAN",
-  [RF_PROTOCOL_APRS]      = "HAM",
+  [RF_PROTOCOL_ADSB_1090] = "ADS", // используются две разные частоты ADSB 1090 (ES).
+  [RF_PROTOCOL_ADSB_UAT]  = "UAT", // используются две разные частоты ADSB - 978 (UAT).
+  [RF_PROTOCOL_FANET]     = "FAN", // Вы летите. Модуль FANET внутри передает ваше положение в эфир. Другие модули FANET принимают ваше положение и отображают его на экране другого устройства. FANET+ 
+                                   // Это Flarm. В то время как модуль FANET с открытым исходным кодом может делать все вышеперечисленное, модуль FANET+, 
+								   // разработанный и произведенный компанией Skytraxx, но интегрированный в Naviter и другие продукты, также включает в себя передатчик Flarm.   
+  [RF_PROTOCOL_APRS]      = "HAM", // APRS [1, 2] это протокол цифровой радиолюбительской связи. На базе этого протокола построена глобальная система связи. Её основные задачи: 
+                                   // передача информации о координатах объектов в пространстве, обмен сообщениями, передача данных с погодных станций и многое другое.
 };
 
 size_t (*protocol_encode)(void *, ufo_t *);
@@ -151,6 +160,7 @@ const rfchip_ops_t sx1262_ops = {
 };
 #endif /* USE_BASICMAC */
 #endif /*EXCLUDE_SX12XX */
+
 #if !defined(EXCLUDE_UATM)
 const rfchip_ops_t uatm_ops = {
   RF_IC_UATM,
@@ -287,12 +297,13 @@ byte RF_setup(void)
 #endif /* USE_OGN_RF_DRIVER */
   }
 
-  if (rf_chip) {
-    rf_chip->setup();
+  if (rf_chip) 
+  {
+    rf_chip->setup();  // настроить драйвер  радиомодуля
 
     const rf_proto_desc_t *p;
 
-    switch (settings->rf_protocol)
+    switch (settings->rf_protocol)  // включить протокол в соответствии с радиомодулем
     {
       case RF_PROTOCOL_OGNTP:     p = &ogntp_proto_desc;  break;
       case RF_PROTOCOL_P3I:       p = &p3i_proto_desc;    break;
@@ -302,7 +313,7 @@ byte RF_setup(void)
       case RF_PROTOCOL_APRS:
 #if defined(ENABLE_PROL)
         if (rf_chip->type == RF_IC_SX1276 || rf_chip->type == RF_IC_SX1262) {
-          p = &prol_proto_desc;
+          p = &prol_proto_desc;  
         } else
 #endif /* ENABLE_PROL */
         {
@@ -328,7 +339,7 @@ byte RF_setup(void)
     uint16_t duration = ts->s0.duration + ts->s1.duration;
     ts->adj = duration > ts->interval_mid ? 0 : (ts->interval_mid - duration) / 2;
 
-    return rf_chip->type;
+    return rf_chip->type;   // сохранить тип устройства
   } else {
     return RF_IC_NONE;
   }
@@ -452,18 +463,21 @@ size_t RF_Encode(ufo_t *fop)
 
 bool RF_Transmit(size_t size, bool wait)
 {
-  if (rf_chip && (size > 0)) {
+  if (rf_chip && (size > 0)) 
+  {
     RF_tx_size = size;
 
     if (settings->txpower == RF_TX_POWER_OFF ) {
       return true;
     }
 
-    if (!wait || millis() > TxTimeMarker) {
+    if (!wait || millis() > TxTimeMarker) 
+	{
 
       time_t timestamp = now();
 
-      if (memcmp(TxBuffer, RxBuffer, RF_tx_size) != 0) {
+      if (memcmp(TxBuffer, RxBuffer, RF_tx_size) != 0) 
+	  {
 
         rf_chip->transmit();
 
@@ -778,7 +792,7 @@ static bool sx1276_probe()
 
   lmic_hal_init (nullptr);
 
-  // manually reset radio
+  // вручную сбросить радио
   hal_pin_rst(0); // drive RST pin low
   hal_waitUntil(os_getTime()+ms2osticks(1)); // wait >100us
 
@@ -867,39 +881,49 @@ static bool sx1262_probe()
 
 static void sx12xx_channel(int8_t channel)
 {
-  if (channel != -1 && channel != sx12xx_channel_prev) {
+  if (channel != -1 && channel != sx12xx_channel_prev) 
+  {
     uint32_t frequency = RF_FreqPlan.getChanFrequency((uint8_t) channel);
     int8_t fc = settings->freq_corr;
 
-    //Serial.print("frequency: "); Serial.println(frequency);
+    Serial.print("frequency: "); Serial.println(frequency);
 
-    if (sx12xx_receive_active) {
+
+    if (sx12xx_receive_active) 
+    {
       os_radio(RADIO_RST);
       sx12xx_receive_active = false;
     }
 
-    if (rf_chip->type == RF_IC_SX1276) {
+    if (rf_chip->type == RF_IC_SX1276) 
+    {
       /* correction of not more than 30 kHz is allowed */
-      if (fc > 30) {
+      if (fc > 30) 
+      {
         fc = 30;
-      } else if (fc < -30) {
+      } 
+      else if (fc < -30) 
+      {
         fc = -30;
-      };
-    } else {
+      }//; // уточнить нужно ли ;
+    }
+    else 
+    {
       /* Most of SX1262 designs use TCXO */
       fc = 0;
     }
 
 #if defined(ENABLE_PROL)
-    if (settings->rf_protocol == RF_PROTOCOL_APRS) {
+    if (settings->rf_protocol == RF_PROTOCOL_APRS) 
+    {
       frequency = 433775000UL;
     }
 #endif /* ENABLE_PROL */
 
-    /* Actual RF chip's channel registers will be updated before each Tx or Rx session */
+    /* Фактические регистры каналов радиочастотного чипа будут обновляться перед каждым сеансом передачи или приема. */
     LMIC.freq = frequency + (fc * 1000);
     //LMIC.freq = 868200000UL;
-
+    Serial.print("LMIC.freq: "); Serial.println(LMIC.freq);
     sx12xx_channel_prev = channel;
   }
 }
@@ -908,10 +932,10 @@ static void sx12xx_setup()
 {
   SoC->SPI_begin();
 
-  // initialize runtime env
+  // инициализировать среду выполнения
   os_init (nullptr);
 
-  // Reset the MAC state. Session and pending data transfers will be discarded.
+  // Сбросьте состояние MAC. Сеанс и ожидающие передачи данных будут отменены.
   LMIC_reset();
 
   switch (settings->rf_protocol)
@@ -944,8 +968,8 @@ static void sx12xx_setup()
     protocol_encode = &legacy_encode;
     protocol_decode = &legacy_decode;
     /*
-     * Enforce legacy protocol setting for SX1276
-     * if other value (UAT) left in EEPROM from other (UATM) radio
+     *Применить настройки устаревшего протокола для SX1276.
+     * если в EEPROM осталось другое значение (UAT) от другого (UATM) радио
      */
     settings->rf_protocol = RF_PROTOCOL_LEGACY;
     break;
@@ -957,8 +981,8 @@ static void sx12xx_setup()
   {
   case RF_TX_POWER_FULL:
 
-    /* Load regional max. EIRP at first */
-    LMIC.txpow = RF_FreqPlan.MaxTxPower;
+    /* Нагрузка региональная макс. ЭИРП сначала */
+    LMIC.txpow = 20;//RF_FreqPlan.MaxTxPower;
 
     if (rf_chip->type == RF_IC_SX1262) {
       /* SX1262 is unable to give more than 22 dBm */
@@ -972,21 +996,21 @@ static void sx12xx_setup()
 
 #if 1
     /*
-     * Enforce Tx power limit until confirmation
-     * that RFM95W is doing well
-     * when antenna is not connected
+     * Принудительно ограничить мощность передачи до подтверждения
+     * что у RFM95W дела идут хорошо
+     * когда антенна не подключена
      */
     if (LMIC.txpow > 20)
       LMIC.txpow = 20;
 #endif
 
-    /* Enforce Tx power limit for a limb-worn (handheld or wristband) device */
+    /* Установите ограничение мощности передачи для устройств, носимых на конечностях (портативных или браслетных). */
 #if 0
     if (hw_info.model == SOFTRF_MODEL_BADGE ||
         hw_info.model == SOFTRF_MODEL_BRACELET) {
       if (settings->band == RF_BAND_US &&
-          LMIC.txpow > 13) {
-        LMIC.txpow = 13; /* d = 0.5 cm */
+          LMIC.txpow > 20) {
+        LMIC.txpow = 20; /* d = 0.5 cm */
       }
     }
 #endif
@@ -994,9 +1018,13 @@ static void sx12xx_setup()
   case RF_TX_POWER_OFF:
   case RF_TX_POWER_LOW:
   default:
-    LMIC.txpow = 17; /* 2 dBm is minimum for RFM95W on PA_BOOST pin */
+    LMIC.txpow = 20; /* 2 dBm is minimum for RFM95W on PA_BOOST pin */
     break;
   }
+
+  Serial.print("LMIC.txpow: ");
+  Serial.println(LMIC.txpow);
+
 }
 
 static void sx12xx_setvars()

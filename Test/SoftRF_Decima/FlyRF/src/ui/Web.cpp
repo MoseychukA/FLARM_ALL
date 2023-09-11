@@ -696,17 +696,17 @@ void handleRoot() {
     PSTR("<html>\
   <head>\
     <meta name='viewport' content='width=device-width, initial-scale=1'>\
-    <title>FlyRF status</title>\
+    <title>FlyRF статус</title>\
   </head>\
 <body>\
  <table width=100%%>\
   <tr><!-- <td align=left><h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1></td> -->\
-  <td align=center><h1>FlyRF status</h1></td>\
+  <td align=center><h1>FlyRF статус</h1></td>\
   <!-- <td align=right><img src='/logo.png'></td> --></tr>\
  </table>\
  <table width=100%%>\
   <tr><th align=left>Device Id</th><td align=right>%06X</td></tr>\
-  <tr><th align=left>Software Version</th><td align=right>%s&nbsp;&nbsp;%s</td></tr>"
+  <tr><th align=left>Версия программы</th><td align=right>%s&nbsp;&nbsp;%s</td></tr>"
 #if !defined(ENABLE_AHRS)
  "</table><table width=100%%>\
   <tr><td align=left><table><tr><th align=left>GNSS&nbsp;&nbsp;</th><td align=right>%s</td></tr></table></td>\

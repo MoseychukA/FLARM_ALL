@@ -22,6 +22,8 @@ DISPLAY_MODEL *u8g2 = nullptr;
 #define OLED_WIRE_PORT Wire
 #endif
 
+#define XPOWERS_CHIP_AXP2101
+
 #if defined(HAS_PMU)
 #include "XPowersLib.h"
 
@@ -56,6 +58,7 @@ bool initPMU()
     }
 
     if (!PMU) {
+
         PMU = new XPowersAXP192(PMU_WIRE_PORT);
         if (!PMU->init()) {
             Serial.println("Warning: Failed to find AXP192 power management");
@@ -417,5 +420,3 @@ void initBoard()
 
 
 }
-
-

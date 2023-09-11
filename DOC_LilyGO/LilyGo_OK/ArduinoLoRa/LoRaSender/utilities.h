@@ -19,7 +19,7 @@
 * Option: 433E6,470E6,868E6,915E6
 * */
 
-#define LoRa_frequency      868E6
+#define LoRa_frequency      868800000  //868E6
 
 
 #define UNUSE_PIN                   (0)
@@ -74,7 +74,7 @@
 
 #define GPS_BAUD_RATE               9600
 #define HAS_GPS
-//#define HAS_DISPLAY                 //Optional, bring your own board, no OLED !!
+#define HAS_DISPLAY                 //Optional, bring your own board, no OLED !!
 #define HAS_PMU
 
 #elif defined(LILYGO_T3_V1_0)
@@ -185,12 +185,3 @@
 #else
 #error "For the first use, please define the board version and model in <utilities. h>"
 #endif
-
-
-
-
-
-
-
-
-

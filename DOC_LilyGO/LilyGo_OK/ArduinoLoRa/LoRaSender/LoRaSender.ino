@@ -17,22 +17,27 @@ void setup()
     digitalWrite(ledPin, HIGH);
 
     // Use this initializer if you're using a 1.8" TFT
-    tft.init();   // initialize
+  //  tft.init();   // initialize
     // large block of text
-    tft.fillScreen(TFT_BLACK);
-    testdrawtext("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa, fringilla sed malesuada et, malesuada sit amet turpis. Sed porttitor neque ut ante pretium vitae malesuada nunc bibendum. Nullam aliquet ultrices massa eu hendrerit. Ut sed nisi lorem. In vestibulum purus a tortor imperdiet posuere. ", TFT_WHITE);
+ //   tft.fillScreen(TFT_BLACK);
+  //  testdrawtext("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur adipiscing ante sed nibh tincidunt feugiat. Maecenas enim massa, fringilla sed malesuada et, malesuada sit amet turpis. Sed porttitor neque ut ante pretium vitae malesuada nunc bibendum. Nullam aliquet ultrices massa eu hendrerit. Ut sed nisi lorem. In vestibulum purus a tortor imperdiet posuere. ", TFT_WHITE);
     delay(1000);
 
     // tft print function!
-    tftPrintTest();
-    delay(4000);
+  //  tftPrintTest();
+  //  delay(4000);
 
     Serial.println("LoRa Sender");
     LoRa.setPins(RADIO_CS_PIN, RADIO_RST_PIN, RADIO_DIO0_PIN);
-    if (!LoRa.begin(LoRa_frequency)) {
+    if (!LoRa.begin(LoRa_frequency)) 
+    {
         Serial.println("Starting LoRa failed!");
         while (1);
     }
+
+LoRa.setTxPower(20,PA_OUTPUT_PA_BOOST_PIN);
+
+    
 }
 
 void loop()
@@ -47,17 +52,17 @@ void loop()
     LoRa.endPacket();
 
 #ifdef HAS_DISPLAY
- /*   if (u8g2) {
+    if (u8g2) {
         char buf[256];
         u8g2->clearBuffer();
         u8g2->drawStr(0, 12, "Transmitting: OK!");
         snprintf(buf, sizeof(buf), "Sending: %d", counter);
         u8g2->drawStr(0, 30, buf);
         u8g2->sendBuffer();
-    }*/
+    }
 #endif
     counter++;
-    delay(5000);
+    delay(1000);
 }
 
 void testdrawtext(char* text, uint16_t color) {
@@ -104,4 +109,3 @@ void tftPrintTest() {
     tft.setTextColor(TFT_WHITE);
     tft.print(" seconds.");
 }
-

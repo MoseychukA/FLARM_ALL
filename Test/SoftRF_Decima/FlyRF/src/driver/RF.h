@@ -24,6 +24,12 @@
 
 #include "../system/SoC.h"
 
+/*
+BasicMAC - это переносимая реализация спецификации LoRaWAN™ от LoRa™ Alliance на языке программирования C.
+Это ответвление библиотеки IBM LMiC и поддерживает несколько регионов, которые выбираются во время
+компиляции и / или выполнения. Он может обрабатывать устройства класса A, класса B и класса C.
+*/
+
 #if defined(USE_BASICMAC)
 #include <basicmac.h>
 #else
@@ -47,8 +53,8 @@
 #define maxof3(a,b,c)     maxof2(maxof2(a,b),c)
 #define maxof5(a,b,c,d,e) maxof2(maxof2(a,b),maxof3(c,d,e))
 
-/* Max. paket's payload size for all supported RF protocols */
-//#define MAX_PKT_SIZE  32 /* 48 = UAT LONG_FRAME_DATA_BYTES */
+/* Макс. размер полезной нагрузки пакета для всех поддерживаемых радиочастотных протоколов */
+//#define MAX_PKT_SIZE 32 /* 48 = UAT LONG_FRAME_DATA_BYTES */
 #define MAX_PKT_SIZE  maxof5(LEGACY_PAYLOAD_SIZE, OGNTP_PAYLOAD_SIZE, \
                              P3I_PAYLOAD_SIZE, FANET_PAYLOAD_SIZE, \
                              UAT978_PAYLOAD_SIZE)
@@ -59,11 +65,12 @@
                              UAT978_PAYLOAD_SIZE), APRS_PAYLOAD_SIZE)
 #endif /* ENABLE_PROL */
 
-#define RXADDR {0x31, 0xfa , 0xb6} // Address of this device (4 bytes)
-#define TXADDR {0x31, 0xfa , 0xb6} // Address of device to send to (4 bytes)
+#define RXADDR {0x31, 0xfa , 0xb6} // Адрес этого устройства (4 байта)
+#define TXADDR {0x31, 0xfa , 0xb6} // Адрес устройства для отправки (4 байта)
 
 enum
 {
+	/* Перечень радио модулей, применяемых в программе */
   RF_IC_NONE,
   RF_IC_NRF905,
   RF_IC_SX1276,
@@ -97,8 +104,8 @@ typedef struct rfchip_ops_struct {
 
 typedef struct Slot_descr_struct {
   uint16_t begin;
-  uint16_t duration;
-  unsigned long tmarker;
+  uint16_t duration;     //продолжительность
+  unsigned long tmarker; // метка
 } Slot_descr_t;
 
 typedef struct Slots_descr_struct {
@@ -109,7 +116,7 @@ typedef struct Slots_descr_struct {
   uint16_t      air_time;
   Slot_descr_t  s0;
   Slot_descr_t  s1;
-  uint8_t       current;
+  uint8_t       current;  // текущий
 } Slots_descr_t;
 
 String Bin2Hex(byte *, size_t);
