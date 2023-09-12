@@ -371,17 +371,23 @@ void RF_SetChannel(void)
     unsigned long time_corr_neg;
     unsigned long ms_since_boot = millis();
 
-    if (pps_btime_ms) {
+    if (pps_btime_ms) 
+    {
       unsigned long last_Commit_Time = ms_since_boot - gnss.time.age();
-      if (pps_btime_ms <= last_Commit_Time) {
+      if (pps_btime_ms <= last_Commit_Time) 
+      {
         time_corr_neg = (last_Commit_Time - pps_btime_ms) % 1000;
-      } else {
+      } 
+      else 
+      {
         time_corr_neg = 1000 - ((pps_btime_ms - last_Commit_Time) % 1000);
       }
       ref_time_ms = (ms_since_boot - pps_btime_ms) <= 1010 ?
                     pps_btime_ms :
                     ms_since_boot-(ms_since_boot % 1000)+(pps_btime_ms % 1000);
-    } else {
+    } 
+    else 
+    {
       unsigned long last_RMC_Commit = ms_since_boot - gnss.date.age();
       time_corr_neg = gnss_chip ? gnss_chip->rmc_ms : 100;
       ref_time_ms = last_RMC_Commit - time_corr_neg;
