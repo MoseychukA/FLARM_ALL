@@ -64,7 +64,7 @@ void loop() {
   // Font and background colour, background colour is used for anti-alias blending
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   
-  Serial.print("REG_PA_CONFIG = ");
+  /*Serial.print("REG_PA_CONFIG = ");
   Serial.println(LoRa.readRegister(0x09),HEX);
   Serial.println(LoRa.readRegister(0x09),BIN);
     
@@ -74,7 +74,7 @@ void loop() {
   
   Serial.print("REG_OCP = ");
   Serial.println(LoRa.readRegister(0x0b),HEX);
-  Serial.println(LoRa.readRegister(0x0b),BIN);
+  Serial.println(LoRa.readRegister(0x0b),BIN);*/
 
 
   int packetSize = LoRa.parsePacket();

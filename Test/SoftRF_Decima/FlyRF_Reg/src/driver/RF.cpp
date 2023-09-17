@@ -48,6 +48,7 @@ byte TxBuffer[MAX_PKT_SIZE] __attribute__((aligned(sizeof(uint32_t))));
 
 uint32_t tx_packets_counter = 0;
 uint32_t rx_packets_counter = 0;
+
 uint8_t WebRegPaConfig = 0;
 uint8_t WebRegPaDac = 0;
 uint8_t WebRegOcp = 0;
@@ -341,12 +342,6 @@ byte RF_setup(void)
 
     uint16_t duration = ts->s0.duration + ts->s1.duration;
     ts->adj = duration > ts->interval_mid ? 0 : (ts->interval_mid - duration) / 2;
-
-    //WebRegPaConfig = 0x8f;
-    //WebRegPaDac = 0x87;
-    //WebRegOcp = 0x3b;
-
-
 
     return rf_chip->type;   // сохранить тип устройства
   } else {
@@ -821,9 +816,17 @@ static bool sx1276_probe()
 
   v = sx1276_readReg(SX1276_RegVersion);
 
+  //writeReg(RegPaDac, 0x87); // high power
+  //writeReg(RegPaConfig, 0x80 | (20 - 5)); // BOOST (5..20d
+  //writeReg(RegOcp, 0x3b); // high power
+
+  /*WebRegPaConfig = 0;
+  WebRegPaDac = 0;
+  WebRegOcp = 0;
+
   WebRegPaConfig = sx1276_readReg(RegPaConfig);
   WebRegPaDac = sx1276_readReg(RegPaDac);
-  WebRegOcp = sx1276_readReg(RegOcp);
+  WebRegOcp = sx1276_readReg(RegOcp);*/
 
   pinMode(lmic_pins.nss, INPUT);
   SPI.end();
@@ -942,9 +945,13 @@ static void sx12xx_channel(int8_t channel)
     }
 #endif /* ENABLE_PROL */
 
+  /*  WebRegPaConfig = 0;
+    WebRegPaDac = 0;
+    WebRegOcp = 0;
+
     WebRegPaConfig = sx1276_readReg(RegPaConfig);
     WebRegPaDac = sx1276_readReg(RegPaDac);
-    WebRegOcp = sx1276_readReg(RegOcp);
+    WebRegOcp = sx1276_readReg(RegOcp);*/
 
     /* Фактические регистры каналов радиочастотного чипа будут обновляться перед каждым сеансом передачи или приема. */
     LMIC.freq = frequency + (fc * 1000);
@@ -1047,12 +1054,16 @@ static void sx12xx_setup()
   case RF_TX_POWER_OFF:
   case RF_TX_POWER_LOW:
   default:
-    LMIC.txpow = 20; /* 2 dBm is minimum for RFM95W on PA_BOOST pin */
+    LMIC.txpow = 2; /* 2 dBm is minimum for RFM95W on PA_BOOST pin */
     break;
   }
 
   Serial.print("LMIC.txpow: ");
   Serial.println(LMIC.txpow);
+
+  WebRegPaConfig = 0;
+  WebRegPaDac = 0;
+  WebRegOcp = 0;
 
   WebRegPaConfig = sx1276_readReg(RegPaConfig);
   WebRegPaDac = sx1276_readReg(RegPaDac);

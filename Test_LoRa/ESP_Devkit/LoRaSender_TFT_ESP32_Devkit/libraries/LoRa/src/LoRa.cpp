@@ -435,7 +435,7 @@ void LoRaClass::setTxPower(int level, int outputPin)
     }
 
     writeRegister(REG_PA_CONFIG, PA_BOOST | (level-2));
-	
+	//writeRegister(REG_PA_CONFIG, PA_BOOST | (level-2));
 	Serial.print("REG_PA_CONFIG = ");
 	Serial.println(readRegister(REG_PA_CONFIG),HEX);
 	Serial.println(readRegister(REG_PA_CONFIG),BIN);

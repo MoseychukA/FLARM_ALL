@@ -739,7 +739,7 @@ void handleRoot() {
      <th align=left>&nbsp;RegOcp&nbsp;</th><td align=right>%X</td>\
     </tr></table></td></tr>\
   </table>\
- <h2 align=center>Most recent GNSS fix</h2>\
+ <h1 align=center>Последнее исправление GNSS</h1>\
  <table width=100%%>\
   <tr><th align=left>Time</th><td align=right>%u</td></tr>\
   <tr><th align=left>Satellites</th><td align=right>%d</td></tr>\

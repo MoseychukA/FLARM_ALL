@@ -1,0 +1,13 @@
+     </table>\
+  <table width=100%%>\
+     <tr><th align=left>RegPaConfig&nbsp;</th><td align=right>%u</td>\
+     <th align=left>&nbsp;&nbsp;RegPaDac&nbsp;</th><td align=right>%u</td>\
+     <th align=left>&nbsp;&nbsp;&nbsp;RegOcp&nbsp;</th><td align=right>%u</td>\
+    </tr></table></td></tr>\
+	
+	uint8_t WebRegPaConfig = 0x8f;
+uint8_t WebRegPaDac = 0x87;
+uint8_t WebRegOcp = 0x3b;
+	
+	
+	C:\Users\Alex\Documents\Arduino
