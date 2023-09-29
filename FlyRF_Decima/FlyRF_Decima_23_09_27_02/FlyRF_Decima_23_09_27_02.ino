@@ -40,7 +40,7 @@ WebServer server(80);
 #include "TFTModule.h"
 #endif
 
-char daysOfTheWeek[7][12] = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
 
 #ifdef USE_TFT_MODULE
 TFTModule tftModule;
