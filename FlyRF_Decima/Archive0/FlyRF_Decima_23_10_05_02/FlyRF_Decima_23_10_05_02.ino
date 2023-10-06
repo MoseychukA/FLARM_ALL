@@ -1,0 +1,658 @@
+/*
+ Программа анализатора концентрации кислорода
+
+ Применяется микроконтроллер на базе ESP32   
+ ESP32 Dev Module
+ 
+ Версия печатной платы "LilyGO-T-Beam"
+*/
+
+#include <stdio.h>                // define I/O functions
+#include <Arduino.h>              // define I/O functions
+#include "SPI.h"
+#include <TFT_eSPI.h>             // Поддержка TFT дисплея 
+#include <SD.h>                   // Поддержка SD карты
+#include "SPIFFS.h"
+#include "FS.h"
+#include "Configuration_ESP32.h"  // Основные настройки программы
+#include "Settings.h"             //  
+#include "CoreButton.h"           //
+#include "CoreCommandBuffer.h"    // обработчик входящих по UART команд
+#include <Wire.h>                 // 
+#include "AT24CX.h"               // Поддержка энергонезависимой памяти
+#include <ArduinoJson.h>
+#include <EEPROM.h>
+#include <aircraft.h>
+#include <adsb_encoder.h>
+#include <TimeLib.h>
+#include <lib_crc.h>
+#include <protocol.h>
+#include <TinyGPS++.h>
+#include <nmealib.h>
+#include <fec.h>
+#include <flashchips.h>
+#include <LibAPRSesp.h>
+#include <manchester.h>
+#include <U8g2lib.h>
+#include <mode-s.h>
+#include <egm96s.h>
+#include <axp20x.h>
+
+
+
+
+
+#define FORMAT_SPIFFS_IF_FAILED true
+
+
+/* Файлы SoftRF*/
+#include "WiFi.h"
+#include "SoftRF.h"
+#include "WiFiHelper.h"
+#include "XPowersLib.h"
+#include "SoC.h"
+#include "MODULE_ESP32.h"
+#include "EEPROMHelper.h"
+
+#include "D1090.h"
+#include "GDL90.h"
+#include "JSON.h"
+#include "MAVLink.h"
+#include "NMEA.h"
+#include "TrafficHelper.h"
+#include "RF.h"
+
+
+
+#if !defined(SERIAL_FLUSH)
+#define SERIAL_FLUSH() Serial.flush()
+#endif
+
+#define DEBUG 0
+#define DEBUG_TIMING 0
+
+#define isTimeToDisplay() (millis() - LEDTimeMarker     > 1000)
+#define isTimeToExport()  (millis() - ExportTimeMarker  > 1000)
+
+
+
+//====================================================================================
+AT24CX memWiFi;
+
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <WebServer.h>
+#include <ESPmDNS.h>
+#include <Update.h>
+const char* host = "esp32";
+//const char* ssid = "DAP-1155";
+//const char* ssid = "ASUS";
+//const char* password = "panasonic";
+//WebServer server(80);
+
+
+
+#ifdef USE_TFT_MODULE
+#include "TFTModule.h"
+#endif
+
+
+
+#ifdef USE_TFT_MODULE
+TFTModule tftModule;
+
+#endif
+
+//--------------------------------------------------------------------------------------------------------------------------------
+bool canCallYield = false;
+//--------------------------------------------------------------------------------------------------------------------------------
+bool lcd_ON = false;
+uint32_t screenIdleTimer = 0;
+uint32_t backlightTimer = 0;
+uint32_t powerOffTimer = 0;
+bool power_ON = false;
+
+//--------------------------------------------------------------------------------------------------------------------------------
+void screenAction(AbstractTFTScreen* screen)
+{
+    // какое-то действие на экране произошло.
+    // тут просто сбрасываем таймер ничегонеделанья.
+    screenIdleTimer = millis();           // Таймер переключения на главный экран
+    backlightTimer = millis();            // Таймер отключения подсветки дисплея
+	powerOffTimer = millis();             // Таймер отключения питания прибора
+}
+//--------------------------------------------------------------------------------------------------------------------------------
+void batteryPowerOn()                     // Включение питания от аккумулятора
+{
+    int i = 0;
+    int time_i = 20;                      // время нажатия на кнопку включения питания.
+ /*   do
+    {
+        delay(100);         
+        if (!digitalRead(POWER_ON_IN))
+        {
+            i++;
+
+            power_ON = true;
+        }
+        else
+        {
+            power_ON = false;
+            break;
+        }
+
+    } while (i < time_i);*/
+
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+void listDir(fs::FS& fs, const char* dirname, uint8_t levels) 
+{
+    Serial.printf("Listing directory: %s\r\n", dirname);
+
+    File root = fs.open(dirname);
+    if (!root) {
+        Serial.println("- failed to open directory");
+        return;
+    }
+    if (!root.isDirectory()) {
+        Serial.println(" - not a directory");
+        return;
+    }
+
+    File file = root.openNextFile();
+    while (file) {
+        if (file.isDirectory()) {
+            Serial.print("  DIR : ");
+            Serial.println(file.name());
+            if (levels) {
+                listDir(fs, file.path(), levels - 1);
+            }
+        }
+        else {
+            Serial.print("  FILE: ");
+            Serial.print(file.name());
+            Serial.print("\tSIZE: ");
+            Serial.println(file.size());
+        }
+        file = root.openNextFile();
+    }
+}
+
+void readFile(fs::FS& fs, const char* path) {
+    Serial.printf("Reading file: %s\r\n", path);
+
+    File file = fs.open(path);
+    if (!file || file.isDirectory()) {
+        Serial.println("- failed to open file for reading");
+        return;
+    }
+
+    Serial.println("- read from file:");
+    while (file.available()) {
+        Serial.write(file.read());
+    }
+    file.close();
+}
+
+void writeFile(fs::FS& fs, const char* path, const char* message) {
+    Serial.printf("Writing file: %s\r\n", path);
+
+    File file = fs.open(path, FILE_WRITE);
+    if (!file) {
+        Serial.println("- failed to open file for writing");
+        return;
+    }
+    if (file.print(message)) {
+        Serial.println("- file written");
+    }
+    else {
+        Serial.println("- write failed");
+    }
+    file.close();
+}
+
+void appendFile(fs::FS& fs, const char* path, const char* message) {
+    Serial.printf("Appending to file: %s\r\n", path);
+
+    File file = fs.open(path, FILE_APPEND);
+    if (!file) {
+        Serial.println("- failed to open file for appending");
+        return;
+    }
+    if (file.print(message)) {
+        Serial.println("- message appended");
+    }
+    else {
+        Serial.println("- append failed");
+    }
+    file.close();
+}
+
+void renameFile(fs::FS& fs, const char* path1, const char* path2) {
+    Serial.printf("Renaming file %s to %s\r\n", path1, path2);
+    if (fs.rename(path1, path2)) {
+        Serial.println("- file renamed");
+    }
+    else {
+        Serial.println("- rename failed");
+    }
+}
+
+void deleteFile(fs::FS& fs, const char* path) {
+    Serial.printf("Deleting file: %s\r\n", path);
+    if (fs.remove(path)) {
+        Serial.println("- file deleted");
+    }
+    else {
+        Serial.println("- delete failed");
+    }
+}
+
+void testFileIO(fs::FS& fs, const char* path) {
+    Serial.printf("Testing file I/O with %s\r\n", path);
+
+    static uint8_t buf[512];
+    size_t len = 0;
+    File file = fs.open(path, FILE_WRITE);
+    if (!file) {
+        Serial.println("- failed to open file for writing");
+        return;
+    }
+
+    size_t i;
+    Serial.print("- writing");
+    uint32_t start = millis();
+    for (i = 0; i < 2048; i++) {
+        if ((i & 0x001F) == 0x001F) {
+            Serial.print(".");
+        }
+        file.write(buf, 512);
+    }
+    Serial.println("");
+    uint32_t end = millis() - start;
+    Serial.printf(" - %u bytes written in %u ms\r\n", 2048 * 512, end);
+    file.close();
+
+    file = fs.open(path);
+    start = millis();
+    end = start;
+    i = 0;
+    if (file && !file.isDirectory()) {
+        len = file.size();
+        size_t flen = len;
+        start = millis();
+        Serial.print("- reading");
+        while (len) {
+            size_t toRead = len;
+            if (toRead > 512) {
+                toRead = 512;
+            }
+            file.read(buf, toRead);
+            if ((i++ & 0x001F) == 0x001F) {
+                Serial.print(".");
+            }
+            len -= toRead;
+        }
+        Serial.println("");
+        end = millis() - start;
+        Serial.printf("- %u bytes read in %u ms\r\n", flen, end);
+        file.close();
+    }
+    else {
+        Serial.println("- failed to open file for reading");
+    }
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------------------
+/*
+ * Login page
+ */
+const char* loginIndex = 
+"<form name='loginForm'>"
+"<table width='20%' bgcolor='A09F9F' align='center'>"
+"<tr>"
+"<td colspan=2>"
+"<center><font size=4><b>ESP32 Login Page</b></font></center>"
+"<br>"
+"</td>"
+"<br>"
+"<br>"
+"</tr>"
+"<td>Username:</td>"
+"<td><input type='text' size=25 name='userid'><br></td>"
+"</tr>"
+"<br>"
+"<br>"
+"<tr>"
+"<td>Password:</td>"
+"<td><input type='Password' size=25 name='pwd'><br></td>"
+"<br>"
+"<br>"
+"</tr>"
+"<tr>"
+"<td><input type='submit' onclick='check(this.form)' value='Login'></td>"
+"</tr>"
+"</table>"
+"</form>"
+"<script>"
+"function check(form)"
+"{"
+"if(form.userid.value=='admin' && form.pwd.value=='admin')"
+"{"
+"window.open('/serverIndex')"
+"}"
+"else"
+"{"
+" alert('Error Password or Username')/*displays error message*/"
+"}"
+"}"
+"</script>";
+/*
+ * Server Index Page
+ */
+const char* serverIndex =
+"<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>"
+"<form method='POST' action='#' enctype='multipart/form-data' id='upload_form'>"
+"<input type='file' name='update'>"
+"<input type='submit' value='Update'>"
+"</form>"
+"<div id='prg'>progress: 0%</div>"
+"<script>"
+"$('form').submit(function(e){"
+"e.preventDefault();"
+"var form = $('#upload_form')[0];"
+"var data = new FormData(form);"
+" $.ajax({"
+"url: '/update',"
+"type: 'POST',"
+"data: data,"
+"contentType: false,"
+"processData:false,"
+"xhr: function() {"
+"var xhr = new window.XMLHttpRequest();"
+"xhr.upload.addEventListener('progress', function(evt) {"
+"if (evt.lengthComputable) {"
+"var per = evt.loaded / evt.total;"
+"$('#prg').html('progress: ' + Math.round(per*100) + '%');"
+"}"
+"}, false);"
+"return xhr;"
+"},"
+"success:function(d, s) {"
+"console.log('success!')"
+"},"
+"error: function (a, b, c) {"
+"}"
+"});"
+"});"
+"</script>";
+/*
+ * setup function
+ */
+ //--------------------------------------------------------------------------------------------------------------------------------
+
+void bridge(void* pvParameters)
+{
+	//// Connect to WiFi network
+
+	//char ssid[20] = "";
+	//char password[20] = "";
+
+	//memWiFi.readChars(ROUTER_ID_EEPROM_ADDR + 2, ssid, sizeof(ssid));
+
+	//Serial.print("SSID =  ");
+	//Serial.println(ssid);
+	//delay(100);
+	//memWiFi.readChars(ROUTER_PASSWORD_EEPROM_ADDR + 2, password, sizeof(password));
+	//Serial.print("Password =  ");
+	//Serial.println(password);
+
+	//WiFi.begin(ssid, password);
+	//int count_connect = 0;
+	//SerialDEBUG.println("Wait for connection");
+	//// Wait for connection
+	//while (WiFi.status() != WL_CONNECTED)
+	//{
+	//	delay(500);
+	//	SerialDEBUG.print(".");
+	//	count_connect++;
+	//	if (count_connect > 20)
+	//	{
+	//		break;
+	//	}
+	//}
+
+	//if (WiFi.status() == WL_CONNECTED)
+	//{
+	//	SerialDEBUG.println("");
+	//	SerialDEBUG.print("Connected to ");
+	//	SerialDEBUG.println(ssid);
+	//	SerialDEBUG.print("IP address: ");
+	//	SerialDEBUG.println(WiFi.localIP());
+	//	Settings.SetWiFiConnect(true);
+	//	/*use mdns for host name resolution*/
+	//	if (!MDNS.begin(host)) { //http://esp32.local
+	//		SerialDEBUG.println("Error setting up MDNS responder!");
+	//		while (1) {
+	//			delay(1000);
+	//		}
+	//	}
+	//	SerialDEBUG.println("mDNS responder started");
+	//	/*return index page which is stored in serverIndex */
+	//	server.on("/", HTTP_GET, []() {
+	//		server.sendHeader("Connection", "close");
+	//		server.send(200, "text/html", loginIndex);
+	//	});
+	//	server.on("/serverIndex", HTTP_GET, []() {
+	//		server.sendHeader("Connection", "close");
+	//		server.send(200, "text/html", serverIndex);
+	//	});
+	//	/*handling uploading firmware file */
+	//	server.on("/update", HTTP_POST, []() {
+	//		server.sendHeader("Connection", "close");
+	//		server.send(200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
+	//		ESP.restart();
+	//	}, []() {
+	//		HTTPUpload& upload = server.upload();
+	//		if (upload.status == UPLOAD_FILE_START) {
+	//			SerialDEBUG.printf("Update: %s\n", upload.filename.c_str());
+	//			if (!Update.begin(UPDATE_SIZE_UNKNOWN)) { //start with max available size
+	//				Update.printError(SerialDEBUG);
+	//			}
+	//		}
+	//		else if (upload.status == UPLOAD_FILE_WRITE) {
+	//			/* flashing firmware to ESP*/
+	//			if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
+	//				Update.printError(SerialDEBUG);
+	//			}
+	//		}
+	//		else if (upload.status == UPLOAD_FILE_END) {
+	//			if (Update.end(true)) { //true to set the size to the current progress
+	//				SerialDEBUG.printf("Update Success: %u\nRebooting...\n", upload.totalSize);
+	//			}
+	//			else {
+	//				Update.printError(SerialDEBUG);
+	//			}
+	//		}
+	//	});
+	//	server.begin();
+	//}
+	//else
+	//{
+	//	SerialDEBUG.println("");
+	//	SerialDEBUG.println("****** Not connected to WiFi! *******");
+	//	Settings.SetWiFiConnect(false);
+	//}
+
+	//while (true)
+	//{
+	//	server.handleClient();
+	//	delay(10);
+
+	//	static uint32_t tmr = millis();
+	//	if (millis() - tmr > 2000)
+	//	{
+	//		if (WiFi.status() == WL_CONNECTED)
+	//		{
+	//			Settings.SetWiFiConnect(true);
+	//			Settings.SetWiFiState(false);
+	//		}
+	//		else
+	//		{
+	//			Settings.SetWiFiConnect(false);
+	//			Settings.SetWiFiState(true);
+	//		}
+
+
+	//		tmr = millis();
+	//	}
+
+	//}
+}
+//--------------------------------------------------------------------------------------------------------------------------------
+ufo_t ThisAircraft;
+
+hardware_info_t hw_info = {
+  .model = IMU_NONE,//DEFAULT_SOFTRF_MODEL,
+  .revision = 0,
+  .soc = SOC_NONE,
+  .rf = IMU_NONE, //RF_IC_NONE,
+  .gnss = IMU_NONE, //GNSS_MODULE_NONE,
+  .baro = IMU_NONE, //BARO_MODULE_NONE,
+  .display = IMU_NONE, //DISPLAY_NONE,
+  .storage = STORAGE_NONE,
+  .rtc = IMU_NONE, //RTC_NONE,
+  .imu = IMU_NONE,
+  .mag = MAG_NONE,
+  .pmu = IMU_NONE, //PMU_NONE,
+};
+
+unsigned long LEDTimeMarker = 0;
+unsigned long ExportTimeMarker = 0;
+
+
+void setup() 
+{
+  canCallYield = false;
+
+  // поднимаем первый UART
+  SerialDEBUG.begin(Serial_SPEED);
+  while (!SerialDEBUG && millis() < 1000);
+
+  hw_info.soc = esp32sys.Setup();        // Настраиваем устройство LilyGO-T-Beam
+
+  Serial.print("hw_info.soc = ");       // Сообщил, что система ESP32 настроена.
+  Serial.println(hw_info.soc);
+
+  Settings.setup();                      // Настраиваем остальные устройства
+
+  pinMode(23, OUTPUT);                   // 
+  digitalWrite(23, HIGH);                // 
+
+  pinMode(18, OUTPUT);                   // 
+  digitalWrite(18, HIGH);                // 
+ 
+  if (!SPIFFS.begin(FORMAT_SPIFFS_IF_FAILED)) 
+  {
+      Serial.println("SPIFFS Mount Failed");
+      return;
+  }
+
+ // rst_info* resetInfo;
+ 
+ 
+  /*listDir(SPIFFS, "/", 0);
+  writeFile(SPIFFS, "/hello.txt", "Hello ");
+  appendFile(SPIFFS, "/hello.txt", "World!\r\n");
+  readFile(SPIFFS, "/hello.txt");
+  renameFile(SPIFFS, "/hello.txt", "/foo.txt");
+  readFile(SPIFFS, "/foo.txt");
+  deleteFile(SPIFFS, "/foo.txt");
+  testFileIO(SPIFFS, "/test.txt");
+  deleteFile(SPIFFS, "/test.txt");
+  Serial.println("Test complete");*/
+  
+#ifdef USE_TFT_MODULE 
+ tftModule.Setup();
+#endif
+
+ screenIdleTimer = millis();
+
+ TFTScreen->onAction(screenAction);  // 
+
+ // Печатаем в SerialDEBUG готовность
+ SerialDEBUG.println("READY");
+ 
+ // // тест EEPROM
+  SerialDEBUG.println();
+
+ screenIdleTimer = millis();         // Таймер переключения на главный экран
+ backlightTimer  = millis();         // Таймер отключения подсветки дисплея
+ powerOffTimer   = millis();         // Таймер отключения питания прибора
+
+  // выводим в UART версию прошивки
+ CommandHandler.getVER(&SerialDEBUG);
+ 
+ canCallYield = true;
+ //SerialDEBUG.print("setup() running on core ");
+ ////  "Блок setup() выполняется на ядре "
+ //SerialDEBUG.println(xPortGetCoreID());
+
+
+ // xTaskCreatePinnedToCore(
+ //Task1code, /* Функция, содержащая код задачи */
+ // "Task1", /* Название задачи */
+ //     10000, /* Размер стека в словах */
+ //     NULL, /* Параметр создаваемой задачи */
+ //     0, /* Приоритет задачи */
+ //     & Task1, /* Идентификатор задачи */
+ //     0); /* Ядро, на котором будет выполняться задача */
+ // 
+
+ /*xTaskCreatePinnedToCore(bridge, "bridge", 4096, NULL, 1, NULL, 0);*/
+
+ WiFi_setup();
+
+
+
+
+ disableCore0WDT();
+ disableCore1WDT();
+ disableLoopWDT(); // You forgot this one !
+
+ // Settings.TestI2C();
+
+ 
+ SerialDEBUG.flush();
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------------------
+void loop()
+{
+
+
+	Settings.update();                    // Проверяем состояние кнопки питания
+ 
+	#ifdef USE_TFT_MODULE
+		tftModule.Update();
+	#endif 
+
+
+#ifdef _COM_COMMANDS_OFF
+    // обрабатываем входящие команды
+    CommandHandler.handleCommands();
+#endif // _COM_COMMANDS_OFF
+
+
+	WiFi_loop();
+
+
+
+
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------------------
