@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SoftRF_AA.ino" />
+    <ClCompile Include="AbstractModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractModule.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Airplane.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AT24CX.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AT24CX.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BigRusFont.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Configuration_ESP32.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreButton.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreCommandBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreCommandBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Final_Frontier_28.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IconsFont.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Latin_Hiragana_24.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NotoSansBold15.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NotoSansMonoSCB20.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RusFont.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RusFont3.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SensorFont.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SensorFont2.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SevenSegNumFontMDS.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SevenSegNumFontPlus.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallRusFont.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFTMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFTMenu.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFTModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFTModule.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFTRus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFTRus.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFT_Includes.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyVector.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Various_Symbols_32x32.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="__vm\.SoftRF_AA.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
