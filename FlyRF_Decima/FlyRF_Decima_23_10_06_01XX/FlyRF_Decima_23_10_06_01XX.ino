@@ -96,7 +96,6 @@ const char* host = "esp32";
 #endif
 
 
-
 #ifdef USE_TFT_MODULE
 TFTModule tftModule;
 

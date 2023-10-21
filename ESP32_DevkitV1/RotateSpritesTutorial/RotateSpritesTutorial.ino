@@ -1,4 +1,7 @@
 #include <TFT_eSPI.h> 
+#include <SPI.h>
+#include <FS.h>
+#include "SPIFFS.h" // ESP32 only
 
 TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite back = TFT_eSprite(&tft);

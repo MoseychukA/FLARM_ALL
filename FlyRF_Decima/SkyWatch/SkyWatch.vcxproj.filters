@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SkyWatch.ino" />
+    <ClCompile Include="BaroHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaroHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BatteryHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BatteryHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BluetoothHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BluetoothHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EEPROMHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EEPROMHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GDL90Helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GDL90Helper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GNSSHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GNSSHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Melody.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NMEAHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NMEAHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OTAHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OTAHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform_ESP32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform_ESP32.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform_ESP8266.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform_ESP8266.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform_RP2040.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform_RP2040.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyWatch.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoCHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoCHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFTHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TFTHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TrafficHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TrafficHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View_Radar_TFT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View_Status_TFT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View_Text_TFT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View_Time_TFT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WiFiHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WiFiHelper.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="__vm\.SkyWatch.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
