@@ -89,7 +89,7 @@ void print_current(const char *s, bool d)
 }
 #endif
 
-bool inServiceMode = false;
+bool inServiceMode = true;
 
 void setup()
 {
@@ -199,9 +199,11 @@ void setup()
 void loop()
 {
 #if defined(EXPERIMENTAL)
-  if (inServiceMode) {
+  if (inServiceMode) 
+  {
     service_loop();
-  } else
+  }
+  else
 #endif /* EXPERIMENTAL */
   {
     normal_loop();
@@ -267,15 +269,16 @@ void service_loop()
     Serial.write(SerialInput.read());
     bypass_inactive = false;
   }
-  if (bypass_inactive) {
-//    TFT_loop();
+  if (bypass_inactive) 
+  {
+    TFT_loop();
 
-//    Traffic_ClearExpired();
+    Traffic_ClearExpired();
 
-//    WiFi_loop();
+    WiFi_loop();
 
     // Handle Web
-//    Web_loop();
+    Web_loop();
 
     SoC->Button_loop();
 
