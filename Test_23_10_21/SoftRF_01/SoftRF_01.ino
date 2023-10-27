@@ -545,6 +545,16 @@ void watchout()
 unsigned int pos_ndx = 0;
 unsigned long TxPosUpdMarker = 0;
 
+float altitude1 = 100.0;
+bool alt_high = false;
+bool alien_dist = false;
+
+float alien_lat = 55.950197;
+float alien_lon = 38.207984;
+float alien_lat1 = 55.927032;
+float alien_lon1 = 38.306560;
+
+
 void txrx_test()
 {
   bool success = false;
@@ -557,13 +567,235 @@ void txrx_test()
 #endif
   ThisAircraft.timestamp = now();
 
-  if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 4000 ) {
-    ThisAircraft.latitude  = pgm_read_float( &txrx_test_positions[pos_ndx][0]);
-    ThisAircraft.longitude = pgm_read_float( &txrx_test_positions[pos_ndx][1]);
+  if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 4000 ) 
+  {
+   // ThisAircraft.latitude  = pgm_read_float( &txrx_test_positions[pos_ndx][0]);
+  //  ThisAircraft.longitude = pgm_read_float( &txrx_test_positions[pos_ndx][1]);
     pos_ndx = (pos_ndx + 1) % TXRX_TEST_NUM_POSITIONS;
+/*
+56.011918, 38.356383 Черноголовка
+
+56.023279, 38.351918  Афанасово-3
+    
+56.042176, 38.483176 село Стромынь
+55.950197, 38.207984 деревня Мизиново
+19 км.
+56.011524, 38.377847  проезд Строителей, 1Б Средняя точка
+
+56.026725, 38.291524  село Ивановское
+55.993891, 38.339010  городской округ Черноголовка
+
+55.927032, 38.306560 село Воскресенское
+56.023282, 38.351907 деревня Афанасово-3
+
+   */
+
+    int set_air = 2;   // Варианты движения самолетов
+
+
+    switch (set_air)
+    {
+    case 0:
+        ThisAircraft.latitude = pgm_read_float(&txrx_test_positions[pos_ndx][0]);
+        ThisAircraft.longitude = pgm_read_float(&txrx_test_positions[pos_ndx][1]);
+
+        if (!alt_high)
+        {
+            altitude1 += 100;
+            if (altitude1 > 4000)
+            {
+                altitude1 = 4000;
+                alt_high = true;
+            }
+        }
+        if (alt_high)
+        {
+            altitude1 -= 100;
+            if (altitude1 < 100)
+            {
+                altitude1 = 100;
+                alt_high = false;
+            }
+        }
+        break;
+    case 1:
+        ThisAircraft.latitude = 55.980197 + (0.002299*20);//55.950197
+        ThisAircraft.longitude = 38.207984 + (0.006880*20);//
+        altitude1 = 100;
+        break;
+    case 2:
+
+        /* Параметры первого тестового самолета
+        56.042176, 38.483176 село Стромынь
+        55.950197, 38.207984 деревня Мизиново
+        19 км.
+        */
+        if (!alien_dist)
+        {
+            alien_lat += 0.002299;
+            alien_lon += 0.006880;
+
+            if (alien_lat >= 56.042176)
+            {
+                alien_lat = 56.042176;
+                alien_dist = true;
+            }
+        }
+
+        if (alien_dist)
+        {
+            alien_lat -= 0.002299;
+            alien_lon -= 0.006880;
+
+            if (alien_lat <= 55.950197)
+            {
+                alien_lat = 55.950197;
+                alien_dist = false;
+            }
+        }
+        ThisAircraft.latitude = alien_lat;
+        ThisAircraft.longitude = alien_lon;
+
+        /* Изменяем высоту*/
+        if (!alt_high)
+        {
+            altitude1 += 10;
+            if (altitude1 > 200)
+            {
+                altitude1 = 200;
+                alt_high = true;
+            }
+        }
+        if (alt_high)
+        {
+
+            altitude1 -= 10;
+            if (altitude1 < 30)
+            {
+                altitude1 = 30;
+                alt_high = false;
+            }
+        }
+
+        break;
+    case 3:
+        /*Параметры второго тестового самолета
+         56.026725, 38.291524  село Ивановское
+         55.993891, 38.339010  городской округ Черноголовка
+         */
+        if (!alien_dist)
+        {
+            alien_lat1 += 0.004598/4;
+            alien_lon1 += 0.013759/4;
+
+            if (alien_lat1 >= 55.993891)
+            {
+
+                alien_lat1 = 55.993891;
+                alien_dist = true;
+            }
+        }
+
+        if (alien_dist)
+        {
+            alien_lat1 -= (0.004598 / 4);
+            alien_lon1 -= (0.013759 / 4);
+
+            if (alien_lat1 <= 56.026725)
+            {
+                alien_lat1 = 56.026725;
+                alien_dist = false;
+            }
+        }
+
+        ThisAircraft.latitude = alien_lat1;
+        ThisAircraft.longitude = alien_lon1;
+        /* Изменяем высоту*/
+        if (!alt_high)
+        {
+            altitude1 += 10;
+            if (altitude1 > 200)
+            {
+                altitude1 = 200;
+                alt_high = true;
+            }
+        }
+        if (alt_high)
+        {
+
+            altitude1 -= 10;
+            if (altitude1 < 30)
+            {
+                altitude1 = 30;
+                alt_high = false;
+            }
+        }
+        break;
+
+    case 4:
+        /*
+  
+       56.023282, 38.351907 деревня Афанасово-3
+        */
+        if (!alien_dist)
+        {
+            alien_lat1 += 0.0006774;
+            alien_lon1 += 0.000158175;
+
+            if (alien_lat1 >= 56.023282)
+            {
+
+                alien_lat1 = 56.023282;
+                alien_dist = true;
+            }
+        }
+
+        if (alien_dist)
+        {
+            alien_lat1 -= 0.0006774;
+            alien_lon1 -= 0.000158175;
+
+            if (alien_lat1 <= 55.996186)
+            {
+                alien_lat1 = 55.996186;
+                alien_dist = false;
+            }
+        }
+
+        ThisAircraft.latitude = alien_lat1;
+        ThisAircraft.longitude = alien_lon1;
+        /* Изменяем высоту*/
+        if (!alt_high)
+        {
+            altitude1 += 10;
+            if (altitude1 > 200)
+            {
+                altitude1 = 200;
+                alt_high = true;
+            }
+        }
+        if (alt_high)
+        {
+
+            altitude1 -= 10;
+            if (altitude1 < 30)
+            {
+                altitude1 = 30;
+                alt_high = false;
+            }
+        }
+        break;
+
+
+    default:
+        break;
+    }
     TxPosUpdMarker = millis();
   }
-  ThisAircraft.altitude = TXRX_TEST_ALTITUDE;
+
+
+  ThisAircraft.altitude = altitude1;// TXRX_TEST_ALTITUDE;
+  //ThisAircraft.altitude = TXRX_TEST_ALTITUDE;
   ThisAircraft.course   = TXRX_TEST_COURSE;
   ThisAircraft.speed    = TXRX_TEST_SPEED;
   ThisAircraft.vs       = TXRX_TEST_VS;

@@ -65,8 +65,11 @@ TFT_eSprite data_KM = TFT_eSprite(&tft);      // Информационный с
 TFT_eSprite version = TFT_eSprite(&tft);      // Этот переделать 
 TFT_eSprite power1 = TFT_eSprite(&tft);       // Спрайт отображения заряда аккумулятора 
 
-TFT_eSprite up_arrow = TFT_eSprite(&tft);     // Спрайт отображения стрелка вверх
-TFT_eSprite arrow_down = TFT_eSprite(&tft);   // Спрайт отображения стрелка вниз
+//TFT_eSprite up_arrow = TFT_eSprite(&tft);     // Спрайт отображения стрелка вверх
+//TFT_eSprite arrow_down = TFT_eSprite(&tft);   // Спрайт отображения стрелка вниз
+
+TFT_eSprite* up_arrow[MAX_TRACKING_OBJECTS];      // Спрайт отображения стрелка вверх
+TFT_eSprite* arrow_down[MAX_TRACKING_OBJECTS];    // Спрайт отображения стрелка вниз
 
 TFT_eSprite* Air_txt_Sprite[MAX_TRACKING_OBJECTS]; //
 TFT_eSprite* little_airplane [MAX_TRACKING_OBJECTS]; //
@@ -642,18 +645,18 @@ void TFTMenu::resetIdleTimer()
        Air_txt_Sprite[i]->createSprite(50, 52);
        Air_txt_Sprite[i]->setPivot(25, 12);
  
-       little_airplane [i] = new TFT_eSprite(&tft);     // Спрайт информации стороннего воздушного объекта
+       up_arrow[i] = new TFT_eSprite(&tft);           // Спрайт информации стороннего воздушного объекта
+       up_arrow[i]->createSprite(8, 10);              // Спрайт отображения стрелка вверх
+
+       arrow_down[i] = new TFT_eSprite(&tft);         // Спрайт информации стороннего воздушного объекта
+       arrow_down[i]->createSprite(8, 10);            // Спрайт отображения стрелка вниз
+
+       little_airplane [i] = new TFT_eSprite(&tft);   // Спрайт информации стороннего воздушного объекта
        little_airplane [i]->createSprite(23, 18);
-  
        little_airplane[i]->setPivot(11,9);
    }
  
-       up_arrow.createSprite(8, 10);                // Спрайт отображения стрелка вверх
-       arrow_down.createSprite(8, 10);              // Спрайт отображения стрелка вниз
-
-
-
-
+  
     Airplane.createSprite(32, 64);
     back.createSprite(320, 320);
   
@@ -769,11 +772,10 @@ void TFTMenu::resetIdleTimer()
    {
        Air_txt_Sprite[i]->fillSprite(TFT_BLACK);       // Закрасим поле соообщений
        little_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле самолетика
+       up_arrow[i]->fillSprite(TFT_BLACK);             // Закрасим поле стрелок вверх
+       arrow_down[i]->fillSprite(TFT_BLACK);           // Закрасим поле стрелок вниз
    }
-   up_arrow.fillSprite(TFT_BLACK);              // Закрасим поле стрелок вверх
-   arrow_down.fillSprite(TFT_BLACK);            // Закрасим поле стрелок вниз
- 
-     
+   
 
    /* Рисуем круглую шкалу серым цветом и символы сторон света белым*/
    for (int i = 0; i < 36; i++)
@@ -825,42 +827,48 @@ void TFTMenu::resetIdleTimer()
 
 
     settings->units = UNITS_METRIC;
-   // TFT_zoom = ZOOM_HIGH;
+  
+   // /* вычисляем минимальное значение дистанции для переключения диапазона просмотра */
+  
+    int arr_min = 32767; // первоначально будем сравнивать
 
+    for (int k = 0; k < MAX_TRACKING_OBJECTS; k++)
+    { // запускаем цикл, для обхода всех элементов массива
 
-
-    /* вычисляем минимальное значение дистанции для переключения диапазона просмотра */
-    int val_distance=Container[0].distance;
-   //  for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
-    for (int i = 0; i < sizeof(Container[MAX_TRACKING_OBJECTS].distance) / sizeof(Container[0].distance); i++)
-    {
-
-   //      if(val_distance <Container[i].distance) 
-          val_distance = Container[i].distance;
-   //  
-   //      if(val_distance > 4900)
-   //      {
-   //         TFT_zoom = ZOOM_LOWEST;
-   //      }
-   //      else if(val_distance <= 4900 && val_distance> 1900)
-   //      {
-   //         TFT_zoom = ZOOM_LOW;
-   //      }
-   //      else if(val_distance <= 1900 && val_distance > 900)
-   //      {
-   //         TFT_zoom = ZOOM_MEDIUM;
-   //      }
-   //      else if(val_distance <= 900 && val_distance !=0)
-   //      {
-   //         TFT_zoom = ZOOM_HIGH;
-   //      }
-   //      else
-   //      {
-   //          TFT_zoom = ZOOM_LOWEST;
-   //      }
+        if ((int)Container[k].distance != 0)
+        {
+            arr_min = min(arr_min, (int)Container[k].distance); // функция min выдает меньшее из двух значений,
+        }
     }
 
+    /*      сначала первый элемент массива сравниваем с 32767, так как первый элемент массива
+            меньше 32767, то первый элемент массива будем сравнивать со вторым и так далее...
+            Пока функция min не выберит наименьшее значение. */
 
+
+      
+         if(arr_min > 4900)
+         {
+            TFT_zoom = ZOOM_LOWEST;
+         }
+         else if(arr_min <= 4900 && arr_min> 1900)
+         {
+            TFT_zoom = ZOOM_LOW;
+         }
+         else if(arr_min <= 1900 && arr_min > 900)
+         {
+            TFT_zoom = ZOOM_MEDIUM;
+         }
+         else if(arr_min <= 900 && arr_min !=0)
+         {
+            TFT_zoom = ZOOM_HIGH;
+         }
+         else
+         {
+             TFT_zoom = ZOOM_LOWEST;
+         }
+
+   
   
    if (settings->units == UNITS_METRIC || settings->units == UNITS_MIXED)
    {
@@ -908,10 +916,10 @@ void TFTMenu::resetIdleTimer()
    if (settings->units == UNITS_METRIC)
    {
 
-           data_KM.drawString(TFT_zoom == ZOOM_LOWEST ? "30" :
-               TFT_zoom == ZOOM_LOW ? "10" :
-               TFT_zoom == ZOOM_MEDIUM ? "4 " :
-               TFT_zoom == ZOOM_HIGH ? "2 " : "", 30, 14);
+           data_KM.drawString(TFT_zoom == ZOOM_LOWEST ? "15" :
+               TFT_zoom == ZOOM_LOW ? "4" :
+               TFT_zoom == ZOOM_MEDIUM ? "2 " :
+               TFT_zoom == ZOOM_HIGH ? "1 " : "", 30, 14);
  
    }
    else
@@ -925,8 +933,7 @@ void TFTMenu::resetIdleTimer()
 
  
      /* Рисуем */
-
-   
+  
    data_KM.setTextDatum(0);
 
    if (settings->units == UNITS_METRIC)
@@ -939,7 +946,7 @@ void TFTMenu::resetIdleTimer()
    }
 
 
-
+ 
 
  /*Рисуем новую картинку*/
     
@@ -969,22 +976,28 @@ void TFTMenu::resetIdleTimer()
 
           // led_num = ((bearing + LED_ROTATE_ANGLE + SECTOR_PER_LED / 2) % 360) / SECTOR_PER_LED;
 
+ 
 
-           Serial.print(" N ");
-           Serial.print(i);
-           Serial.print(" , ");
-           Serial.print(" ID ");
-           Serial.print(Container[i].addr,HEX);
-           Serial.print(" , ");
-           Serial.print(bearing);
-           Serial.print(" , ");
-           Serial.print(distance);
+           //Serial.print(" N ");
+           //Serial.print(i);
+           //Serial.print(" , ");
+           //Serial.print(" ID ");
+           //Serial.print(Container[i].addr,HEX);
+           //Serial.print(" , ");
+           //Serial.print(bearing);
+           //Serial.print(" , ");
+           //Serial.print(distance);
+           //Serial.print(" , ");
+           //Serial.print("arr_min ");
+           //Serial.print(arr_min);
+
+
  /*          Serial.print(" lat ");
            Serial.print(Container[i].latitude);
            Serial.print(" lon ");
            Serial.print(Container[i].longitude);*/
 
-           Serial.println("");
+        //   Serial.println("");
 
           /* if (distance < LED_DISTANCE_FAR)
            {
@@ -1004,10 +1017,6 @@ void TFTMenu::resetIdleTimer()
 
 
            //================================================
-
-
-
-
 
           
            /*вычисляем курс стороннего самолета */
@@ -1091,26 +1100,26 @@ void TFTMenu::resetIdleTimer()
             switch (up_down)
             {
             case 0:
-                 Air_txt_Sprite[i]->drawString(String(int(altitude)), 12, 25, 1);
+                 Air_txt_Sprite[i]->drawString(String(int(altitude)), 10, 25, 1);
 
 
                 break;
             case 1:
                 /*Рисуем стрелку вверх */
-                up_arrow.drawLine(4, 0, 4, 10, little_air_color);
-                up_arrow.drawLine(0, 4, 4, 0, little_air_color);
-                up_arrow.drawLine(4, 0, 8, 4, little_air_color);
-                up_arrow.pushToSprite(*Air_txt_Sprite, 0, 25, TFT_BLACK);
-                Air_txt_Sprite[i]->drawString(String(int(altitude)), 12, 25, 1);
+                up_arrow[i]->drawLine(4, 0, 4, 10, little_air_color);
+                up_arrow[i]->drawLine(0, 4, 4, 0, little_air_color);
+                up_arrow[i]->drawLine(4, 0, 8, 4, little_air_color);
+                up_arrow[i]->pushToSprite(Air_txt_Sprite[i], 0, 25, TFT_BLACK);
+                Air_txt_Sprite[i]->drawString(String(int(altitude)), 10, 25, 1);
                 break;
             case 2:
 
                 /*Рисуем стрелку вниз */
-                arrow_down.drawLine(4, 0, 4, 10, little_air_color);
-                arrow_down.drawLine(0, 6, 4, 10, little_air_color);
-                arrow_down.drawLine(4, 10, 8, 6, little_air_color);
-                arrow_down.pushToSprite(*Air_txt_Sprite, 0, 25, TFT_BLACK);
-                Air_txt_Sprite[i]->drawString(String(int(altitude)), 12, 25, 1);
+                arrow_down[i]->drawLine(4, 0, 4, 10, little_air_color);
+                arrow_down[i]->drawLine(0, 6, 4, 10, little_air_color);
+                arrow_down[i]->drawLine(4, 10, 8, 6, little_air_color);
+                arrow_down[i]->pushToSprite(Air_txt_Sprite[i], 0, 25, TFT_BLACK);
+                Air_txt_Sprite[i]->drawString(String(int(altitude)), 10, 25, 1);
                 break;
            
             default:
@@ -1141,46 +1150,35 @@ void TFTMenu::resetIdleTimer()
 
            dist_info.drawRect(0, 0, 120, 20, little_air_color);
            dist_info.setTextColor(little_air_color, backColor);
-           dist_info.drawString("Distance "+String(val_distance), 2, 4);
-
-           //Serial.print("RelativeVertical ");
-           //Serial.print(RelativeVertical); 
-           //Serial.print(" VerticalSet ");
-           //Serial.print(VerticalSet);
-           //Serial.print(" alarm_height_set ");
-           //Serial.print(alarm_height_set);
-           //Serial.print("| disn ");
-           //Serial.print(val_distance);
-           //Serial.print(" alarm_warning_set ");
-           //Serial.print(alarm_warning_set);
-           //Serial.print(" alarm_danger_set ");
-           //Serial.println(alarm_danger_set);
+           dist_info.drawString("Distance "+String(arr_min), 2, 4);
 
 
-           if (val_distance > alarm_warning_set) // 
+           if (arr_min > alarm_warning_set) // 
            {
 
                little_air_color = TFT_WHITE;
   
            }
-           else if (val_distance < alarm_warning_set && val_distance > alarm_danger_set)
+           else if (arr_min < alarm_warning_set && arr_min > alarm_danger_set)
            {
                if (VerticalSet > alarm_height_set)
                {
+
+
                    little_air_color = TFT_WHITE;
 
                }
-               else if (val_distance <= alarm_warning_set && val_distance >= alarm_danger_set && VerticalSet <= alarm_height_set)
+               else if (arr_min <= alarm_warning_set && arr_min >= alarm_danger_set && VerticalSet <= alarm_height_set)
                {
+
                    little_air_color = TFT_YELLOW;
 
                }
-               else if (val_distance <= alarm_danger_set && VerticalSet <= alarm_height_set)
-               {
-                   little_air_color = TFT_RED;
-               }
            }
- 
+           else if (arr_min <= alarm_danger_set && VerticalSet <= alarm_height_set)
+           {
+               little_air_color = TFT_RED;
+           }
 
             /*Рисуем маленький самолетик */
            little_airplane[i]->drawLine(10, 1, 10, 16, little_air_color);
@@ -1213,11 +1211,6 @@ void TFTMenu::resetIdleTimer()
     {
         if (isThere_plane[i] == true)
         {
-
-  /*          Serial.print("distance - ");
-            Serial.println(distance);*/
-  /*          Serial.print("alien_curse ");
-            Serial.println(alien_curse);*/
 
             little_airplane[i]->pushRotated(Air_txt_Sprite[i], alien_curse[i], TFT_BLACK);
             Air_txt_Sprite[i]->pushToSprite(&back, radar_center_x + Container[i].alien_X -10, radar_center_y - Container[i].alien_Y - 20, TFT_BLACK);
@@ -1252,11 +1245,7 @@ void TFTMenu::resetIdleTimer()
 
    /*рисуем все неподвижные спрайты*/
    back.pushSprite(0, 0);
-   
-  /* dc->setTextColor(TFT_WHITE, backColor);
-   dc->setTextFont(2);
-   dc->setCursor(3, 225);
-   dc->print("Дистанция "); */
+  
   
    /* Изменение дистанции*/
 
@@ -1642,10 +1631,6 @@ void TFTMenu::resetIdleTimer()
      float brng = atan2(y, x);
      brng = degrees(brng);// radians to degrees
      brng = (((int)brng + 360) % 360);
-
-     Serial.print("Heading GPS: ");
-     Serial.println(brng);
-
      return brng;
  }
 

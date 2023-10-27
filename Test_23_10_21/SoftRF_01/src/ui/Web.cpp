@@ -159,7 +159,7 @@ void handleSettings() {
 <td align=right>\
 <select name='mode'>\
 <option %s value='%d'>Normal</option>\
-<!-- <option %s value='%d'>Tx/Rx Test</option> -->\
+<option %s value='%d'>Tx/Rx Test</option>\
 <option %s value='%d'>Bridge</option>\
 <option %s value='%d'>UAV</option>\
 </select>\
@@ -701,7 +701,7 @@ void handleRoot() {
 <body>\
  <table width=100%%>\
   <tr><!-- <td align=left><h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1></td> -->\
-  <td align=center><h1>SoftRF статус</h1></td>\
+  <td align=center><h1>SoftRF status</h1></td>\
   <!-- <td align=right><img src='/logo.png'></td> --></tr>\
  </table>\
  <table width=100%%>\
