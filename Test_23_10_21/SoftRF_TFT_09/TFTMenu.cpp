@@ -762,7 +762,7 @@ void TFTMenu::resetIdleTimer()
    }
 
 
-   angle = 360 - test_curse;                     // Определяем направление нашего самолета и вращаем в другую сторону шкару
+   angle = 360 - 340;//test_curse;                     // Определяем направление нашего самолета и вращаем в другую сторону шкару
     
    back.fillSprite(backColor);                   // Закрасим поле 
    backsprite.fillSprite(backColor);             // 
@@ -989,15 +989,17 @@ void TFTMenu::resetIdleTimer()
            //Serial.print(" , ");
            //Serial.print("arr_min ");
            //Serial.print(arr_min);
+/*
+Container[0].latitude =56.042176;
+Container[i].longitude =38.483176;
 
+           Serial.print(" lat ");
+           Serial.print(Container[i].latitude);
+           Serial.print(" lon ");
+           Serial.print(Container[i].longitude);
 
-           //Serial.print(" lat ");
-           //Serial.print(Container[i].latitude);
-           //Serial.print(" lon ");
-           //Serial.print(Container[i].longitude);
-
-          // Serial.println("");
-
+           Serial.println("");
+*/
 
            //================================================
 
@@ -1135,7 +1137,7 @@ void TFTMenu::resetIdleTimer()
  /*          Serial.print("alarm_attention_set ");
            Serial.print(alarm_attention_set);*/
 
-           Serial.println("");
+         //  Serial.println("");
 
 
            if (arr_min > alarm_attention_set) // 

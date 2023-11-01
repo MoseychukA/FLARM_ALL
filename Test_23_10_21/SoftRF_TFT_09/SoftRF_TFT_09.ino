@@ -565,7 +565,7 @@ void txrx_test()
 
    */
 
-    int set_air = 2;   // Варианты движения самолетов
+    int set_air = 1;   // Варианты движения самолетов
 
 
     switch (set_air)
@@ -573,7 +573,7 @@ void txrx_test()
     case 0:
         ThisAircraft.latitude = pgm_read_float(&txrx_test_positions[pos_ndx][0]);
         ThisAircraft.longitude = pgm_read_float(&txrx_test_positions[pos_ndx][1]);
-
+/*
         if (!alt_high)
         {
             altitude1 += 100;
@@ -592,6 +592,9 @@ void txrx_test()
                 alt_high = false;
             }
         }
+*/
+        altitude1 = 100;
+        
         break;
     case 1:
         ThisAircraft.latitude = 55.996177;  //55.950197 + (0.002299*20);//55.950197
