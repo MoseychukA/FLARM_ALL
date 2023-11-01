@@ -1,0 +1,3 @@
+#adsbScope-landnamefile 26468 7983
+0 0
+10000 11000 RUSSIAN_FEDERATION

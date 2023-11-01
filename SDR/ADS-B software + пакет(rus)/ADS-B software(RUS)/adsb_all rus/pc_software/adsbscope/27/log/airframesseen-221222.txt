@@ -1,0 +1,36 @@
+155BBA	#Russian Federa			> 09:26:28	
+155BBA	#Russian Federa			< 09:28:57	GZP292  
+151D44	#Russian Federa			> 09:30:24	
+151D44	#Russian Federa			< 09:32:43	
+151E90	#Russian Federa			> 09:35:41	
+151E64	#Russian Federa			> 09:38:09	
+151E90	#Russian Federa			< 09:40:35	SBI3042 
+151E90	#Russian Federa			> 09:40:51	
+151E90	#Russian Federa			< 09:42:02	
+151E64	#Russian Federa			< 09:47:24	NWS247  
+150646	#Russian Federa			> 11:28:24	
+150646	#Russian Federa			> 11:31:46	
+155C3B	#Russian Federa			> 11:32:00	
+155C3B	#Russian Federa			< 11:39:53	
+150646	#Russian Federa			< 11:40:30	RLU289  
+151E6D	#Russian Federa			> 11:59:03	
+151E6D	#Russian Federa			< 12:00:05	
+151E6D	#Russian Federa			> 12:00:59	
+151E6D	#Russian Federa			< 12:02:03	
+151E6D	#Russian Federa			> 12:03:33	
+151E6D	#Russian Federa			< 12:04:36	
+151DF5	#Russian Federa			> 12:18:33	
+151DF5	#Russian Federa			< 12:19:35	
+712103	#Saudi Arabia 			> 15:08:30	
+712103	#Saudi Arabia 			< 15:09:33	
+151DA2	#Russian Federa			> 22:35:15	
+151DA2	#Russian Federa			< 22:37:31	
+151DA2	#Russian Federa			> 22:38:08	
+151DA2	#Russian Federa			< 22:39:27	
+151FE1	#Russian Federa			> 22:46:14	
+151FE1	#Russian Federa			< 22:52:01	AFL1712 
+151DA6	#Russian Federa			> 23:00:59	
+151DA6	#Russian Federa			< 23:02:10	AFL1442 
+151DA6	#Russian Federa			> 23:02:19	
+152005	#Russian Federa			> 23:03:40	
+151DA6	#Russian Federa			< 23:04:03	

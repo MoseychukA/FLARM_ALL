@@ -1,0 +1,20 @@
+(c) SBS data autogeneration V2.1 by JetVision started at 20.11.2006 19:49:00
+
+Map borders:
+North/South = 53.626666 - 48.105
+East/West = 12.636666 - 1.6488888
+
+(c) SBS data autogeneration by JetVision completed at 20.11.2006 19:49:01
+
+xxxx_yymm_apt.wpt - Airports (Layer 1, Layer 20 for airport ICAO ID)
+xxxx_yymm_nav.wpt - Navaids (Layer 3 for NDB, Layer 4 for VOR, Layer 20 for facility ID)
+xxxx_yymm_int.wpt - Waypoints (Layer 5, Layer 20 for waypoint ID)
+xxxx_yymm_rnav_int.wpt - RNAV waypoints (Layer 14)
+xxxx_yymm_lower_ats.out - Lower airspace ATS routes (Layer 6)
+xxxx_yymm_upper_ats.out - Upper airspace ATS routes (Layer 7)
+xxxx_yymm_local_ats.out - "Y", "T", "Q" and military ATS routes (Layer 16-19)
+
+
+
+eddk_apt.out  Landebahnen (Start- und Endpunkt)
+
