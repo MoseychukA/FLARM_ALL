@@ -165,7 +165,7 @@ char UDPpacketBuffer[UDP_PACKET_BUFSIZE];
 #if defined(CONFIG_IDF_TARGET_ESP32S3)
 //#define SPI_DRIVER_SELECT 3
 #include <Adafruit_SPIFlash.h>
-#include "../driver/EPD.h"
+//#include "EPD.h"
 #include "uCDB.hpp"
 
 SPIClass uSD_SPI(HSPI);

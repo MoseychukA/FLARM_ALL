@@ -332,7 +332,7 @@ extern void shutdown(int);
 
 #define TXRX_TEST_NUM_POSITIONS (sizeof(txrx_test_positions) / sizeof(float) / 2)
 #define TXRX_TEST_ALTITUDE    438.0
-#define TXRX_TEST_COURSE       0.0
+#define TXRX_TEST_COURSE      340.0
 #define TXRX_TEST_SPEED       150.0
 #define TXRX_TEST_VS         -300.0
 
@@ -344,6 +344,5 @@ extern void shutdown(int);
 #define ENABLE_D1090_INPUT
 
 #define StdOut  Serial
-
 
 #endif /* SOFTRF_H */

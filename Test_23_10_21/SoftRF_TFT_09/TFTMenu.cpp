@@ -762,7 +762,7 @@ void TFTMenu::resetIdleTimer()
    }
 
 
-   angle = 360 - 340;//test_curse;                     // Определяем направление нашего самолета и вращаем в другую сторону шкару
+   angle = 360 - test_curse;                    // Определяем направление нашего самолета и вращаем в другую сторону шкару
     
    back.fillSprite(backColor);                   // Закрасим поле 
    backsprite.fillSprite(backColor);             // 

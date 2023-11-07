@@ -752,7 +752,7 @@ void TFTMenu::resetIdleTimer()
      }
 
 
-     angle = 360 - 340;//test_curse;               // Определяем направление нашего самолета и вращаем в другую сторону шкару
+     angle = 360 - test_curse;               // Определяем направление нашего самолета и вращаем в другую сторону шкару
 
      back.fillSprite(backColor);                   // Закрасим поле 
      backsprite.fillSprite(backColor);             // 
@@ -942,10 +942,6 @@ void TFTMenu::resetIdleTimer()
              speed = (int)Container[i].speed;
              altitude = (int)Container[i].altitude;
 
-
-             //Serial.print("alarm_level ");
-             //Serial.println(Container[i].alarm_level);
-
              //================================================
              bearing = (int)Container[i].bearing;
              distance = (int)Container[i].distance;
@@ -955,13 +951,7 @@ void TFTMenu::resetIdleTimer()
                  bearing = (360 + bearing - (int)ThisAircraft.course) % 360;
              }
 
-             // led_num = ((bearing + LED_ROTATE_ANGLE + SECTOR_PER_LED / 2) % 360) / SECTOR_PER_LED;
-
-   //================================================
-
-
-   /*вычисляем курс стороннего самолета */
-
+               /*вычисляем курс стороннего самолета */
              if (Container[i].latitude != alien_latitude_old[i])
              {
                  alien_curse[i] = bearing_calc(alien_latitude_old[i], alien_longitude_old[i], Container[i].latitude, Container[i].longitude);
@@ -977,7 +967,6 @@ void TFTMenu::resetIdleTimer()
                  }
 
              }
-
 
              /*Расчет координат сторонних самолетов на вращаюсемся экране*/
              /*Функция проверяет и если надо задает новое значение, так чтобы оно была в области допустимых значений, заданной параметрами.*/
@@ -1020,18 +1009,8 @@ void TFTMenu::resetIdleTimer()
                  up_down = 2;
              }
 
-
-             //if (altitude_old[i] > ThisAircraft.altitude)
-             //{
-             //    Height_difference[i] = altitude_old[i] - ThisAircraft.altitude;
-             //}
-             //else if (altitude_old[i] < ThisAircraft.altitude)
-             //{
-             //    Height_difference[i] = ThisAircraft.altitude - altitude_old[i];
-             //}
-   
+  
              Height_difference[i] = altitude_old[i] - ThisAircraft.altitude;
-
 
              /* Определение стрелки вверх вниз. Подем или снижение самолета*/
 
@@ -1063,7 +1042,7 @@ void TFTMenu::resetIdleTimer()
              }
 
              isTeam_all[i] = true;
-             isThere_plane[i] = true;
+             isThere_plane[i] = true; 
              //------------------------------------------------------------------------
 
              float RelativeVertical = Container[i].altitude - ThisAircraft.altitude;  // Разность высот
@@ -1085,12 +1064,7 @@ void TFTMenu::resetIdleTimer()
              int alarm_danger_set = settings->alarm_danger;
              int alarm_height_set = settings->alarm_height;
 
-             /*          Serial.print("alarm_attention_set ");
-                       Serial.print(alarm_attention_set);*/
-
-                       //  Serial.println("");
-
-
+ 
              if (arr_min > alarm_attention_set) // 
              {
                  little_air_color[i] = TFT_WHITE;
@@ -1176,14 +1150,14 @@ void TFTMenu::resetIdleTimer()
      /*отображаем спрайт с информацией по объектам*/
      for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
      {
-         if (isThere_plane[i] == true)
-         {
+  /*       if (isThere_plane[i] == true)
+         {*/
              little_airplane[i]->pushRotated(Air_txt_Sprite[i], alien_curse[i], TFT_BLACK);
              Air_txt_Sprite[i]->pushToSprite(&back, radar_center_x + Container[i].alien_X - 10, radar_center_y - Container[i].alien_Y - 20, TFT_BLACK);
 
              isTeam_all[i] = false;
              isThere_plane[i] = false;
-         }
+         //}
      }
 
 
@@ -1278,11 +1252,11 @@ void TFTMenu::resetIdleTimer()
      uint16_t x, y;
 
      const char EPD_SoftRF_text1[] = "FlyRF";
-     const char EPD_SoftRF_text2[] = "and";
+     const char EPD_SoftRF_text2[] = "www.decima.ru";
      const char EPD_SoftRF_text3[] = "DECIMA";
-     const char EPD_SoftRF_text4[] = "SoftRF_23_SkyWatch_17_01";
+     const char EPD_SoftRF_text4[] = "SoftRF_SDR_23_11_02";
      const char EPD_SoftRF_text5[] = "Linar Yusupov";
-     const char EPD_SoftRF_text6[] = "(C) 2016-2023";
+     const char EPD_SoftRF_text6[] = "(C) 2023";
 
      tft_radar->fillScreen(TFT_NAVY);
 
@@ -1291,86 +1265,41 @@ void TFTMenu::resetIdleTimer()
 
      tft_radar->setFreeFont(&FreeMonoBold24pt7b);
 
-
      tbw1 = sizeof(EPD_SoftRF_text1);
 
-     x = 90;// (tft_radar->width() - tbw1) / 2;
-     y = 80;// (tft_radar->height() + tbh1) / 2 - tbh3;
+     x = 90;
+     y = 80;
      tft_radar->setCursor(x, y);
      tft_radar->print(EPD_SoftRF_text1);
 
-     tft_radar->setFreeFont(&FreeMono18pt7b);
-
-     x = 130;// (tft_radar->width() - tbw2) / 2;
-     y = 125;// (tft_radar->height() + tbh2) / 2;
-     tft_radar->setCursor(x, y);
-     tft_radar->print(EPD_SoftRF_text2);
-
-     tft_radar->setFreeFont(&FreeMonoBold24pt7b);
-
-     x = 80;// (tft_radar->width() - tbw3) / 2;
-     y = 180;// tft_radar->height() + tbh3) / 2 + tbh3;
+     x = 80;
+     y = 150;
      tft_radar->setCursor(x, y);
      tft_radar->print(EPD_SoftRF_text3);
 
      tft_radar->setFreeFont(&FreeSerif9pt7b);
-     tbw4 = tft_radar->textWidth(EPD_SoftRF_text4);
-     //tft_radar->fontHeight();
 
+     x = 10;
+     y = 205;
+     tft_radar->setCursor(x, y);
+     tft_radar->print(EPD_SoftRF_text2);
+
+     x = 10;
+     y = tft_radar->height() - tft_radar->fontHeight() + 10;
+     tft_radar->setCursor(x, y);
+     tft_radar->print(EPD_SoftRF_text6);
+
+     tbw4 = tft_radar->textWidth(EPD_SoftRF_text4);
      x = (tft_radar->width() - tbw4) - 4;
      y = tft_radar->height() - tft_radar->fontHeight() + 10;
      tft_radar->setCursor(x, y);
      tft_radar->print(EPD_SoftRF_text4);
 
-     vTaskDelay(2000);
-
-
-
-
-
-
-     // dc->setTextFont(1);
-
-     // int screenWidth = dc->width();
-     // int screenHeight = dc->height();
-
-     //// dc->setFreeFont(TFT_SMALL_FONT);
-     // int textFontHeight = FONT_HEIGHT(dc);
-
-     // String data = SOFTWARE_VERSION;
-
-     // int textFontWidth = dc->textWidth(data);              // Returns pixel width of string in current font
-     // uint16_t curX = screenWidth - textFontWidth - 3;      // Координаты вывода 
-     // uint16_t curY = screenHeight - textFontHeight;        // Координаты вывода версии
-
-
-    /* dc->setTextColor(TFT_GREEN, TFT_BLACK);
-     dc->setCursor(screenWidth - 30, 17);
-     dc->print("8");
-
-     dc->setTextFont(1);
-
-     dc->setCursor(screenWidth - 50, 4);
-     dc->print(0);
-     dc->print("%");*/
-
-     /*  dc->setTextColor(TFT_WHITE, TFT_BLACK);
-     dc->setTextFont(1);
-       dc->setCursor(5, curY);
-       dc->print("РУССКИЙ");*/
-
-       // dc->drawBitmap(0, 0, bmp, 64, 32, TFT_WHITE);
-
+     vTaskDelay(4000);
 
  }
 
- void TFTMenuScreen::drawData()
- {
-    /* data.fillSprite(TFT_BLACK);
-     data.drawString("compas: " + String(angle), 0, 0);
-     data.pushSprite(0, 220);*/
- }
-
+ 
  //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  // Контроль внутреннего источника питания (аккумуляторов)
  //------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -331,7 +331,7 @@ extern void shutdown(int);
 
 #define TXRX_TEST_NUM_POSITIONS (sizeof(txrx_test_positions) / sizeof(float) / 2)
 #define TXRX_TEST_ALTITUDE    438.0
-#define TXRX_TEST_COURSE      280.0
+#define TXRX_TEST_COURSE      340.0
 #define TXRX_TEST_SPEED       50.0
 #define TXRX_TEST_VS          -300.0
 

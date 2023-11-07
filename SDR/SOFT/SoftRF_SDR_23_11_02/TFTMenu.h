@@ -126,9 +126,7 @@ public:
 	void chargeControl(TFTMenu* menuManager);
     void Rotate_and_Draw_Bitmap(TFTMenu* menuManager, const uint8_t* bitmap, int winkel, uint8_t x, uint8_t y, uint8_t color);
 	void drawWiFi(TFTMenu* menuManager);
-    void drawData();
-
-
+  
 private:
 
     float bearing_calc(float lat, float lon, float lat2, float lon2);
