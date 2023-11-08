@@ -718,7 +718,7 @@ void TFTMenu::resetIdleTimer()
                     little_air_color[i] = TFT_RED;
                     txt_color = TFT_RED;
                 }
-
+                esp_task_wdt_reset();
                 /*Рисуем маленький самолетик */
                 little_airplane[i]->drawLine(10, 1, 10, 16, little_air_color[i]);
                 little_airplane[i]->drawLine(11, 0, 11, 16, little_air_color[i]);
@@ -788,7 +788,8 @@ void TFTMenu::resetIdleTimer()
             longitude_old = ThisAircraft.longitude;
         }
 
-       //  angle = (360 - test_curse) % 360;                       // Определяем направление нашего самолета и вращаем в другую сторону шкалу
+        esp_task_wdt_reset();
+       // angle = (360 - test_curse) % 360;                       // Определяем направление нашего самолета и вращаем в другую сторону шкалу
         angle = (360 - (int)ThisAircraft.course) % 360;            // Тест
 
         /*Выполняем поворот по азимуту*/
@@ -837,7 +838,7 @@ void TFTMenu::resetIdleTimer()
         data_az.setTextColor(TFT_GREEN, backColor);
         data_az.drawString(String(360 - angle), 35, 14);
         data_az.pushToSprite(&back, 138, 1);
-
+        esp_task_wdt_reset();
 
         /*Рисуем заряд аккумулятора*/
         power1.fillSprite(TFT_BLACK);

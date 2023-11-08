@@ -227,11 +227,11 @@ void setup()
   Recorder_setup();
   esp_task_wdt_reset();
   SoC->post_init();
+
   tftModule.Setup();
+  MainScreen->saveVer(ver_soft);  // Сохранить строку с текущей версией.
 
-  MainScreen->saveVer(ver_soft);
-
-  xTaskCreatePinnedToCore(Radar_Task, "Radar_Task", 2048, NULL, 10, NULL, 0);
+ // xTaskCreatePinnedToCore(Radar_Task, "Radar_Task", 2048, NULL, 10, NULL, 0);
   esp_task_wdt_reset();
   SoC->WDT_setup();
 
@@ -588,7 +588,7 @@ void txrx_test()
 
            */
 
-        int set_air = 1;   //  
+        int set_air = 2;   //  
 
         switch (set_air)
         {
