@@ -515,60 +515,94 @@ void TFTMenu::resetIdleTimer()
         data_KM.drawRect(0, 0, 70, 25, TFT_WHITE);
         data_KM.setTextDatum(CC_DATUM);
 
-        if (arr_min > 7000)
-        {
-            // TFT_zoom = ZOOM_SCALE_16000; //16 km
-            divider = 16000; /* 16000m */
-            data_KM.drawString("16 KM", 35, 14);
-        }
-        else if (arr_min <= 7000 && arr_min > 3000)
-        {
-            // TFT_zoom = ZOOM_SCALE_8000; //8km
-            divider = 8000; /*8000m*/
-            data_KM.drawString("8 KM", 35, 14);
-        }
-        else if (arr_min <= 3000 && arr_min > 1400)
-        {
-            // TFT_zoom = ZOOM_SCALE_4000; //4km
-            divider = 4000; /* 4000m */
-            data_KM.drawString("4 KM", 35, 14);
-        }
-        else if (arr_min <= 1400 && arr_min > 800)
-        {
-            //TFT_zoom = ZOOM_SCALE_2000; // 2km
-            divider = 2000; /* 2000m*/
-            data_KM.drawString("2 KM", 35, 14);
-        }
-        else if (arr_min <= 800 && arr_min > 450)
-        {
-            // TFT_zoom = ZOOM_SCALE_1000;   // 1km
-            divider = 1000; /*1000m */
-            data_KM.drawString("1 KM", 35, 14);
-        }
-        else if (arr_min <= 450 && arr_min > 90)
-        {
-            //  TFT_zoom = ZOOM_SCALE_500; //500m
-            divider = 500; /* 500m */
-            data_KM.drawString("500 M", 35, 14);
-        }
-        else if (arr_min <= 90 && arr_min > 45)
-        {
-            // TFT_zoom = ZOOM_SCALE_100; // 100m
-            divider = 100; /* 100m */
-            data_KM.drawString("100 M", 35, 14);
-        }
-        else if (arr_min <= 45 && arr_min > -1)
-        {
-            // TFT_zoom = ZOOM_SCALE_50;   // 50m
-            divider = 50; /* 50m */
-            data_KM.drawString("50 M", 35, 14);
-        }
-        else
-        {
-            //TFT_zoom = ZOOM_SCALE_16000; //16000m
-            divider = 16000; /* 16000m */
-            data_KM.drawString("16 KM", 35, 14);
-        }
+        //if (arr_min > 9000)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_16000; //16 km
+        //    divider = 16000; /* 16000m */
+        //    data_KM.drawString("16 KM", 35, 14);
+        //}
+        //else if (arr_min <= 8000 && arr_min > 7000)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_8000; //8km
+        //    divider = 12000; /*8000m*/
+        //    data_KM.drawString("10 KM", 35, 14);
+        //}
+        //else if (arr_min <= 7000 && arr_min > 5500)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_8000; //8km
+        //    divider = 8000; /*8000m*/
+        //    data_KM.drawString("8 KM", 35, 14);
+        //}
+        //else if (arr_min <= 5500 && arr_min > 4500)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_4000; //4km
+        //    divider = 7000; /* 4000m */
+        //    data_KM.drawString("7 KM", 35, 14);
+        //}
+        //else if (arr_min <= 4500 && arr_min > 3500)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_8000; //8km
+        //    divider = 5500; /*8000m*/
+        //    data_KM.drawString("6 KM", 35, 14);
+        //}
+        //else if (arr_min <= 3500 && arr_min > 2800)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_4000; //4km
+        //    divider = 5000; /* 4000m */
+        //    data_KM.drawString("5 KM", 35, 14);
+        //}
+        //else if (arr_min <= 2800 && arr_min > 2000)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_8000; //8km
+        //    divider = 4500; /*8000m*/
+        //    data_KM.drawString("4 KM", 35, 14);
+        //}
+        //else if (arr_min <= 2000 && arr_min > 1200)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_4000; //4km
+        //    divider = 3500; /* 4000m */
+        //    data_KM.drawString("3 KM", 35, 14);
+        //}
+        //else if (arr_min <= 1200 && arr_min > 800)
+        //{
+        //    //TFT_zoom = ZOOM_SCALE_2000; // 2km
+        //    divider = 2500; /* 2000m*/
+        //    data_KM.drawString("2 KM", 35, 14);
+        //}
+        //else if (arr_min <= 800 && arr_min > 450)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_1000;   // 1km
+        //    divider = 1000; /*1000m */
+        //    data_KM.drawString("1 KM", 35, 14);
+        //}
+        //else if (arr_min <= 450 && arr_min > 90)
+        //{
+        //    //  TFT_zoom = ZOOM_SCALE_500; //500m
+        //    divider = 500; /* 500m */
+        //    data_KM.drawString("500 M", 35, 14);
+        //}
+        //else if (arr_min <= 90 && arr_min > 45)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_100; // 100m
+        //    divider = 100; /* 100m */
+        //    data_KM.drawString("100 M", 35, 14);
+        //}
+        //else if (arr_min <= 45 && arr_min > -1)
+        //{
+        //    // TFT_zoom = ZOOM_SCALE_50;   // 50m
+        //    divider = 50; /* 50m */
+        //    data_KM.drawString("50 M", 35, 14);
+        //}
+        //else
+        //{
+        //    //TFT_zoom = ZOOM_SCALE_16000; //16000m
+        //    divider = 16000; /* 16000m */
+        //    data_KM.drawString("16 KM", 35, 14);
+        //}
+
+        divider = arr_min * 3;
+
+
 
         /* При малой скорости нашего самолета поворачиваем экран на отметку 360 */
         if (ThisAircraft.speed >= 0 && ThisAircraft.speed < 6)
@@ -599,25 +633,12 @@ void TFTMenu::resetIdleTimer()
                 /* курс стороннего самолета с учетом поворота экрана */
                 alien_curse[i] = (angle + (int)Container[i].course) % 360;
 
-                /*Расчет координат сторонних самолетов на вращаюсемся экране*/
-                /*Функция проверяет и если надо задает новое значение, так чтобы оно была в области допустимых значений, заданной параметрами.*/
-                rel_x = constrain(distance_tmr[i] * sin(radians(bearing_tmr[i])), -32768, 32767);
-                rel_y = constrain(distance_tmr[i] * cos(radians(bearing_tmr[i])), -32768, 32767);
-
-                x1 = ((int32_t)rel_x * (int32_t)radius) / divider;
-                y1 = ((int32_t)rel_y * (int32_t)radius) / divider;
-
                 /*Расчет координат сторонних самолетов на неподвижном экране с поправкой на вращение*/
                 /*Функция проверяет и если надо задает новое значение, так чтобы оно была в области допустимых значений, заданной параметрами.*/
 
                 new_angle = (angle + bearing_tmr[i]) % 360;
 
-              /*  new_angle = angle + bearing_tmr[i];
-                if (new_angle > 360) 
-                {
-                    new_angle -= 360;
-                }*/
-
+ 
                 new_rel_x = constrain(distance_tmr[i] * sin(radians(new_angle)), -32768, 32767);
                 new_rel_y = constrain(distance_tmr[i] * cos(radians(new_angle)), -32768, 32767);
 
