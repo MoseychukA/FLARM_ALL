@@ -557,13 +557,15 @@ void txrx_test()
 #endif
   ThisAircraft.timestamp = now();
 
-  if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 4000 ) {
-    ThisAircraft.latitude  = pgm_read_float( &txrx_test_positions[pos_ndx][0]);
-    ThisAircraft.longitude = pgm_read_float( &txrx_test_positions[pos_ndx][1]);
+  if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 2000 ) {
+   // ThisAircraft.latitude  = pgm_read_float( &txrx_test_positions[pos_ndx][0]);
+   // ThisAircraft.longitude = pgm_read_float( &txrx_test_positions[pos_ndx][1]);
+ThisAircraft.latitude  = 56.026725;
+ ThisAircraft.longitude = 38.291524;   
     pos_ndx = (pos_ndx + 1) % TXRX_TEST_NUM_POSITIONS;
     TxPosUpdMarker = millis();
   }
-  ThisAircraft.altitude = TXRX_TEST_ALTITUDE;
+  ThisAircraft.altitude = 120;//TXRX_TEST_ALTITUDE;
   ThisAircraft.course   = TXRX_TEST_COURSE;
   ThisAircraft.speed    = TXRX_TEST_SPEED;
   ThisAircraft.vs       = TXRX_TEST_VS;
