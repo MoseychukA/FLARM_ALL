@@ -28,17 +28,16 @@
 #include "SoftRF.h"
 #include <TimeLib.h>
 #include <esp_task_wdt.h>
-
 #include "src/driver/LED.h"
 #include "src/driver/EEPROM.h"
 #include "src/TrafficHelper.h"
-
+#include "src/driver/GNSS.h"
 #include "NotoSansMonoSCB20.h"
 #include "NotoSansBold15.h"
 
 
 // Stock font and GFXFF reference handle
-#define GFXFF 1
+//#define GFXFF 1
 
 
 #ifdef USE_TFT_MODULE
@@ -58,57 +57,40 @@ TFT_eSprite power1     = TFT_eSprite(&tft);         // Спрайт отобра
 TFT_eSprite* up_arrow[MAX_TRACKING_OBJECTS];        // Спрайт отображения стрелка вверх
 TFT_eSprite* arrow_down[MAX_TRACKING_OBJECTS];      // Спрайт отображения стрелка вниз
 
-TFT_eSprite* Air_txt_Sprite[MAX_TRACKING_OBJECTS];     //
-TFT_eSprite* little_airplane[MAX_TRACKING_OBJECTS];    //
-TFT_eSprite* area_airplane[MAX_TRACKING_OBJECTS];      // Этот спрайт, площадка в котором будет располагатся сторонний самолет
+TFT_eSprite* Air_txt_Sprite[MAX_TRACKING_OBJECTS];  // Этот спрайт, площадка в котором будет располагатся формуляр стороннего самолета
+TFT_eSprite* little_airplane[MAX_TRACKING_OBJECTS]; // Этот спрайт, площадка в котором будет располагатся изображение стороннего самолета
+TFT_eSprite* area_airplane[MAX_TRACKING_OBJECTS];   // Этот спрайт, площадка в котором будет располагатся спрайт little_airplane стороннего самолета
 
-float alien_latitude_old[MAX_TRACKING_OBJECTS];     //
-float alien_longitude_old[MAX_TRACKING_OBJECTS];    //
-int altitude_old[MAX_TRACKING_OBJECTS];             //
-int Height_difference[MAX_TRACKING_OBJECTS];
-int altitude_tmr[MAX_TRACKING_OBJECTS];             //
-int speed_tmr[MAX_TRACKING_OBJECTS];                //
-int bearing_tmr[MAX_TRACKING_OBJECTS];              //
-int bearing_tmr1[MAX_TRACKING_OBJECTS];              //
-int distance_tmr[MAX_TRACKING_OBJECTS];             //
-int alien_curse[MAX_TRACKING_OBJECTS];
-float alien_curse_calc[MAX_TRACKING_OBJECTS];
-float alien_curse_in[MAX_TRACKING_OBJECTS];
-int Container_alien_X[MAX_TRACKING_OBJECTS];
-int Container_alien_Y[MAX_TRACKING_OBJECTS];
-int Container_logbook_X[MAX_TRACKING_OBJECTS];
-int Container_logbook_Y[MAX_TRACKING_OBJECTS];
-uint8_t up_down[MAX_TRACKING_OBJECTS];
-bool Air_txt_left[MAX_TRACKING_OBJECTS];
+int alien_altitude_old[MAX_TRACKING_OBJECTS];       // Предыдущее значение высоты стороннего самолета
+int alien_altitude_tmr[MAX_TRACKING_OBJECTS];       // Высота стороннего самолета
+int Height_difference[MAX_TRACKING_OBJECTS];        // Разность высот нашего и стороннего самолета
+int alien_speed_tmr[MAX_TRACKING_OBJECTS];          // Скорость стороннего самолета
+int bearing_tmr[MAX_TRACKING_OBJECTS];              // Угол в градусах между нашим самолетом и сторонним
+int distance_tmr[MAX_TRACKING_OBJECTS];             // Дистанция между нашим и сторонним самолетом
+int alien_curse[MAX_TRACKING_OBJECTS];              // Курс стороннего самолета
+int Container_alien_X[MAX_TRACKING_OBJECTS];        // Координаты стороннего самолета
+int Container_alien_Y[MAX_TRACKING_OBJECTS];        // Координаты стороннего самолета
+int Container_logbook_X[MAX_TRACKING_OBJECTS];      // Координаты формуляра стороннего самолета
+int Container_logbook_Y[MAX_TRACKING_OBJECTS];      // Координаты формуляра стороннего самолета
+uint8_t arrow_up_down[MAX_TRACKING_OBJECTS];        // флаг стрелки вверх или вниз
+bool Air_txt_left[MAX_TRACKING_OBJECTS];            // флаг расположения формуляра слева или справа
 
-word  little_air_color[MAX_TRACKING_OBJECTS];
+word  little_air_color[MAX_TRACKING_OBJECTS];       // Цвет предупреждения столкновения с сторонним самолетом 
 
-int alien_speed_filtre[MAX_TRACKING_OBJECTS][speed_array_size]; // Фильтр скорости стороннего самолета
-int alien_altitude_filtre[MAX_TRACKING_OBJECTS][speed_array_size]; // Фильтр высоты стороннего самолета
+int alien_speed_filtre[MAX_TRACKING_OBJECTS][speed_array_size];     // Фильтр скорости стороннего самолета
+int alien_altitude_filtre[MAX_TRACKING_OBJECTS][speed_array_size];  // Фильтр высоты стороннего самолета
 
+bool alien_speed_array_countMax[MAX_TRACKING_OBJECTS];             // Флаг заполнения массиво фильтра скорости стороннего самолета
+int alien_speed_sum[MAX_TRACKING_OBJECTS];                         // = 0;
+uint8_t alien_speed_array_count[MAX_TRACKING_OBJECTS];             // Счетчик фильтра скорости стороннего самолета
 
-bool alient_speed_array_countMax[MAX_TRACKING_OBJECTS];// = false;
-int alient_speed_sum[MAX_TRACKING_OBJECTS];// = 0;
-uint8_t alient_speed_array_count[MAX_TRACKING_OBJECTS];// = 0;
+bool alien_altitude_array_countMax[MAX_TRACKING_OBJECTS];          // Флаг заполнения массиво фильтра высоты стороннего самолета
+int alien_altitude_sum[MAX_TRACKING_OBJECTS];                      // = 0;
+uint8_t alien_altitude_array_count[MAX_TRACKING_OBJECTS];          // Счетчик фильтра высоты стороннего самолета
 
-bool alient_altitude_array_countMax[MAX_TRACKING_OBJECTS];// = false;
-int alient_altitude_sum[MAX_TRACKING_OBJECTS];// = 0;
-uint8_t alient_altitude_array_count[MAX_TRACKING_OBJECTS];// = 0;
+int this_speed_filtre[speed_array_size];                            // Фильтр скорости нашего самолета
+int this_altitude_filtre[speed_array_size];                         // Фильтр высоты нашего самолета
 
-int this_speed_filtre[speed_array_size]; // Фильтр скорости нашего самолета
-int this_altitude_filtre[speed_array_size]; // Фильтр высоты нашего самолета
-
-//bool this_altitude_array_countMax[MAX_TRACKING_OBJECTS];// = false;
-//int this_altitude_sum[MAX_TRACKING_OBJECTS];// = 0;
-//uint8_t this_altitude_array_count[MAX_TRACKING_OBJECTS];// = 0;
-//int this_altitude_tmr[MAX_TRACKING_OBJECTS];
-//
-//
-//bool this_speed_array_countMax[MAX_TRACKING_OBJECTS];// = false;
-//int this_speed_sum[MAX_TRACKING_OBJECTS];// = 0;
-//uint8_t this_speed_array_count[MAX_TRACKING_OBJECTS];// = 0; 
-//int this_speed_tmr[MAX_TRACKING_OBJECTS];
-//
 
 //......................................colors
 #define backColor     0x0026
@@ -402,13 +384,13 @@ void TFTMenu::resetIdleTimer()
        area_airplane[i]->createSprite(30, 30);
        area_airplane[i]->setPivot(15, 15);
 
-       alient_speed_array_countMax[i] = false;
-       alient_speed_sum[i] = 0;
-       alient_speed_array_count[i] = 0;
+       alien_speed_array_countMax[i] = false;
+       alien_speed_sum[i] = 0;
+       alien_speed_array_count[i] = 0;
 
-       alient_altitude_array_countMax[i] = false;
-       alient_altitude_sum[i] = 0;
-       alient_altitude_array_count[i] = 0;
+       alien_altitude_array_countMax[i] = false;
+       alien_altitude_sum[i] = 0;
+       alien_altitude_array_count[i] = 0;
 
    }
  
@@ -503,615 +485,668 @@ void TFTMenu::resetIdleTimer()
         // drawWiFi(menuManager);
         tmr = millis();
         int16_t new_angle;
-        int arr_min = 32767; // первоначально будем сравнивать
-        int Air_txt_x = 30;
-       
-        /* Определяем какие пакеты приняты */
-        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+        int arr_min = 32767;             // первоначально будем сравнивать
+        int Air_txt_x = 30;              // Расположение текста в формуляре стороннего самолета 
+
+        fix = (uint8_t)isValidGNSSFix();
+
+        if(!fix && (settings->mode != SOFTRF_MODE_TXRX_TEST))
         {
-            if (Container[i].addr && (now() - Container[i].timestamp) <= TFT_EXPIRATION_TIME)
+            static uint32_t tmr_GNSS = millis();
+            if (millis() - tmr_GNSS > 20000)
             {
-                isThere_plane[i] = true;
-                isTeam_all[i] = true;
+                tmr_GNSS = millis();
+                if (!text_call)
+                {
+                    waiting_txt(menuManager);
+                    text_call = true;
+                }
+            }
+        }
+        else
+        {
+            text_call = false;
+            /* Определяем какие пакеты приняты */
+            for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+            {
+                if (Container[i].addr && (now() - Container[i].timestamp) <= TFT_EXPIRATION_TIME)
+                {
+                    isThere_plane[i] = true;
+                    isTeam_all[i] = true;
 
-            /* вычисляем минимальное значение дистанции для переключения диапазона просмотра */
- 
-               arr_min = min(arr_min, (int)Container[i].distance);   // функция min выдает меньшее из двух значений,
+                    /* вычисляем минимальное значение дистанции для переключения диапазона просмотра */
+                    arr_min = min(arr_min, (int)Container[i].distance);   // функция min выдает меньшее из двух значений,
 
+                }
+                else
+                {
+                    /* нет данных за длительный период  */
+                    isThere_plane[i] = false;
+                }
+                esp_task_wdt_reset();
+            }
+
+
+            /* ================ Подпрограмма корректировки вывода формуляров (пока отложена) ================*/
+            /* Смотрим сколько сторонних самолетов зафиксировано */
+            view_alien_count = alien_count();
+
+            /* Записываем в базу обнаруженные самолеты */
+            /*
+             uint32_t addr;                           // Адрес самолета
+             uint8_t Container_i;                     // Номер самолета в контейнере
+             uint8_t screen_side_width;               // Сторона экрана лево/право
+             uint8_t screen_side_height;              // Сторона экрана верх/низ
+             uint8_t base_alien[alien_count_base];    // Перечень в базе
+             uint8_t base_index;                      // Порядковый номер в базе
+             uint16_t alien_X;                        // Координата X
+             uint16_t alien_Y;                        // Координата Y
+            */
+
+            if (view_alien_count > 1)
+            {
+                //Serial.print("alien_count");
+                //Serial.println(view_alien_count);
+                int base_index_tmp = 0;
+                for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+                {
+
+                    if (Container[i].addr)
+                    {
+                        set_table_alien[base_index_tmp].addr = Container[i].addr;
+                        set_table_alien[base_index_tmp].Container_i = i;
+                        set_table_alien[base_index_tmp].base_index = base_index_tmp;
+
+                        base_index_tmp++;
+                    }
+                }
+                for (int i = 0; i < view_alien_count; i++)
+                {
+                    //Serial.print("Container_i ");
+                    //Serial.print(set_table_alien[i].Container_i);
+                    //Serial.print(" addr ");
+                    //Serial.print(set_table_alien[i].addr, HEX);
+                    //Serial.print(" base_index ");
+                    //Serial.print(set_table_alien[i].base_index, HEX);
+                    ///*Serial.print("alien_count");
+                    //Serial.print(view_alien_count);*/
+
+                    //Serial.println("");
+
+                }
             }
             else
             {
-                /* нет данных за длительный период  */
-                isThere_plane[i] = false;
+
+
             }
+
+            /*==================================================================*/
+
+
+
+
+
+             /* Автоматический выбор диапазона отображения */
+            divider = arr_min * 2.2;
+
+            if (divider <= 13000 && divider > 5300)
+            {
+                divider = 11000;  // 5000
+            }
+            else if (divider <= 5300 && divider > 3000)
+            {
+                divider = 4600; // 2000
+            }
+            else if (divider <= 3000 && divider > 1500)
+            {
+                divider = 2300;  //1000
+            }
+            else if (divider <= 1500 && divider > 600)
+            {
+                divider = 1250;  //500m
+            }
+            else if (divider <= 600 && divider > 350)
+            {
+                divider = 500;  // 200 m
+            }
+            else if (divider <= 350 && divider > 150)
+            {
+                divider = 250;  // 100 m
+            }
+            else if (divider <= 150)
+            {
+                divider = 150; // 50 m
+            }
+
+            /* Фильтр скорости нашего самолета */
+            this_speed_filtre[this_speed_array_count] = (int)ThisAircraft.speed;
+
+            int this_val_speed = 0;
+
+            if (this_speed_array_countMax)                                   // формируем данные о величине скорости
+            {
+                for (int k = 0; k < speed_array_size; k++)
+                {
+                    this_speed_sum += this_speed_filtre[this_speed_array_count];
+                }
+                this_val_speed = this_speed_sum / speed_array_size;
+                this_speed_sum = 0;
+            }
+
+            this_speed_array_count++;
+            if (this_speed_array_count > speed_array_size - 1)                // проверка заполнения массива первичными данными о скорости
+            {
+                this_speed_array_count = 0;
+                this_speed_array_countMax = true;                             //Разрешить выдавать данные о величине скорости
+            }
+
+            this_alien_speed_tmr = this_val_speed;
+
+            /* При малой скорости нашего самолета поворачиваем экран на отметку 360 */
+            if (this_alien_speed_tmr >= 0 && this_alien_speed_tmr < 4)
+            {
+                ThisAircraft.course = 0;
+            }
+
+            angle = (360 - (int)ThisAircraft.course) % 360;            // 
+
+                // /*Рисуем новую картинку*/
+            for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+            {
+                if (Container[i].addr)
+                {
+
+                    //================================================
+                    bearing_tmr[i] = (int)Container[i].bearing;      // угол в градусах между нашим самолетом и сторонним
+                    distance_tmr[i] = (int)Container[i].distance;    // дистанция между нашим самолетом и сторонним
+
+                    /* фильтруем показания скорости стороннего самолета */
+                    /* Сначала заполняем массив фильтра данными по скорости */
+
+                    alien_speed_filtre[i][alien_speed_array_count[i]] = (int)Container[i].speed;
+                    int alien_val_speed = 0;
+
+                    if (alien_speed_array_countMax[i])                                   // формируем данные о величине скорости
+                    {
+                        for (int k = 0; k < speed_array_size; k++)
+                        {
+                            alien_speed_sum[i] += alien_speed_filtre[i][k];
+                        }
+                        alien_val_speed = alien_speed_sum[i] / speed_array_size;
+                        alien_speed_sum[i] = 0;
+                    }
+
+                    alien_speed_array_count[i]++;
+                    if (alien_speed_array_count[i] > speed_array_size - 1)                // проверка заполнения массива первичными данными о скорости
+                    {
+                        alien_speed_array_count[i] = 0;
+                        alien_speed_array_countMax[i] = true;                             //Разрешить выдавать данные о величине скорости
+                    }
+
+                    alien_speed_tmr[i] = alien_val_speed;
+
+                    // --------------------------------------------------------------------------------
+                     /* При малой скорости смотрим в центр экрана на наш самолет*/
+                    if (alien_speed_tmr[i] >= 0 && alien_speed_tmr[i] < 4)
+                    {
+                        Container[i].course = (180 + bearing_tmr[i]) % 360;
+                    }
+
+                    /* курс стороннего самолета с учетом поворота экрана */
+                    alien_curse[i] = (angle + (int)Container[i].course) % 360;
+
+                    /*Расчет координат сторонних самолетов на неподвижном экране с поправкой на вращение*/
+                    new_angle = (angle + bearing_tmr[i]) % 360;
+
+                    /*Функция проверяет и если надо задает новое значение, так чтобы оно была в области допустимых значений, заданной параметрами.*/
+                    new_rel_x = constrain(distance_tmr[i] * sin(radians(new_angle)), -32768, 32767);
+                    new_rel_y = constrain(distance_tmr[i] * cos(radians(new_angle)), -32768, 32767);
+
+                    new_x = ((int32_t)new_rel_x * (int32_t)radius) / divider;
+                    new_y = ((int32_t)new_rel_y * (int32_t)radius) / divider;
+
+                    Container_alien_X[i] = new_x;  // Сохранить координаты стороннего самолета
+                    Container_alien_Y[i] = new_y;
+
+                    /* Расчет координат формуляра стороннего самолета */
+                    if (new_x >= 0)  // Зона левая сторона
+                    {
+                        Air_txt_x = 41;
+                        Air_txt_left[i] = false;
+                        if (new_y <= -62) //
+                        {
+                            form_x = new_x + 9; // ok
+                            form_y = new_y + 22; //
+                        }
+                        else
+                        {
+                            form_x = new_x + 9; //1
+                            form_y = new_y + 15;     //
+                        }
+
+                    }
+                    else
+                    {
+                        Air_txt_x = 30;
+                        Air_txt_left[i] = true;
+                        if (new_y <= -62) //
+                        {
+                            form_x = new_x - 85; // ok
+                            form_y = new_y + 22; //
+                        }
+                        else
+                        {
+                            form_x = new_x - 85; //
+                            form_y = new_y + 15; //1
+                        }
+
+                    }
+
+                    Container_logbook_X[i] = form_x;  // Сохранить координаты формуляра стороннего самолета
+                    Container_logbook_Y[i] = form_y;
+
+                    esp_task_wdt_reset();
+
+                    /* Фильтр высоты стороннего самолета */
+                    alien_altitude_filtre[i][alien_altitude_array_count[i]] = (int)Container[i].altitude;
+
+                    int alien_val_altitude = 0;
+
+                    if (alien_altitude_array_countMax[i])                                   // формируем данные о высоте
+                    {
+                        for (int k = 0; k < altitude_array_size; k++)
+                        {
+                            alien_altitude_sum[i] += alien_altitude_filtre[i][k];
+                        }
+                        alien_val_altitude = alien_altitude_sum[i] / altitude_array_size;
+                        alien_altitude_sum[i] = 0;
+                    }
+
+                    alien_altitude_array_count[i]++;
+                    if (alien_altitude_array_count[i] > altitude_array_size - 1)                    // проверка заполнения массива первичными данными высоте
+                    {
+                        alien_altitude_array_count[i] = 0;
+                        alien_altitude_array_countMax[i] = true;                             //Разрешить выдавать данные о высоте
+                    }
+
+                    alien_altitude_tmr[i] = alien_val_altitude;
+
+                    /* Фильтр высоты нашего самолета */
+                    this_altitude_filtre[this_altitude_array_count] = (int)ThisAircraft.altitude;
+
+                    int this_val_altitude = 0;
+
+                    if (this_altitude_array_countMax)                                   // формируем данные о высоте
+                    {
+                        for (int k = 0; k < altitude_array_size; k++)
+                        {
+                            this_altitude_sum += this_altitude_filtre[this_altitude_array_count];
+                        }
+                        this_val_altitude = this_altitude_sum / altitude_array_size;
+                        this_altitude_sum = 0;
+                    }
+
+                    this_altitude_array_count++;
+                    if (this_altitude_array_count > altitude_array_size - 1)                    // проверка заполнения массива первичными данными о скорости
+                    {
+                        this_altitude_array_count = 0;
+                        this_altitude_array_countMax = true;                             //Разрешить выдавать данные о величине скорости
+                    }
+
+                    this_alien_altitude_tmr = this_val_altitude;
+
+                    //----------------------------------------------------------------------
+                     /* Определяем разность высот и устанавливаем цвет предупреждения*/
+                    float RelativeVertical = alien_altitude_tmr[i] - this_alien_altitude_tmr;  // Разность высот
+                    float VerticalSet = 0;
+
+                    if (RelativeVertical >= 0)
+                    {
+                        VerticalSet = alien_altitude_tmr[i] - this_alien_altitude_tmr;
+
+                    }
+                    else if (RelativeVertical < 0)
+                    {
+                        VerticalSet = this_alien_altitude_tmr - alien_altitude_tmr[i];
+                    }
+
+                    /* Получить установки определения уровней предупреждения */
+                    int alarm_attention_set = settings->alarm_attention;
+                    int alarm_warning_set = settings->alarm_warning;
+                    int alarm_danger_set = settings->alarm_danger;
+                    int alarm_height_set = settings->alarm_height;
+
+                    if (arr_min >= alarm_attention_set) // 
+                    {
+                        little_air_color[i] = TFT_WHITE;
+                        txt_color = TFT_GREEN;
+                    }
+                    else if (arr_min <= alarm_attention_set && arr_min > alarm_warning_set)
+                    {
+                        if (VerticalSet > alarm_height_set)
+                        {
+                            little_air_color[i] = TFT_WHITE;
+                            txt_color = TFT_GREEN;
+                        }
+                        else
+                        {
+                            little_air_color[i] = TFT_YELLOW;
+                            txt_color = TFT_YELLOW;
+                        }
+                    }
+                    else if (arr_min <= alarm_warning_set && arr_min > alarm_danger_set)
+                    {
+                        if (VerticalSet > alarm_height_set)
+                        {
+                            little_air_color[i] = TFT_WHITE;
+                            txt_color = TFT_GREEN;
+                        }
+                        else if (VerticalSet <= alarm_height_set)
+                        {
+                            little_air_color[i] = TFT_ORANGE;
+                            txt_color = TFT_ORANGE;
+                        }
+                    }
+                    else if (arr_min <= alarm_danger_set && VerticalSet <= alarm_height_set)
+                    {
+                        little_air_color[i] = TFT_RED;
+                        txt_color = TFT_RED;
+                    }
+                    esp_task_wdt_reset();
+
+                    up_arrow[i]->fillSprite(TFT_BLACK);             // Закрасим поле стрелок вверх
+                    arrow_down[i]->fillSprite(TFT_BLACK);           // Закрасим поле стрелок вниз
+
+                    if (alien_altitude_array_countMax[i])
+                    {
+                        int diff_altitude = 5;
+
+                        if (alien_altitude_tmr[i] > alien_altitude_old[i])
+                        {
+                            if (alien_altitude_tmr[i] - alien_altitude_old[i] > diff_altitude)
+                            {
+                                arrow_up_down[i] = 1;
+                                alien_altitude_old[i] = alien_altitude_tmr[i];
+                            }
+                        }
+                        else if (alien_altitude_tmr[i] < alien_altitude_old[i])
+                        {
+                            if (alien_altitude_old[i] - alien_altitude_tmr[i] > diff_altitude)
+                            {
+                                arrow_up_down[i] = 2;
+                                alien_altitude_old[i] = alien_altitude_tmr[i];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        arrow_up_down[i] = 0;
+                    }
+
+                    /* Вычисляем разность высот между нашим самолетом и сторонним */
+                    Height_difference[i] = alien_altitude_old[i] - this_alien_altitude_tmr;
+
+                    /* Пишем в формуляр скорость стороннего самолета */
+                    Air_txt_Sprite[i]->fillSprite(TFT_BLACK);                        // Закрасим поле соообщений
+                    Air_txt_Sprite[i]->setTextColor(little_air_color[i], TFT_BLACK); // Установить цвет согласно программе предупреждения опастности
+                    Air_txt_Sprite[i]->setTextDatum(TC_DATUM);                       // Определим как будет выводится текс
+                    Air_txt_Sprite[i]->loadFont(NotoSansBold15);                     // Установить шрифт формуляра
+
+                    if (Height_difference[i] > 0)
+                    {
+                        Air_txt_Sprite[i]->drawString("+" + String(int(Height_difference[i])), Air_txt_x, 2, 1);
+                    }
+                    else
+                    {
+                        Air_txt_Sprite[i]->drawString(String(int(Height_difference[i])), Air_txt_x, 2, 1);
+                    }
+
+                    Air_txt_Sprite[i]->drawString(String(alien_speed_tmr[i]), Air_txt_x, 14, 1);    // Записать скорость в формуляр
+
+                    /* Определение стрелки вверх вниз. Подем или снижение самолета*/
+
+                    switch (arrow_up_down[i])
+                    {
+                    case 0:
+                        //Air_txt_Sprite[i]->drawString(String(int(Height_difference[i])), 0, 0, 1);
+                        break;
+                    case 1:
+                        /*Рисуем стрелку вверх */
+                        up_arrow[i]->drawLine(4, 0, 4, 10, little_air_color[i]);
+                        up_arrow[i]->drawLine(0, 4, 4, 0, little_air_color[i]);
+                        up_arrow[i]->drawLine(4, 0, 8, 4, little_air_color[i]);
+                        up_arrow[i]->pushToSprite(Air_txt_Sprite[i], Air_txt_x - 26, 6, TFT_BLACK);
+                        break;
+                    case 2:
+
+                        /*Рисуем стрелку вниз */
+                        arrow_down[i]->drawLine(4, 0, 4, 10, little_air_color[i]);
+                        arrow_down[i]->drawLine(0, 6, 4, 10, little_air_color[i]);
+                        arrow_down[i]->drawLine(4, 10, 8, 6, little_air_color[i]);
+                        arrow_down[i]->pushToSprite(Air_txt_Sprite[i], Air_txt_x - 26, 6, TFT_BLACK);
+                        break;
+                    default:
+                        break;
+                    }
+
+                    little_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле самолетика
+
+                    /*Рисуем маленький самолетик */
+                    little_airplane[i]->drawLine(10, 1, 10, 16, little_air_color[i]);
+                    little_airplane[i]->drawLine(11, 0, 11, 16, little_air_color[i]);
+                    little_airplane[i]->drawLine(12, 1, 12, 16, little_air_color[i]);
+
+                    little_airplane[i]->drawLine(6, 5, 15, 5, little_air_color[i]);
+                    little_airplane[i]->drawLine(3, 6, 18, 6, little_air_color[i]);
+                    little_airplane[i]->drawLine(0, 7, 21, 7, little_air_color[i]);
+
+
+                    little_airplane[i]->drawLine(6, 15, 14, 15, little_air_color[i]);
+                    little_airplane[i]->drawLine(7, 16, 15, 16, little_air_color[i]);
+
+                    area_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле 
+
+                    esp_task_wdt_reset();
+                }
+            }
+
+            back.fillSprite(backColor);                   // Закрасим поле 
+            backsprite.fillSprite(backColor);             // 
+            backsprite.setPivot(160, 160);                // Назначаем центр вращения спрайта воздушной обстановки
+
+            /* Рисуем круглую шкалу серым цветом и символы сторон света белым*/
+            for (int i = 0; i < 36; i++)
+            {
+                color2 = TFT_DARKGREY;
+                if (i % 3 == 0)
+                {
+                    backsprite.drawWedgeLine(x[i * 10], y[i * 10], px[i * 10], py[i * 10], 1, 1, color2);
+                    backsprite.setTextColor(TFT_DARKGREY, TFT_BLACK);
+                    if (i == 0)
+                    {
+                        backsprite.drawString("N", lx[i * 10] + 1, ly[i * 10]);
+                    }
+                    if (i == 9)
+                    {
+                        backsprite.drawString("E", lx[i * 10], ly[i * 10]);
+                    }
+                    if (i == 18)
+                    {
+                        backsprite.drawString("S", lx[i * 10], ly[i * 10]);
+                    }
+                    if (i == 27)
+                    {
+                        backsprite.drawString("W", lx[i * 10], ly[i * 10]);
+                    }
+                }
+                else
+                {
+                    backsprite.drawWedgeLine(x[i * 10], y[i * 10], px1[i * 10], py1[i * 10], 1, 1, color2);
+                }
+            }
+
+            //      data_KM.fillSprite(backColor);
+                  /*Рисуем малый серый круг*/
+            backsprite.drawCircle(cx, 160, 80, TFT_DARKGREY);
+
+            ///* Вычисляем направление полета нашего самолета*/
+            if (ThisAircraft.latitude != latitude_old)
+            {
+                test_curse = bearing_calc(latitude_old, longitude_old, ThisAircraft.latitude, ThisAircraft.longitude);
+
+                latitude_old = ThisAircraft.latitude;
+                longitude_old = ThisAircraft.longitude;
+            }
+
             esp_task_wdt_reset();
-        }
 
+            /*Выполняем поворот нашего самолета по азимуту*/
+            backsprite.pushRotated(&back, angle, TFT_BLACK);
 
-        /* Автоматический выбор диапазона отображения */
-        divider = arr_min * 2.2;
-
-        if (divider <= 13000 && divider > 5300)
-        {
-            divider = 11000;  // 5000
-        }
-        else if (divider <= 5300 && divider > 3000)
-        {
-            divider = 4600; // 2000
-        }
-        else if (divider <= 3000 && divider > 1500)
-        {
-            divider = 2300;  //1000
-        }
-        else if(divider <= 1500 && divider > 600)
-        {
-            divider = 1250;  //500m
-        }
-        else if (divider <= 600 && divider > 350)
-        {
-            divider = 500;  // 200 m
-        }
-        else if (divider <= 350 && divider > 150)
-        {
-            divider = 250;  // 100 m
-        }
-        else if (divider <= 150 )
-        {
-           divider = 150; // 50 m
-        }
-
-
-        this_speed_filtre[this_speed_array_count] = (int)ThisAircraft.speed;
-
-        int this_val_speed = 0;
-
-        if (this_speed_array_countMax)                                   // формируем данные о величине скорости
-        {
-            for (int k = 0; k < speed_array_size; k++)
+            if (divider <= 13000)
             {
-                this_speed_sum += this_speed_filtre[this_speed_array_count];
+                data_KM.loadFont(NotoSansBold15);
+                data_KM.fillSprite(backColor);
+                data_KM.setTextDatum(TC_DATUM);
+
+                if (divider == 11000)
+                {
+                    data_KM.drawString("5000 m", 30, 1);
+                }
+                else if (divider == 4600)
+                {
+                    data_KM.drawString("2000 m", 30, 1);
+                }
+                else if (divider == 2300)
+                {
+                    data_KM.drawString("1000 m", 30, 1);
+                }
+                else if (divider == 1250)
+                {
+                    data_KM.drawString("500 m", 30, 1);
+                }
+                else if (divider == 500)
+                {
+                    data_KM.drawString("200 m", 30, 1);
+                }
+                else if (divider == 250)
+                {
+                    data_KM.drawString("100 m", 30, 1);
+                }
+                else if (divider == 150)
+                {
+                    data_KM.drawString("50 m", 30, 1);
+                }
+
+                data_KM.pushToSprite(&back, 130, 226, TFT_BLACK);
             }
-            this_val_speed = this_speed_sum / speed_array_size;
-            this_speed_sum = 0;
-        }
 
-        /*      Serial.print("this_speed_array_count ");
-                Serial.print(this_speed_array_count);*/
 
-        this_speed_array_count++;
-        if (this_speed_array_count > speed_array_size - 1)                // проверка заполнения массива первичными данными о скорости
-        {
-            this_speed_array_count = 0;
-            this_speed_array_countMax = true;                             //Разрешить выдавать данные о величине скорости
-        }
 
-        this_speed_tmr = this_val_speed;
+            /* Рисум градусы азимута*/
+            /*  отображаем на табло курс в градусах*/
+            esp_task_wdt_reset();
+            data_az.loadFont(NotoSansMonoSCB20);
+            data_az.setTextDatum(CR_DATUM);
+            data_az.fillSprite(TFT_BLACK);
 
-        /* При малой скорости нашего самолета поворачиваем экран на отметку 360 */
-        if (this_speed_tmr >= 0 && this_speed_tmr < 4)
-        {
-            ThisAircraft.course = 0;
-        }
+            // data_az.drawSmoothRoundRect(0, 0, 5, 5, 50, 25, TFT_DARKGREY);
 
-        angle = (360 - (int)ThisAircraft.course) % 360;            // 
+            data_az.drawRect(0, 0, 50, 25, TFT_DARKGREY);
+            data_az.drawCircle(42, 8, 3, TFT_GREEN);    // Рисуем кружок символа градуса
+            data_az.setTextColor(TFT_GREEN, backColor);
+            data_az.drawString(String(360 - angle), 37, 14);
+            data_az.pushToSprite(&back, 138, 1);
+            esp_task_wdt_reset();
 
-            // /*Рисуем новую картинку*/
-        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
-        {
-            if (Container[i].addr)
+            /*Рисуем заряд аккумулятора*/
+            power1.fillSprite(TFT_BLACK);
+            power1.fillRect(2, 2, 26, 12, TFT_GREEN);
+            power1.drawRect(0, 0, 30, 16, TFT_WHITE);
+            power1.fillRect(30, 4, 3, 8, TFT_WHITE);
+            power1.pushToSprite(&back, 282, 4, TFT_BLACK);
+
+            /* настройки сообщения о дистанции вверху слева*/
+            dist_info.loadFont(NotoSansMonoSCB20);
+            dist_info.fillSprite(TFT_BLACK);
+            dist_info.setTextDatum(TC_DATUM);
+            String arr_min_txt = String(arr_min);
+
+            if (arr_min <= 10)
             {
-                // speed_tmr[i] = (int)Container[i].speed;
-               //  altitude_tmr[i] = (int)Container[i].altitude;
-
-                 //================================================
-                bearing_tmr[i] = (int)Container[i].bearing;      // угол в градусах между нашим самолетом и сторонним
-                distance_tmr[i] = (int)Container[i].distance;    // дистанция между нашим самолетом и сторонним
-
-                /* фильтруем показания скорости */
-
-                /* Сначала заполняем массив фильтра данными по скорости */
-
-                alien_speed_filtre[i][alient_speed_array_count[i]] = (int)Container[i].speed;
-                int alien_val_speed = 0;
-
-                if (alient_speed_array_countMax[i])                                   // формируем данные о величине скорости
-                {
-                    for (int k = 0; k < speed_array_size; k++)
-                    {
-                        alient_speed_sum[i] += alien_speed_filtre[i][k];
-                    }
-                    alien_val_speed = alient_speed_sum[i] / speed_array_size;
-                    alient_speed_sum[i] = 0;
-                }
-
-                alient_speed_array_count[i]++;
-                if (alient_speed_array_count[i] > speed_array_size - 1)                // проверка заполнения массива первичными данными о скорости
-                {
-                    alient_speed_array_count[i] = 0;
-                    alient_speed_array_countMax[i] = true;                             //Разрешить выдавать данные о величине скорости
-                }
-
-                speed_tmr[i] = alien_val_speed;
-
-  /*              alient_speed_sum[i] = 0;
-                speed_tmr[i] = val_speed;*/
-
-                // --------------------------------------------------------------------------------
-                 /* При малой скорости смотрим в центр экрана на наш самолет*/
-                if (speed_tmr[i] >= 0 && speed_tmr[i] < 4)
-                {
-                    Container[i].course = (180 + bearing_tmr[i]) % 360;
-                }
-
-                /* курс стороннего самолета с учетом поворота экрана */
-                alien_curse[i] = (angle + (int)Container[i].course) % 360;
-
-                /*Расчет координат сторонних самолетов на неподвижном экране с поправкой на вращение*/
-                /*Функция проверяет и если надо задает новое значение, так чтобы оно была в области допустимых значений, заданной параметрами.*/
-
-                new_angle = (angle + bearing_tmr[i]) % 360;
-
-
-                new_rel_x = constrain(distance_tmr[i] * sin(radians(new_angle)), -32768, 32767);
-                new_rel_y = constrain(distance_tmr[i] * cos(radians(new_angle)), -32768, 32767);
-
-                new_x = ((int32_t)new_rel_x * (int32_t)radius) / divider;
-                new_y = ((int32_t)new_rel_y * (int32_t)radius) / divider;
-
-                Container_alien_X[i] = new_x;  // Сохранить координаты стороннего самолета
-                Container_alien_Y[i] = new_y;
-
-                /* Расчет координат формуляра стороннего самолета */
-                if (new_x >= 0)  // Зона левая сторона
-                {
-                    Air_txt_x = 41;
-                    Air_txt_left[i] = false;
-                    if (new_y <= -62) //
-                    {
-                        form_x = new_x + 9; // ok
-                        form_y = new_y + 22; //
-                    }
-                    else
-                    {
-                        form_x = new_x + 9; //1
-                        form_y = new_y + 15;     //
-                    }
-
-                }
-                else
-                {
-                    Air_txt_x = 30;
-                    Air_txt_left[i] = true;
-                    if (new_y <= -62) //
-                    {
-                        form_x = new_x - 85; // ok
-                        form_y = new_y + 22; //
-                    }
-                    else
-                    {
-                        form_x = new_x - 85; //
-                        form_y = new_y + 15; //1
-                    }
-
-                }
-
-                Container_logbook_X[i] = form_x;  // Сохранить координаты формуляра стороннего самолета
-                Container_logbook_Y[i] = form_y;
-
-                esp_task_wdt_reset();
-
-                //------------------------------------------------------------------------
-               /* Определяем разность высот и устанавливаем цвет предупреждения*/
-
-                //----------------------------------------------------------------------
-                alien_altitude_filtre[i][alient_altitude_array_count[i]] = (int)Container[i].altitude;
-
-                int alien_val_altitude = 0;
-
-                if (alient_altitude_array_countMax[i])                                   // формируем данные о высоте
-                {
-                    for (int k = 0; k < altitude_array_size; k++)
-                    {
-                        alient_altitude_sum[i] += alien_altitude_filtre[i][k];
-                    }
-                    alien_val_altitude = alient_altitude_sum[i] / altitude_array_size;
-                    alient_altitude_sum[i] = 0;
-                }
-
-                alient_altitude_array_count[i]++;
-                if (alient_altitude_array_count[i] > altitude_array_size-1)                    // проверка заполнения массива первичными данными высоте
-                {
-                    alient_altitude_array_count[i] = 0;
-                    alient_altitude_array_countMax[i] = true;                             //Разрешить выдавать данные о высоте
-                }
-
-                altitude_tmr[i] = alien_val_altitude;
-
-                //----------------------------------------------------------------------
-                this_altitude_filtre[this_altitude_array_count] = (int)ThisAircraft.altitude;
-
-                int this_val_altitude = 0;
- 
-                if (this_altitude_array_countMax)                                   // формируем данные о высоте
-                {
-                    for (int k = 0; k < altitude_array_size; k++)
-                    {
-                        this_altitude_sum += this_altitude_filtre[this_altitude_array_count];
-                    }
-                    this_val_altitude = this_altitude_sum / altitude_array_size;
-                    this_altitude_sum = 0;
-                }
-
- /*               Serial.print("this_altitude_array_count ");
-                Serial.print(this_altitude_array_count);*/
-
-                this_altitude_array_count++;
-                if (this_altitude_array_count > altitude_array_size-1)                    // проверка заполнения массива первичными данными о скорости
-                {
-                    this_altitude_array_count = 0;
-                    this_altitude_array_countMax = true;                             //Разрешить выдавать данные о величине скорости
-                }
-
-                this_altitude_tmr = this_val_altitude;
-
-                //Serial.print(" ThisAircraft.altitude ");
-                //Serial.print(ThisAircraft.altitude);
-                //Serial.print(" | this_altitude_tmr ");
-                //Serial.println(this_altitude_tmr);
-  
-                //----------------------------------------------------------------------
-
-                float RelativeVertical = altitude_tmr[i] - this_altitude_tmr;  // Разность высот
-                float VerticalSet = 0;
-
-                if (RelativeVertical >= 0)
-                {
-                    VerticalSet = altitude_tmr[i] - this_altitude_tmr;
-
-                }
-                else if (RelativeVertical < 0)
-                {
-                    VerticalSet = this_altitude_tmr - altitude_tmr[i];
-                }
-
-                /* Получить установки определения уровнейй предупреждения */
-                int alarm_attention_set = settings->alarm_attention;
-                int alarm_warning_set = settings->alarm_warning;
-                int alarm_danger_set = settings->alarm_danger;
-                int alarm_height_set = settings->alarm_height;
-
-                if (arr_min >= alarm_attention_set) // 
-                {
-                    little_air_color[i] = TFT_WHITE;
-                    txt_color = TFT_GREEN;
-                }
-                else if (arr_min <= alarm_attention_set && arr_min > alarm_warning_set)
-                {
-                    if (VerticalSet > alarm_height_set)
-                    {
-                        little_air_color[i] = TFT_WHITE;
-                        txt_color = TFT_GREEN;
-                    }
-                    else
-                    {
-                        little_air_color[i] = TFT_YELLOW;
-                        txt_color = TFT_YELLOW;
-                    }
-                }
-                else if (arr_min <= alarm_warning_set && arr_min > alarm_danger_set)
-                {
-                    if (VerticalSet > alarm_height_set)
-                    {
-                        little_air_color[i] = TFT_WHITE;
-                        txt_color = TFT_GREEN;
-                    }
-                    else if (VerticalSet <= alarm_height_set)
-                    {
-                        little_air_color[i] = TFT_ORANGE;
-                        txt_color = TFT_ORANGE;
-                    }
-                }
-                else if (arr_min <= alarm_danger_set && VerticalSet <= alarm_height_set)
-                {
-                    little_air_color[i] = TFT_RED;
-                    txt_color = TFT_RED;
-                }
-                esp_task_wdt_reset();
-
-                up_arrow[i]->fillSprite(TFT_BLACK);             // Закрасим поле стрелок вверх
-                arrow_down[i]->fillSprite(TFT_BLACK);           // Закрасим поле стрелок вниз
-
-                if (alient_altitude_array_countMax[i])
-                {
-                    int diff_altitude = 5;
-
-                    if (altitude_tmr[i] > altitude_old[i])
-                    {
-                        if (altitude_tmr[i] - altitude_old[i] > diff_altitude)
-                        {
-                            up_down[i] = 1;
-                            altitude_old[i] = altitude_tmr[i];
-                        }
-                    }
-                    else if (altitude_tmr[i] < altitude_old[i])
-                    {
-                        if (altitude_old[i] - altitude_tmr[i] > diff_altitude)
-                        {
-                            up_down[i] = 2;
-                            altitude_old[i] = altitude_tmr[i];
-                        }
-                     }
-                }
-                else
-                {
-                    up_down[i] = 0;
-                }
-
-                /* Вычисляем разность высот между нашим самолетом и сторонним */
-                Height_difference[i] = altitude_old[i] - this_altitude_tmr; 
-               
-                /* Пишем в формуляр скорость стороннего самолета */
-                Air_txt_Sprite[i]->fillSprite(TFT_BLACK);                        // Закрасим поле соообщений
-                Air_txt_Sprite[i]->setTextColor(little_air_color[i], TFT_BLACK); // Установить цвет согласно программе предупреждения опастности
-                Air_txt_Sprite[i]->setTextDatum(TC_DATUM);                       // Определим как будет выводится текс
-                Air_txt_Sprite[i]->loadFont(NotoSansBold15);                     // Установить шрифт формуляра
-
-                if (Height_difference[i] > 0)
-                {
-                    Air_txt_Sprite[i]->drawString("+" + String(int(Height_difference[i])), Air_txt_x, 2, 1);
-                }
-                else
-                {
-                    Air_txt_Sprite[i]->drawString(String(int(Height_difference[i])), Air_txt_x, 2, 1);
-                }
-
-                Air_txt_Sprite[i]->drawString(String(speed_tmr[i]), Air_txt_x, 14, 1);    // Записать скорость в формуляр
-
-                /* Определение стрелки вверх вниз. Подем или снижение самолета*/
-
-                switch (up_down[i])
-                {
-                case 0:
-                    //Air_txt_Sprite[i]->drawString(String(int(Height_difference[i])), 0, 0, 1);
-                    break;
-                case 1:
-                    /*Рисуем стрелку вверх */
-                    up_arrow[i]->drawLine(4, 0, 4, 10, little_air_color[i]);
-                    up_arrow[i]->drawLine(0, 4, 4, 0, little_air_color[i]);
-                    up_arrow[i]->drawLine(4, 0, 8, 4, little_air_color[i]);
-                    up_arrow[i]->pushToSprite(Air_txt_Sprite[i], Air_txt_x - 26, 6, TFT_BLACK);
-                    break;
-                case 2:
-
-                    /*Рисуем стрелку вниз */
-                    arrow_down[i]->drawLine(4, 0, 4, 10, little_air_color[i]);
-                    arrow_down[i]->drawLine(0, 6, 4, 10, little_air_color[i]);
-                    arrow_down[i]->drawLine(4, 10, 8, 6, little_air_color[i]);
-                    arrow_down[i]->pushToSprite(Air_txt_Sprite[i], Air_txt_x - 26, 6, TFT_BLACK);
-                    break;
-                default:
-                    break;
-                }
-
-                little_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле самолетика
-
-                /*Рисуем маленький самолетик */
-                little_airplane[i]->drawLine(10, 1, 10, 16, little_air_color[i]);
-                little_airplane[i]->drawLine(11, 0, 11, 16, little_air_color[i]);
-                little_airplane[i]->drawLine(12, 1, 12, 16, little_air_color[i]);
-
-                little_airplane[i]->drawLine(6, 5, 15, 5, little_air_color[i]);
-                little_airplane[i]->drawLine(3, 6, 18, 6, little_air_color[i]);
-                little_airplane[i]->drawLine(0, 7, 21, 7, little_air_color[i]);
-
-
-                little_airplane[i]->drawLine(6, 15, 14, 15, little_air_color[i]);
-                little_airplane[i]->drawLine(7, 16, 15, 16, little_air_color[i]);
-
-                area_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле 
-                //area_txt_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле 
-
-                esp_task_wdt_reset();
-            }
-        }
- 
-        back.fillSprite(backColor);                   // Закрасим поле 
-        backsprite.fillSprite(backColor);             // 
-        backsprite.setPivot(160, 160);                // Назначаем центр вращения спрайта воздушной обстановки
-
-        /* Рисуем круглую шкалу серым цветом и символы сторон света белым*/
-        for (int i = 0; i < 36; i++)
-        {
-            color2 = TFT_DARKGREY;
-            if (i % 3 == 0)
-            {
-                backsprite.drawWedgeLine(x[i * 10], y[i * 10], px[i * 10], py[i * 10], 1, 1, color2);
-                backsprite.setTextColor(TFT_DARKGREY, TFT_BLACK);
-                if (i == 0)
-                {
-                    backsprite.drawString("N", lx[i * 10] + 1, ly[i * 10]);
-                }
-                if (i == 9)
-                {
-                    backsprite.drawString("E", lx[i * 10], ly[i * 10]);
-                }
-                if (i == 18)
-                {
-                    backsprite.drawString("S", lx[i * 10], ly[i * 10]);
-                }
-                if (i == 27)
-                {
-                    backsprite.drawString("W", lx[i * 10], ly[i * 10]);
-                }
+                arr_min_txt = "0";
             }
             else
             {
-                backsprite.drawWedgeLine(x[i * 10], y[i * 10], px1[i * 10], py1[i * 10], 1, 1, color2);
+                int len = arr_min_txt.length();
+                arr_min_txt.setCharAt(len - 1, '0');
             }
+
+            if (arr_min != 32767)
+            {
+                // dist_info.drawSmoothRoundRect(0, 0, 5, 1, 80, 25, txt_color);
+                dist_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
+                dist_info.setTextColor(txt_color, backColor);
+                dist_info.drawString(arr_min_txt + " m", 40, 4);
+                dist_info.pushToSprite(&back, 1, 2);
+            }
+            else
+            {
+                // dist_info.drawSmoothRoundRect(0, 0, 5, 1, 80, 25, TFT_DARKGREY);
+                dist_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
+                dist_info.setTextColor(TFT_WHITE, backColor);
+                dist_info.drawString("-----", 40, 4);
+                dist_info.pushToSprite(&back, 1, 2);
+            }
+
+            /*Формируем картинку самолета*/
+                /* Рисуем фюзеляж*/
+            Airplane.drawLine(12, 0, 12, 18, TFT_DARKGREY);
+
+            /*Рисуем передние крылья*/
+            Airplane.drawLine(3, 7, 20, 7, TFT_DARKGREY);
+            Airplane.drawLine(0, 8, 23, 8, TFT_DARKGREY);
+
+            /*Рисуем задние крылья*/
+            Airplane.drawLine(7, 17, 17, 17, TFT_DARKGREY);
+            Airplane.pushToSprite(&back, 148, 150, TFT_BLACK);
+
+            /*отображаем спрайт с информацией по объектам*/
+            for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+            {
+                if (isTeam_all[i] == true)
+                {
+
+                    little_airplane[i]->pushRotated(area_airplane[i], alien_curse[i], TFT_BLACK);
+                    area_airplane[i]->pushToSprite(&back, radar_center_x + Container_alien_X[i] - 15, radar_center_y - Container_alien_Y[i] - 15, TFT_BLACK);
+
+                    if (Air_txt_left[i])
+                    {
+                        Air_txt_Sprite[i]->drawSmoothRoundRect(0, 0, 1, 1, 65, 29, TFT_DARKCYAN);
+                        Air_txt_Sprite[i]->fillTriangle(76, 15, 67, 7, 67, 23, TFT_DARKCYAN);
+
+                    }
+                    else
+                    {
+                        Air_txt_Sprite[i]->drawSmoothRoundRect(11, 0, 1, 1, 64, 29, TFT_DARKCYAN);
+                        Air_txt_Sprite[i]->fillTriangle(0, 15, 9, 7, 9, 23, TFT_DARKCYAN);
+                    }
+
+
+                    // Air_txt_Sprite[i]->drawRect(0,0,76, 30, TFT_WHITE);
+                    Air_txt_Sprite[i]->pushToSprite(&back, radar_center_x + Container_logbook_X[i]/* - 26*/, radar_center_y - Container_logbook_Y[i]/* - 13*/, TFT_BLACK);
+
+                    isTeam_all[i] = false;
+                    esp_task_wdt_reset();
+                }
+            }
+
+            esp_task_wdt_reset();
+
+            /*рисуем все спрайты*/
+            back.pushSprite(0, 0);
         }
-
-  //      data_KM.fillSprite(backColor);
-        /*Рисуем малый серый круг*/
-        backsprite.drawCircle(cx, 160, 80, TFT_DARKGREY);
-
-        ///* Вычисляем направление полета нашего самолета*/
-        if (ThisAircraft.latitude != latitude_old)
-        {
-            test_curse = bearing_calc(latitude_old, longitude_old, ThisAircraft.latitude, ThisAircraft.longitude);
-
-            latitude_old = ThisAircraft.latitude;
-            longitude_old = ThisAircraft.longitude;
-        }
-
-        esp_task_wdt_reset();
-
-        /*Выполняем поворот нашего самолета по азимуту*/
-        backsprite.pushRotated(&back, angle, TFT_BLACK);
- 
-        if (divider <= 13000)
-        {
-            data_KM.loadFont(NotoSansBold15);
-            data_KM.fillSprite(backColor);
-            data_KM.setTextDatum(TC_DATUM);
-  
-            if (divider == 11000)
-            {
-                data_KM.drawString("5000 m", 30, 1);
-            }
-            else if (divider == 4600)
-            {
-                data_KM.drawString("2000 m", 30, 1);
-            }
-            else if (divider == 2300) 
-            {
-                data_KM.drawString("1000 m", 30, 1);
-            }
-            else if (divider == 1250)
-            {
-               data_KM.drawString("500 m", 30, 1);
-            }
-            else if (divider == 500)
-            {
-                data_KM.drawString("200 m", 30, 1);
-            }
-            else if (divider == 250)
-            {
-               data_KM.drawString("100 m", 30, 1);
-            }
-            else if (divider == 150)
-            {
-               data_KM.drawString("50 m", 30, 1);
-            }
-
-            data_KM.pushToSprite(&back, 130, 226, TFT_BLACK);
-        }
-
-
-
-        /* Рисум градусы азимута*/
-        /*  отображаем на табло курс в градусах*/
-        esp_task_wdt_reset();
-        data_az.loadFont(NotoSansMonoSCB20);
-        data_az.setTextDatum(CR_DATUM);
-        data_az.fillSprite(TFT_BLACK);
-
-       // data_az.drawSmoothRoundRect(0, 0, 5, 5, 50, 25, TFT_DARKGREY);
-
-        data_az.drawRect(0, 0, 50, 25, TFT_DARKGREY);
-        data_az.drawCircle(42, 8, 3, TFT_GREEN);    // Рисуем кружок символа градуса
-        data_az.setTextColor(TFT_GREEN, backColor);
-        data_az.drawString(String(360 - angle), 37, 14);
-        data_az.pushToSprite(&back, 138, 1);
-        esp_task_wdt_reset();
-
-        /*Рисуем заряд аккумулятора*/
-        power1.fillSprite(TFT_BLACK);
-        power1.fillRect(2, 2, 26, 12, TFT_GREEN);
-        power1.drawRect(0, 0, 30, 16, TFT_WHITE); 
-        power1.fillRect(30, 4, 3, 8, TFT_WHITE);
-        power1.pushToSprite(&back, 282, 4, TFT_BLACK);
-
-        /* настройки сообщения о дистанции внизу слева*/
-        dist_info.loadFont(NotoSansMonoSCB20);
-        dist_info.fillSprite(TFT_BLACK);
-
-        String arr_min_txt = String(arr_min);
-
-        if (arr_min <= 10)
-        {
-            arr_min_txt = "10";
-
-        }
-        else
-        {
-            int len = arr_min_txt.length();
-            arr_min_txt.setCharAt(len-1, '0');
-        }
-      
-        if (arr_min != 32767)
-        {
-           // dist_info.drawSmoothRoundRect(0, 0, 5, 1, 80, 25, txt_color);
-            dist_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
-            dist_info.setTextColor(txt_color, backColor);
-            dist_info.drawString(arr_min_txt + " m", 40, 4);
-            dist_info.pushToSprite(&back,1,2);
-        }
-        else
-        {
-           // dist_info.drawSmoothRoundRect(0, 0, 5, 1, 80, 25, TFT_DARKGREY);
-            dist_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
-            dist_info.setTextColor(TFT_WHITE, backColor);
-            dist_info.drawString("-----" , 40, 4);
-            dist_info.pushToSprite(&back,1,2);
-        }
-            
-        /*Формируем картинку самолета*/
-            /* Рисуем фюзеляж*/
-        Airplane.drawLine(12, 0, 12, 18, TFT_DARKGREY);
-
-        /*Рисуем передние крылья*/
-        Airplane.drawLine(3, 7, 20, 7, TFT_DARKGREY);
-        Airplane.drawLine(0, 8, 23, 8, TFT_DARKGREY);
-
-        /*Рисуем задние крылья*/
-        Airplane.drawLine(7, 17, 17, 17, TFT_DARKGREY);
-        Airplane.pushToSprite(&back, 148, 150, TFT_BLACK);
-
-                    /*отображаем спрайт с информацией по объектам*/
-        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
-        {
-            if (isTeam_all[i] == true)
-            {
-
-               little_airplane[i]->pushRotated(area_airplane[i], alien_curse[i], TFT_BLACK);
-               area_airplane[i]->pushToSprite(&back, radar_center_x + Container_alien_X[i]-15, radar_center_y - Container_alien_Y[i]-15, TFT_BLACK);
-
-               if (Air_txt_left[i])
-               {
-                   Air_txt_Sprite[i]->drawSmoothRoundRect(0, 0, 1, 1, 65, 29, TFT_DARKCYAN);
-                   Air_txt_Sprite[i]->fillTriangle(76, 15, 67, 7, 67, 23, TFT_DARKCYAN);
-
-               }
-               else
-               {
-                   Air_txt_Sprite[i]->drawSmoothRoundRect(11, 0, 1, 1, 64, 29, TFT_DARKCYAN);
-                   Air_txt_Sprite[i]->fillTriangle(0, 15, 9, 7, 9, 23, TFT_DARKCYAN);
-               }
-
-
-              // Air_txt_Sprite[i]->drawRect(0,0,76, 30, TFT_WHITE);
-               Air_txt_Sprite[i]->pushToSprite(&back, radar_center_x + Container_logbook_X[i]/* - 26*/, radar_center_y - Container_logbook_Y[i]/* - 13*/, TFT_BLACK);
-
-                isTeam_all[i] = false;
-                esp_task_wdt_reset();
-            }
-        }  
-
-        esp_task_wdt_reset();
-
-        /*рисуем все спрайты*/
-        back.pushSprite(0, 0);
- 
     }
  }
  //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1131,7 +1166,6 @@ void TFTMenu::resetIdleTimer()
      const char EPD_SoftRF_text1[] = "FlyRF";
      const char EPD_SoftRF_text2[] = "www.decima.ru";
      const char EPD_SoftRF_text3[] = "DECIMA";
-  //   const char EPD_SoftRF_text4[] = "SoftRF_0_23_11_06_07";
      const char EPD_SoftRF_text5[] = "Linar Yusupov";
      const char EPD_SoftRF_text6[] = "(C) 2023";
 
@@ -1174,12 +1208,6 @@ void TFTMenu::resetIdleTimer()
      tft_radar->setCursor(x_tft, y_tft);
      tft_radar->print(Current_version);
 
-     //tbw1 = tft_radar->textWidth(EPD_SoftRF_text4);
-     //x_tft = (tft_radar->width() - tbw1) - 4;
-     //y_tft = tft_radar->height() - tft_radar->fontHeight() + 10;
-     //tft_radar->setCursor(x_tft, y_tft);
-     //tft_radar->print(EPD_SoftRF_text4);
-
      esp_task_wdt_reset();
      vTaskDelay(4000);
 
@@ -1208,19 +1236,19 @@ void TFTMenu::resetIdleTimer()
              backsprite.setTextColor(TFT_WHITE, TFT_BLACK);
              if (i == 0)
              {
-                 backsprite.drawString("N", lx[i * 10] + 1, ly[i * 10]);
+                 backsprite.drawString("N", lx[i * 10] + 1, ly[i * 10], color2);
              }
              if (i == 9)
              {
-                 backsprite.drawString("E", lx[i * 10], ly[i * 10]);
+                 backsprite.drawString("E", lx[i * 10], ly[i * 10], color2);
              }
              if (i == 18)
              {
-                 backsprite.drawString("S", lx[i * 10], ly[i * 10]);
+                 backsprite.drawString("S", lx[i * 10], ly[i * 10], color2);
              }
              if (i == 27)
              {
-                 backsprite.drawString("W", lx[i * 10], ly[i * 10]);
+                 backsprite.drawString("W", lx[i * 10], ly[i * 10], color2);
              }
          }
          else
@@ -1238,12 +1266,13 @@ void TFTMenu::resetIdleTimer()
      backsprite.pushRotated(&back, angle, TFT_BLACK);
      /***************    TFT_шкала дистанции    *******************/
 
-     //data_KM.loadFont(NotoSansMonoSCB20);
-     //data_KM.fillSprite(TFT_BLACK);
-     //data_KM.drawRect(0, 0, 59, 25, TFT_WHITE);
-     //data_KM.setTextColor(TFT_GREEN, backColor);
-     //data_KM.drawString("15 KM", 5, 3);
-     //data_KM.pushToSprite(&back, 3, 1);
+    dist_info.loadFont(NotoSansMonoSCB20);
+    dist_info.setTextDatum(TC_DATUM);
+    dist_info.fillSprite(TFT_BLACK);
+    dist_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
+    dist_info.setTextColor(TFT_WHITE, backColor);
+    dist_info.drawString("-----", 40, 4);
+    dist_info.pushToSprite(&back, 1, 2);
 
 
          /* Рисум градусы азимута*/
@@ -1255,7 +1284,7 @@ void TFTMenu::resetIdleTimer()
    data_az.drawRect(0, 0, 48, 25, TFT_WHITE);
    data_az.drawCircle(40, 8, 3, TFT_GREEN);    // Рисуем кружок символа градуса
    data_az.setTextColor(TFT_GREEN, backColor);
-   data_az.drawString(String(360 - angle), 35, 14);
+   data_az.drawString(String(0), 35, 14);
    data_az.pushToSprite(&back, 138, 1);
 
 
@@ -1267,10 +1296,6 @@ void TFTMenu::resetIdleTimer()
     power1.pushToSprite(&back, 282, 4, TFT_BLACK);
 
     /* настройки сообщения о дистанции внизу слева*/
-    dist_info.loadFont(NotoSansMonoSCB20);
-    dist_info.fillSprite(backColor);
-    dist_info.setTextDatum(TC_DATUM);                         //TL_DATUM 0 // Top left (default)
-
                                                               /*Формируем картинку самолета*/
      /* Рисуем фюзеляж*/
 
@@ -1284,9 +1309,32 @@ void TFTMenu::resetIdleTimer()
    Airplane.drawLine(7, 17, 17, 17, TFT_DARKGREY);
    // Airplane.drawLine(7, 20, 15, 20, TFT_DARKGREY);
    Airplane.pushToSprite(&back, 148, 150, TFT_BLACK);
+     /*рисуем все неподвижные спрайты*/
+    back.pushSprite(0, 0);
+ 
+    //   /* Определение местоположения при старте */
+    fix = (uint8_t)isValidGNSSFix();
 
-   /*рисуем все неподвижные спрайты*/
-  //  back.pushSprite(0, 0);
+    if (!fix && (settings->mode != SOFTRF_MODE_TXRX_TEST))
+    {
+            if (!text_call)
+            {
+                waiting_txt(menuManager);
+               // text_call = true;
+            }
+    }
+
+    esp_task_wdt_reset();
+    vTaskDelay(4000);
+    esp_task_wdt_reset();
+    //vTaskDelay(4000);
+ 
+
+    //while (((int)ThisAircraft.latitude==0) && ((int)ThisAircraft.longitude == 0))
+    //{
+ 
+    //}
+
 
  }
 
@@ -1680,8 +1728,75 @@ void TFTMenu::resetIdleTimer()
      return val_voltage;                                 //Напряжение питания аккумулятора
  }
 
+ int TFTMenuScreen::alien_count()
+ {
+     int count = 0;
+
+     for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) 
+     {
+         if (Container[i].addr) {
+             count++;
+         }
+     }
+
+     return count;
+ }
+
+ bool TFTMenuScreen::coordinates_waiting()
+ {
+     bool coord = false;
 
 
+
+     return coord;
+ }
+
+ void TFTMenuScreen::waiting_txt(TFTMenu* menuManager) // Вывод текста "ОПРЕДЕЛЕНИЕ МЕСТОПОЛОЖЕНИЯ"
+ {
+     /* Определение местоположения нашего самолета при старте */
+
+     TFT_Class* tft_radar = menuManager->getDC();
+     if (!tft_radar)
+     {
+         return;
+     }
+
+     TFTRus* rusPrinter = menuManager->getRusPrinter();
+
+     int screenWidth = tft_radar->width();
+     int screenHeight = tft_radar->height();
+
+     Serial.print("screenWidth ");
+     Serial.print(screenWidth);
+
+     Serial.print(" | screenHeight ");
+     Serial.print(screenHeight);
+
+
+     tft_radar->setFreeFont(TFT_FONT);
+     int textFontHeight = FONT_HEIGHT(tft_radar);
+
+     String data = data_txt; //"ОПРЕДЕЛЕНИЕ"
+     String data1 = data_txt1; //"МЕСТОПОЛОЖЕНИЯ"
+     int textFontWidth = tft_radar->textWidth(data, 2);                   // Returns pixel width of string in current font
+
+     Serial.print("textFontWidth ");
+     Serial.print(textFontWidth);
+
+     uint16_t curX = (screenWidth / 2) - (textFontWidth / 2) - 12;        // Координаты вывода 
+     uint16_t curY = 110;                                                 // Координаты вывода текста
+     rusPrinter->print(data.c_str(), curX, curY, backColor, TFT_YELLOW);  // Отображаем 
+
+     textFontWidth = tft_radar->textWidth(data1, 2);                      // Returns pixel width of string in current font
+     Serial.print(" | textFontWidth2 ");
+     Serial.print(textFontWidth);
+
+     curX = (screenWidth / 2) - (textFontWidth / 2) - 18;                  // Координаты вывода 
+     curY = 140;                                                           // Координаты вывода текста
+     rusPrinter->print(data1.c_str(), curX, curY, backColor, TFT_YELLOW);  // Отображаем 
+
+
+ }
 
 
 

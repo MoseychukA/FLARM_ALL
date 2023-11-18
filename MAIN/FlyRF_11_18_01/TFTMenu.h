@@ -9,11 +9,10 @@
 #include "TFTRus.h"
 #include "TFT_Includes.h"
 #include "SoftRF.h"
+//#include "src/driver/GNSS.h"
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//#define INFO_BOX_V_SPACING 5
-//#define INFO_BOX_CONTENT_PADDING 8
-//#define ALL_CHANNELS_BUTTON_HEIGHT 60
+
 
 #define TFT_EXPIRATION_TIME     15 /* seconds */
 #define isTimeToDisplay()       (millis() - TFTTimeMarker > 1000)
@@ -21,13 +20,24 @@
 #define TFT_RADAR_V_THRESHOLD   50      /* metres */
 
 
-//enum {
-//    NO_GESTURE,  // нет движения
-//    SWIPE_LEFT,
-//    SWIPE_RIGHT,
-//    SWIPE_UP,
-//    SWIPE_DOWN
-//};
+//--------------------------------------------------------------------------------------------------------------------------------------
+#pragma pack(push,1)
+typedef struct
+{
+    uint32_t addr;                           // Адрес самолета
+    uint8_t Container_i;                     // Номер самолета в контейнере
+    uint8_t screen_side_width;               // Сторона экрана лево/право
+    uint8_t screen_side_height;              // Сторона экрана верх/низ
+    uint8_t base_alien[alien_count_base];    // Перечень в базе
+    uint8_t base_index;                      // Порядковый номер в базе
+    uint16_t alien_X;                        // Координата X
+    uint16_t alien_Y;                        // Координата Y
+} table_alien; // Таблица сторонних самолетов
+#pragma pack(pop)
+
+
+
+
 
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -79,6 +89,9 @@ private:
 
     float bearing_calc(float lat, float lon, float lat2, float lon2);
     double distance_form(double lat1, double long1, double lat2, double long2);
+    int alien_count();
+    bool coordinates_waiting();
+    void waiting_txt(TFTMenu* menuManager); // Вывод текста "ОПРЕДЕЛЕНИЕ МЕСТОПОЛОЖЕНИЯ"
     uint16_t getSpeed(uint16_t speed); //
     uint16_t getPowerVoltageAkk(uint16_t pin); // Контроль напряжения питания внутренних источников (аккумуляторов).
 	bool isActive;
@@ -98,7 +111,6 @@ private:
     short unsigned int iter = 0;              // used to calculate the frames per second (FPS)
     int winkel = 0;
     int angle = 0;
-   // int angle = 0;
     int angle_air = 0;
     int angle_tmp = -1;
     bool wifi_set = false;
@@ -107,8 +119,6 @@ private:
     int test_curse = 0;
     float latitude_old = 0;
     float longitude_old= 0;
-
-   
 
     //............................dont edit this
     int cx = 160;
@@ -164,29 +174,25 @@ private:
     int16_t form_x=0;
     int16_t form_y=0;
 
-   /* uint8_t up_down = 0;*/
+   /* uint8_t arrow_up_down = 0;*/
     word  txt_color = TFT_WHITE;
     String Current_version;
     
     bool this_altitude_array_countMax = false;
     int this_altitude_sum = 0;
     uint8_t this_altitude_array_count = 0;
-    int this_altitude_tmr = 0;
+    int this_alien_altitude_tmr = 0;
 
     bool this_speed_array_countMax = false;
     int this_speed_sum = 0;
     uint8_t this_speed_array_count = 0;
-    int this_speed_tmr = 0;
+    int this_alien_speed_tmr = 0;
+    int view_alien_count = 0;
 
+    table_alien set_table_alien[alien_count_base];
 
-
-
- /*   bool array_countMax = false;
-    int sum = 0;
-    uint8_t array_count = 0;
-    uint8_t array_size = 50;
-    int dimension_array[50];*/
-
+    bool text_call = false;
+    uint8_t  fix = false;
 
 };
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
