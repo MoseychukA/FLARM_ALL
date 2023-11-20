@@ -1,0 +1,12 @@
+
+*.hex binary
+*.bin binary
+*.elf binary
+*.map binary
+
+
+*.c eol=lf
+*.h eol=lf
+*.C eol=lf
+*.H eol=lf
+*.txt eol=lf
