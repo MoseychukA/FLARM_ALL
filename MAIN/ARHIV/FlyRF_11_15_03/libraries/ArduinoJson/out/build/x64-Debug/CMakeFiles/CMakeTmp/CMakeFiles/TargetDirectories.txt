@@ -1,0 +1,3 @@
+D:/1 GIT FLARM_ALL/MAIN/ARHIV/FlyRF_11_15_03/libraries/ArduinoJson/out/build/x64-Debug/CMakeFiles/CMakeTmp/CMakeFiles/cmTC_d5f68.dir
+D:/1 GIT FLARM_ALL/MAIN/ARHIV/FlyRF_11_15_03/libraries/ArduinoJson/out/build/x64-Debug/CMakeFiles/CMakeTmp/CMakeFiles/edit_cache.dir
+D:/1 GIT FLARM_ALL/MAIN/ARHIV/FlyRF_11_15_03/libraries/ArduinoJson/out/build/x64-Debug/CMakeFiles/CMakeTmp/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+bootloader_stm32f407vgt6_urov_cubemx_01\startup_stm32f407xx.o: startup_stm32f407xx.s

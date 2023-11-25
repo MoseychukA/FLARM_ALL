@@ -1,0 +1,1 @@
+stm32f407vet6_usb_host_flash_01\startup_stm32f407xx.o: startup_stm32f407xx.s

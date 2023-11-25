@@ -1,0 +1,1 @@
+msc_stm32f407zgt6_host_01\startup_stm32f407xx.o: startup_stm32f407xx.s

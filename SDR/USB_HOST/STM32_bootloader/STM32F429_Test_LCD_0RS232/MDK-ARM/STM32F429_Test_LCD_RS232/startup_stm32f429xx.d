@@ -1,0 +1,1 @@
+stm32f429_test_lcd_rs232\startup_stm32f429xx.o: startup_stm32f429xx.s

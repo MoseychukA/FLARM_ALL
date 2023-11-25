@@ -1,0 +1,11 @@
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/CMakeFiles/test.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/src/CMakeFiles/ArduinoJson.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/src/CMakeFiles/rebuild_cache.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/src/CMakeFiles/test.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/src/CMakeFiles/edit_cache.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/test/CMakeFiles/ArduinoJsonTests.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/test/CMakeFiles/rebuild_cache.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/test/CMakeFiles/test.dir
+D:/1 GIT FLARM_ALL/ARHIV/Soft/Demo2_RX_868/libraries/ArduinoJson/out/build/x64-Debug/test/CMakeFiles/edit_cache.dir

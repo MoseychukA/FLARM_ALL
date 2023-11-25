@@ -1,0 +1,193 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.31.0.0
+Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Alex Mos, NTMP, LIC=KRMW3-ANDAY-EVW1R-KT4FY-ZLP2I-QJC53
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.31.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.31.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
+Dialog DLL:      TCM.DLL V1.46.0.0
+ 
+<h2>Project:</h2>
+D:\1 GIT FLARM_ALL\SDR\USB_HOST\SDR_STM32F746NGH6\MDK-ARM\SDR_STM32F746NGH6.uvprojx
+Project File Date:  11/24/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'SDR_STM32F746NGH6'
+assembling startup_stm32f746xx.s...
+compiling fm_radio.c...
+..\Core\Src\fm_radio.c(82): error:  #20: identifier "PI" is undefined
+          pcm = pcm * 8.0f / PI; // scale from radians
+..\Core\Src\fm_radio.c(101): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+      HCD_HandleTypeDef* hhcd,
+..\Core\Src\fm_radio.c(103): error:  #20: identifier "HCD_URBStateTypeDef" is undefined
+      HCD_URBStateTypeDef urb_state) {
+..\Core\Src\fm_radio.c(111): error:  #20: identifier "URB_DONE" is undefined
+      if (urb_state == URB_DONE) {
+..\Core\Src\fm_radio.c: 0 warnings, 4 errors
+compiling usb_user_process.c...
+compiling libusb_port.c...
+../Core/Inc/libusb.h(959): error:  #20: identifier "ssize_t" is undefined
+  ssize_t LIBUSB_CALL libusb_get_device_list(libusb_context *ctx,
+../Core/Inc/libusb.h(1381): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Core/Inc/libusb.h(1386): warning:  #231-D: declaration is not visible outside of function
+      struct timeval *tv, int *completed);
+../Core/Inc/libusb.h(1390): warning:  #231-D: declaration is not visible outside of function
+      struct timeval *tv);
+../Core/Inc/libusb.h(1393): warning:  #231-D: declaration is not visible outside of function
+      struct timeval *tv);
+..\Core\Src\libusb_port.c(14): error:  #20: identifier "ssize_t" is undefined
+  ssize_t LIBUSB_CALL libusb_get_device_list(libusb_context* ctx,
+..\Core\Src\libusb_port.c: 4 warnings, 2 errors
+compiling stm32f7xx_it.c...
+compiling trace.c...
+compiling fm_radio_math_utils.c...
+compiling convenience.c...
+..\Core\Src\convenience.c(27): error:  #5: cannot open source input file "unistd.h": No such file or directory
+  #include <unistd.h>
+..\Core\Src\convenience.c: 0 warnings, 1 error
+compiling audio_player.c...
+compiling usbh_conf.c...
+..\Core\Src\usbh_conf.c(8): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  HCD_HandleTypeDef hhcd;
+..\Core\Src\usbh_conf.c(18): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_MspInit(HCD_HandleTypeDef *hhcd)
+..\Core\Src\usbh_conf.c(94): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_MspDeInit(HCD_HandleTypeDef *hhcd)
+..\Core\Src\usbh_conf.c(114): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_SOF_Callback(HCD_HandleTypeDef *hhcd)
+..\Core\Src\usbh_conf.c(124): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_Connect_Callback(HCD_HandleTypeDef *hhcd)
+..\Core\Src\usbh_conf.c(134): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_Disconnect_Callback(HCD_HandleTypeDef *hhcd)
+..\Core\Src\usbh_conf.c(156): error:  #20: identifier "HCD_PHY_ULPI" is undefined
+    hhcd.Init.phy_itface = HCD_PHY_ULPI;
+..\Core\Src\usbh_conf.c(158): error:  #20: identifier "HCD_SPEED_HIGH" is undefined
+    hhcd.Init.speed = HCD_SPEED_HIGH;
+..\Core\Src\usbh_conf.c(166): warning:  #223-D: function "HAL_HCD_Init" declared implicitly
+    HAL_HCD_Init(&hhcd);
+..\Core\Src\usbh_conf.c(168): warning:  #223-D: function "HAL_HCD_GetCurrentFrame" declared implicitly
+    USBH_LL_SetTimer(phost, HAL_HCD_GetCurrentFrame(&hhcd));
+..\Core\Src\usbh_conf.c(180): warning:  #223-D: function "HAL_HCD_DeInit" declared implicitly
+    HAL_HCD_DeInit(phost->pData);
+..\Core\Src\usbh_conf.c(191): warning:  #223-D: function "HAL_HCD_Start" declared implicitly
+    HAL_HCD_Start(phost->pData);
+..\Core\Src\usbh_conf.c(202): warning:  #223-D: function "HAL_HCD_Stop" declared implicitly
+    HAL_HCD_Stop(phost->pData);
+..\Core\Src\usbh_conf.c(215): warning:  #223-D: function "HAL_HCD_GetCurrentSpeed" declared implicitly
+    switch (HAL_HCD_GetCurrentSpeed(phost->pData))
+..\Core\Src\usbh_conf.c(243): warning:  #223-D: function "HAL_HCD_ResetPort" declared implicitly
+    HAL_HCD_ResetPort(phost->pData);
+..\Core\Src\usbh_conf.c(255): warning:  #223-D: function "HAL_HCD_HC_GetXferCount" declared implicitly
+    return HAL_HCD_HC_GetXferCount(phost->pData, pipe);
+..\Core\Src\usbh_conf.c(277): warning:  #223-D: function "HAL_HCD_HC_Init" declared implicitly
+    USBH_StatusTypeDef status = HAL_HCD_HC_Init(phost->pData,
+..\Core\Src\usbh_conf.c(277): warning:  #188-D: enumerated type mixed with another type
+    USBH_StatusTypeDef status = HAL_HCD_HC_Init(phost->pData,
+..\Core\Src\usbh_conf.c(295): warning:  #223-D: function "HAL_HCD_HC_Halt" declared implicitly
+    HAL_HCD_HC_Halt(phost->pData, pipe);
+..\Core\Src\usbh_conf.c(335): warning:  #223-D: function "HAL_HCD_HC_SubmitRequest" declared implicitly
+    HAL_HCD_HC_SubmitRequest(phost->pData,
+..\Core\Src\usbh_conf.c(362): warning:  #223-D: function "HAL_HCD_HC_GetURBState" declared implicitly
+    return (USBH_URBStateTypeDef)HAL_HCD_HC_GetURBState (phost->pData, pipe);
+..\Core\Src\usbh_conf.c: 13 warnings, 8 errors
+compiling main.c...
+compiling stm32f7xx_hal_msp.c...
+compiling exceptions.c...
+..\Core\Src\exceptions.c(3): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  extern HCD_HandleTypeDef hhcd;
+..\Core\Src\exceptions.c(4): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  extern SAI_HandleTypeDef haudio_out_sai;
+..\Core\Src\exceptions.c(5): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  extern SAI_HandleTypeDef haudio_in_sai;
+..\Core\Src\exceptions.c(48): warning:  #223-D: function "HAL_HCD_IRQHandler" declared implicitly
+      HAL_HCD_IRQHandler(&hhcd);
+..\Core\Src\exceptions.c: 1 warning, 3 errors
+compiling usbh_core.c...
+compiling usbh_ioreq.c...
+compiling tuner_e4k.c...
+..\Core\Src\tuner_e4k.c(446): warning:  #68-D: integer conversion resulted in a change of sign
+  		return -EINVAL;
+..\Core\Src\tuner_e4k.c(374): warning:  #177-D: function "is_fvco_valid"  was declared but never referenced
+  static int is_fvco_valid(uint32_t fvco_z)
+..\Core\Src\tuner_e4k.c(396): warning:  #177-D: function "is_z_valid"  was declared but never referenced
+  static int is_z_valid(uint32_t z)
+..\Core\Src\tuner_e4k.c(407): warning:  #177-D: function "use_3ph_mixing"  was declared but never referenced
+  static int use_3ph_mixing(uint32_t flo)
+..\Core\Src\tuner_e4k.c: 4 warnings, 0 errors
+compiling usbh_conf_template.c...
+compiling usbh_ctlreq.c...
+compiling usbh_pipes.c...
+compiling tuner_fc0012.c...
+compiling tuner_fc0013.c...
+compiling stm32f7xx_hal_tim.c...
+compiling stm32f7xx_hal_tim_ex.c...
+compiling stm32f7xx_hal_cortex.c...
+compiling tuner_r82xx.c...
+..\Core\Src\tuner_r82xx.c(419): warning:  #177-D: variable "i"  was declared but never referenced
+  	int rc, i;
+..\Core\Src\tuner_r82xx.c(420): warning:  #177-D: variable "sleep_time"  was declared but never referenced
+  	unsigned sleep_time = 10000;
+..\Core\Src\tuner_r82xx.c(1232): warning:  #188-D: enumerated type mixed with another type
+  	priv->type = -1;
+..\Core\Src\tuner_r82xx.c(1232): warning:  #68-D: integer conversion resulted in a change of sign
+  	priv->type = -1;
+..\Core\Src\tuner_r82xx.c(980): warning:  #177-D: function "r82xx_read_gain"  was declared but never referenced
+  static int r82xx_read_gain(struct r82xx_priv *priv)
+..\Core\Src\tuner_r82xx.c(998): warning:  #177-D: variable "r82xx_vga_gain_steps"  was declared but never referenced
+  static const int r82xx_vga_gain_steps[]  = {
+..\Core\Src\tuner_r82xx.c(1241): warning:  #177-D: function "r82xx_xtal_check"  was declared but never referenced
+  static int r82xx_xtal_check(struct r82xx_priv *priv)
+..\Core\Src\tuner_r82xx.c: 7 warnings, 0 errors
+compiling stm32f7xx_hal_flash_ex.c...
+compiling stm32f7xx_hal_flash.c...
+compiling stm32f7xx_hal_gpio.c...
+compiling tuner_fc2580.c...
+compiling stm32f7xx_hal_rcc.c...
+compiling stm32f7xx_hal_rcc_ex.c...
+compiling stm32f7xx_hal_pwr_ex.c...
+compiling stm32f7xx_hal_dma.c...
+compiling stm32f7xx_hal.c...
+compiling stm32f7xx_hal_dma_ex.c...
+compiling stm32f7xx_hal_pwr.c...
+compiling stm32f7xx_hal_i2c_ex.c...
+compiling system_stm32f7xx.c...
+compiling stm32f7xx_hal_exti.c...
+compiling stm32f7xx_hal_i2c.c...
+"SDR_STM32F746NGH6\SDR_STM32F746NGH6.axf" - 18 Error(s), 29 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.7.0.pack
+                ARM.CMSIS.5.7.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.4.0
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_SDR_STM32F746NGH6
+  C:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.4.0
+      Include file:  CMSIS\Core\Include\tz_context.h
+Target not created.
+Build Time Elapsed:  00:00:18
+</pre>
+</body>
+</html>

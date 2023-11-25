@@ -1,0 +1,1172 @@
+Dependencies for Project 'Bootloader_STM32F407ZGT6_SDIO_CubeMX_7', Target 'Bootloader_STM32F407ZGT6_SDIO_CubeMX_7': (DO NOT MODIFY !)
+CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
+F (startup_stm32f407xx.s)(0x655E4E44)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 531" --pd "_RTE_ SETA 1" --pd "STM32F407xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f407xx.lst --xref -o bootloader_stm32f407zgt6_sdio_cubemx_7\startup_stm32f407xx.o --depend bootloader_stm32f407zgt6_sdio_cubemx_7\startup_stm32f407xx.d)
+F (..\Src\stm32f407black_zgt6.c)(0x5FA814E1)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f407black_zgt6.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f407black_zgt6.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f407black_zgt6.d)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/main.h)(0x655DD801)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+F (..\Src\command.c)(0x5FA81356)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\command.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\command.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\command.d)
+I (../Inc/command.h)(0x5FA811CE)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/main.h)(0x655DD801)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/fatfs.h)(0x655DD800)
+I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
+I (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x64E9DE85)
+I (../Inc/sd_diskio.h)(0x655DD800)
+F (..\Src\flash_if.c)(0x5FA169A1)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\flash_if.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\flash_if.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\flash_if.d)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+F (../Src/main.c)(0x655DD801)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\main.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\main.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\main.d)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/fatfs.h)(0x655DD800)
+I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
+I (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x64E9DE85)
+I (../Inc/sd_diskio.h)(0x655DD800)
+F (../Src/bsp_driver_sd.c)(0x655DD800)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\bsp_driver_sd.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\bsp_driver_sd.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\bsp_driver_sd.d)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Src/sd_diskio.c)(0x655DD800)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\sd_diskio.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\sd_diskio.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\sd_diskio.d)
+I (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
+I (../Inc/sd_diskio.h)(0x655DD800)
+F (../Src/fatfs.c)(0x655DD800)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\fatfs.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\fatfs.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\fatfs.d)
+I (../Inc/fatfs.h)(0x655DD800)
+I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
+I (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x64E9DE85)
+I (../Inc/sd_diskio.h)(0x655DD800)
+F (../Src/stm32f4xx_it.c)(0x655DD800)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_it.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_it.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_it.d)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/stm32f4xx_it.h)(0x655DD800)
+F (../Src/stm32f4xx_hal_msp.c)(0x655DD800)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_msp.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_msp.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_msp.d)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+F (../Src/system_stm32f4xx.c)(0x5F8AB47E)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\system_stm32f4xx.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\system_stm32f4xx.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\system_stm32f4xx.d)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_rcc.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_rcc.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_rcc.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_rcc_ex.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_rcc_ex.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_rcc_ex.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash_ex.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash_ex.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash_ex.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash_ramfunc.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash_ramfunc.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_flash_ramfunc.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_gpio.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_gpio.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_gpio.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_dma_ex.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_dma_ex.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_dma_ex.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_dma.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_dma.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_dma.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_pwr.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_pwr.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_pwr.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_pwr_ex.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_pwr_ex.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_pwr_ex.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_cortex.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_cortex.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_cortex.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_exti.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_exti.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_exti.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_ll_sdmmc.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_ll_sdmmc.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_ll_sdmmc.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_sd.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_sd.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_sd.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_tim.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_tim.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_tim.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_tim_ex.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_tim_ex.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_tim_ex.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c)(0x64E9DEA2)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_uart.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_uart.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\stm32f4xx_hal_uart.d)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+F (../Middlewares/Third_Party/FatFs/src/diskio.c)(0x64E9DE85)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\diskio.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\diskio.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\diskio.d)
+I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
+F (../Middlewares/Third_Party/FatFs/src/ff.c)(0x64E9DE85)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\ff.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\ff.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\ff.d)
+I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
+I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x64E9DE85)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5EC7BC4C)
+F (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.c)(0x64E9DE85)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\ff_gen_drv.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\ff_gen_drv.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\ff_gen_drv.d)
+I (../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/diskio.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/integer.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/ff.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
+F (../Middlewares/Third_Party/FatFs/src/option/syscall.c)(0x64E9DE85)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\syscall.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\syscall.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\syscall.d)
+I (../Middlewares/Third_Party/FatFs/src/option/../ff.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/option/../integer.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
+F (../Middlewares/Third_Party/FatFs/src/option/ccsbcs.c)(0x64E9DE85)(--c99 -c --cpu Cortex-M4.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FatFs/src -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Bootloader_STM32F407ZGT6_SDIO_CubeMX_7-IC:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o bootloader_stm32f407zgt6_sdio_cubemx_7\ccsbcs.o --omf_browse bootloader_stm32f407zgt6_sdio_cubemx_7\ccsbcs.crf --depend bootloader_stm32f407zgt6_sdio_cubemx_7\ccsbcs.d)
+I (../Middlewares/Third_Party/FatFs/src/option/../ff.h)(0x64E9DE85)
+I (../Middlewares/Third_Party/FatFs/src/option/../integer.h)(0x64E9DE85)
+I (../Inc/ffconf.h)(0x655DD800)
+I (../Inc/main.h)(0x655DD801)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x64E9DEA2)
+I (../Inc/stm32f4xx_hal_conf.h)(0x655DD800)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x64E9DEA2)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x64E9DE81)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x64E9DE83)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x64E9DE83)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x64E9DE81)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x64E9DEA2)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x5EC7BC4C)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h)(0x64E9DEA2)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x64E9DEA2)
+I (../Inc/stm32f407black_zgt6.h)(0x5F9BA8B9)
+I (../Inc/flash_if.h)(0x5F9C235A)
+I (../Inc/command.h)(0x5FA811CE)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC7BC54)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC7BC4C)
+I (../Inc/bsp_driver_sd.h)(0x655DD800)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC7BC4C)
