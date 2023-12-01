@@ -1,0 +1,26 @@
+--cpu=Cortex-M4.fp.sp
+"sdr_stm32f407vet6_usb_04\startup_stm32f407xx.o"
+"sdr_stm32f407vet6_usb_04\main.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_it.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_msp.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_tim.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_tim_ex.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_uart.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_rcc.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_rcc_ex.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_flash.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_flash_ex.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_flash_ramfunc.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_gpio.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_dma_ex.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_dma.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_pwr.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_pwr_ex.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_cortex.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal.o"
+"sdr_stm32f407vet6_usb_04\stm32f4xx_hal_exti.o"
+"sdr_stm32f407vet6_usb_04\system_stm32f4xx.o"
+--library_type=microlib --strict --scatter "SDR_STM32F407VET6_USB_04\SDR_STM32F407VET6_USB_04.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "SDR_STM32F407VET6_USB_04.map" -o SDR_STM32F407VET6_USB_04\SDR_STM32F407VET6_USB_04.axf

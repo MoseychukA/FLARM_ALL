@@ -34,6 +34,7 @@ usb_device_hid\usbd_ioreq.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_f
 usb_device_hid\usbd_ioreq.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
 usb_device_hid\usbd_ioreq.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 usb_device_hid\usbd_ioreq.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+usb_device_hid\usbd_ioreq.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 usb_device_hid\usbd_ioreq.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h
 usb_device_hid\usbd_ioreq.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h
 usb_device_hid\usbd_ioreq.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h

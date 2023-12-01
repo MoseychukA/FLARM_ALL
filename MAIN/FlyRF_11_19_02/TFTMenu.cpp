@@ -1324,13 +1324,14 @@ void TFTMenu::resetIdleTimer()
      esp_task_wdt_reset();
      vTaskDelay(4000);
 
+/*
      for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
          if (Container[i].addr && (ThisAircraft.timestamp - Container[i].timestamp) > ENTRY_EXPIRATION_TIME) {
              Container[i] = EmptyFO;
          }
      }
 
-
+*/
 
 
      esp_task_wdt_reset();

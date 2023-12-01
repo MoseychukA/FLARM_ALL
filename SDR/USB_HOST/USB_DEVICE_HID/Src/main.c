@@ -67,20 +67,20 @@ static void GetPointerData(uint8_t*pbuf)
 	static uint8_t cnt=0; //счетчик циклов
 	static uint8_t drct=0;//направление курсора
 	int8_t x=0,y=0,but=0;
-//	if((cnt<20)&&(drct==0))
-//	{
-//		x=CURSOR_STEP;
-//		y=CURSOR_STEP;
-//		cnt++;
-//	}
-//	else if (cnt>0)
-//	{
-//		drct=1;
-//		x=-CURSOR_STEP;
-//		y=-CURSOR_STEP;
-//		cnt--;
-//	}
-//	else drct=0;
+	if((cnt<20)&&(drct==0))
+	{
+		x=CURSOR_STEP;
+		y=CURSOR_STEP;
+		cnt++;
+	}
+	else if (cnt>0)
+	{
+		drct=1;
+		x=-CURSOR_STEP;
+		y=-CURSOR_STEP;
+		cnt--;
+	}
+	else drct=0;
 	if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_0)==GPIO_PIN_SET)
 	{
 		but=2;

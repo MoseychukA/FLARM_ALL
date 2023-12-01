@@ -24,7 +24,7 @@
 #include <stdlib.h>
 
 #ifndef _WIN32
-#include <unistd.h>
+//#include <unistd.h>
 #else
 #include <windows.h>
 #include <fcntl.h>

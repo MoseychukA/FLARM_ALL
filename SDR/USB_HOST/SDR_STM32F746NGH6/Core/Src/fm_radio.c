@@ -1,4 +1,5 @@
 #include "fm_radio.h"
+#include "stm32f7xx_hal_hcd.h"
 
 static struct FMRadio self;
 

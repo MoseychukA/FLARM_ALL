@@ -3,7 +3,7 @@
 
 #include "stdint.h"
 #include "main.h"
-//#include "arm_math.h"
+#include "arm_math.h"
 #include "convenience.h"
 #include "rtl-sdr.h"
 #include "audio_player.h"

@@ -1,9 +1,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
-//#include "stm32746g_discovery.h"
+#include "stm32746g_discovery.h"
 #include "usbh_core.h"
 #include "stdio.h"
 #include "trace.h"
+#include "stm32f7xx_hal_hcd.h"
 
 HCD_HandleTypeDef hhcd;
 

@@ -1,4 +1,6 @@
 #include "exceptions.h"
+#include "stm32f7xx_hal_hcd.h"
+#include "stm32f7xx_hal_sai.h"
 
 extern HCD_HandleTypeDef hhcd;
 extern SAI_HandleTypeDef haudio_out_sai;

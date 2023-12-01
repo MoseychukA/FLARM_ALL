@@ -3,6 +3,7 @@
 void trace_itm_print(uint8_t channel, uint32_t data) {
 
     // send data with smallest possible channel buffer
+	  //отправлять данные с наименьшим возможным буфером канала
     if (data > 0xFFFF) {
         while (!ITM->PORT[channel].u32 && (ITM->TCR & ITM_TCR_BUSY_Msk));
 
