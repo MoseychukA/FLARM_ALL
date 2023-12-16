@@ -46,6 +46,7 @@ void Error_Handler(void);
 void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
+
 /* USER CODE END 0 */
 
 /* USER CODE BEGIN PFP */
@@ -57,6 +58,7 @@ USBD_StatusTypeDef USBD_Get_USB_Status(HAL_StatusTypeDef hal_status);
 /* Private functions ---------------------------------------------------------*/
 
 /* USER CODE BEGIN 1 */
+
 /* USER CODE END 1 */
 
 /*******************************************************************************
@@ -231,7 +233,7 @@ void HAL_PCD_SuspendCallback(PCD_HandleTypeDef *hpcd)
   /* USER CODE BEGIN 2 */
   if (hpcd->Init.low_power_enable)
   {
-    /* Set SLEEPDEEP bit and SleepOnExit of Cortex System Control Register */
+    /* Set SLEEPDEEP bit and SleepOnExit of Cortex System Control Register. */
     SCB->SCR |= (uint32_t)((uint32_t)(SCB_SCR_SLEEPDEEP_Msk | SCB_SCR_SLEEPONEXIT_Msk));
   }
   /* USER CODE END 2 */
@@ -250,6 +252,7 @@ void HAL_PCD_ResumeCallback(PCD_HandleTypeDef *hpcd)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
   /* USER CODE BEGIN 3 */
+
   /* USER CODE END 3 */
   USBD_LL_Resume((USBD_HandleTypeDef*)hpcd->pData);
 }

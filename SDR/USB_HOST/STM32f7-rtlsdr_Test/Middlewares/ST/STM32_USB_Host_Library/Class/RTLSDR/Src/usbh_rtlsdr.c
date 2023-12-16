@@ -970,7 +970,8 @@ USBH_StatusTypeDef RTLSDR_probe_tuners(USBH_HandleTypeDef *phost) {
   RTLSDR_HandleTypeDef *RTLSDR_Handle =  
     (RTLSDR_HandleTypeDef*) phost->pActiveClass->pData; 
   
-  switch (RTLSDR_Handle->probeState) {
+  switch (RTLSDR_Handle->probeState)
+  {
     case RTLSDR_PROBE_E4000:
         uStatus = RTLSDR_i2c_read_reg(phost, E4K_I2C_ADDR, E4K_CHECK_ADDR);
         if (uStatus == USBH_OK || uStatus == USBH_NOT_SUPPORTED) {
@@ -1108,7 +1109,7 @@ static USBH_StatusTypeDef USBH_RTLSDR_Process (USBH_HandleTypeDef *phost)
   */
 static USBH_StatusTypeDef USBH_RTLSDR_SOFProcess (USBH_HandleTypeDef *phost)
 {
-  //USBH_DbgLog("Enter RTLSDR_SOFProcess");
+  USBH_DbgLog("Enter RTLSDR_SOFProcess");
   return USBH_OK;  
 }
 

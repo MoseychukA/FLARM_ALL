@@ -67,8 +67,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbh_core.h"
-#include "usbh_def.h"
-
 //#include "stm32746g_discovery.h"
 //#include "stm32746g_discovery_lcd.h"
 //#include "stm32746g_discovery_sdram.h"
@@ -76,9 +74,6 @@
 /** @addtogroup USBH_LIB
 * @{
 */
-
-
-
 
 /** @addtogroup USBH_CLASS
 * @{
@@ -248,7 +243,7 @@ typedef struct _RTLSDR_Process
   
   
   /* TIM3 handle declaration */
-//extern  TIM_HandleTypeDef    TimHandle;
+//!!  TIM_HandleTypeDef    TimHandle;
 
   /* Timer 3 Prescaler declaration */
   uint32_t uwPrescalerValue;
@@ -305,10 +300,10 @@ enum RTLSDR_USB_REG {
 
 enum RTLSDR_SYS_REG {
 	DEMOD_CTL		= 0x3000,
-	GPO			= 0x3001,
-	GPI			= 0x3002,
+	GPO			    = 0x3001,
+	GPI			    = 0x3002,
 	GPOE			= 0x3003,
-	GPD			= 0x3004,
+	GPD			    = 0x3004,
 	SYSINTE			= 0x3005,
 	SYSINTS			= 0x3006,
 	GP_CFG0			= 0x3007,
@@ -320,12 +315,12 @@ enum RTLSDR_SYS_REG {
 };
  
 enum RTLSDR_BLOCKS {
-	DEMODB		= 0,
+	DEMODB		    = 0,
 	USBB			= 1,
 	SYSB			= 2,
 	TUNB			= 3,
 	ROMB			= 4,
-	IRB			  = 5,
+	IRB			    = 5,
 	IICB			= 6,
 };
 

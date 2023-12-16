@@ -1,0 +1,31 @@
+Собрал проект. Но программа зависает при вызове GUI_Init ();
+
+в версии 5.22 от Кейла я получил аналогичную проблему. Решилось в этом месте: GUI_X_RTX.c
+Код:
+void GUI_X_InitOS(void)    {;/* os_sem_init(GUI_Semaphore, 1);*/ }
+void GUI_X_Unlock(void)    { os_sem_send(GUI_Semaphore); }
+void GUI_X_Lock(void)      { os_sem_wait(GUI_Semaphore, 0xFFFF); }
+U32  GUI_X_GetTaskId(void) { return os_tsk_self(); }
+Правильная инициализация семафора. Мой код по Keil RTX. 
+и GUIConf.c
+Код:
+#include <rtl.h>
+#include "GUI.h"
+
+#define GUI_NUMBYTES  (1024 * 32)    // x KByte
+#define GUI_BLOCKSIZE 0x80
+
+U32 GUI_Mem[GUI_NUMBYTES / 4];
+OS_SEM GUI_Semaphore;
+
+void GUI_X_Config(void)
+{
+  os_sem_init(GUI_Semaphore, 1);
+  
+  GUI_ALLOC_AssignMemory(GUI_Mem, GUI_NUMBYTES);
+  GUI_ALLOC_SetAvBlockSize(GUI_BLOCKSIZE);
+  //
+  // Set default font
+  //
+  GUI_SetDefaultFont(GUI_FONT_6X8);
+}

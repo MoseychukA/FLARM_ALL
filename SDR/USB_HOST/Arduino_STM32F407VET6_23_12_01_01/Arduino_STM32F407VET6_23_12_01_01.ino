@@ -2,6 +2,7 @@
 
 
 */
+
 #include <GxTFT.h> // Hardware-specific library
 #define TFT_Class GxTFT
 #include <GxIO/STM32GENERIC/GxIO_STM32F4_FSMC/GxIO_STM32F4_FSMC.h>
@@ -16,6 +17,13 @@ TFT_Class tft(io, controller, 320, 240); // landscape 240x320
 #define yield()
 #endif
 
+//#include <stdio.h>                // define I/O functions
+//#include <Arduino.h>              // define I/O functions
+//
+//#include "main.h"
+//#include "usb_host.h"
+
+//USBH_HandleTypeDef hUsbHostFS;  //hUSBHost
 
 
 

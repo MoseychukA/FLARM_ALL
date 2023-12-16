@@ -32,15 +32,7 @@ extern "C" {
   * @{
   */
 	
-#define USBH_MAX_NUM_ENDPOINTS_SDR                2
-#define USBH_MAX_NUM_INTERFACES_SDR               2
-#define USBH_MAX_NUM_CONFIGURATION_SDR            1
-#define USBH_MAX_NUM_SUPPORTED_CLASS_SDR          1
-#define USBH_KEEP_CFG_DESCRIPTOR_SDR              0
-#define USBH_MAX_SIZE_CONFIGURATION_SDR           0x200
-#define USBH_MAX_DATA_BUFFER_SDR                  0x200
-#define USBH_DEBUG_LEVEL_SDR                      3
-#define USBH_USE_OS_SDR                           0
+
 
 /** @addtogroup USBH_LIB_CORE
   * @{
@@ -106,7 +98,7 @@ extern "C" {
 #define LE64S(addr)       ((int64_t)(LE64((addr))))
 
 #ifndef USBH_MAX_DATA_BUFFER
-//#define USBH_MAX_DATA_BUFFER                               0x400U
+#define USBH_MAX_DATA_BUFFER                               0x400U
 #endif
 
 #define USBH_MAX_EP_PACKET_SIZE                            0x400U
@@ -299,7 +291,7 @@ typedef struct _InterfaceDescriptor
   uint8_t bInterfaceSubClass;   /* Subclass Code (Assigned by USB Org) */
   uint8_t bInterfaceProtocol;   /* Protocol Code */
   uint8_t iInterface;           /* Index of String Descriptor Describing this interface */
-  USBH_EpDescTypeDef               Ep_Desc[USBH_MAX_NUM_ENDPOINTS_SDR];
+  USBH_EpDescTypeDef               Ep_Desc[USBH_MAX_NUM_ENDPOINTS];
 }
 USBH_InterfaceDescTypeDef;
 
@@ -314,7 +306,7 @@ typedef struct _ConfigurationDescriptor
   uint8_t   iConfiguration;       /*Index of String Descriptor Describing this configuration */
   uint8_t   bmAttributes;         /* D7 Bus Powered , D6 Self Powered, D5 Remote Wakeup , D4..0 Reserved (0)*/
   uint8_t   bMaxPower;            /*Maximum Power Consumption */
-  USBH_InterfaceDescTypeDef        Itf_Desc[USBH_MAX_NUM_INTERFACES_SDR];
+  USBH_InterfaceDescTypeDef        Itf_Desc[USBH_MAX_NUM_INTERFACES];
 }
 USBH_CfgDescTypeDef;
 
@@ -441,8 +433,8 @@ typedef struct
 /* Attached device structure */
 typedef struct
 {
-  uint8_t                           CfgDesc_Raw[USBH_MAX_SIZE_CONFIGURATION_SDR];
-  uint8_t                           Data[USBH_MAX_DATA_BUFFER_SDR];
+  uint8_t                           CfgDesc_Raw[USBH_MAX_SIZE_CONFIGURATION];
+  uint8_t                           Data[USBH_MAX_DATA_BUFFER];
   uint8_t                           address;
   uint8_t                           speed;
   uint8_t                           EnumCnt;
@@ -475,11 +467,11 @@ typedef struct
 typedef struct _USBH_HandleTypeDef
 {
   __IO HOST_StateTypeDef     gState;       /*  Host State Machine Value */
-  ENUM_StateTypeDef     EnumState;         /* Enumeration state Machine */
+  ENUM_StateTypeDef     EnumState;    /* Enumeration state Machine */
   CMD_StateTypeDef      RequestState;
   USBH_CtrlTypeDef      Control;
   USBH_DeviceTypeDef    device;
-  USBH_ClassTypeDef    *pClass[USBH_MAX_NUM_SUPPORTED_CLASS_SDR];
+  USBH_ClassTypeDef    *pClass[USBH_MAX_NUM_SUPPORTED_CLASS];
   USBH_ClassTypeDef    *pActiveClass;
   uint32_t              ClassNumber;
   uint32_t              Pipes[16];

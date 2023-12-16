@@ -1,0 +1,980 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.31.0.0
+Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Alex Mos, NTMP, LIC=KRMW3-ANDAY-EVW1R-KT4FY-ZLP2I-QJC53
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.31.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.31.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
+Dialog DLL:      TCM.DLL V1.46.0.0
+ 
+<h2>Project:</h2>
+D:\1 GIT FLARM_ALL\SDR\USB_HOST\SDR_STM32F746NGH6_Keil\SDR_STM32F746NGH6_Keil_01\MDK-ARM\SDR_STM32F746NGH6_Keil_01.uvprojx
+Project File Date:  12/12/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'SDR_STM32F746NGH6_Keil_01'
+assembling startup_stm32f746xx.s...
+compiling stm32f7xx_hal_flash.c...
+compiling stm32f7xx_hal_tim_ex.c...
+compiling stm32f7xx_hal_rcc_ex.c...
+compiling stm32f7xx_hal_gpio.c...
+compiling stm32f7xx_it.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(134): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(138): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(139): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(243): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(244): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(245): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Inc\usbh_rtlsdr.h(246): error:  #20: identifier "TIM_HandleTypeDef" is undefined
+    TIM_HandleTypeDef    TimHandle;
+../Core/Src/stm32f7xx_it.c(37): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  extern HCD_HandleTypeDef hhcd;
+../Core/Src/stm32f7xx_it.c(227): warning:  #223-D: function "HAL_HCD_IRQHandler" declared implicitly
+    HAL_HCD_IRQHandler(&hhcd);
+../Core/Src/stm32f7xx_it.c: 1 warning, 8 errors
+compiling stm32f7xx_hal_cortex.c...
+compiling main.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(134): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(138): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(139): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(243): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(244): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(245): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Inc\usbh_rtlsdr.h(246): error:  #20: identifier "TIM_HandleTypeDef" is undefined
+    TIM_HandleTypeDef    TimHandle;
+../Core/Src/main.c(69): warning:  #177-D: variable "RTLSDR_Handle"  was declared but never referenced
+    RTLSDR_HandleTypeDef *RTLSDR_Handle =
+../Core/Src/main.c: 1 warning, 7 errors
+compiling stm32f7xx_hal_tim.c...
+compiling stm32f7xx_hal_flash_ex.c...
+compiling stm32f7xx_hal_msp.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(134): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(138): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(139): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(243): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(244): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(245): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Inc\usbh_rtlsdr.h(246): error:  #20: identifier "TIM_HandleTypeDef" is undefined
+    TIM_HandleTypeDef    TimHandle;
+../Core/Src/stm32f7xx_hal_msp.c: 0 warnings, 7 errors
+compiling stm32f7xx_hal_rcc.c...
+compiling stm32f7xx_hal_adc.c...
+compiling stm32f7xx_hal.c...
+compiling stm32f7xx_hal_dma.c...
+compiling stm32f7xx_hal_adc_ex.c...
+compiling stm32f7xx_hal_exti.c...
+compiling stm32f7xx_hal_pwr.c...
+compiling stm32f7xx_hal_can.c...
+compiling stm32f7xx_hal_i2c.c...
+compiling stm32f7xx_hal_dma_ex.c...
+compiling stm32f7xx_hal_cec.c...
+compiling stm32f7xx_hal_i2c_ex.c...
+compiling stm32f7xx_hal_pwr_ex.c...
+compiling stm32f7xx_hal_dma2d.c...
+compiling stm32f7xx_hal_dcmi_ex.c...
+compiling stm32f7xx_hal_dfsdm.c...
+compiling stm32f7xx_hal_crc.c...
+compiling stm32f7xx_hal_dac_ex.c...
+compiling stm32f7xx_hal_cryp_ex.c...
+compiling stm32f7xx_hal_crc_ex.c...
+compiling stm32f7xx_hal_dac.c...
+compiling stm32f7xx_hal_eth.c...
+compiling stm32f7xx_hal_cryp.c...
+compiling stm32f7xx_hal_i2s.c...
+compiling stm32f7xx_hal_hash.c...
+compiling stm32f7xx_hal_irda.c...
+compiling stm32f7xx_hal_dcmi.c...
+compiling stm32f7xx_hal_dsi.c...
+compiling stm32f7xx_hal_hash_ex.c...
+compiling stm32f7xx_hal_hcd.c...
+compiling stm32f7xx_hal_msp_template.c...
+compiling stm32f7xx_hal_iwdg.c...
+compiling stm32f7xx_hal_jpeg.c...
+compiling stm32f7xx_hal_lptim.c...
+compiling stm32f7xx_hal_nor.c...
+compiling stm32f7xx_hal_mmc.c...
+compiling stm32f7xx_hal_mdios.c...
+compiling stm32f7xx_hal_ltdc_ex.c...
+compiling stm32f7xx_hal_pcd.c...
+compiling stm32f7xx_hal_nand.c...
+compiling stm32f7xx_hal_ltdc.c...
+compiling stm32f7xx_hal_pcd_ex.c...
+compiling stm32f7xx_hal_qspi.c...
+compiling stm32f7xx_hal_rng.c...
+compiling stm32f7xx_hal_sai.c...
+compiling stm32f7xx_hal_smartcard_ex.c...
+compiling stm32f7xx_hal_smartcard.c...
+compiling stm32f7xx_hal_sd.c...
+compiling stm32f7xx_hal_sdram.c...
+compiling stm32f7xx_hal_smbus.c...
+compiling stm32f7xx_hal_rtc.c...
+compiling stm32f7xx_hal_rtc_ex.c...
+compiling stm32f7xx_hal_sai_ex.c...
+compiling stm32f7xx_hal_sram.c...
+compiling stm32f7xx_hal_timebase_rtc_alarm_template.c...
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(81): error:  #20: identifier "RTC_HandleTypeDef" is undefined
+  RTC_HandleTypeDef        hRTC_Handle;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(149): error:  #20: identifier "RTC_HOURFORMAT_24" is undefined
+      hRTC_Handle.Init.HourFormat = RTC_HOURFORMAT_24;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(152): error:  #20: identifier "RTC_OUTPUT_DISABLE" is undefined
+      hRTC_Handle.Init.OutPut = RTC_OUTPUT_DISABLE;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(153): error:  #20: identifier "RTC_OUTPUT_POLARITY_HIGH" is undefined
+      hRTC_Handle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(154): error:  #20: identifier "RTC_OUTPUT_TYPE_OPENDRAIN" is undefined
+      hRTC_Handle.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(155): warning:  #223-D: function "HAL_RTC_Init" declared implicitly
+      status = HAL_RTC_Init(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(155): warning:  #188-D: enumerated type mixed with another type
+      status = HAL_RTC_Init(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(160): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_DISABLE" declared implicitly
+      __HAL_RTC_WRITEPROTECTION_DISABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(163): warning:  #223-D: function "__HAL_RTC_ALARMA_DISABLE" declared implicitly
+      __HAL_RTC_ALARMA_DISABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(166): warning:  #223-D: function "__HAL_RTC_ALARM_CLEAR_FLAG" declared implicitly
+      __HAL_RTC_ALARM_CLEAR_FLAG(&hRTC_Handle, RTC_FLAG_ALRAF);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(166): error:  #20: identifier "RTC_FLAG_ALRAF" is undefined
+      __HAL_RTC_ALARM_CLEAR_FLAG(&hRTC_Handle, RTC_FLAG_ALRAF);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(170): warning:  #223-D: function "__HAL_RTC_ALARM_GET_FLAG" declared implicitly
+      while (__HAL_RTC_ALARM_GET_FLAG(&hRTC_Handle, RTC_FLAG_ALRAWF) == RESET)
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(170): error:  #20: identifier "RTC_FLAG_ALRAWF" is undefined
+      while (__HAL_RTC_ALARM_GET_FLAG(&hRTC_Handle, RTC_FLAG_ALRAWF) == RESET)
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(183): warning:  #223-D: function "__HAL_RTC_ALARMA_ENABLE" declared implicitly
+      __HAL_RTC_ALARMA_ENABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(186): warning:  #223-D: function "__HAL_RTC_ALARM_ENABLE_IT" declared implicitly
+      __HAL_RTC_ALARM_ENABLE_IT(&hRTC_Handle, RTC_IT_ALRA);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(186): error:  #20: identifier "RTC_IT_ALRA" is undefined
+      __HAL_RTC_ALARM_ENABLE_IT(&hRTC_Handle, RTC_IT_ALRA);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(189): warning:  #223-D: function "__HAL_RTC_ALARM_EXTI_ENABLE_IT" declared implicitly
+      __HAL_RTC_ALARM_EXTI_ENABLE_IT();
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(190): warning:  #223-D: function "__HAL_RTC_ALARM_EXTI_ENABLE_RISING_EDGE" declared implicitly
+      __HAL_RTC_ALARM_EXTI_ENABLE_RISING_EDGE();
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(196): error:  #20: identifier "RTC_INIT_MASK" is undefined
+        hRTC_Handle.Instance->ISR = (uint32_t)RTC_INIT_MASK;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(215): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_ENABLE" declared implicitly
+      __HAL_RTC_WRITEPROTECTION_ENABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(242): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_DISABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_DISABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(244): warning:  #223-D: function "__HAL_RTC_ALARM_DISABLE_IT" declared implicitly
+    __HAL_RTC_ALARM_DISABLE_IT(&hRTC_Handle, RTC_IT_ALRA);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(244): error:  #20: identifier "RTC_IT_ALRA" is undefined
+    __HAL_RTC_ALARM_DISABLE_IT(&hRTC_Handle, RTC_IT_ALRA);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(246): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_ENABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_ENABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(257): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_DISABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_DISABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(259): warning:  #223-D: function "__HAL_RTC_ALARM_ENABLE_IT" declared implicitly
+    __HAL_RTC_ALARM_ENABLE_IT(&hRTC_Handle, RTC_IT_ALRA);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(259): error:  #20: identifier "RTC_IT_ALRA" is undefined
+    __HAL_RTC_ALARM_ENABLE_IT(&hRTC_Handle, RTC_IT_ALRA);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(261): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_ENABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_ENABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(272): error:  #20: identifier "RTC_HandleTypeDef" is undefined
+  void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(278): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_DISABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(281): error:  #20: identifier "RTC_INIT_MASK" is undefined
+    hrtc->Instance->ISR = (uint32_t)RTC_INIT_MASK;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(297): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_ENABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c(306): warning:  #223-D: function "HAL_RTC_AlarmIRQHandler" declared implicitly
+    HAL_RTC_AlarmIRQHandler(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_alarm_template.c: 20 warnings, 13 errors
+compiling stm32f7xx_ll_adc.c...
+compiling stm32f7xx_hal_timebase_tim_template.c...
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(40): error:  #20: identifier "TIM_HandleTypeDef" is undefined
+  TIM_HandleTypeDef        TimHandle;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(96): error:  #20: identifier "TIM_COUNTERMODE_UP" is undefined
+    TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(97): error:  #20: identifier "TIM_AUTORELOAD_PRELOAD_DISABLE" is undefined
+    TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(98): warning:  #223-D: function "HAL_TIM_Base_Init" declared implicitly
+    status = HAL_TIM_Base_Init(&TimHandle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(98): warning:  #188-D: enumerated type mixed with another type
+    status = HAL_TIM_Base_Init(&TimHandle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(102): warning:  #223-D: function "HAL_TIM_Base_Start_IT" declared implicitly
+      status = HAL_TIM_Base_Start_IT(&TimHandle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(102): warning:  #188-D: enumerated type mixed with another type
+      status = HAL_TIM_Base_Start_IT(&TimHandle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(132): warning:  #223-D: function "__HAL_TIM_DISABLE_IT" declared implicitly
+    __HAL_TIM_DISABLE_IT(&TimHandle, TIM_IT_UPDATE);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(132): error:  #20: identifier "TIM_IT_UPDATE" is undefined
+    __HAL_TIM_DISABLE_IT(&TimHandle, TIM_IT_UPDATE);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(143): warning:  #223-D: function "__HAL_TIM_ENABLE_IT" declared implicitly
+    __HAL_TIM_ENABLE_IT(&TimHandle, TIM_IT_UPDATE);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(143): error:  #20: identifier "TIM_IT_UPDATE" is undefined
+    __HAL_TIM_ENABLE_IT(&TimHandle, TIM_IT_UPDATE);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(154): error:  #20: identifier "TIM_HandleTypeDef" is undefined
+  void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c(165): warning:  #223-D: function "HAL_TIM_IRQHandler" declared implicitly
+    HAL_TIM_IRQHandler(&TimHandle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_tim_template.c: 7 warnings, 6 errors
+compiling stm32f7xx_hal_spdifrx.c...
+compiling stm32f7xx_hal_spi.c...
+compiling stm32f7xx_ll_crc.c...
+compiling stm32f7xx_ll_dac.c...
+compiling stm32f7xx_ll_dma2d.c...
+compiling stm32f7xx_ll_dma.c...
+compiling stm32f7xx_ll_gpio.c...
+compiling stm32f7xx_ll_exti.c...
+compiling stm32f7xx_ll_i2c.c...
+compiling stm32f7xx_ll_lptim.c...
+compiling stm32f7xx_ll_pwr.c...
+compiling stm32f7xx_hal_timebase_rtc_wakeup_template.c...
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(82): error:  #20: identifier "RTC_HandleTypeDef" is undefined
+  RTC_HandleTypeDef        hRTC_Handle;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(156): error:  #20: identifier "RTC_HOURFORMAT_24" is undefined
+      hRTC_Handle.Init.HourFormat = RTC_HOURFORMAT_24;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(159): error:  #20: identifier "RTC_OUTPUT_DISABLE" is undefined
+      hRTC_Handle.Init.OutPut = RTC_OUTPUT_DISABLE;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(160): error:  #20: identifier "RTC_OUTPUT_POLARITY_HIGH" is undefined
+      hRTC_Handle.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(161): error:  #20: identifier "RTC_OUTPUT_TYPE_OPENDRAIN" is undefined
+      hRTC_Handle.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(162): warning:  #223-D: function "HAL_RTC_Init" declared implicitly
+      status = HAL_RTC_Init(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(162): warning:  #188-D: enumerated type mixed with another type
+      status = HAL_RTC_Init(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(167): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_DISABLE" declared implicitly
+      __HAL_RTC_WRITEPROTECTION_DISABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(170): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_DISABLE" declared implicitly
+      __HAL_RTC_WAKEUPTIMER_DISABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(173): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_DISABLE_IT" declared implicitly
+      __HAL_RTC_WAKEUPTIMER_DISABLE_IT(&hRTC_Handle, RTC_IT_WUT);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(173): error:  #20: identifier "RTC_IT_WUT" is undefined
+      __HAL_RTC_WAKEUPTIMER_DISABLE_IT(&hRTC_Handle, RTC_IT_WUT);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(176): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_GET_FLAG" declared implicitly
+      while (__HAL_RTC_WAKEUPTIMER_GET_FLAG(&hRTC_Handle, RTC_FLAG_WUTWF) == RESET)
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(176): error:  #20: identifier "RTC_FLAG_WUTWF" is undefined
+      while (__HAL_RTC_WAKEUPTIMER_GET_FLAG(&hRTC_Handle, RTC_FLAG_WUTWF) == RESET)
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(190): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_CLEAR_FLAG" declared implicitly
+      __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(&hRTC_Handle, RTC_FLAG_WUTF);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(190): error:  #20: identifier "RTC_FLAG_WUTF" is undefined
+      __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(&hRTC_Handle, RTC_FLAG_WUTF);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(199): error:  #20: identifier "RTC_WAKEUPCLOCK_CK_SPRE_16BITS" is undefined
+      hRTC_Handle.Instance->CR |= (uint32_t)RTC_WAKEUPCLOCK_CK_SPRE_16BITS;
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(202): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_IT" declared implicitly
+      __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_IT();
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(204): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_RISING_EDGE" declared implicitly
+      __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_RISING_EDGE();
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(207): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_ENABLE_IT" declared implicitly
+      __HAL_RTC_WAKEUPTIMER_ENABLE_IT(&hRTC_Handle, RTC_IT_WUT);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(207): error:  #20: identifier "RTC_IT_WUT" is undefined
+      __HAL_RTC_WAKEUPTIMER_ENABLE_IT(&hRTC_Handle, RTC_IT_WUT);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(210): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_ENABLE" declared implicitly
+      __HAL_RTC_WAKEUPTIMER_ENABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(213): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_ENABLE" declared implicitly
+      __HAL_RTC_WRITEPROTECTION_ENABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(241): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_DISABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_DISABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(243): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_DISABLE_IT" declared implicitly
+    __HAL_RTC_WAKEUPTIMER_DISABLE_IT(&hRTC_Handle, RTC_IT_WUT);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(243): error:  #20: identifier "RTC_IT_WUT" is undefined
+    __HAL_RTC_WAKEUPTIMER_DISABLE_IT(&hRTC_Handle, RTC_IT_WUT);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(245): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_ENABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_ENABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(256): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_DISABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_DISABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(258): warning:  #223-D: function "__HAL_RTC_WAKEUPTIMER_ENABLE_IT" declared implicitly
+    __HAL_RTC_WAKEUPTIMER_ENABLE_IT(&hRTC_Handle, RTC_IT_WUT);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(258): error:  #20: identifier "RTC_IT_WUT" is undefined
+    __HAL_RTC_WAKEUPTIMER_ENABLE_IT(&hRTC_Handle, RTC_IT_WUT);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(260): warning:  #223-D: function "__HAL_RTC_WRITEPROTECTION_ENABLE" declared implicitly
+    __HAL_RTC_WRITEPROTECTION_ENABLE(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(271): error:  #20: identifier "RTC_HandleTypeDef" is undefined
+  void HAL_RTCEx_WakeUpTimerEventCallback(RTC_HandleTypeDef *hrtc)
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c(282): warning:  #223-D: function "HAL_RTCEx_WakeUpTimerIRQHandler" declared implicitly
+    HAL_RTCEx_WakeUpTimerIRQHandler(&hRTC_Handle);
+..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_timebase_rtc_wakeup_template.c: 19 warnings, 13 errors
+compiling stm32f7xx_ll_rcc.c...
+compiling stm32f7xx_ll_rng.c...
+compiling stm32f7xx_ll_rtc.c...
+compiling stm32f7xx_ll_spi.c...
+compiling stm32f7xx_ll_tim.c...
+compiling stm32f7xx_ll_usart.c...
+compiling stm32f7xx_hal_uart_ex.c...
+compiling stm32f7xx_hal_wwdg.c...
+compiling stm32f7xx_hal_spi_ex.c...
+compiling stm32f7xx_hal_usart.c...
+compiling stm32f7xx_hal_uart.c...
+compiling usbh_core.c...
+compiling tuner_e4k.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(134): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(138): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(139): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(243): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(244): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(245): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Inc\usbh_rtlsdr.h(246): error:  #20: identifier "TIM_HandleTypeDef" is undefined
+    TIM_HandleTypeDef    TimHandle;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c(892): warning:  #188-D: enumerated type mixed with another type
+  			uStatus = E4K_rf_filter_set(phost);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c(145): warning:  #177-D: variable "lnagain"  was declared but never referenced
+  static const int32_t lnagain[] = {
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c(161): warning:  #177-D: variable "enhgain"  was declared but never referenced
+  static const int32_t enhgain[] = {
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c(314): warning:  #177-D: function "is_fvco_valid"  was declared but never referenced
+  static int is_fvco_valid(uint32_t fvco_z)
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c: 4 warnings, 7 errors
+compiling usbh_rtlsdr.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(134): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(138): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(139): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(243): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(244): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(245): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Inc\usbh_rtlsdr.h(246): error:  #20: identifier "TIM_HandleTypeDef" is undefined
+    TIM_HandleTypeDef    TimHandle;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(247): error:  #20: identifier "TIM_COUNTERMODE_UP" is undefined
+      RTLSDR_Handle->TimHandle.Init.CounterMode       = TIM_COUNTERMODE_UP;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(250): warning:  #223-D: function "HAL_TIM_Base_Init" declared implicitly
+      if (HAL_TIM_Base_Init(&(RTLSDR_Handle->TimHandle)) != HAL_OK) {
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(255): warning:  #223-D: function "HAL_TIM_Base_Start" declared implicitly
+      if (HAL_TIM_Base_Start(&(RTLSDR_Handle->TimHandle)) != HAL_OK) {
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(975): warning:  #188-D: enumerated type mixed with another type
+          uStatus = RTLSDR_i2c_read_reg(phost, E4K_I2C_ADDR, E4K_CHECK_ADDR);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(992): warning:  #188-D: enumerated type mixed with another type
+          uStatus = RTLSDR_i2c_read_reg(phost, FC0013_I2C_ADDR, FC0013_CHECK_ADDR);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(1007): warning:  #188-D: enumerated type mixed with another type
+        uStatus = RTLSDR_i2c_read_reg(phost, R820T_I2C_ADDR, R82XX_CHECK_ADDR);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(1022): warning:  #188-D: enumerated type mixed with another type
+        uStatus = RTLSDR_i2c_read_reg(phost, R828D_I2C_ADDR, R82XX_CHECK_ADDR);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c: 6 warnings, 8 errors
+compiling stm32f7xx_ll_usb.c...
+compiling usbh_ctlreq.c...
+compiling stm32f7xx_ll_sdmmc.c...
+compiling usbh_ioreq.c...
+compiling usbh_conf.c...
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(32): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  HCD_HandleTypeDef hhcd;
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(42): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_MspInit(HCD_HandleTypeDef *hhcd)
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(151): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_MspDeInit(HCD_HandleTypeDef *hhcd)
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(175): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_SOF_Callback(HCD_HandleTypeDef *hhcd)
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(185): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_Connect_Callback(HCD_HandleTypeDef *hhcd)
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(195): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_Disconnect_Callback(HCD_HandleTypeDef *hhcd)
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(208): error:  #20: identifier "HCD_HandleTypeDef" is undefined
+  void HAL_HCD_HC_NotifyURBChange_Callback(HCD_HandleTypeDef *hhcd, uint8_t chnum, HCD_URBStateTypeDef urb_state)
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(208): error:  #20: identifier "HCD_URBStateTypeDef" is undefined
+  void HAL_HCD_HC_NotifyURBChange_Callback(HCD_HandleTypeDef *hhcd, uint8_t chnum, HCD_URBStateTypeDef urb_state)
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(230): error:  #20: identifier "HCD_PHY_EMBEDDED" is undefined
+    hhcd.Init.phy_itface = HCD_PHY_EMBEDDED; 
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(232): error:  #20: identifier "HCD_SPEED_FULL" is undefined
+    hhcd.Init.speed = HCD_SPEED_FULL;
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(241): warning:  #223-D: function "HAL_HCD_Init" declared implicitly
+    HAL_HCD_Init(&hhcd);
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(265): warning:  #223-D: function "HAL_HCD_GetCurrentFrame" declared implicitly
+    USBH_LL_SetTimer(phost, HAL_HCD_GetCurrentFrame(&hhcd));
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(277): warning:  #223-D: function "HAL_HCD_DeInit" declared implicitly
+    HAL_HCD_DeInit(phost->pData);
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(288): warning:  #223-D: function "HAL_HCD_Start" declared implicitly
+    HAL_HCD_Start(phost->pData);
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(299): warning:  #223-D: function "HAL_HCD_Stop" declared implicitly
+    HAL_HCD_Stop(phost->pData);
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(312): warning:  #223-D: function "HAL_HCD_GetCurrentSpeed" declared implicitly
+    switch (HAL_HCD_GetCurrentSpeed(phost->pData))
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(340): warning:  #223-D: function "HAL_HCD_ResetPort" declared implicitly
+    HAL_HCD_ResetPort(phost->pData);
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(352): warning:  #223-D: function "HAL_HCD_HC_GetXferCount" declared implicitly
+    return HAL_HCD_HC_GetXferCount(phost->pData, pipe);
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(374): warning:  #223-D: function "HAL_HCD_HC_Init" declared implicitly
+    HAL_HCD_HC_Init(phost->pData,
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(392): warning:  #223-D: function "HAL_HCD_HC_Halt" declared implicitly
+    HAL_HCD_HC_Halt(phost->pData, pipe);
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(432): warning:  #223-D: function "HAL_HCD_HC_SubmitRequest" declared implicitly
+    HAL_HCD_HC_SubmitRequest(phost->pData,
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c(459): warning:  #223-D: function "HAL_HCD_HC_GetURBState" declared implicitly
+    return (USBH_URBStateTypeDef)HAL_HCD_HC_GetURBState (phost->pData, pipe);
+..\Middlewares\ST\STM32_USB_Host_Library\Core\Src\usbh_conf.c: 12 warnings, 10 errors
+compiling system_stm32f7xx.c...
+compiling stm32f7xx_ll_fmc.c...
+compiling usbh_pipes.c...
+compiling stm32f7xx_ll_utils.c...
+compiling stm32746g_discovery_audio.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.h(237): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  void  BSP_AUDIO_OUT_ClockConfig(SAI_HandleTypeDef *hsai, uint32_t AudioFreq, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.h(238): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  void  BSP_AUDIO_OUT_MspInit(SAI_HandleTypeDef *hsai, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.h(239): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  void  BSP_AUDIO_OUT_MspDeInit(SAI_HandleTypeDef *hsai, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.h(269): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  void  BSP_AUDIO_IN_MspInit(SAI_HandleTypeDef *hsai, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.h(270): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  void  BSP_AUDIO_IN_MspDeInit(SAI_HandleTypeDef *hsai, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(137): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  SAI_HandleTypeDef         haudio_out_sai={0};
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(138): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  SAI_HandleTypeDef         haudio_in_sai={0};
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(139): error:  #20: identifier "TIM_HandleTypeDef" is undefined
+  TIM_HandleTypeDef         haudio_tim;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(185): warning:  #223-D: function "HAL_SAI_GetState" declared implicitly
+    if(HAL_SAI_GetState(&haudio_out_sai) == HAL_SAI_STATE_RESET)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(185): error:  #20: identifier "HAL_SAI_STATE_RESET" is undefined
+    if(HAL_SAI_GetState(&haudio_out_sai) == HAL_SAI_STATE_RESET)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(234): warning:  #223-D: function "HAL_SAI_Transmit_DMA" declared implicitly
+      HAL_SAI_Transmit_DMA(&haudio_out_sai, (uint8_t*) pBuffer, DMA_MAX(Size / AUDIODATA_SIZE));
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(248): warning:  #223-D: function "HAL_SAI_Transmit_DMA" declared implicitly
+     HAL_SAI_Transmit_DMA(&haudio_out_sai, (uint8_t*) pData, Size);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(269): warning:  #223-D: function "HAL_SAI_DMAPause" declared implicitly
+      HAL_SAI_DMAPause(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(293): warning:  #223-D: function "HAL_SAI_DMAResume" declared implicitly
+      HAL_SAI_DMAResume(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(312): warning:  #223-D: function "HAL_SAI_DMAStop" declared implicitly
+    HAL_SAI_DMAStop(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(405): warning:  #223-D: function "__HAL_SAI_DISABLE" declared implicitly
+    __HAL_SAI_DISABLE(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(409): warning:  #223-D: function "HAL_SAI_Init" declared implicitly
+    HAL_SAI_Init(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(412): warning:  #223-D: function "__HAL_SAI_ENABLE" declared implicitly
+    __HAL_SAI_ENABLE(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(429): warning:  #223-D: function "__HAL_SAI_DISABLE" declared implicitly
+    __HAL_SAI_DISABLE(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(433): warning:  #223-D: function "HAL_SAI_Init" declared implicitly
+    HAL_SAI_Init(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(436): warning:  #223-D: function "__HAL_SAI_ENABLE" declared implicitly
+    __HAL_SAI_ENABLE(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(455): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef *hsai)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(467): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef *hsai)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(479): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(481): error:  #20: identifier "HAL_SAI_StateTypeDef" is undefined
+    HAL_SAI_StateTypeDef audio_out_state;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(482): error:  #20: identifier "HAL_SAI_StateTypeDef" is undefined
+    HAL_SAI_StateTypeDef audio_in_state;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(484): warning:  #223-D: function "HAL_SAI_GetState" declared implicitly
+    audio_out_state = HAL_SAI_GetState(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(488): error:  #20: identifier "HAL_SAI_STATE_BUSY" is undefined
+    if ((audio_out_state == HAL_SAI_STATE_BUSY) || (audio_out_state == HAL_SAI_STATE_BUSY_TX))
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(488): error:  #20: identifier "HAL_SAI_STATE_BUSY_TX" is undefined
+    if ((audio_out_state == HAL_SAI_STATE_BUSY) || (audio_out_state == HAL_SAI_STATE_BUSY_TX))
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(493): error:  #20: identifier "HAL_SAI_STATE_BUSY" is undefined
+    if ((audio_in_state == HAL_SAI_STATE_BUSY) || (audio_in_state == HAL_SAI_STATE_BUSY_RX))
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(493): error:  #20: identifier "HAL_SAI_STATE_BUSY_RX" is undefined
+    if ((audio_in_state == HAL_SAI_STATE_BUSY) || (audio_in_state == HAL_SAI_STATE_BUSY_RX))
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(529): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  __weak void BSP_AUDIO_OUT_MspInit(SAI_HandleTypeDef *hsai, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(612): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  __weak void BSP_AUDIO_OUT_MspDeInit(SAI_HandleTypeDef *hsai, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(626): warning:  #223-D: function "__HAL_SAI_DISABLE" declared implicitly
+      __HAL_SAI_DISABLE(hsai);  
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(657): error:  #20: identifier "SAI_HandleTypeDef" is undefined
+  __weak void BSP_AUDIO_OUT_ClockConfig(SAI_HandleTypeDef *hsai, uint32_t AudioFreq, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(712): warning:  #223-D: function "__HAL_SAI_DISABLE" declared implicitly
+    __HAL_SAI_DISABLE(&haudio_out_sai);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(718): error:  #20: identifier "SAI_MODEMASTER_TX" is undefined
+    haudio_out_sai.Init.AudioMode = SAI_MODEMASTER_TX;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(719): error:  #20: identifier "SAI_MASTERDIVIDER_ENABLE" is undefined
+    haudio_out_sai.Init.NoDivider = SAI_MASTERDIVIDER_ENABLED;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(720): error:  #20: identifier "SAI_FREE_PROTOCOL" is undefined
+    haudio_out_sai.Init.Protocol = SAI_FREE_PROTOCOL;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(721): error:  #20: identifier "SAI_DATASIZE_16" is undefined
+    haudio_out_sai.Init.DataSize = SAI_DATASIZE_16;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(722): error:  #20: identifier "SAI_FIRSTBIT_MSB" is undefined
+    haudio_out_sai.Init.FirstBit = SAI_FIRSTBIT_MSB;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(723): error:  #20: identifier "SAI_CLOCKSTROBING_RISINGEDGE" is undefined
+    haudio_out_sai.Init.ClockStrobing = SAI_CLOCKSTROBING_RISINGEDGE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(724): error:  #20: identifier "SAI_ASYNCHRONOUS" is undefined
+    haudio_out_sai.Init.Synchro = SAI_ASYNCHRONOUS;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(725): error:  #20: identifier "SAI_OUTPUTDRIVE_ENABLE" is undefined
+    haudio_out_sai.Init.OutputDrive = SAI_OUTPUTDRIVE_ENABLED;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c(726): error:  #20: identifier "SAI_FIFOTHRESHOLD_1QF" is undefined
+    haudio_out_sai.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_1QF;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_audio.c: 15 warnings, 30 errors
+compiling lcd_log.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(134): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(138): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(139): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(243): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(244): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(245): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\Log\lcd_log.c: 0 warnings, 6 errors
+compiling stm32746g_discovery.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery.c(395): error:  #20: identifier "UART_HandleTypeDef" is undefined
+  void BSP_COM_Init(COM_TypeDef COM, UART_HandleTypeDef *huart)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery.c(422): warning:  #223-D: function "HAL_UART_Init" declared implicitly
+    HAL_UART_Init(huart);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery.c(435): error:  #20: identifier "UART_HandleTypeDef" is undefined
+  void BSP_COM_DeInit(COM_TypeDef COM, UART_HandleTypeDef *huart)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery.c(439): warning:  #223-D: function "HAL_UART_DeInit" declared implicitly
+    HAL_UART_DeInit(huart);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery.c: 2 warnings, 2 errors
+compiling stm32746g_discovery_camera.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.h(123): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  void BSP_CAMERA_MspInit(DCMI_HandleTypeDef *hdcmi, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.h(124): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  void BSP_CAMERA_MspDeInit(DCMI_HandleTypeDef *hdcmi, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(111): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  DCMI_HandleTypeDef  hDcmiHandler;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(142): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+    DCMI_HandleTypeDef *phdcmi;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(142): error:  #20: identifier "phdcmi" is undefined
+    DCMI_HandleTypeDef *phdcmi;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(150): error:  #20: identifier "DCMI_CR_ALL_FRAME" is undefined
+    phdcmi->Init.CaptureRate      = DCMI_CR_ALL_FRAME;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(151): error:  #20: identifier "DCMI_HSPOLARITY_LOW" is undefined
+    phdcmi->Init.HSPolarity       = DCMI_HSPOLARITY_LOW;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(152): error:  #20: identifier "DCMI_SYNCHRO_HARDWARE" is undefined
+    phdcmi->Init.SynchroMode      = DCMI_SYNCHRO_HARDWARE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(153): error:  #20: identifier "DCMI_VSPOLARITY_HIGH" is undefined
+    phdcmi->Init.VSPolarity       = DCMI_VSPOLARITY_HIGH;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(154): error:  #20: identifier "DCMI_EXTEND_DATA_8B" is undefined
+    phdcmi->Init.ExtendedDataMode = DCMI_EXTEND_DATA_8B;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(155): error:  #20: identifier "DCMI_PCKPOLARITY_RISING" is undefined
+    phdcmi->Init.PCKPolarity      = DCMI_PCKPOLARITY_RISING;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(170): warning:  #223-D: function "HAL_DCMI_Init" declared implicitly
+      HAL_DCMI_Init(phdcmi);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(178): warning:  #223-D: function "HAL_DCMI_ConfigCrop" declared implicitly
+        HAL_DCMI_ConfigCROP(phdcmi,           /* Crop in the middle of the VGA picture */
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(183): warning:  #223-D: function "HAL_DCMI_EnableCrop" declared implicitly
+        HAL_DCMI_EnableCROP(phdcmi);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(188): warning:  #223-D: function "HAL_DCMI_DisableCrop" declared implicitly
+        HAL_DCMI_DisableCROP(phdcmi);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(213): warning:  #223-D: function "HAL_DCMI_DeInit" declared implicitly
+    HAL_DCMI_DeInit(&hDcmiHandler);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(226): warning:  #223-D: function "HAL_DCMI_Start_DMA" declared implicitly
+    HAL_DCMI_Start_DMA(&hDcmiHandler, DCMI_MODE_CONTINUOUS, (uint32_t)buff, GetSize(CameraCurrentResolution));
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(226): error:  #20: identifier "DCMI_MODE_CONTINUOUS" is undefined
+    HAL_DCMI_Start_DMA(&hDcmiHandler, DCMI_MODE_CONTINUOUS, (uint32_t)buff, GetSize(CameraCurrentResolution));
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(237): warning:  #223-D: function "HAL_DCMI_Start_DMA" declared implicitly
+    HAL_DCMI_Start_DMA(&hDcmiHandler, DCMI_MODE_SNAPSHOT, (uint32_t)buff, GetSize(CameraCurrentResolution));
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(237): error:  #20: identifier "DCMI_MODE_SNAPSHOT" is undefined
+    HAL_DCMI_Start_DMA(&hDcmiHandler, DCMI_MODE_SNAPSHOT, (uint32_t)buff, GetSize(CameraCurrentResolution));
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(247): warning:  #223-D: function "HAL_DCMI_Suspend" declared implicitly
+    HAL_DCMI_Suspend(&hDcmiHandler);  
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(257): warning:  #223-D: function "HAL_DCMI_Resume" declared implicitly
+    HAL_DCMI_Resume(&hDcmiHandler);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(268): warning:  #223-D: function "HAL_DCMI_Stop" declared implicitly
+    if(HAL_DCMI_Stop(&hDcmiHandler) == HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(436): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  __weak void BSP_CAMERA_MspInit(DCMI_HandleTypeDef *hdcmi, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(533): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  __weak void BSP_CAMERA_MspDeInit(DCMI_HandleTypeDef *hdcmi, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(556): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  void HAL_DCMI_LineEventCallback(DCMI_HandleTypeDef *hdcmi)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(577): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  void HAL_DCMI_VsyncEventCallback(DCMI_HandleTypeDef *hdcmi)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(598): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  void HAL_DCMI_FrameEventCallback(DCMI_HandleTypeDef *hdcmi)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c(619): error:  #20: identifier "DCMI_HandleTypeDef" is undefined
+  void HAL_DCMI_ErrorCallback(DCMI_HandleTypeDef *hdcmi)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_camera.c: 10 warnings, 19 errors
+compiling stm32746g_discovery_lcd.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(134): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(138): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(139): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(243): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(244): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_MspDeInit(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.h(245): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  void     BSP_LCD_ClockConfig(LTDC_HandleTypeDef *hltdc, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(119): error:  #20: identifier "LTDC_HandleTypeDef" is undefined
+  LTDC_HandleTypeDef  hLtdcHandler;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(120): error:  #20: identifier "DMA2D_HandleTypeDef" is undefined
+  static DMA2D_HandleTypeDef hDma2dHandler;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(176): error:  #20: identifier "LTDC_HSPOLARITY_AL" is undefined
+    hLtdcHandler.Init.HSPolarity = LTDC_HSPOLARITY_AL;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(177): error:  #20: identifier "LTDC_VSPOLARITY_AL" is undefined
+    hLtdcHandler.Init.VSPolarity = LTDC_VSPOLARITY_AL; 
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(178): error:  #20: identifier "LTDC_DEPOLARITY_AL" is undefined
+    hLtdcHandler.Init.DEPolarity = LTDC_DEPOLARITY_AL;  
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(179): error:  #20: identifier "LTDC_PCPOLARITY_IPC" is undefined
+    hLtdcHandler.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(182): warning:  #223-D: function "HAL_LTDC_GetState" declared implicitly
+    if(HAL_LTDC_GetState(&hLtdcHandler) == HAL_LTDC_STATE_RESET)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(182): error:  #20: identifier "HAL_LTDC_STATE_RESET" is undefined
+    if(HAL_LTDC_GetState(&hLtdcHandler) == HAL_LTDC_STATE_RESET)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(187): warning:  #223-D: function "HAL_LTDC_Init" declared implicitly
+    HAL_LTDC_Init(&hLtdcHandler);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(216): warning:  #223-D: function "__HAL_LTDC_DISABLE" declared implicitly
+    __HAL_LTDC_DISABLE(&hLtdcHandler);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(219): warning:  #223-D: function "HAL_LTDC_DeInit" declared implicitly
+    HAL_LTDC_DeInit(&hLtdcHandler);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(273): error:  #20: identifier "LTDC_LayerCfgTypeDef" is undefined
+    LCD_LayerCfgTypeDef  layer_cfg;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(280): error:  #20: identifier "LTDC_PIXEL_FORMAT_ARGB8888" is undefined
+    layer_cfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(287): error:  #20: identifier "LTDC_BLENDING_FACTOR1_PAxCA" is undefined
+    layer_cfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(288): error:  #20: identifier "LTDC_BLENDING_FACTOR2_PAxCA" is undefined
+    layer_cfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(292): warning:  #223-D: function "HAL_LTDC_ConfigLayer" declared implicitly
+    HAL_LTDC_ConfigLayer(&hLtdcHandler, &layer_cfg, LayerIndex); 
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(307): error:  #20: identifier "LTDC_LayerCfgTypeDef" is undefined
+    LCD_LayerCfgTypeDef  layer_cfg;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(314): error:  #20: identifier "LTDC_PIXEL_FORMAT_RGB565" is undefined
+    layer_cfg.PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(321): error:  #20: identifier "LTDC_BLENDING_FACTOR1_PAxCA" is undefined
+    layer_cfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(322): error:  #20: identifier "LTDC_BLENDING_FACTOR2_PAxCA" is undefined
+    layer_cfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(326): warning:  #223-D: function "HAL_LTDC_ConfigLayer" declared implicitly
+    HAL_LTDC_ConfigLayer(&hLtdcHandler, &layer_cfg, LayerIndex); 
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(356): warning:  #223-D: function "__HAL_LTDC_LAYER_ENABLE" declared implicitly
+      __HAL_LTDC_LAYER_ENABLE(&hLtdcHandler, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(360): warning:  #223-D: function "__HAL_LTDC_LAYER_DISABLE" declared implicitly
+      __HAL_LTDC_LAYER_DISABLE(&hLtdcHandler, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(362): warning:  #223-D: function "__HAL_LTDC_RELOAD_IMMEDIATE_CONFIG" declared implicitly
+    __HAL_LTDC_RELOAD_CONFIG(&hLtdcHandler);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(378): warning:  #223-D: function "__HAL_LTDC_LAYER_ENABLE" declared implicitly
+      __HAL_LTDC_LAYER_ENABLE(&hLtdcHandler, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(382): warning:  #223-D: function "__HAL_LTDC_LAYER_DISABLE" declared implicitly
+      __HAL_LTDC_LAYER_DISABLE(&hLtdcHandler, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(396): warning:  #223-D: function "HAL_LTDC_SetAlpha" declared implicitly
+    HAL_LTDC_SetAlpha(&hLtdcHandler, Transparency, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(408): warning:  #223-D: function "HAL_LTDC_SetAlpha_NoReload" declared implicitly
+    HAL_LTDC_SetAlpha_NoReload(&hLtdcHandler, Transparency, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(419): warning:  #223-D: function "HAL_LTDC_SetAddress" declared implicitly
+    HAL_LTDC_SetAddress(&hLtdcHandler, Address, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(430): warning:  #223-D: function "HAL_LTDC_SetAddress_NoReload" declared implicitly
+    HAL_LTDC_SetAddress_NoReload(&hLtdcHandler, Address, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(445): warning:  #223-D: function "HAL_LTDC_SetWindowSize" declared implicitly
+    HAL_LTDC_SetWindowSize(&hLtdcHandler, Width, Height, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(448): warning:  #223-D: function "HAL_LTDC_SetWindowPosition" declared implicitly
+    HAL_LTDC_SetWindowPosition(&hLtdcHandler, Xpos, Ypos, LayerIndex); 
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(463): warning:  #223-D: function "HAL_LTDC_SetWindowSize_NoReload" declared implicitly
+    HAL_LTDC_SetWindowSize_NoReload(&hLtdcHandler, Width, Height, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(466): warning:  #223-D: function "HAL_LTDC_SetWindowPosition_NoReload" declared implicitly
+    HAL_LTDC_SetWindowPosition_NoReload(&hLtdcHandler, Xpos, Ypos, LayerIndex); 
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(478): warning:  #223-D: function "HAL_LTDC_ConfigColorKeying" declared implicitly
+    HAL_LTDC_ConfigColorKeying(&hLtdcHandler, RGBValue, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(479): warning:  #223-D: function "HAL_LTDC_EnableColorKeying" declared implicitly
+    HAL_LTDC_EnableColorKeying(&hLtdcHandler, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(491): warning:  #223-D: function "HAL_LTDC_ConfigColorKeying_NoReload" declared implicitly
+    HAL_LTDC_ConfigColorKeying_NoReload(&hLtdcHandler, RGBValue, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(492): warning:  #223-D: function "HAL_LTDC_EnableColorKeying_NoReload" declared implicitly
+    HAL_LTDC_EnableColorKeying_NoReload(&hLtdcHandler, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(503): warning:  #223-D: function "HAL_LTDC_DisableColorKeying" declared implicitly
+    HAL_LTDC_DisableColorKeying(&hLtdcHandler, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(514): warning:  #223-D: function "HAL_LTDC_DisableColorKeying_NoReload" declared implicitly
+    HAL_LTDC_DisableColorKeying_NoReload(&hLtdcHandler, LayerIndex);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(526): warning:  #223-D: function "HAL_LTDC_Reload" declared implicitly
+    HAL_LTDC_Reload (&hLtdcHandler, ReloadType);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(596): error:  #20: identifier "LTDC_PIXEL_FORMAT_ARGB8888" is undefined
+    if(hLtdcHandler.LayerCfg[ActiveLayer].PixelFormat == LTDC_PIXEL_FORMAT_ARGB8888)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(601): error:  #20: identifier "LTDC_PIXEL_FORMAT_RGB888" is undefined
+    else if(hLtdcHandler.LayerCfg[ActiveLayer].PixelFormat == LTDC_PIXEL_FORMAT_RGB888)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(606): error:  #20: identifier "LTDC_PIXEL_FORMAT_RGB565" is undefined
+    else if((hLtdcHandler.LayerCfg[ActiveLayer].PixelFormat == LTDC_PIXEL_FORMAT_RGB565) || \
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(607): error:  #20: identifier "LTDC_PIXEL_FORMAT_ARGB4444" is undefined
+            (hLtdcHandler.LayerCfg[ActiveLayer].PixelFormat == LTDC_PIXEL_FORMAT_ARGB4444) || \
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(608): error:  #20: identifier "LTDC_PIXEL_FORMAT_AL88" is undefined
+            (hLtdcHandler.LayerCfg[ActiveLayer].PixelFormat == LTDC_PIXEL_FORMAT_AL88))  
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(754): error:  #20: identifier "LTDC_PIXEL_FORMAT_RGB565" is undefined
+    if(hLtdcHandler.LayerCfg[ActiveLayer].PixelFormat == LTDC_PIXEL_FORMAT_RGB565)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(779): error:  #20: identifier "LTDC_PIXEL_FORMAT_RGB565" is undefined
+    if(hLtdcHandler.LayerCfg[ActiveLayer].PixelFormat == LTDC_PIXEL_FORMAT_RGB565)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(1004): error:  #20: identifier "LTDC_PIXEL_FORMAT_RGB565" is undefined
+    if(hLtdcHandler.LayerCfg[ActiveLayer].PixelFormat == LTDC_PIXEL_FORMAT_RGB565)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c(1048): error:  #20: identifier "DMA2D_INPUT_ARGB8888" is undefined
+      input_color_mode = CM_ARGB8888;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_lcd.c: 26 warnings, 30 errors
+compiling stm32746g_discovery_qspi.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.h(148): error:  #20: identifier "QSPI_HandleTypeDef" is undefined
+  void BSP_QSPI_MspInit(QSPI_HandleTypeDef *hqspi, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.h(149): error:  #20: identifier "QSPI_HandleTypeDef" is undefined
+  void BSP_QSPI_MspDeInit(QSPI_HandleTypeDef *hqspi, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(88): error:  #20: identifier "QSPI_HandleTypeDef" is undefined
+  QSPI_HandleTypeDef QSPIHandle;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(101): error:  #20: identifier "QSPI_HandleTypeDef" is undefined
+  static uint8_t QSPI_ResetMemory          (QSPI_HandleTypeDef *hqspi);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(102): error:  #20: identifier "QSPI_HandleTypeDef" is undefined
+  static uint8_t QSPI_DummyCyclesCfg       (QSPI_HandleTypeDef *hqspi);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(103): error:  #20: identifier "QSPI_HandleTypeDef" is undefined
+  static uint8_t QSPI_WriteEnable          (QSPI_HandleTypeDef *hqspi);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(104): error:  #20: identifier "QSPI_HandleTypeDef" is undefined
+  static uint8_t QSPI_AutoPollingMemReady  (QSPI_HandleTypeDef *hqspi, uint32_t Timeout);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(123): warning:  #223-D: function "HAL_QSPI_DeInit" declared implicitly
+    if (HAL_QSPI_DeInit(&QSPIHandle) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(134): error:  #20: identifier "QSPI_SAMPLE_SHIFTING_HALFCYCLE" is undefined
+    QSPIHandle.Init.SampleShifting     = QSPI_SAMPLE_SHIFTING_HALFCYCLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(136): error:  #20: identifier "QSPI_CS_HIGH_TIME_2_CYCLE" is undefined
+    QSPIHandle.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_2_CYCLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(137): error:  #20: identifier "QSPI_CLOCK_MODE_0" is undefined
+    QSPIHandle.Init.ClockMode          = QSPI_CLOCK_MODE_0;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(138): error:  #20: identifier "QSPI_FLASH_ID_1" is undefined
+    QSPIHandle.Init.FlashID            = QSPI_FLASH_ID_1;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(139): error:  #20: identifier "QSPI_DUALFLASH_DISABLE" is undefined
+    QSPIHandle.Init.DualFlash          = QSPI_DUALFLASH_DISABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(141): warning:  #223-D: function "HAL_QSPI_Init" declared implicitly
+    if (HAL_QSPI_Init(&QSPIHandle) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(170): warning:  #223-D: function "HAL_QSPI_DeInit" declared implicitly
+    if (HAL_QSPI_DeInit(&QSPIHandle) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(190): error:  #20: identifier "QSPI_CommandTypeDef" is undefined
+    QSPI_CommandTypeDef s_command;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(193): error:  #20: identifier "QSPI_INSTRUCTION_1_LINE" is undefined
+    s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(195): error:  #20: identifier "QSPI_ADDRESS_4_LINES" is undefined
+    s_command.AddressMode       = QSPI_ADDRESS_4_LINES;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(196): error:  #20: identifier "QSPI_ADDRESS_24_BITS" is undefined
+    s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(198): error:  #20: identifier "QSPI_ALTERNATE_BYTES_NONE" is undefined
+    s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(199): error:  #20: identifier "QSPI_DATA_4_LINES" is undefined
+    s_command.DataMode          = QSPI_DATA_4_LINES;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(202): error:  #20: identifier "QSPI_DDR_MODE_DISABLE" is undefined
+    s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(203): error:  #20: identifier "QSPI_DDR_HHC_ANALOG_DELAY" is undefined
+    s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(204): error:  #20: identifier "QSPI_SIOO_INST_EVERY_CMD" is undefined
+    s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(207): warning:  #223-D: function "HAL_QSPI_Command" declared implicitly
+    if (HAL_QSPI_Command(&QSPIHandle, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(207): error:  #20: identifier "HAL_QSPI_TIMEOUT_DEFAULT_VALUE" is undefined
+    if (HAL_QSPI_Command(&QSPIHandle, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(213): warning:  #223-D: function "HAL_QSPI_Receive" declared implicitly
+    if (HAL_QSPI_Receive(&QSPIHandle, pData, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(213): error:  #20: identifier "HAL_QSPI_TIMEOUT_DEFAULT_VALUE" is undefined
+    if (HAL_QSPI_Receive(&QSPIHandle, pData, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(230): error:  #20: identifier "QSPI_CommandTypeDef" is undefined
+    QSPI_CommandTypeDef s_command;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(253): error:  #20: identifier "QSPI_INSTRUCTION_1_LINE" is undefined
+    s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(255): error:  #20: identifier "QSPI_ADDRESS_4_LINES" is undefined
+    s_command.AddressMode       = QSPI_ADDRESS_4_LINES;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(256): error:  #20: identifier "QSPI_ADDRESS_24_BITS" is undefined
+    s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(257): error:  #20: identifier "QSPI_ALTERNATE_BYTES_NONE" is undefined
+    s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(258): error:  #20: identifier "QSPI_DATA_4_LINES" is undefined
+    s_command.DataMode          = QSPI_DATA_4_LINES;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c(260): error:  #20: identifier "QSPI_DDR_MODE_DISABLE" is undefined
+    s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_qspi.c: 5 warnings, 30 errors
+compiling stm32746g_discovery_eeprom.c...
+compiling stm32746g_discovery_sdram.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(134): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(138): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.h(139): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  void    BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(117): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  SDRAM_HandleTypeDef sdramHandle;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(118): error:  #20: identifier "FMC_SDRAM_TimingTypeDef" is undefined
+  static FMC_SDRAM_TimingTypeDef Timing;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(119): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  static FMC_SDRAM_CommandTypeDef Command;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(143): error:  #20: identifier "FMC_SDRAM_DEVICE" is undefined
+    sdramHandle.Instance = FMC_SDRAM_DEVICE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(154): error:  #20: identifier "FMC_SDRAM_BANK1" is undefined
+    sdramHandle.Init.SDBank             = FMC_SDRAM_BANK1;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(155): error:  #20: identifier "FMC_SDRAM_COLUMN_BITS_NUM_8" is undefined
+    sdramHandle.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_8;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(156): error:  #20: identifier "FMC_SDRAM_ROW_BITS_NUM_12" is undefined
+    sdramHandle.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(157): error:  #20: identifier "FMC_SDRAM_MEM_BUS_WIDTH_16" is undefined
+    sdramHandle.Init.MemoryDataWidth    = SDRAM_MEMORY_WIDTH;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(158): error:  #20: identifier "FMC_SDRAM_INTERN_BANKS_NUM_4" is undefined
+    sdramHandle.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(159): error:  #20: identifier "FMC_SDRAM_CAS_LATENCY_2" is undefined
+    sdramHandle.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_2;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(160): error:  #20: identifier "FMC_SDRAM_WRITE_PROTECTION_DISABLE" is undefined
+    sdramHandle.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(161): error:  #20: identifier "FMC_SDRAM_CLOCK_PERIOD_2" is undefined
+    sdramHandle.Init.SDClockPeriod      = SDCLOCK_PERIOD;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(162): error:  #20: identifier "FMC_SDRAM_RBURST_ENABLE" is undefined
+    sdramHandle.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(163): error:  #20: identifier "FMC_SDRAM_RPIPE_DELAY_0" is undefined
+    sdramHandle.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_0;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(169): warning:  #223-D: function "HAL_SDRAM_Init" declared implicitly
+    if(HAL_SDRAM_Init(&sdramHandle, &Timing) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(192): error:  #20: identifier "FMC_SDRAM_DEVICE" is undefined
+    sdramHandle.Instance = FMC_SDRAM_DEVICE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(194): warning:  #223-D: function "HAL_SDRAM_DeInit" declared implicitly
+    if(HAL_SDRAM_DeInit(&sdramHandle) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(219): error:  #20: identifier "FMC_SDRAM_CMD_CLK_ENABLE" is undefined
+    Command.CommandMode            = FMC_SDRAM_CMD_CLK_ENABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(220): error:  #20: identifier "FMC_SDRAM_CMD_TARGET_BANK1" is undefined
+    Command.CommandTarget          = FMC_SDRAM_CMD_TARGET_BANK1;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(225): warning:  #223-D: function "HAL_SDRAM_SendCommand" declared implicitly
+    HAL_SDRAM_SendCommand(&sdramHandle, &Command, SDRAM_TIMEOUT);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(232): error:  #20: identifier "FMC_SDRAM_CMD_PALL" is undefined
+    Command.CommandMode            = FMC_SDRAM_CMD_PALL;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(241): error:  #20: identifier "FMC_SDRAM_CMD_AUTOREFRESH_MODE" is undefined
+    Command.CommandMode            = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(256): error:  #20: identifier "FMC_SDRAM_CMD_LOAD_MODE" is undefined
+    Command.CommandMode            = FMC_SDRAM_CMD_LOAD_MODE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(266): warning:  #223-D: function "HAL_SDRAM_ProgramRefreshRate" declared implicitly
+    HAL_SDRAM_ProgramRefreshRate(&sdramHandle, RefreshCount); 
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(278): warning:  #223-D: function "HAL_SDRAM_Read_32b" declared implicitly
+    if(HAL_SDRAM_Read_32b(&sdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(297): warning:  #223-D: function "HAL_SDRAM_Read_DMA" declared implicitly
+    if(HAL_SDRAM_Read_DMA(&sdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(316): warning:  #223-D: function "HAL_SDRAM_Write_32b" declared implicitly
+    if(HAL_SDRAM_Write_32b(&sdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(335): warning:  #223-D: function "HAL_SDRAM_Write_DMA" declared implicitly
+    if(HAL_SDRAM_Write_DMA(&sdramHandle, (uint32_t *)uwStartAddress, pData, uwDataSize) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(350): error:  #20: identifier "FMC_SDRAM_CommandTypeDef" is undefined
+  uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(352): warning:  #223-D: function "HAL_SDRAM_SendCommand" declared implicitly
+    if(HAL_SDRAM_SendCommand(&sdramHandle, SdramCmd, SDRAM_TIMEOUT) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(368): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  __weak void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c(459): error:  #20: identifier "SDRAM_HandleTypeDef" is undefined
+  __weak void BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sdram.c: 9 warnings, 26 errors
+compiling stm32746g_discovery_sd.c...
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.h(125): error:  #20: identifier "HAL_SD_TransferStateTypedef" is undefined
+  HAL_SD_TransferStateTypedef BSP_SD_GetStatus(void);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.h(126): error:  #20: identifier "HAL_SD_CardInfoTypedef" is undefined
+  void    BSP_SD_GetCardInfo(HAL_SD_CardInfoTypedef *CardInfo);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.h(131): error:  #20: identifier "SD_HandleTypeDef" is undefined
+  void    BSP_SD_MspInit(SD_HandleTypeDef *hsd, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.h(132): error:  #20: identifier "SD_HandleTypeDef" is undefined
+  void    BSP_SD_Detect_MspInit(SD_HandleTypeDef *hsd, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.h(133): error:  #20: identifier "SD_HandleTypeDef" is undefined
+  void    BSP_SD_MspDeInit(SD_HandleTypeDef *hsd, void *Params);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(117): error:  #20: identifier "SD_HandleTypeDef" is undefined
+  SD_HandleTypeDef uSdHandle;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(118): error:  #20: identifier "HAL_SD_CardInfoTypedef" is undefined
+  static SD_CardInfo      uSdCardInfo;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(146): error:  #20: identifier "SDMMC_CLOCK_EDGE_RISING" is undefined
+    uSdHandle.Init.ClockEdge           = SDMMC_CLOCK_EDGE_RISING;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(147): error:  #20: identifier "SDMMC_CLOCK_BYPASS_DISABLE" is undefined
+    uSdHandle.Init.ClockBypass         = SDMMC_CLOCK_BYPASS_DISABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(148): error:  #20: identifier "SDMMC_CLOCK_POWER_SAVE_DISABLE" is undefined
+    uSdHandle.Init.ClockPowerSave      = SDMMC_CLOCK_POWER_SAVE_DISABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(149): error:  #20: identifier "SDMMC_BUS_WIDE_1B" is undefined
+    uSdHandle.Init.BusWide             = SDMMC_BUS_WIDE_1B;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(150): error:  #20: identifier "SDMMC_HARDWARE_FLOW_CONTROL_DISABLE" is undefined
+    uSdHandle.Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(151): error:  #20: identifier "SDMMC_TRANSFER_CLK_DIV" is undefined
+    uSdHandle.Init.ClockDiv            = SDMMC_TRANSFER_CLK_DIV;
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(164): warning:  #223-D: function "HAL_SD_Init" declared implicitly
+    if(HAL_SD_Init(&uSdHandle, &uSdCardInfo) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(164): error:  #20: identifier "SD_OK" is undefined
+    if(HAL_SD_Init(&uSdHandle, &uSdCardInfo) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(173): warning:  #223-D: function "HAL_SD_WideBusOperation_Config" declared implicitly
+      if(HAL_SD_WideBusOperation_Config(&uSdHandle, SDMMC_BUS_WIDE_4B) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(173): error:  #20: identifier "SDMMC_BUS_WIDE_4B" is undefined
+      if(HAL_SD_WideBusOperation_Config(&uSdHandle, SDMMC_BUS_WIDE_4B) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(173): error:  #20: identifier "SD_OK" is undefined
+      if(HAL_SD_WideBusOperation_Config(&uSdHandle, SDMMC_BUS_WIDE_4B) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(197): warning:  #223-D: function "HAL_SD_DeInit" declared implicitly
+    if(HAL_SD_DeInit(&uSdHandle) != HAL_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(258): warning:  #223-D: function "HAL_SD_ReadBlocks" declared implicitly
+    if(HAL_SD_ReadBlocks(&uSdHandle, pData, ReadAddr, BlockSize, NumOfBlocks) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(258): error:  #20: identifier "SD_OK" is undefined
+    if(HAL_SD_ReadBlocks(&uSdHandle, pData, ReadAddr, BlockSize, NumOfBlocks) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(278): warning:  #223-D: function "HAL_SD_WriteBlocks" declared implicitly
+    if(HAL_SD_WriteBlocks(&uSdHandle, pData, WriteAddr, BlockSize, NumOfBlocks) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(278): error:  #20: identifier "SD_OK" is undefined
+    if(HAL_SD_WriteBlocks(&uSdHandle, pData, WriteAddr, BlockSize, NumOfBlocks) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(301): warning:  #223-D: function "HAL_SD_ReadBlocks_DMA" declared implicitly
+    if(HAL_SD_ReadBlocks_DMA(&uSdHandle, pData, ReadAddr, BlockSize, NumOfBlocks) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(301): error:  #20: identifier "SD_OK" is undefined
+    if(HAL_SD_ReadBlocks_DMA(&uSdHandle, pData, ReadAddr, BlockSize, NumOfBlocks) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(309): warning:  #223-D: function "HAL_SD_CheckReadOperation" declared implicitly
+      if(HAL_SD_CheckReadOperation(&uSdHandle, (uint32_t)SD_DATATIMEOUT) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(309): error:  #20: identifier "SD_OK" is undefined
+      if(HAL_SD_CheckReadOperation(&uSdHandle, (uint32_t)SD_DATATIMEOUT) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(335): warning:  #223-D: function "HAL_SD_WriteBlocks_DMA" declared implicitly
+    if(HAL_SD_WriteBlocks_DMA(&uSdHandle, pData, WriteAddr, BlockSize, NumOfBlocks) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(335): error:  #20: identifier "SD_OK" is undefined
+    if(HAL_SD_WriteBlocks_DMA(&uSdHandle, pData, WriteAddr, BlockSize, NumOfBlocks) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(343): warning:  #223-D: function "HAL_SD_CheckWriteOperation" declared implicitly
+      if(HAL_SD_CheckWriteOperation(&uSdHandle, (uint32_t)SD_DATATIMEOUT) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(343): error:  #20: identifier "SD_OK" is undefined
+      if(HAL_SD_CheckWriteOperation(&uSdHandle, (uint32_t)SD_DATATIMEOUT) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(364): warning:  #223-D: function "HAL_SD_Erase" declared implicitly
+    if(HAL_SD_Erase(&uSdHandle, StartAddr, EndAddr) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(364): error:  #20: identifier "SD_OK" is undefined
+    if(HAL_SD_Erase(&uSdHandle, StartAddr, EndAddr) != SD_OK)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(380): error:  #20: identifier "SD_HandleTypeDef" is undefined
+  __weak void BSP_SD_MspInit(SD_HandleTypeDef *hsd, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(479): error:  #20: identifier "SD_HandleTypeDef" is undefined
+  __weak void BSP_SD_Detect_MspInit(SD_HandleTypeDef *hsd, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(499): error:  #20: identifier "SD_HandleTypeDef" is undefined
+  __weak void BSP_SD_MspDeInit(SD_HandleTypeDef *hsd, void *Params)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(537): error:  #20: identifier "HAL_SD_TransferStateTypedef" is undefined
+  HAL_SD_TransferStateTypedef BSP_SD_GetStatus(void)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(539): warning:  #223-D: function "HAL_SD_GetStatus" declared implicitly
+    return(HAL_SD_GetStatus(&uSdHandle));
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(547): error:  #20: identifier "HAL_SD_CardInfoTypedef" is undefined
+  void BSP_SD_GetCardInfo(HAL_SD_CardInfoTypedef *CardInfo)
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c(550): warning:  #223-D: function "HAL_SD_Get_CardInfo" declared implicitly
+    HAL_SD_Get_CardInfo(&uSdHandle, CardInfo);
+..\Utilities\STM32746G-Discovery\stm32746g_discovery_sd.c: 12 warnings, 28 errors
+compiling stm32746g_discovery_ts.c...
+"SDR_STM32F746NGH6_Keil_01\SDR_STM32F746NGH6_Keil_01.axf" - 250 Error(s), 149 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.7.0.pack
+                ARM.CMSIS.5.7.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.4.0
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_SDR_STM32F746NGH6_Keil_01
+  C:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.4.0
+      Include file:  CMSIS\Core\Include\tz_context.h
+Target not created.
+Build Time Elapsed:  00:00:43
+</pre>
+</body>
+</html>

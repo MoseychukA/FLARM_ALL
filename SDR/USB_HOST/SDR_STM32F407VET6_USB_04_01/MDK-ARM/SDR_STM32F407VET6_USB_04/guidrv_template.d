@@ -1,0 +1,15 @@
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ..\EmWin\Config\GUIDRV_Template.c
+sdr_stm32f407vet6_usb_04\guidrv_template.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/LCD_Private.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/LCD_Protected.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/LCD.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/GUI_ConfDefaults.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/Config/GUIConf.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/Global.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/GUI.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/GUI_Type.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/GUI_Version.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/GUI_Private.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/GUI_Debug.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/WM_GUI.h
+sdr_stm32f407vet6_usb_04\guidrv_template.o: ../EmWin/inc/LCD_ConfDefaults.h

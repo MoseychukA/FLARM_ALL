@@ -1,0 +1,854 @@
+<html>
+<body>
+<pre>
+<h1>�Vision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: �Vision V5.31.0.0
+Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Alex Mos, NTMP, LIC=KRMW3-ANDAY-EVW1R-KT4FY-ZLP2I-QJC53
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.31.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.31.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
+Dialog DLL:      TCM.DLL V1.46.0.0
+ 
+<h2>Project:</h2>
+D:\1 GIT FLARM_ALL\SDR\USB_HOST\SDR_STM32F407VET6_USB_04_01\MDK-ARM\SDR_STM32F407VET6_USB_04.uvprojx
+Project File Date:  12/05/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'SDR_STM32F407VET6_USB_04'
+assembling startup_stm32f407xx.s...
+compiling stm32f4xx_hal_flash_ex.c...
+compiling usbh_conf.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Src/usbh_conf.c: 3 warnings, 30 errors
+compiling stm32f4xx_hal_flash.c...
+compiling usb_host.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Src/usb_host.c: 3 warnings, 30 errors
+compiling stm32f4xx_ll_usb.c...
+compiling stm32f4xx_hal_rcc.c...
+compiling stm32f4xx_hal_hcd.c...
+compiling stm32f4xx_hal_rcc_ex.c...
+compiling main.c...
+../Src/main.c(184): warning:  #177-D: variable "RTLSDR_Handle"  was declared but never referenced
+  	 RTLSDR_HandleTypeDef *RTLSDR_Handle = (RTLSDR_HandleTypeDef*) hUSBHost.pActiveClass->pData;
+../Src/main.c(445): warning:  #177-D: function "USBH_UserProcess"  was declared but never referenced
+  static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
+../Src/main.c: 2 warnings, 0 errors
+compiling stm32f4xx_hal.c...
+compiling stm32f4xx_hal_gpio.c...
+compiling stm32f4xx_hal_msp.c...
+compiling stm32f4xx_hal_pwr_ex.c...
+compiling stm32f4xx_hal_flash_ramfunc.c...
+compiling stm32f4xx_hal_dma_ex.c...
+compiling stm32f4xx_it.c...
+compiling stm32f4xx_hal_cortex.c...
+compiling stm32f4xx_hal_dma.c...
+compiling stm32f4xx_hal_pwr.c...
+compiling stm32f4xx_hal_exti.c...
+compiling system_stm32f4xx.c...
+compiling stm32f4xx_hal_sram.c...
+compiling usbh_core.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.c: 3 warnings, 30 errors
+compiling stm32f4xx_hal_tim_ex.c...
+compiling stm32f4xx_hal_tim.c...
+compiling usbh_ctlreq.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c: 3 warnings, 30 errors
+compiling stm32f4xx_hal_spi.c...
+compiling stm32f4xx_ll_fsmc.c...
+compiling stm32f4xx_hal_uart.c...
+compiling usbh_ioreq.c...
+../Middlewares/ST/STM32_USB_Host_Library/Core/Inc/usbh_def.h(292): error:  #20: identifier "USBH_MAX_NUM_ENDPOINTS" is undefined
+    USBH_EpDescTypeDef               Ep_Desc[USBH_MAX_NUM_ENDPOINTS];
+../Middlewares/ST/STM32_USB_Host_Library/Core/Inc/usbh_def.h(307): error:  #20: identifier "USBH_MAX_NUM_INTERFACES" is undefined
+    USBH_InterfaceDescTypeDef        Itf_Desc[USBH_MAX_NUM_INTERFACES];
+../Middlewares/ST/STM32_USB_Host_Library/Core/Inc/usbh_def.h(434): error:  #20: identifier "USBH_MAX_SIZE_CONFIGURATION" is undefined
+    uint8_t                           CfgDesc_Raw[USBH_MAX_SIZE_CONFIGURATION];
+../Middlewares/ST/STM32_USB_Host_Library/Core/Inc/usbh_def.h(472): error:  #20: identifier "USBH_MAX_NUM_SUPPORTED_CLASS" is undefined
+    USBH_ClassTypeDef    *pClass[USBH_MAX_NUM_SUPPORTED_CLASS];
+../Inc/usbh_conf.h(83): warning:  #47-D: incompatible redefinition of macro "USBH_MAX_DATA_BUFFER"  (declared at line 99 of "../Middlewares/ST/STM32_USB_Host_Library/Core/Inc/usbh_def.h")
+  #define USBH_MAX_DATA_BUFFER      512U
+../Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c: 1 warning, 4 errors
+compiling usbh_hid_parser.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/HID/Src/usbh_hid_parser.c: 3 warnings, 30 errors
+compiling usbh_hid_mouse.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/HID/Src/usbh_hid_mouse.c: 3 warnings, 30 errors
+compiling fonts.c...
+compiling correct_ANSI.c...
+compiling usbh_hid.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/HID/Src/usbh_hid.c: 3 warnings, 30 errors
+compiling usbh_hid_keybd.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/HID/Src/usbh_hid_keybd.c: 3 warnings, 30 errors
+compiling GUIConf.c...
+compiling GUI_X.c...
+compiling GUIDRV_Template.c...
+compiling usbh_pipes.c...
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(181): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*Init)         (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(182): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*InitProcess)  (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #79: expected a type specifier
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): warning:  #231-D: declaration is not visible outside of function
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #90: function returning function is not allowed
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #168: a function type is not allowed here
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(183): error:  #101: "USBH_StatusTypeDef" has already been declared in the current scope
+    USBH_StatusTypeDef  (*SetBW)        (struct _USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(369): error:  #20: identifier "USBH_ClassTypeDef" is undefined
+  extern USBH_ClassTypeDef  RTLSDR_Class;
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(379): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_IOProcess (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(380): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef USBH_RTLSDR_Init (USBH_HandleTypeDef *phost);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(382): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_reg (USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(387): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_read_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(393): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_write_array(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(399): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(403): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write_reg(USBH_HandleTypeDef *phost, 
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(408): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_write(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_StatusTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Inc/usbh_rtlsdr.h(410): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  USBH_StatusTypeDef RTLSDR_i2c_read(USBH_HandleTypeDef *phost, uint8_t i2c_addr, uint8_t *buffer, uint8_t);
+../Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.c: 3 warnings, 30 errors
+compiling Arial16.c...
+compiling WindowDLG.c...
+compiling GUIDEMO_AntialiasedText.c...
+compiling GUIDEMO.c...
+compiling LCD_ini.c...
+..\LCD_ILI9341_FSMC\LCD_ini.c(174): warning:  #223-D: function "GPIO_SetBits" declared implicitly
+     LCD_LED_ON;
+..\LCD_ILI9341_FSMC\LCD_ini.c(174): error:  #20: identifier "GPIO_Pin_1" is undefined
+     LCD_LED_ON;
+..\LCD_ILI9341_FSMC\LCD_ini.c: 1 warning, 1 error
+compiling GUIDEMO_Conf.c...
+compiling GUIDEMO_Bitmap.c...
+compiling GUIDEMO_ColorBar.c...
+compiling GUIDEMO_BarGraph.c...
+compiling GUIDEMO_Cursor.c...
+compiling GUIDEMO_Automotive.c...
+compiling GUIDEMO_Intro.c...
+compiling GUIDEMO_Graph.c...
+compiling GUIDEMO_Fading.c...
+compiling GUIDEMO_Listview.c...
+compiling GUIDEMO_ImageFlow.c...
+compiling GUIDEMO_IconView.c...
+compiling tft_lcd.c...
+..\LCD_ILI9341_FSMC\tft_lcd.c(18): error:  #20: identifier "RCC_ClocksTypeDef" is undefined
+      RCC_ClocksTypeDef RCC_Clocks;
+..\LCD_ILI9341_FSMC\tft_lcd.c(19): warning:  #223-D: function "RCC_GetClocksFreq" declared implicitly
+      RCC_GetClocksFreq (&RCC_Clocks);
+..\LCD_ILI9341_FSMC\tft_lcd.c(79): error:  #20: identifier "FSMC_NORSRAMInitTypeDef" is undefined
+     FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
+..\LCD_ILI9341_FSMC\tft_lcd.c(80): error:  #20: identifier "FSMC_NORSRAMTimingInitTypeDef" is undefined
+     FSMC_NORSRAMTimingInitTypeDef  p;
+..\LCD_ILI9341_FSMC\tft_lcd.c(83): warning:  #223-D: function "RCC_AHB1PeriphClockCmd" declared implicitly
+     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOE, ENABLE);
+..\LCD_ILI9341_FSMC\tft_lcd.c(83): error:  #20: identifier "RCC_AHB1Periph_GPIOD" is undefined
+     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOE, ENABLE);
+..\LCD_ILI9341_FSMC\tft_lcd.c(83): error:  #20: identifier "RCC_AHB1Periph_GPIOE" is undefined
+     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOE, ENABLE);
+..\LCD_ILI9341_FSMC\tft_lcd.c(87): error:  #136: struct "<unnamed>"  has no field "GPIO_Pin"
+     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 |
+..\LCD_ILI9341_FSMC\tft_lcd.c(87): error:  #20: identifier "GPIO_Pin_0" is undefined
+     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 |
+..\LCD_ILI9341_FSMC\tft_lcd.c(87): error:  #20: identifier "GPIO_Pin_1" is undefined
+     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 |
+..\LCD_ILI9341_FSMC\tft_lcd.c(87): error:  #20: identifier "GPIO_Pin_4" is undefined
+     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 |
+..\LCD_ILI9341_FSMC\tft_lcd.c(87): error:  #20: identifier "GPIO_Pin_5" is undefined
+     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 |
+..\LCD_ILI9341_FSMC\tft_lcd.c(88): error:  #20: identifier "GPIO_Pin_7" is undefined
+                                   GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 |
+..\LCD_ILI9341_FSMC\tft_lcd.c(88): error:  #20: identifier "GPIO_Pin_8" is undefined
+                                   GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 |
+..\LCD_ILI9341_FSMC\tft_lcd.c(88): error:  #20: identifier "GPIO_Pin_9" is undefined
+                                   GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 |
+..\LCD_ILI9341_FSMC\tft_lcd.c(89): error:  #20: identifier "GPIO_Pin_10" is undefined
+                                  GPIO_Pin_10 |GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+..\LCD_ILI9341_FSMC\tft_lcd.c(89): error:  #20: identifier "GPIO_Pin_13" is undefined
+                                  GPIO_Pin_10 |GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+..\LCD_ILI9341_FSMC\tft_lcd.c(89): error:  #20: identifier "GPIO_Pin_14" is undefined
+                                  GPIO_Pin_10 |GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+..\LCD_ILI9341_FSMC\tft_lcd.c(89): error:  #20: identifier "GPIO_Pin_15" is undefined
+                                  GPIO_Pin_10 |GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+..\LCD_ILI9341_FSMC\tft_lcd.c(90): error:  #136: struct "<unnamed>"  has no field "GPIO_Mode"
+     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;                 // режим альтернативной функции
+..\LCD_ILI9341_FSMC\tft_lcd.c(90): error:  #20: identifier "GPIO_Mode_AF" is undefined
+     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;                 // режим альтернативной функции
+..\LCD_ILI9341_FSMC\tft_lcd.c(91): error:  #136: struct "<unnamed>"  has no field "GPIO_Speed"
+     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;            // частота 50 МГц
+..\LCD_ILI9341_FSMC\tft_lcd.c(91): error:  #20: identifier "GPIO_Speed_50MHz" is undefined
+     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;            // частота 50 МГц
+..\LCD_ILI9341_FSMC\tft_lcd.c(92): error:  #136: struct "<unnamed>"  has no field "GPIO_OType"
+     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;               // двухтактный выход
+..\LCD_ILI9341_FSMC\tft_lcd.c(92): error:  #20: identifier "GPIO_OType_PP" is undefined
+     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;               // двухтактный выход
+..\LCD_ILI9341_FSMC\tft_lcd.c(93): error:  #136: struct "<unnamed>"  has no field "GPIO_PuPd"
+     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;            // без подтяжки
+..\LCD_ILI9341_FSMC\tft_lcd.c(93): error:  #20: identifier "GPIO_PuPd_NOPULL" is undefined
+     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;            // без подтяжки
+..\LCD_ILI9341_FSMC\tft_lcd.c(94): warning:  #223-D: function "GPIO_Init" declared implicitly
+     GPIO_Init(GPIOD, &GPIO_InitStructure);                       // выполняем инициализацию
+..\LCD_ILI9341_FSMC\tft_lcd.c(96): warning:  #223-D: function "GPIO_PinAFConfig" declared implicitly
+     GPIO_PinAFConfig(GPIOD, GPIO_PinSource0, GPIO_AF_FSMC);      // GPIO D0  <-> FSMC D2
+..\LCD_ILI9341_FSMC\tft_lcd.c(96): error:  #20: identifier "GPIO_PinSource0" is undefined
+     GPIO_PinAFConfig(GPIOD, GPIO_PinSource0, GPIO_AF_FSMC);      // GPIO D0  <-> FSMC D2
+..\LCD_ILI9341_FSMC\tft_lcd.c(96): error:  #20: identifier "GPIO_AF_FSMC" is undefined
+     GPIO_PinAFConfig(GPIOD, GPIO_PinSource0, GPIO_AF_FSMC);      // GPIO D0  <-> FSMC D2
+..\LCD_ILI9341_FSMC\tft_lcd.c(97): error:  #20: identifier "GPIO_PinSource1" is undefined
+     GPIO_PinAFConfig(GPIOD, GPIO_PinSource1, GPIO_AF_FSMC);      // GPIO D1  <-> FSMC D3
+..\LCD_ILI9341_FSMC\tft_lcd.c(98): error:  #20: identifier "GPIO_PinSource4" is undefined
+     GPIO_PinAFConfig(GPIOD, GPIO_PinSource4, GPIO_AF_FSMC);      // GPIO D4  <-> FSMC NOE
+..\LCD_ILI9341_FSMC\tft_lcd.c(99): error:  #20: identifier "GPIO_PinSource5" is undefined
+     GPIO_PinAFConfig(GPIOD, GPIO_PinSource5, GPIO_AF_FSMC);      // GPIO D5  <-> FSMC NWE
+..\LCD_ILI9341_FSMC\tft_lcd.c: 4 warnings, 30 errors
+compiling GUIDEMO_Resource.c...
+compiling GUIDEMO_Speedometer.c...
+compiling GUIDEMO_Speed.c...
+compiling GUIDEMO_RadialMenu.c...
+compiling GUIDEMO_Skinning.c...
+compiling GUIDEMO_Start.c...
+compiling TouchPanel.c...
+..\TouchPanel\TouchPanel.c(38): warning:  #177-D: variable "MSB"  was declared but never referenced
+  	uint16_t val, MSB, LSB;
+..\TouchPanel\TouchPanel.c(38): warning:  #177-D: variable "LSB"  was declared but never referenced
+  	uint16_t val, MSB, LSB;
+..\TouchPanel\TouchPanel.c(36): warning:  #177-D: function "SPI_Write"  was declared but never referenced
+  static uint16_t SPI_Write ( uint16_t cmd )
+..\TouchPanel\TouchPanel.c(110): warning:  #177-D: function "SpiDelay"  was declared but never referenced
+  static void SpiDelay ( uint16_t DelayCnt )
+..\TouchPanel\TouchPanel.c: 4 warnings, 0 errors
+compiling GUIDEMO_WashingMachine.c...
+compiling GUIDEMO_VScreen.c...
+compiling GUIDEMO_TransparentDialog.c...
+compiling GUIDEMO_ZoomAndRotate.c...
+compiling GUIDEMO_Treeview.c...
+compiling LCDConf_FlexColor.c...
+compiling tuner_e4k.c...
+../Inc/main.h(116): error:  #20: identifier "USBH_HandleTypeDef" is undefined
+  extern USBH_HandleTypeDef hUSBHost;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c(892): warning:  #188-D: enumerated type mixed with another type
+  			uStatus = E4K_rf_filter_set(phost);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c(145): warning:  #177-D: variable "lnagain"  was declared but never referenced
+  static const int32_t lnagain[] = {
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c(161): warning:  #177-D: variable "enhgain"  was declared but never referenced
+  static const int32_t enhgain[] = {
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c(314): warning:  #177-D: function "is_fvco_valid"  was declared but never referenced
+  static int is_fvco_valid(uint32_t fvco_z)
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_e4k.c: 4 warnings, 1 error
+compiling usbh_rtlsdr.c...
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(976): warning:  #188-D: enumerated type mixed with another type
+          uStatus = RTLSDR_i2c_read_reg(phost, E4K_I2C_ADDR, E4K_CHECK_ADDR);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(993): warning:  #188-D: enumerated type mixed with another type
+          uStatus = RTLSDR_i2c_read_reg(phost, FC0013_I2C_ADDR, FC0013_CHECK_ADDR);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(1008): warning:  #188-D: enumerated type mixed with another type
+        uStatus = RTLSDR_i2c_read_reg(phost, R820T_I2C_ADDR, R82XX_CHECK_ADDR);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c(1023): warning:  #188-D: enumerated type mixed with another type
+        uStatus = RTLSDR_i2c_read_reg(phost, R828D_I2C_ADDR, R82XX_CHECK_ADDR);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c: 4 warnings, 0 errors
+"SDR_STM32F407VET6_USB_04\SDR_STM32F407VET6_USB_04.axf" - 306 Error(s), 47 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.7.0.pack
+                ARM.CMSIS.5.7.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.4.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.13.0.pack
+                Keil.STM32F4xx_DFP.2.13.0
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_SDR_STM32F407VET6_USB_04
+  C:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include
+  C:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.4.0
+      Include file:  CMSIS\Core\Include\tz_context.h
+Target not created.
+Build Time Elapsed:  00:00:18
+</pre>
+</body>
+</html>

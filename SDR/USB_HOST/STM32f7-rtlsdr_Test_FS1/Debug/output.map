@@ -26637,7 +26637,7 @@ OUTPUT(stm32-rtlsdr.elf elf32-littlearm)
  .debug_macro   0x00024d94       0x88 src/syscalls.o
  .debug_macro   0x00024e1c      0x4fe src/system_stm32f7xx.o
 
-.debug_line     0x00000000    0x1bfb3
+.debug_line     0x00000000    0x1bfb1
  .debug_line    0x00000000      0xcf4 HAL_Driver/Src/stm32f7xx_hal.o
  .debug_line    0x00000cf4      0xe62 HAL_Driver/Src/stm32f7xx_hal_cortex.o
  .debug_line    0x00001b56      0xe1c HAL_Driver/Src/stm32f7xx_hal_dma.o
@@ -26653,23 +26653,23 @@ OUTPUT(stm32-rtlsdr.elf elf32-littlearm)
  .debug_line    0x0000c233      0xe09 HAL_Driver/Src/stm32f7xx_ll_fmc.o
  .debug_line    0x0000d03c     0x117a HAL_Driver/Src/stm32f7xx_ll_usb.o
  .debug_line    0x0000e1b6     0x129c Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Src/tuner_e4k.o
- .debug_line    0x0000f452     0x1336 Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Src/usbh_rtlsdr.o
- .debug_line    0x00010788      0xeb7 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_conf.o
- .debug_line    0x0001163f      0xfa8 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.o
- .debug_line    0x000125e7      0xf85 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.o
- .debug_line    0x0001356c      0xd6f Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.o
- .debug_line    0x000142db      0xd27 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.o
- .debug_line    0x00015002      0xe09 Utilities/Log/lcd_log.o
- .debug_line    0x00015e0b      0xe7d Utilities/STM32746G-Discovery/stm32746g_discovery.o
- .debug_line    0x00016c88     0x130e Utilities/STM32746G-Discovery/stm32746g_discovery_lcd.o
- .debug_line    0x00017f96      0xc94 Utilities/STM32746G-Discovery/stm32746g_discovery_sdram.o
- .debug_line    0x00018c2a     0x10a0 src/main.o
- .debug_line    0x00019cca     0x1129 src/stm32f7xx_it.o
- .debug_line    0x0001adf3      0x5df src/syscalls.o
- .debug_line    0x0001b3d2      0xb62 src/system_stm32f7xx.o
- .debug_line    0x0001bf34       0x7f startup/startup_stm32f746xx.o
+ .debug_line    0x0000f452     0x1334 Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Src/usbh_rtlsdr.o
+ .debug_line    0x00010786      0xeb7 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_conf.o
+ .debug_line    0x0001163d      0xfa8 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.o
+ .debug_line    0x000125e5      0xf85 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.o
+ .debug_line    0x0001356a      0xd6f Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.o
+ .debug_line    0x000142d9      0xd27 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.o
+ .debug_line    0x00015000      0xe09 Utilities/Log/lcd_log.o
+ .debug_line    0x00015e09      0xe7d Utilities/STM32746G-Discovery/stm32746g_discovery.o
+ .debug_line    0x00016c86     0x130e Utilities/STM32746G-Discovery/stm32746g_discovery_lcd.o
+ .debug_line    0x00017f94      0xc94 Utilities/STM32746G-Discovery/stm32746g_discovery_sdram.o
+ .debug_line    0x00018c28     0x10a0 src/main.o
+ .debug_line    0x00019cc8     0x1129 src/stm32f7xx_it.o
+ .debug_line    0x0001adf1      0x5df src/syscalls.o
+ .debug_line    0x0001b3d0      0xb62 src/system_stm32f7xx.o
+ .debug_line    0x0001bf32       0x7f startup/startup_stm32f746xx.o
 
-.debug_str      0x00000000    0xca679
+.debug_str      0x00000000    0xca67c
  .debug_str     0x00000000    0xbd827 HAL_Driver/Src/stm32f7xx_hal.o
                               0xbdc80 (size before relaxing)
  .debug_str     0x000bd827      0x49e HAL_Driver/Src/stm32f7xx_hal_cortex.o
@@ -26700,35 +26700,35 @@ OUTPUT(stm32-rtlsdr.elf elf32-littlearm)
                               0xbdb86 (size before relaxing)
  .debug_str     0x000c20c5     0x4d19 Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Src/tuner_e4k.o
                               0xc2416 (size before relaxing)
- .debug_str     0x000c6dde      0x5dd Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Src/usbh_rtlsdr.o
-                              0xc1ff9 (size before relaxing)
- .debug_str     0x000c73bb      0x188 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_conf.o
+ .debug_str     0x000c6dde      0x5e0 Middlewares/ST/STM32_USB_Host_Library/Class/RTLSDR/Src/usbh_rtlsdr.o
+                              0xc1ffc (size before relaxing)
+ .debug_str     0x000c73be      0x188 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_conf.o
                               0xbf9b3 (size before relaxing)
- .debug_str     0x000c7543      0x1e3 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.o
+ .debug_str     0x000c7546      0x1e3 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.o
                               0xbdcd9 (size before relaxing)
- .debug_str     0x000c7726      0x25e Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.o
+ .debug_str     0x000c7729      0x25e Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.o
                               0xbdd7d (size before relaxing)
- .debug_str     0x000c7984       0xfe Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.o
+ .debug_str     0x000c7987       0xfe Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.o
                               0xbdbb7 (size before relaxing)
- .debug_str     0x000c7a82       0x92 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.o
+ .debug_str     0x000c7a85       0x92 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.o
                               0xbdb3c (size before relaxing)
- .debug_str     0x000c7b14      0x515 Utilities/Log/lcd_log.o
+ .debug_str     0x000c7b17      0x515 Utilities/Log/lcd_log.o
                               0xbf58e (size before relaxing)
- .debug_str     0x000c8029      0x9c6 Utilities/STM32746G-Discovery/stm32746g_discovery.o
+ .debug_str     0x000c802c      0x9c6 Utilities/STM32746G-Discovery/stm32746g_discovery.o
                               0xbf74e (size before relaxing)
- .debug_str     0x000c89ef      0x7d1 Utilities/STM32746G-Discovery/stm32746g_discovery_lcd.o
+ .debug_str     0x000c89f2      0x7d1 Utilities/STM32746G-Discovery/stm32746g_discovery_lcd.o
                               0xc01e3 (size before relaxing)
- .debug_str     0x000c91c0      0x167 Utilities/STM32746G-Discovery/stm32746g_discovery_sdram.o
+ .debug_str     0x000c91c3      0x167 Utilities/STM32746G-Discovery/stm32746g_discovery_sdram.o
                               0xbe38f (size before relaxing)
- .debug_str     0x000c9327       0xe9 src/main.o
+ .debug_str     0x000c932a       0xe9 src/main.o
                               0xc1dc5 (size before relaxing)
- .debug_str     0x000c9410       0xdf src/stm32f7xx_it.o
+ .debug_str     0x000c9413       0xdf src/stm32f7xx_it.o
                               0xc140a (size before relaxing)
- .debug_str     0x000c94ef     0x1101 src/syscalls.o
+ .debug_str     0x000c94f2     0x1101 src/syscalls.o
                                0x859c (size before relaxing)
- .debug_str     0x000ca5f0       0x5a src/system_stm32f7xx.o
+ .debug_str     0x000ca5f3       0x5a src/system_stm32f7xx.o
                               0xbc306 (size before relaxing)
- .debug_str     0x000ca64a       0x2f startup/startup_stm32f746xx.o
+ .debug_str     0x000ca64d       0x2f startup/startup_stm32f746xx.o
                                  0x58 (size before relaxing)
 
 .comment        0x00000000       0x7f

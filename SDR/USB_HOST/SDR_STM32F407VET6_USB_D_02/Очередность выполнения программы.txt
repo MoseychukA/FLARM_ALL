@@ -1,0 +1,36 @@
+
+Настраиваем USB порт
+1) MX_USB_HOST_Init()
+2 ) USBH_Init(&hUsbHostFS, USBH_UserProcess, HOST_FS (usb_host.c)
+2.1.1) USBH_StatusTypeDef  USBH_Init
+Настроить "железо" порт USB
+2.1.2)(void)USBH_LL_Init(phost);
+2.1.3) return USBH_OK;
+Подключаем класс USBH_RTLSDR_CLASS
+2.2.1) USBH_RegisterClass(&hUsbHostFS, USBH_RTLSDR_CLASS) != USBH_OK
+2.2.2a) USBH_StatusTypeDef status = USBH_OK;
+2.2.2.b)   USBH_UsrLog("USBH_StatusTypeDef status %d",status);
+  return status;
+  Порт USB запущен в работу.
+2.3.1)if (USBH_Start(&hUsbHostFS) != USBH_OK)
+2.3.2)(void)USBH_LL_Start(phost); 
+2.3.3) hal_status = HAL_HCD_Start(phost->pData);
+       usb_status = USBH_Get_USB_Status(hal_status);
+       return usb_status;
+!! Проверить выполнен ли запуск порта USB в работу.
+
+Настройка MX_USB_HOST_Init() выполнена.
+
+3)   while (1)
+  {
+    /* USER CODE END WHILE */
+    MX_USB_HOST_Process();
+	
+	//..
+	
+	
+  }
+  
+
+
+

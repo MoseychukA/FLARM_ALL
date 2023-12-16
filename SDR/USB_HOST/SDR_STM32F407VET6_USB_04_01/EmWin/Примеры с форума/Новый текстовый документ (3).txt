@@ -1,0 +1,50 @@
+В обработчике кнопки:
+Код:
+            case ID_BUTTON_OK: // Notifications sent by 'ButtonOpen'
+               switch(NCode)
+               {
+                  case WM_NOTIFICATION_RELEASED:  // Кнопка отпущена
+                     GUI_EndDialog ( hDlg, 1 );
+                     break;
+               } // switch
+               break;
+
+
+Вызов окон:
+Код:
+   while (1)
+   {
+      GUI_CURSOR_SetPosition ( LCD_GetXSize ( ) / 2, LCD_GetYSize ( ) / 2 );
+      GUI_CURSOR_Show ( );
+      GUI_Exec ( );
+
+      hWin = CreateFramewinFileOpen ( );
+      retCode = GUI_ExecCreatedDialog ( hWin );
+      WM_DeleteWindow ( hWin );
+      GUI_Exec ( );
+
+      if ( retCode == 1 )
+      { // файл выбрали
+         // очистка дисплея
+         SSD1963_FillScr ( 0x0000 );
+
+//         STM_EVAL_LEDToggle ( LED_Green );
+         GUI_MessageBox ( selectedFilename, "Выбранный файл", 0 );
+
+         // очистка дисплея
+         SSD1963_FillScr ( 0x0000 );
+      } // if
+
+      delay_ms ( 1000 );
+   } // while
+
+
+Вместо второго окна у меня GUI_MessageBox, но на суть дела оно не влияет.
+MessageBox такое же окно, как и все остальные.
+
+А под ним что-нить есть, или только фон? Дело в том, что фон по умолчанию не перерисовывается, т.к. не знает свой цвет, попробуй сначала сделать так:
+
+WM_SelectWindow(WM_HBKWIN);
+WM_SetDesktopColor(GUI_BLACK);
+
+А потом пошаманить с окнами...

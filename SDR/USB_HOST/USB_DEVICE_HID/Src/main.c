@@ -49,6 +49,19 @@ UART_HandleTypeDef huart1;
 #define CURSOR_STEP	1
 extern USBD_HandleTypeDef hUsbDeviceFS;
 uint8_t HID_Buffer[4];
+
+	
+	#ifdef __GNUC__
+  /* With GCC, small printf (option LD Linker->Libraries->Small printf
+     set to 'Yes') calls __io_putchar() */
+  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+	
+
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -121,9 +134,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USB_DEVICE_Init();
   MX_USART1_UART_Init();
+  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
+	
+	printf("Start system\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -245,6 +260,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the EVAL_COM1 and Loop until the end of transmission */
+  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF); 
+
+  return ch;
+}
 /* USER CODE END 4 */
 
 /**

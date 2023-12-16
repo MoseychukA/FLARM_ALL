@@ -1,0 +1,50 @@
+Тач - легко. Ноги, SPI, контроллер инициализируете в main до запуска оболочки.
+Драйвер тача пишете сами.
+
+Пишете где-то функции типа:
+
+Код:
+// Чтение и корректировка (пересчёты, усреднения и т.п.) координат тача
+void ReadTouchXY ( uint16_t *px, uint16_t *py )
+{
+   uint16_t x, y, aX, aY;
+   float fTemp;
+
+   // X
+   aX = TPReadY ( );
+   fTemp = aX * 800.0F / 4096.0F;
+   x = fTemp;
+   if ( x > 799 )
+      x = 799;
+
+   // Y
+   aY = 4096 - TPReadX ( );
+   fTemp = aY * 480.0F / 4096.0F;
+   y = fTemp;
+
+   // Результат
+   *px = x;
+   *py = y;
+} // ReadTouchXY
+
+// Touch Callback
+void Touch_Update ( void )
+{
+  GUI_PID_STATE TS_State;
+  uint16_t x, y;
+
+  ReadTouchXY ( &x, &y );
+
+  TS_State.x = x;
+  TS_State.y = y;
+  TS_State.Pressed = isTouch ( );
+  TS_State.Layer = 0;
+
+  if ( ( x < LCD_GetXSize ( ) ) && ( y < LCD_GetYSize ( ) ) )
+    GUI_TOUCH_StoreStateEx ( &TS_State );
+} // Touch_Update
+
+
+Touch_Update периодически сами вызываете откуда-то. Чаще всего из прерывания Systick 1ms.
+В GUIConf.h указать
+#define GUI_SUPPORT_TOUCH (1) // Support touchscreen

@@ -1,0 +1,12 @@
+Можно и удалять, а если памяти хватает - то есть:
+Код:
+WM_BringToBottom();
+WM_BringToTop();
+WM_GetActiveWindow();
+WM_Update();
+WM_SetFocus();
+WM_HideWindow();
+WM_ShowWindow();
+WM_DisableWindow();
+WM_EnableWindow();
+а вызывать CreateStartwindow() целесообразно только если оно ещё не создано или было закрыто...
