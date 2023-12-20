@@ -1,0 +1,52 @@
+16:05:48 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:05:52 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:06:13 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:06:54 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:06:58 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:07:47 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:07:53 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:08:41 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:09:02 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:09:07 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:09:49 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:10:28 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+16:10:40 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.
+20:52:35 **** Clean-only build of configuration Debug for project stm32f407_disco_usbh_hid ****
+make clean 
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:/Ac6/SystemWorkbench/jre/bin/server;C:/Ac6/SystemWorkbench/jre/bin;C:/Ac6/SystemWorkbench/jre/lib/amd64;C:\Program Files\Eclipse Foundation\jdk-8.0.302.8-hotspot\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Microsoft\jdk-11.0.16.101-hotspot\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\STMicroelectronics\STM32 ST-LINK Utility\ST-LINK Utility;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files (x86)\P-CAD 2006 Viewer\;C:\dev\CMake\bin;C:\Program Files\TortoiseGit\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files (x86)\GNU Tools ARM Embedded\5.4 2016q3\bin;C:\Users\Alex\AppData\Local\Microsoft\WindowsApps;C:\Users\Alex\AppData\Local\GitHubDesktop\bin;C:\msys64\mingw64\bin;C:\Users\Alex\.platformio\penv\Scripts;C:\Users\Alex\AppData\Local\Programs\jaguar;C:\Users\Alex\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Alex\AppData\Local\Programs\Python\Python311\python.exe;C:\Program Files\Java\jre-1.8\bin;C:\Ac6\SystemWorkbench\plugins\fr.ac6.mcu.ide_2.9.1.201905031422\resources\project_importer\windows;]
+
+**** Build of configuration Debug for project stm32f407_disco_usbh_hid ****
+
+Nothing to build for project stm32f407_disco_usbh_hid
+20:55:30 **** Incremental Build of configuration Debug for project stm32-rtlsdr ****
+make all 
+make: Nothing to be done for 'all'.

@@ -1,0 +1,277 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.31.0.0
+Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Alex Mos, NTMP, LIC=KRMW3-ANDAY-EVW1R-KT4FY-ZLP2I-QJC53
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.31.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.31.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
+Dialog DLL:      TCM.DLL V1.46.0.0
+ 
+<h2>Project:</h2>
+D:\1 GIT FLARM_ALL\SDR\USB_HOST\RTLSDR_STM32F407VET6_USB_03\MDK-ARM\RTLSDR_STM32F407VET6_USB_01.uvprojx
+Project File Date:  12/19/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'RTLSDR_STM32F407VET6_USB_01'
+assembling startup_stm32f407xx.s...
+compiling stm32f4xx_hal_rcc_ex.c...
+compiling stm32f4xx_it.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+../Src/stm32f4xx_it.c: 4 warnings, 0 errors
+compiling usb_user_process.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\Src\usb_user_process.c: 4 warnings, 0 errors
+compiling stm32f4xx_hal_msp.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+../Src/stm32f4xx_hal_msp.c: 4 warnings, 0 errors
+compiling stm32f4xx_ll_usb.c...
+compiling stm32f4xx_hal_hcd.c...
+compiling usbh_conf.c...
+compiling stm32f4xx_hal_rcc.c...
+compiling usb_host.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+../Src/usb_host.c: 4 warnings, 0 errors
+compiling libusb_port.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\Src\libusb_port.c: 4 warnings, 0 errors
+compiling main.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+../XPT2046/XPT2046_touch.h(25): warning:  #1295-D: Deprecated declaration XPT2046_TouchPressed - give arg types
+  bool XPT2046_TouchPressed();
+../Src/main.c: 5 warnings, 0 errors
+compiling stm32f4xx_hal_flash.c...
+compiling stm32f4xx_hal_flash_ex.c...
+compiling stm32f4xx_hal_gpio.c...
+compiling stm32f4xx_hal_dma.c...
+compiling stm32f4xx_hal_cortex.c...
+compiling stm32f4xx_hal_flash_ramfunc.c...
+compiling stm32f4xx_hal_exti.c...
+compiling stm32f4xx_hal_dma_ex.c...
+compiling stm32f4xx_hal_pwr.c...
+compiling stm32f4xx_hal.c...
+compiling stm32f4xx_hal_pwr_ex.c...
+compiling usbh_ioreq.c...
+compiling stm32f4xx_hal_sram.c...
+compiling usbh_ctlreq.c...
+compiling stm32f4xx_hal_tim_ex.c...
+compiling stm32f4xx_hal_uart.c...
+compiling system_stm32f4xx.c...
+compiling usbh_core.c...
+compiling stm32f4xx_ll_fsmc.c...
+compiling stm32f4xx_hal_spi.c...
+compiling stm32f4xx_hal_tim.c...
+compiling usbh_pipes.c...
+compiling font8.c...
+compiling font12.c...
+compiling font16.c...
+compiling font20.c...
+compiling font24.c...
+compiling usbh_hid.c...
+compiling usbh_hid_mouse.c...
+compiling tuner_fc2580.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_fc2580.c: 4 warnings, 0 errors
+compiling usbh_hid_parser.c...
+compiling librtlsdr.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(318): warning:  #47-D: incompatible redefinition of macro "CTRL_IN"  (declared at line 367 of "..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Inc\usbh_rtlsdr.h")
+  #define CTRL_IN		(LIBUSB_REQUEST_TYPE_VENDOR | LIBUSB_ENDPOINT_IN)
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(319): warning:  #47-D: incompatible redefinition of macro "CTRL_OUT"  (declared at line 368 of "..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Inc\usbh_rtlsdr.h")
+  #define CTRL_OUT	(LIBUSB_REQUEST_TYPE_VENDOR | LIBUSB_ENDPOINT_OUT)
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(902): warning:  #177-D: variable "e4k_gains"  was declared but never referenced
+      const int e4k_gains[] = { -10, 15, 40, 65, 90, 115, 140, 165, 190, 215,
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(1327): warning:  #177-D: variable "i"  was declared but never referenced
+      int i;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(1328): warning:  #177-D: variable "list"  was declared but never referenced
+      libusb_device** list;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(1330): warning:  #177-D: variable "device"  was declared but never referenced
+      libusb_device* device = NULL;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(1331): warning:  #177-D: variable "device_count"  was declared but never referenced
+      uint32_t device_count = 0;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(1332): warning:  #177-D: variable "dd"  was declared but never referenced
+      struct libusb_device_descriptor dd;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(1334): warning:  #177-D: variable "cnt"  was declared but never referenced
+      ssize_t cnt;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(1474): warning:  #167-D: argument of type "volatile void *" is incompatible with parameter of type "unsigned char *"
+      return libusb_bulk_transfer(dev->devh, 0x81, buf, len, n_read, BULK_TIMEOUT);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c(1553): warning:  #185-D: dynamic initialization in unreachable code
+      int r = 0;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\librtlsdr.c: 15 warnings, 0 errors
+compiling usbh_rtlsdr.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\usbh_rtlsdr.c: 4 warnings, 0 errors
+compiling tuner_r82xx.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_r82xx.c(419): warning:  #177-D: variable "i"  was declared but never referenced
+  	int rc, i;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_r82xx.c(420): warning:  #177-D: variable "sleep_time"  was declared but never referenced
+  	unsigned sleep_time = 10000;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_r82xx.c(1232): warning:  #188-D: enumerated type mixed with another type
+  	priv->type = -1;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_r82xx.c(1232): warning:  #68-D: integer conversion resulted in a change of sign
+  	priv->type = -1;
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_r82xx.c(980): warning:  #177-D: function "r82xx_read_gain"  was declared but never referenced
+  static int r82xx_read_gain(struct r82xx_priv *priv)
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_r82xx.c(998): warning:  #177-D: variable "r82xx_vga_gain_steps"  was declared but never referenced
+  static const int r82xx_vga_gain_steps[]  = {
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_r82xx.c(1241): warning:  #177-D: function "r82xx_xtal_check"  was declared but never referenced
+  static int r82xx_xtal_check(struct r82xx_priv *priv)
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_r82xx.c: 11 warnings, 0 errors
+compiling usbh_hid_keybd.c...
+compiling tuner_fc0012.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_fc0012.c: 4 warnings, 0 errors
+compiling tuner_fc0013.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\Middlewares\ST\STM32_USB_Host_Library\Class\RTLSDR\Src\tuner_fc0013.c: 4 warnings, 0 errors
+compiling ili9341.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+..\ILI9341\ili9341.c: 4 warnings, 0 errors
+compiling XPT2046_touch.c...
+../Inc/libusb.h(1380): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_wait_for_event(libusb_context *ctx, struct timeval *tv);
+../Inc/libusb.h(1384): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_timeout_completed(libusb_context *ctx, struct timeval *tv, int *completed);
+../Inc/libusb.h(1387): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_handle_events_locked(libusb_context *ctx,  struct timeval *tv);
+../Inc/libusb.h(1389): warning:  #231-D: declaration is not visible outside of function
+  int LIBUSB_CALL libusb_get_next_timeout(libusb_context *ctx,  struct timeval *tv);
+../XPT2046/XPT2046_touch.h(25): warning:  #1295-D: Deprecated declaration XPT2046_TouchPressed - give arg types
+  bool XPT2046_TouchPressed();
+..\XPT2046\XPT2046_touch.c: 5 warnings, 0 errors
+linking...
+Program Size: Code=27240 RO-data=8584 RW-data=168 ZI-data=4472  
+FromELF: creating hex file...
+"RTLSDR_STM32F407VET6_USB_01\RTLSDR_STM32F407VET6_USB_01.axf" - 0 Error(s), 76 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.7.0.pack
+                ARM.CMSIS.5.7.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.4.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.13.0.pack
+                Keil.STM32F4xx_DFP.2.13.0
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_RTLSDR_STM32F407VET6_USB_01
+  C:\Users\Alex\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include
+  C:\Users\Alex\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.4.0
+      Include file:  CMSIS\Core\Include\tz_context.h
+Build Time Elapsed:  00:00:17
+</pre>
+</body>
+</html>
