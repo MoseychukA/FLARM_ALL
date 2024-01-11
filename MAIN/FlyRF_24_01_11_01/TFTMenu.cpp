@@ -745,13 +745,13 @@ void TFTMenu::resetIdleTimer()
 
                     alien_speed_tmr[i] = alien_val_speed * 1.852;                  // Скорость стороннего самолета после фильтра
 
-                    Serial.print("alien_val_speed ");
-                    Serial.print(alien_val_speed);
-                    Serial.print(" alien_speed_tmr ");
-                    Serial.println(alien_speed_tmr[i]);
+                   // Serial.print("alien_val_speed ");
+                   // Serial.print(alien_val_speed);
+                   // Serial.print(" alien_speed_tmr ");
+                   // Serial.println(alien_speed_tmr[i]);
 
                     // --------------------------------------------------------------------------------
-                     /* При малой скорости смотрим в центр экрана на наш самолет*/
+                     /* При малой скорости смотрим в центр экрана на наш самолет. Это означает что самолет не летит (на земле) */
                     if (alien_speed_tmr[i] >= 0 && alien_speed_tmr[i] < 4)
                     {
                         Container[i].course = (180 + bearing_tmr[i]) % 360;
@@ -984,10 +984,10 @@ void TFTMenu::resetIdleTimer()
                                 arrow_up_down[i] = 0;
                             }
 
-                            Serial.print("array_ok ");
-                            Serial.print(array_ok);
-                            Serial.print("arrow_up_down");
-                            Serial.println(arrow_up_down[i]);
+                           // Serial.print("array_ok ");
+                           // Serial.print(array_ok);
+                           // Serial.print("arrow_up_down");
+                           // Serial.println(arrow_up_down[i]);
 
                         }
                     }
@@ -1880,11 +1880,11 @@ void TFTMenu::resetIdleTimer()
      int screenWidth = tft_radar->width();
      int screenHeight = tft_radar->height();
 
-     Serial.print("screenWidth ");
-     Serial.print(screenWidth);
+    // Serial.print("screenWidth ");
+    // Serial.print(screenWidth);
 
-     Serial.print(" | screenHeight ");
-     Serial.print(screenHeight);
+   //  Serial.print(" | screenHeight ");
+   //  Serial.print(screenHeight);
 
 
      tft_radar->setFreeFont(TFT_FONT);
@@ -1894,16 +1894,16 @@ void TFTMenu::resetIdleTimer()
      String data1 = data_txt1; //"МЕСТОПОЛОЖЕНИЯ"
      int textFontWidth = tft_radar->textWidth(data, 2);                   // Returns pixel width of string in current font
 
-     Serial.print("textFontWidth ");
-     Serial.print(textFontWidth);
+   //  Serial.print("textFontWidth ");
+   //  Serial.print(textFontWidth);
 
      uint16_t curX = (screenWidth / 2) - (textFontWidth / 2) - 12;        // Координаты вывода 
      uint16_t curY = 110;                                                 // Координаты вывода текста
      rusPrinter->print(data.c_str(), curX, curY, backColor, TFT_YELLOW);  // Отображаем 
 
      textFontWidth = tft_radar->textWidth(data1, 2);                      // Returns pixel width of string in current font
-     Serial.print(" | textFontWidth2 ");
-     Serial.print(textFontWidth);
+    // Serial.print(" | textFontWidth2 ");
+    // Serial.print(textFontWidth);
 
      curX = (screenWidth / 2) - (textFontWidth / 2) - 18;                  // Координаты вывода 
      curY = 140;                                                           // Координаты вывода текста
