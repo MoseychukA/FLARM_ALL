@@ -132,7 +132,8 @@ Copyright (C) 2015-2023 &nbsp;&nbsp;&nbsp; Linar Yusupov\
 </body>\
 </html>";
 
-void handleSettings() {
+void handleSettings() 
+{
 
   size_t size = 6790;
   char *offset;
