@@ -599,7 +599,7 @@ void txrx_test()
 
            */
 
-        int set_air = 1;   //  
+        int set_air = 2;   //  
 
         switch (set_air)
         {

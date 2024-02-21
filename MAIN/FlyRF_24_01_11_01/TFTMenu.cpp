@@ -1187,7 +1187,7 @@ void TFTMenu::resetIdleTimer()
             dist_info.setTextDatum(TC_DATUM);
             String arr_min_txt = String(arr_min);
 
-            if (arr_min <= 10)
+            if (arr_min <= 5)
             {
                 arr_min_txt = "0";
             }
@@ -1207,10 +1207,17 @@ void TFTMenu::resetIdleTimer()
             }
             else
             {
+              /*
                 // dist_info.drawSmoothRoundRect(0, 0, 5, 1, 80, 25, TFT_DARKGREY);
                 dist_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
                 dist_info.setTextColor(TFT_WHITE, backColor);
                 dist_info.drawString("-----", 40, 4);
+                dist_info.pushToSprite(&back, 1, 2);
+                */
+
+                dist_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
+                dist_info.setTextColor(txt_color, backColor);
+                dist_info.drawString(arr_min_txt + " m", 40, 4);
                 dist_info.pushToSprite(&back, 1, 2);
             }
 
