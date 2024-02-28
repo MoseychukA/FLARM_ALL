@@ -545,28 +545,167 @@ void watchout()
 unsigned int pos_ndx = 0;
 unsigned long TxPosUpdMarker = 0;
 
+
+float altitude1 = 100.0;
+float speed1 = 300.0;
+bool alt_high = false;
+bool alien_dist = false;
+
+
+//55.945148, 37.188258 Деревня Рузино
+float alien_lat1 = 55.945148;
+float alien_lon1 = 37.188258;
+
+// 55.976033, 37.306534 Деревня Чёрная Грязь
+float alien_lat2 = 55.976033;
+float alien_lon2 = 37.306534;
+
+float alien_lat = 55.945148;
+float alien_lon = 37.188258;
+
+float test_curse = 0.0;
+float latitude_old = 0.0;
+float longitude_old = 0.0;
+
+
+int set_air = 2;   //  
+
+
 void txrx_test()
 {
-  bool success = false;
+    bool success = false;
 #if DEBUG_TIMING
-  unsigned long baro_start_ms, baro_end_ms;
-  unsigned long tx_start_ms, tx_end_ms, rx_start_ms, rx_end_ms;
-  unsigned long parse_start_ms, parse_end_ms, led_start_ms, led_end_ms;
-  unsigned long export_start_ms, export_end_ms;
-  unsigned long oled_start_ms, oled_end_ms;
+    unsigned long baro_start_ms, baro_end_ms;
+    unsigned long tx_start_ms, tx_end_ms, rx_start_ms, rx_end_ms;
+    unsigned long parse_start_ms, parse_end_ms, led_start_ms, led_end_ms;
+    unsigned long export_start_ms, export_end_ms;
+    unsigned long oled_start_ms, oled_end_ms;
 #endif
-  ThisAircraft.timestamp = now();
+    ThisAircraft.timestamp = now();
 
-  if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 4000 ) {
-    ThisAircraft.latitude  = pgm_read_float( &txrx_test_positions[pos_ndx][0]);
-    ThisAircraft.longitude = pgm_read_float( &txrx_test_positions[pos_ndx][1]);
-    pos_ndx = (pos_ndx + 1) % TXRX_TEST_NUM_POSITIONS;
-    TxPosUpdMarker = millis();
-  }
-  ThisAircraft.altitude = TXRX_TEST_ALTITUDE;
-  ThisAircraft.course   = TXRX_TEST_COURSE;
-  ThisAircraft.speed    = TXRX_TEST_SPEED;
-  ThisAircraft.vs       = TXRX_TEST_VS;
+ 
+    if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 2000)
+    {
+        //ThisAircraft.latitude  = pgm_read_float( &txrx_test_positions[pos_ndx][0]);
+        //ThisAircraft.longitude = pgm_read_float( &txrx_test_positions[pos_ndx][1]);
+        pos_ndx = (pos_ndx + 1) % TXRX_TEST_NUM_POSITIONS;
+
+        switch (set_air)
+        {
+        case 0:
+           // ThisAircraft.latitude = pgm_read_float(&txrx_test_positions[pos_ndx][0]);
+           // ThisAircraft.longitude = pgm_read_float(&txrx_test_positions[pos_ndx][1]);
+            
+            if (!alt_high)
+            {
+                altitude1 += 100.0;
+                if (altitude1 > 4000.0)
+                {
+                    altitude1 = 4000.0;
+                    alt_high = true;
+                }
+            }
+            if (alt_high)
+            {
+                altitude1 -= 100.0;
+                if (altitude1 < 100.0)
+                {
+                    altitude1 = 100.0;
+                    alt_high = false;
+                }
+            }
+            
+  
+            break;
+        case 1:
+        
+            ThisAircraft.latitude = alien_lat1 + (0.000772125*20);   //55.996177;  //
+            ThisAircraft.longitude = alien_lon1 + (0.0029569*20);   //38.345584; //
+            
+            Serial.print(ThisAircraft.latitude,5);
+            Serial.print("/");
+            Serial.println(ThisAircraft.longitude, 5);
+            
+            test_curse = test_curse + 2.0;
+            if (test_curse >= 360.0)
+                test_curse = 0.0;
+ 
+            speed1 = speed1-1.0;
+            if (speed1 <=0.0)
+                speed1 = 50.0;
+
+            altitude1 = 100.0;
+           // test_curse = 40;
+            break;
+        case 2:
+
+            if (!alien_dist)
+            {
+                alien_lat += 0.000772125;
+                alien_lon += 0.0029569;
+
+                if (alien_lat >= alien_lat2)
+                {
+                    alien_lat = alien_lat2;
+                    alien_dist = true;
+                }
+                test_curse = 57.0;
+            }
+
+            if (alien_dist)
+            {
+                alien_lat -= 0.000772125;
+                alien_lon -= 0.0029569;
+
+                if (alien_lat <= alien_lat1)
+                {
+                    alien_lat = alien_lat1;
+                    alien_dist = false;
+                }
+                test_curse = 240.0;
+            }
+            ThisAircraft.latitude = alien_lat;
+            ThisAircraft.longitude = alien_lon;
+
+            /* */
+            if (!alt_high)
+            {
+                altitude1 += 10.0;
+                if (altitude1 > 200.0)
+                {
+                    altitude1 = 200.0;
+                    alt_high = true;
+                }
+            }
+            if (alt_high)
+            {
+
+                altitude1 -= 10.0;
+                if (altitude1 < 30.0)
+                {
+                    altitude1 = 30.0;
+                    alt_high = false;
+                }
+            }
+            Serial.print(ThisAircraft.latitude,5);
+            Serial.print("/");
+            Serial.println(ThisAircraft.longitude, 5);
+            speed1 = speed1 - 1.0;
+            if (speed1 <= 2.0)
+                speed1 = 300.0;
+             break;
+        default:
+            break;
+        }
+        TxPosUpdMarker = millis();
+    }
+
+
+    ThisAircraft.altitude = altitude1; 
+    ThisAircraft.course   = test_curse; 
+    ThisAircraft.speed    = speed1;    
+    ThisAircraft.vs       = TXRX_TEST_VS;
+
 
 #if DEBUG_TIMING
   baro_start_ms = millis();
