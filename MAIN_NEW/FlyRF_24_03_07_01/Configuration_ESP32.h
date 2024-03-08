@@ -11,13 +11,13 @@
 #define data_txt "ОПРЕДЕЛЕНИЕ"
 #define data_txt1 "МЕСТОПОЛОЖЕНИЯ"
 
-#define left_button   36 //left button
-#define right_button  39 //right button
+#define left_button       36 //left button
+#define right_button      39 //right button
 #define distance_button   38 //left button
 
-#define speed_array_size  5       // Величина массива фильтра скорости сторннего самолета
+#define speed_array_size     5    // Величина массива фильтра скорости сторннего самолета
 #define altitude_array_size  5    // Величина массива фильтра высоты сторннего самолета
-#define alien_count_base 8
+#define alien_count_base     8
 
 
 //--------------------------------------------------------------------------------------------------------------------------------

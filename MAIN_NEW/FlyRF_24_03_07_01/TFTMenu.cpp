@@ -33,19 +33,16 @@
 #include "NotoSansBold15.h"
 #include "RF.h"
 //#include "BatteryRF.h"
-#include "D1090.h"
-#include "mode-s.h"
 #include <stdio.h>
 
 #ifdef USE_TFT_MODULE
 
 #include "TFTMenu.h"
 
-int D1090_cnt = 0;
-uint8_t D1090buf[32]; // at least 3 lines of 80 characters each
 
 
-TFT_eSPI tft = TFT_eSPI();
+/* Спрайты вывода изображений и информации на экран дисплея */
+TFT_eSPI tft = TFT_eSPI();                          // 
 
 TFT_eSprite back       = TFT_eSprite(&tft);         // Спрайт фона
 TFT_eSprite backsprite = TFT_eSprite(&tft);         // Спрайт отображения вращающегося поля воздушной обстановки
@@ -59,7 +56,7 @@ TFT_eSprite* arrow[MAX_TRACKING_OBJECTS];           // Спрайт отобра
 TFT_eSprite* arrow_old[MAX_TRACKING_OBJECTS];       // Спрайт отображения стрелка 
 
 TFT_eSprite* Air_txt_Sprite[MAX_TRACKING_OBJECTS];  // Этот спрайт, площадка в котором будет располагатся формуляр стороннего самолета
-TFT_eSprite* little_airplane[MAX_TRACKING_OBJECTS]; // Этот спрайт, площадка в котором будет располагатся изображение стороннего самолета DUMP1090
+TFT_eSprite* little_airplane[MAX_TRACKING_OBJECTS]; // Этот спрайт, площадка в котором будет располагатся изображение стороннего самолета с приемника DUMP1090
 TFT_eSprite* LoRa_airplane[MAX_TRACKING_OBJECTS];   // Этот спрайт, площадка в котором будет располагатся изображение стороннего самолета c LoRa
 TFT_eSprite* area_airplane[MAX_TRACKING_OBJECTS];   // Этот спрайт, площадка в котором будет располагатся спрайт little_airplane стороннего самолета
 TFT_eSprite* DUMP1090_Sprite[MAX_TRACKING_OBJECTS]; // Этот спрайт, площадка в котором будет располагатся данные 1090 стороннего самолета
@@ -97,7 +94,7 @@ uint8_t alien_altitude_array_count[MAX_TRACKING_OBJECTS];          // Счетч
 int this_speed_filtre[speed_array_size];                           // Фильтр скорости нашего самолета
 int this_altitude_filtre[speed_array_size];                        // Фильтр высоты нашего самолета
 int dump1090_speed[MAX_TRACKING_OBJECTS];                          // 
-String dump1090_info_txt[MAX_TRACKING_OBJECTS];                   //
+String dump1090_info_txt[MAX_TRACKING_OBJECTS];                    //
 
 
 
@@ -115,7 +112,6 @@ bool isThere_plane[MAX_TRACKING_OBJECTS] = { false };
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #define FONT_HEIGHT(dc) dc->fontHeight(1)
-
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 unsigned int utf8GetCharSize(unsigned char bt) 
@@ -390,7 +386,7 @@ void TFTMenu::resetIdleTimer()
        little_airplane [i]->createSprite(24, 18);
        little_airplane[i]->setPivot(12,9); 
 
-       LoRa_airplane[i] = new TFT_eSprite(&tft);   // Спрайт информации стороннего воздушного объекта LoRa
+       LoRa_airplane[i] = new TFT_eSprite(&tft);      // Спрайт информации стороннего воздушного объекта LoRa
        LoRa_airplane[i]->createSprite(24, 18);
        LoRa_airplane[i]->setPivot(12, 9);
 
@@ -491,24 +487,21 @@ void TFTMenu::resetIdleTimer()
       }
 
    static uint32_t tmr = millis();
-   //Receive1090();  // Получить пакет от DUMP1090
- 
+   
     /* Проверяем наличие новой информации */ 
-    if (millis() - tmr > DATA_MEASURE_THRESHOLD)
+    if (millis() - tmr > DATA_MEASURE_THRESHOLD)       
     {
         // drawVoltage(menuManager);
         // drawWiFi(menuManager);
         tmr = millis();
         int16_t new_angle;
-        int arr_min = 32767;             // первоначально будем сравнивать
         int Air_txt_x = 30;              // Расположение текста в формуляре стороннего самолета 
-         
-           
+ 
 
         /* Проверяем есть ли данные GPS. Ждем 20 секунд */
-        fix = (uint8_t)isValidGNSSFix();
+        fix = (uint8_t)isValidGNSSFix();   //Проверяем есть ли данные GPS.
 
-        if(!fix && (settings->mode != SOFTRF_MODE_TXRX_TEST))
+        if(!fix && (settings->mode != SOFTRF_MODE_TXRX_TEST)) // Эта проверка не проводится в тестовом режиме
         {
             static uint32_t tmr_GNSS = millis();
             if (millis() - tmr_GNSS > 20000)
@@ -517,7 +510,7 @@ void TFTMenu::resetIdleTimer()
                 if (!text_call)
                 {
                     waiting_txt(menuManager);  // Вывод сообщения о том что нет данных GPS
-                    text_call = true;          // Запретить повторный вывод нового сообщения 
+                    text_call = true;          // Сообщение вывели. Запретить повторный вывод нового сообщения 
                 }
             }
         }
@@ -526,46 +519,50 @@ void TFTMenu::resetIdleTimer()
             text_call = false;                  // Готов к выводу нового сообщения 
 
             /* Определяем какие пакеты приняты в текущем периоде*/
+            /* Определяем минимальную дистанцию между нашим и сторонни самолетом и курс стороннего самолета*/
+            int mass[MAX_TRACKING_OBJECTS];
+            int min_distance = 32767;    // Запишем максимальное число для сравнения. Первоначально будем сравнивать
+            int index_distance = 0 ;
+
+            
+
             for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
             {
-                if (Container[i].addr && (now() - Container[i].timestamp) <= TFT_EXPIRATION_TIME)
+                if (Container[i].addr && (now() - Container[i].timestamp) <= TFT_EXPIRATION_TIME)  // Если есть самолет в базе и подошло время обновления данных
                 {
-                    isThere_plane[i] = true;
-                    isTeam_all[i] = true;
+                    isThere_plane[i] = true;  // Сторонний самолет определен в базе
+                    isTeam_all[i] = true;     //!! Сторонний самолет определен в базе (пока не применяется)
 
                     /* вычисляем минимальное значение дистанции для переключения диапазона просмотра */
-                    arr_min = min(arr_min, (int)Container[i].distance);   // функция min выдает меньшее из двух значений,
+                    if (Container[i].latitude != 0 && Container[i].longitude != 0 ) // Расчет возможен если получены координаты стороннего самолета)
+                    {
+                        if ((int)Container[i].distance < min_distance)//если есть элемент, меньше нашего - делаем его минимальным
+                        {
+                            min_distance = (int)Container[i].distance;
+                            index_distance = i;
+                            alient_course0 = Container[i].course; /* Определяем курс в градусах ближайшего чужого самолета*/
+                        }
+                    }
 
                 }
                 else
                 {
                     /* нет данных за длительный период  */
-                    isThere_plane[i] = false;
+                    isThere_plane[i] = false; //!!(пока не применяется)
                 }
                 esp_task_wdt_reset();
             }
 
-
-             /* Определяем курс в градусах ближайшего чужого самолета*/
-            for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+            if (min_distance != 32767)
             {
-                if ((int)Container[i].distance == arr_min)
-                {
-                  
-                        alient_course0 = Container[i].course;
-
-                        Serial.print("i = ");
-                        Serial.print(i);
-                        Serial.print(" arr_min = ");
-                        Serial.print(arr_min);
-                        Serial.print(" alient_course0 = ");
-                        Serial.println(alient_course0);
-                        break;
-                  
-                }
+                Serial.print("i = ");
+                Serial.print(index_distance);
+                Serial.print(" min_distance = ");
+                Serial.print(min_distance);
+                Serial.print(" alient_course0 = ");
+                Serial.println(alient_course0);
             }
-
-
+ 
 
             /* ================ Подпрограмма корректировки вывода формуляров (пока отложена) ================*/
             /* Смотрим сколько сторонних самолетов зафиксировано */
@@ -639,50 +636,50 @@ void TFTMenu::resetIdleTimer()
             /*==================================================================*/
 
              /* Автоматический выбор диапазона отображения */
-            divider = arr_min * 2.2;
+            divider = min_distance * 2.2;
             int divider_num = 1;
 
-            if (arr_min > 10100)
+            if (min_distance > 10100)
             {
                 divider = 32000;  // 16000
                 divider_num = 1;
             }
-            if (arr_min <= 10100 && arr_min > 5100)
+            if (min_distance <= 10100 && min_distance > 5100)
             {
                 divider = 21500;  // 10000
                 divider_num = 2;
             }
-            else if (arr_min <= 5100 && arr_min > 2100)
+            else if (min_distance <= 5100 && min_distance > 2100)
             {
                 divider = 10500;  // 5000
                 divider_num = 3;
             }
-            else if (arr_min <= 2100 && arr_min > 1050)
+            else if (min_distance <= 2100 && min_distance > 1050)
             {
                 divider = 4340; // 2000
                 divider_num = 4;
             }
-            else if (arr_min <= 1050 && arr_min > 510)
+            else if (min_distance <= 1050 && min_distance > 510)
             {
                 divider = 2150;  //1000
                 divider_num = 5;
             }
-            else if (arr_min <= 510 && arr_min > 210)
+            else if (min_distance <= 510 && min_distance > 210)
             {
                 divider = 1100;  //500m
                 divider_num = 6;
             }
-            else if (arr_min <= 210 && arr_min > 110)
+            else if (min_distance <= 210 && min_distance > 110)
             {
                 divider = 440;  // 200 m
                 divider_num = 7;
             }
-            else if (arr_min <= 110 && arr_min > 50)
+            else if (min_distance <= 110 && min_distance > 50)
             {
                 divider = 220;  // 100 m
                 divider_num = 8;
             }
-            else if (arr_min <= 50)
+            else if (min_distance <= 50)
             {
                 divider = 110; // 50 m
                 divider_num = 9;
@@ -925,12 +922,12 @@ void TFTMenu::resetIdleTimer()
                     int alarm_height_set = settings->alarm_height;
 
 
-                    if (arr_min >= alarm_attention_set)   // Чужой самолет очень далеко
+                    if (min_distance >= alarm_attention_set)   // Чужой самолет очень далеко
                     {
                         little_air_color[i] = TFT_WHITE;
                         txt_color = TFT_GREEN;
                     }
-                    else if (arr_min <= alarm_attention_set && arr_min > alarm_warning_set) // Чужой самолет на расстоянии информирования
+                    else if (min_distance <= alarm_attention_set && min_distance > alarm_warning_set) // Чужой самолет на расстоянии информирования
                     {
                         if (VerticalSet > alarm_height_set)  //  Чужой самолет выше расстояния информирования
                         {
@@ -944,7 +941,7 @@ void TFTMenu::resetIdleTimer()
                             txt_color = TFT_YELLOW;
                         }
                     }
-                    else if (arr_min <= alarm_warning_set && arr_min > alarm_danger_set)  // Чужой самолет на расстоянии предупреждения
+                    else if (min_distance <= alarm_warning_set && min_distance > alarm_danger_set)  // Чужой самолет на расстоянии предупреждения
                     {
                         if (VerticalSet > alarm_height_set)                              // Чужой самолет выше расстояния предупреждения
                         {
@@ -958,7 +955,7 @@ void TFTMenu::resetIdleTimer()
                             txt_color = TFT_ORANGE;
                         }
                     }
-                    else if (arr_min <= alarm_danger_set && VerticalSet <= alarm_height_set) // Чужой самолет на расстоянии и высоте опасен
+                    else if (min_distance <= alarm_danger_set && VerticalSet <= alarm_height_set) // Чужой самолет на расстоянии и высоте опасен
                     {
                         little_air_color[i] = TFT_RED;
                         txt_color = TFT_RED;
@@ -1259,24 +1256,24 @@ void TFTMenu::resetIdleTimer()
             dist_info.loadFont(NotoSansMonoSCB20);
             dist_info.fillSprite(TFT_BLACK);
             dist_info.setTextDatum(TC_DATUM);
-            String arr_min_txt = String(arr_min);
+            String min_distance_txt = String(min_distance);
 
-            if (arr_min <= 5)
+            if (min_distance <= 5)
             {
-                arr_min_txt = "0";
+                min_distance_txt = "0";
             }
             else
             {
-                int len = arr_min_txt.length();
-                arr_min_txt.setCharAt(len - 1, '0');
+                int len = min_distance_txt.length();
+                min_distance_txt.setCharAt(len - 1, '0');
             }
 
-            if (arr_min != 32767)
+            if (min_distance != 32767)
             {
                 // dist_info.drawSmoothRoundRect(0, 0, 5, 1, 80, 25, txt_color);
                 dist_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
                 dist_info.setTextColor(txt_color, backColor);
-                dist_info.drawString(arr_min_txt + " m", 40, 4);
+                dist_info.drawString(min_distance_txt + " m", 40, 4);
                 dist_info.pushToSprite(&back, 1, 2);
             }
             else
@@ -2067,7 +2064,14 @@ void TFTMenu::resetIdleTimer()
 
      SerialOutput.print("\n");
      */
-     Traffic_Add(&fo);
+
+     /* Расчет расстояния, курса и уровня опастности сближения нашего и стороннего самолета*/
+     if (fo.latitude != 0 && fo.longitude != 0) // Расчет возможен если получены координаты нашего и стороннего самолета
+     {
+         Traffic_Update(&fo);   // 
+     }
+     /* Остальные параметры записываем в базу */
+     Traffic_Add(&fo);      //
  }
 
  void TFTMenuScreen::Receive1090()

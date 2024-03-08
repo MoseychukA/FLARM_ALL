@@ -136,7 +136,8 @@ void Traffic_Update(ufo_t *fop)
                                  fop->latitude,
                                  fop->longitude);
 
-  if (Alarm_Level) {
+  if (Alarm_Level) 
+  {
     fop->alarm_level = (*Alarm_Level)(&ThisAircraft, fop);
   }
 }
