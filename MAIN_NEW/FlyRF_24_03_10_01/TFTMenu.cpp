@@ -62,10 +62,11 @@ TFT_eSprite* LoRa_airplane[MAX_TRACKING_OBJECTS];   // Этот спрайт, п
 TFT_eSprite* area_airplane[MAX_TRACKING_OBJECTS];   // Этот спрайт, площадка в котором будет располагатся спрайт little_airplane стороннего самолета
 TFT_eSprite* DUMP1090_Sprite[MAX_TRACKING_OBJECTS]; // Этот спрайт, площадка в котором будет располагатся данные 1090 стороннего самолета
 
-int alien_altitude_old[MAX_TRACKING_OBJECTS];       // Предыдущее значение высоты стороннего самолета
-int alien_altitude_actual[MAX_TRACKING_OBJECTS];    // Высота стороннего самолета
-int alien_altitude_arrow[MAX_TRACKING_OBJECTS];     // Предыдущая высота стороннего самолета для отображения стрелок выше/ниже.
-int alien_altitude_hysteresis[MAX_TRACKING_OBJECTS];// Обработанная высота стороннего самолета
+int alien_altitude_old[MAX_TRACKING_OBJECTS];       // Предыдущее значение высоты стороннего самолета. Нужно для вычисления высоты с учетом гистерезиса
+int alien_altitude_actual[MAX_TRACKING_OBJECTS];    // Высота стороннего самолета. Нужно для вычисления высоты с учетом гистерезиса
+int this_alien_altitude[MAX_TRACKING_OBJECTS];      // Высота стороннего самолета. Нужно для вычисления 
+int old_alien_altitude_arrow[MAX_TRACKING_OBJECTS]; // Предыдущая высота стороннего самолета для отображения стрелок выше/ниже.
+int alien_altitude_hysteresis[MAX_TRACKING_OBJECTS];// Обработанная высота стороннего самолета после применения гистерезиса
 int height_difference[MAX_TRACKING_OBJECTS];        // Разность высот нашего и стороннего самолета
 int alien_speed_tmr[MAX_TRACKING_OBJECTS];          // Скорость стороннего самолета
 int bearing_tmr[MAX_TRACKING_OBJECTS];              // Угол в градусах между нашим самолетом и сторонним
@@ -95,14 +96,16 @@ bool alien_altitude_array_countMax[MAX_TRACKING_OBJECTS];          // Флаг �
 int alien_altitude_sum[MAX_TRACKING_OBJECTS];                      // = 0;
 uint8_t alien_altitude_array_count[MAX_TRACKING_OBJECTS];          // Счетчик фильтра высоты стороннего самолета
 
+static uint32_t tmr_array[MAX_TRACKING_OBJECTS];                   // Задержка по времени контроля движения чужого самолета
+
 int Aircraft_speed_filtre[speed_array_size];                       // Фильтр скорости нашего самолета
 int Aircraft_altitude_tmr[speed_array_size];                       // Фильтр высоты нашего самолета
 
 int dump1090_speed[MAX_TRACKING_OBJECTS];                          // 
 String dump1090_info_txt[MAX_TRACKING_OBJECTS];                    //
 
-bool array_ok[MAX_TRACKING_OBJECTS];
-bool DUMP1090_array_ok[MAX_TRACKING_OBJECTS];
+//bool array_ok[MAX_TRACKING_OBJECTS];
+//bool DUMP1090_array_ok[MAX_TRACKING_OBJECTS];
 
 //......................................colors
 #define backColor     0x0026
@@ -409,9 +412,11 @@ void TFTMenu::resetIdleTimer()
        alien_altitude_sum[i] = 0;
        alien_altitude_array_count[i] = 0;
 
-       alien_altitude_arrow[i] = 0;                // Массив хранения предыдущих значений высоты, для формирования стрелок направления перемещения самолета вврх/вниз
-       array_ok[i] = 0;
-       DUMP1090_array_ok[i] = 0;
+       old_alien_altitude_arrow[i] = 0;                // Массив хранения предыдущих значений высоты, для формирования стрелок направления перемещения самолета вврх/вниз
+
+       tmr_array[i] = millis();
+      // array_ok[i] = 0;
+      // DUMP1090_array_ok[i] = 0;
 
    }
  
@@ -592,6 +597,7 @@ void TFTMenu::resetIdleTimer()
                         set_table_alien[base_index_tmp].speed = (int)Container[i].speed;
                         set_table_alien[base_index_tmp].signal_source = Container[i].signal_source;
                         set_table_alien[base_index_tmp].heading = Container[i].course;
+                        this_alien_altitude[i] = (int)Container[i].altitude;
                         base_index_tmp++;
                     }
                 }
@@ -685,10 +691,10 @@ void TFTMenu::resetIdleTimer()
  
            // Получить установки определения уровней предупреждения. Параметры задаются со смартфона и записываются в EEPROM
  
-            int alarm_attention_set = settings->alarm_attention; // Внимание. Параметр - расстояние 
-            int alarm_warning_set = settings->alarm_warning;   // Предупреждение. Параметр - расстояние 
-            int alarm_danger_set = settings->alarm_danger;    // Тревога. Параметр - расстояние        
-            int alarm_height_set = settings->alarm_height;    // Тревога по высоте. Параметр - высота 
+            int alarm_attention_set = settings->alarm_attention;     // Внимание. Параметр - расстояние 
+            int alarm_warning_set   = settings->alarm_warning;       // Предупреждение. Параметр - расстояние 
+            int alarm_danger_set    = settings->alarm_danger;        // Тревога. Параметр - расстояние        
+            int alarm_height_set    = settings->alarm_height;        // Тревога по высоте. Параметр - высота 
 
             //=========================== Сглаживаем основные показатели скорости и высоты ==================================
 
@@ -731,7 +737,7 @@ void TFTMenu::resetIdleTimer()
 
             int this_val_altitude = 0;
 
-            if (this_altitude_array_countMax)                                   // формируем данные о высоте нашего самолета
+            if (this_altitude_array_countMax)                                        // формируем данные о высоте нашего самолета
             {
                 for (int k = 0; k < altitude_array_size; k++)
                 {
@@ -742,13 +748,13 @@ void TFTMenu::resetIdleTimer()
             }
 
             this_altitude_array_count++;
-            if (this_altitude_array_count > altitude_array_size - 1)           // проверка заполнения массива первичными данными о скорости
+            if (this_altitude_array_count > altitude_array_size - 1)                // проверка заполнения массива первичными данными о скорости
             {
                 this_altitude_array_count = 0;
-                this_altitude_array_countMax = true;                           //Разрешить выдавать данные о величине скорости
+                this_altitude_array_countMax = true;                                //Разрешить выдавать данные о величине скорости
             }
 
-            thisAircraft_altitude_tmr = this_val_altitude;                             // Данные по высоте нашего самолета после фильтра
+            thisAircraft_altitude_tmr = this_val_altitude;                          // Данные по высоте нашего самолета после фильтра
 
 
             //===================================================================================
@@ -762,7 +768,7 @@ void TFTMenu::resetIdleTimer()
  
                      /* Сначала заполняем массив фильтра данными по скорости */
 
-                    alien_speed_filtre[i][alien_speed_array_count[i]] = (int)Container[i].speed;
+                    alien_speed_filtre[i][alien_speed_array_count[i]] = (int)Container[i].speed; 
                     int alien_val_speed = 0;
 
                     if (alien_speed_array_countMax[i])                        // формируем данные о величине скорости
@@ -820,12 +826,12 @@ void TFTMenu::resetIdleTimer()
 
                     if ((alien_altitude_actual[i] - alien_altitude_old[i] > diff_altitude) || alien_altitude_old[i] - alien_altitude_actual[i] > diff_altitude)
                     {
-                        // !! Временно на время отладки
+                         //!! Временно на время отладки
                         alien_altitude_old[i] = alien_altitude_actual[i];                 // Окончательные данные по высоте стороннего самолета с учетом гистерезиса.
                         alien_altitude_hysteresis[i] = alien_altitude_actual[i];          // Окончательные данные по высоте стороннего самолета с учетом гистерезиса.
                     }
 
-
+                       // alien_altitude_hysteresis[i] = (int)Container[i].altitude;
                     //=================================================================================================
 
                     /* Определяем разность высот между нашим и сторонним самолетом. Нужно для вывода текста в формуляр */
@@ -849,6 +855,52 @@ void TFTMenu::resetIdleTimer()
                     /* Вычисляем разность высот между нашим самолетом и сторонним. Данне со знаком + или -*/
                     height_difference[i] = alien_altitude_hysteresis[i] - thisAircraft_altitude_tmr;
 
+                    //============================  Определение направления стрелок подъем или снижение ==========================================================
+                    /*
+                    Напоминание: alien_altitude_array_countMax  это флаг готовности данные о высоте стороннего самолета
+                    
+                    */
+
+                    if (alien_altitude_array_countMax[i] && alien_altitude_hysteresis[i] !=0)  //
+                    {
+                        if (millis() - tmr_array[i] > 100 + (DATA_MEASURE_THRESHOLD*4))  //Исключить мигание стрелки вверх/вниз. Дадим время для изменения высоты самолета
+                        {
+                            tmr_array[i] = millis();
+
+                            /* Напоминание
+                                old_alien_altitude_arrow -  Предыдущая высота стороннего самолета для отображения стрелок выше/ниже.
+                                alien_altitude_hysteresis - Обработанная высота стороннего самолета
+                            */
+   
+
+                            if (alien_altitude_hysteresis[i] > old_alien_altitude_arrow[i] && old_alien_altitude_arrow[i] != 0)
+                            {
+                                arrow_up_down[i] = 1;
+                            }
+                            else if (alien_altitude_hysteresis[i] < old_alien_altitude_arrow[i] && old_alien_altitude_arrow[i] != 0)
+                            {
+                                arrow_up_down[i] = 2;
+                            }
+                            else
+                            {
+                                arrow_up_down[i] = 0;
+                            }
+                            old_alien_altitude_arrow[i] = alien_altitude_hysteresis[i];
+                        }
+                    }
+                    else
+                    {
+                         arrow_up_down[i] = 0;
+                    }
+
+ 
+                    //Serial.print(" old_alien_altitude_arrow[i] = ");
+                    //Serial.print(old_alien_altitude_arrow[i]);
+                    //Serial.print(" arrow_up_down[i] ");
+                    //Serial.print(i);
+                    //Serial.print(" = ");
+                    //Serial.println(arrow_up_down[i]);
+ 
                     //========================== Если координаты стороннего самолета определены ====================================
  
                     if (set_table_alien[i].lat != 0 && set_table_alien[i].lon != 0)   
@@ -986,66 +1038,24 @@ void TFTMenu::resetIdleTimer()
                         /*  
                             Действительно для самолетов с известными координатами.
                             Определяем наличие и направление вывода стрелок.
-                            Напоминание:  alien_altitude_array_countMax[i] = true;  // Это флаг готовности данные о высоте стороннего самолета
+                            Источник данных не важен
                         */
 
-                        if (alien_altitude_array_countMax[i]/* && ((int)Container[i].distance < 3000)*/)  //Разрешить выводить изображение стрелок если дистанция ближе 3000 м.
-                        {
-                            static uint32_t tmr_array = millis();
-
-                            if (millis() - tmr_array > 100)  //Исключить мигание стрелки вверх/вниз
-                            {
-                                tmr_array = millis();
-
-                                /* Напоминание
-                                    alien_altitude_arrow -  Предыдущая высота стороннего самолета для отображения стрелок выше/ниже.
-                                    alien_altitude_hysteresis - Обработанная высота стороннего самолета
-                                */
-
-                                if (alien_altitude_hysteresis[i] > alien_altitude_arrow[i])
-                                {
-                                    arrow_up_down[i] = 1;
-                                    alien_altitude_arrow[i] = alien_altitude_hysteresis[i];
-                                }
-                                else if (alien_altitude_hysteresis[i] < alien_altitude_arrow[i])
-                                {
-                                    arrow_up_down[i] = 2;
-                                    alien_altitude_arrow[i] = alien_altitude_hysteresis[i];
-                                }
-                                else
-                                {
-                                    arrow_up_down[i] = 0;
-                                }
-
-                                array_ok[i] = true;
-                            }
-                        }
-                        else
-                        {
-                            array_ok[i] = false;
-                            arrow_up_down[i] = 0;
-                        }
-
-                        /* Определение стрелки вверх вниз. Подем или снижение самолета*/
-
-                        if (array_ok[i])
-                        {
-                            array_ok[i] = false;
                             switch (arrow_up_down[i])
                             {
                             case 0:
-                                arrow[i]->fillSprite(backColor);             // Закрасим поле стрелок вверх
+                                arrow[i]->fillSprite(backColor);                      // Закрасим поле стрелок вверх
                                 break;
                             case 1:
                                 /*Рисуем стрелку вверх */
-                                arrow[i]->fillSprite(backColor);                  // Закрасим поле стрелок вверх
-                                arrow[i]->drawLine(4, 0, 4, 9, little_air_color[i]);  // |
+                                arrow[i]->fillSprite(backColor);                       // Закрасим поле стрелок вверх
+                                arrow[i]->drawLine(4, 0, 4, 9, little_air_color[i]);   // |
                                 arrow[i]->drawLine(0, 4, 3, 1, little_air_color[i]);   // /
                                 arrow[i]->drawLine(5, 1, 8, 4, little_air_color[i]);   // 
                                 break;
                             case 2:
                                 /*Рисуем стрелку вниз */
-                                arrow[i]->fillSprite(backColor);             // Закрасим поле стрелок вниз
+                                arrow[i]->fillSprite(backColor);                       // Закрасим поле стрелок вниз
                                 arrow[i]->drawLine(4, 0, 4, 9, little_air_color[i]);   // |
                                 arrow[i]->drawLine(0, 5, 3, 8, little_air_color[i]);   // 
                                 arrow[i]->drawLine(5, 8, 8, 5, little_air_color[i]);   //
@@ -1053,10 +1063,10 @@ void TFTMenu::resetIdleTimer()
                             default:
                                 break;
                             }
-                        }
+ 
+                            // Формируем изображение летящего объекта с учетом с какого источника были полученыданные о координатах
 
-
-                        if (set_table_alien[i].signal_source == 1)
+                        if (set_table_alien[i].signal_source == 1)  // С учетом данных, полученных с приемника DUMP1090
                         {
                             /*Рисуем маленький самолетик */
                             little_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле самолетика
@@ -1076,7 +1086,7 @@ void TFTMenu::resetIdleTimer()
                             area_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле 
                         }
 
-                        if (set_table_alien[i].signal_source == 2)
+                        else if (set_table_alien[i].signal_source == 2) // С учетом данных, полученных с приемника LoRa868
                         {
                             /*Рисуем маленький самолетик */
                             LoRa_airplane[i]->fillSprite(TFT_BLACK);   // Закрасим поле самолетика
@@ -1095,7 +1105,7 @@ void TFTMenu::resetIdleTimer()
                        Действительно только для данных, полученных без координат. Выводим слева на экране
                      */
 
-                    if (set_table_alien[i].lat == 0 && set_table_alien[i].lon == 0 && set_table_alien[i].altitude != 0)
+                    if (set_table_alien[i].lat == 0 && set_table_alien[i].lon == 0 && set_table_alien[i].altitude != 0 && set_table_alien[i].signal_source == 1)
                     {
 
                         /* Определение цвета вывода текста */
@@ -1141,55 +1151,8 @@ void TFTMenu::resetIdleTimer()
                         DUMP1090_Sprite[i]->setTextDatum(CC_DATUM);                          // Определим как будет выводится текст
                         DUMP1090_Sprite[i]->loadFont(NotoSansBold15);                        // Установить шрифт формуляра
 
-          
-                            //Действительно для самолетов с известными координатами.
-                            //Определяем наличие и направление вывода стрелок.
-                            //Напоминание:  alien_altitude_array_countMax[i] = true;  // Это флаг готовности данные о высоте стороннего самолета
-                        
-
-                        if (alien_altitude_array_countMax[i])  //Разрешить выводить изображение стрелок
-                        {
-                            static uint32_t alien_tmr_array = millis();
-
-                            if (millis() - alien_tmr_array > 100)  //Исключить мигание стрелки вверх/вниз
-                            {
-                                alien_tmr_array = millis();
-
-                                // Напоминание
-                                //    alien_altitude_arrow -  Предыдущая высота стороннего самолета для отображения стрелок выше/ниже.
-                                //    alien_altitude_hysteresis - Обработанная высота стороннего самолета
-                            
-
-                                if (alien_altitude_hysteresis[i] > alien_altitude_arrow[i])
-                                {
-                                    DUMP1090_arrow_up_down[i] = 1;
-                                    alien_altitude_arrow[i] = alien_altitude_hysteresis[i];
-                                }
-                                else if (alien_altitude_hysteresis[i] < alien_altitude_arrow[i])
-                                {
-                                    DUMP1090_arrow_up_down[i] = 2;
-                                    alien_altitude_arrow[i] = alien_altitude_hysteresis[i];
-                                }
-                                else
-                                {
-                                    DUMP1090_arrow_up_down[i] = 0;
-                                }
-
-                                DUMP1090_array_ok[i] = true;
-                            }
-                        }
-                        else
-                        {
-                            DUMP1090_array_ok[i] = false;
-                            DUMP1090_arrow_up_down[i] = 0;
-                        }
-
-                        // Определение стрелки вверх вниз. Подем или снижение самолета
-
-                        if (DUMP1090_array_ok[i])
-                        {
-                            DUMP1090_array_ok[i] = false;
-                            switch (DUMP1090_arrow_up_down[i])
+  
+                            switch (arrow_up_down[i])
                             {
                             case 0:
                                 arrow[i]->fillSprite(backColor);             // Закрасим поле стрелок вверх
@@ -1214,10 +1177,7 @@ void TFTMenu::resetIdleTimer()
                             default:
                                 break;
                             }
-                        }
 
- 
-   
                     //==================================================================================================
 
 
@@ -1459,7 +1419,7 @@ void TFTMenu::resetIdleTimer()
                         {
                             little_airplane[i]->pushRotated(area_airplane[i], alient_course[i], TFT_BLACK); // 
                         }
-                        if (set_table_alien[i].signal_source == 2)
+                        else if (set_table_alien[i].signal_source == 2)
                         {
                             LoRa_airplane[i]->pushRotated(area_airplane[i], alient_course[i], TFT_BLACK);
                         }
@@ -1472,20 +1432,15 @@ void TFTMenu::resetIdleTimer()
                         {
                             Air_txt_Sprite[i]->drawSmoothRoundRect(0, 0, 1, 1, 65, 29, TFT_DARKCYAN);
                             Air_txt_Sprite[i]->fillTriangle(76, 15, 67, 7, 67, 23, TFT_DARKCYAN);
-                            if (((int)Container[i].distance < 3000))  //Разрешить выводить изображение стрелок если дистанция ближе 3000 м.
-                            {
-                                arrow[i]->pushToSprite(Air_txt_Sprite[i], 4, 4, TFT_BLACK);
-                            }
+                            arrow[i]->pushToSprite(Air_txt_Sprite[i], 4, 4, TFT_BLACK);
+
                         }
                         else
                         {
 
                             Air_txt_Sprite[i]->drawSmoothRoundRect(11, 0, 1, 1, 64, 29, TFT_DARKCYAN);
                             Air_txt_Sprite[i]->fillTriangle(0, 15, 9, 7, 9, 23, TFT_DARKCYAN);
-                            if (((int)Container[i].distance < 3000))  //Разрешить выводить изображение стрелок если дистанция ближе 3000 м.
-                            {
-                                arrow[i]->pushToSprite(Air_txt_Sprite[i], Air_txt_x - 31, 4, TFT_BLACK);
-                            }
+                            arrow[i]->pushToSprite(Air_txt_Sprite[i], Air_txt_x - 31, 4, TFT_BLACK);
                         }
 
                         Air_txt_Sprite[i]->pushToSprite(&back, radar_center_x + Container_logbook_X[i], radar_center_y - Container_logbook_Y[i], TFT_BLACK);

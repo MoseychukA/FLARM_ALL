@@ -1,50 +1,49 @@
- /*
+/*
  * SoftRF(.ino) firmware
  * Copyright (C) 2016-2023 Linar Yusupov
  *
  * Author: Linar Yusupov, linar.r.yusupov@gmail.com
  *
  * Web: http://github.com/lyusupov/SoftRF
- *
- *
+ 
  */
 
 #include <stdio.h>                // define I/O functions
 #include <Arduino.h>              // define I/O functions
 #include "SPI.h"
 #include <TFT_eSPI.h>             // Поддержка TFT дисплея  
-#include <SD.h>                   // Поддержка SD карты
-#include "SPIFFS.h"
-#include "FS.h"
-#include <Wire.h>                 // 
 #include "TFTModule.h"
 #include "Configuration_ESP32.h"
-
-#include "src/system/OTA.h"
-#include "src/system/Time.h"
-#include "src/driver/LED.h"
-#include "src/driver/GNSS.h"
-#include "src/driver/RF.h"
-#include "src/driver/Sound.h"
-#include "src/driver/EEPROM.h"
-#include "src/driver/Battery.h"
-#include "src/protocol/data/MAVLink.h"
-#include "src/protocol/data/GDL90.h"
-#include "src/protocol/data/NMEA.h"
-#include "src/protocol/data/D1090.h"
-#include "src/system/SoC.h"
-#include "src/driver/WiFi.h"
-#include "src/ui/Web.h"
-#include "src/driver/Baro.h"
-#include "src/TTNHelper.h"
-#include "src/TrafficHelper.h"
-#include "src/system/Recorder.h"
 #include <esp_task_wdt.h>
 
-#include "src/platform/ESP32.h"
+#include "ESP32RF.h"
+#include "OTA.h"
+#include "TimeRF.h"
+#include "LED.h"
+#include "GNSS.h"
+#include "RF.h"
+#include "Sound.h"
+#include "EEPROMRF.h"
+#include "BatteryRF.h"
+#include "MAVLinkRF.h"
+#include "GDL90.h"
+#include "NMEA.h"
+#include "D1090.h"
+#include "SoC.h"
+#include "WiFiRF.h"
+#include "WebRF.h"
+#include "Baro.h"
+#include "TTNHelper.h"
+#include "TrafficHelper.h"
+#include "Recorder.h"
+#include <TimeLib.h>
+
+//#include "mode-s.h"
 
 
-#define WDT_TIMEOUT 8
+#if defined(ENABLE_AHRS)
+#include "AHRS.h"
+#endif /* ENABLE_AHRS */
 
 TFTModule tftModule;
 
@@ -55,9 +54,6 @@ void bridge();
 void watchout();
 void normal();
 
-#if defined(ENABLE_AHRS)
-#include "src/driver/AHRS.h"
-#endif /* ENABLE_AHRS */
 
 #if !defined(SERIAL_FLUSH)
 #define SERIAL_FLUSH() Serial.flush()
@@ -91,19 +87,22 @@ unsigned long ExportTimeMarker = 0;
 
 bool start_setup = false;
 
-void  Radar_Task(void* pvParameters)
+void  DUMP1090_Task(void* pvParameters)
 {
     for (;; )
     {
         if (start_setup)
         {
- 
+            MainScreen->Receive1090();  // Получить пакет от DUMP1090
             esp_task_wdt_reset();
-            vTaskDelay(10);
-            yield();
+            vTaskDelay(1);
+           // yield();
         }
     }
 }
+
+
+
 
 
 void setup()
@@ -111,8 +110,7 @@ void setup()
   rst_info *resetInfo;
 
   hw_info.soc = SoC_setup(); // Has to be very first procedure in the execution order
-  esp_task_wdt_init(WDT_TIMEOUT, false);  //enable panic so ESP32 restarts
-  esp_task_wdt_add(NULL);                 //add current thread to WDT watch
+
   resetInfo = (rst_info *) SoC->getResetInfoPtr();
 
   Serial.println();
@@ -120,17 +118,14 @@ void setup()
   Serial.print(SoC->name);
   Serial.print(F(" FW.REV: " SOFTRF_FIRMWARE_VERSION " DEV.ID: "));
   Serial.println(String(SoC->getChipId(), HEX));
-  Serial.println(F("Copyright (C) 2015-2023 Linar Yusupov. All rights reserved."));
 
-
+  
   String ver_soft = __FILE__;
   int val_srt = ver_soft.lastIndexOf('\\');
   ver_soft.remove(0, val_srt+1);
   val_srt = ver_soft.lastIndexOf('.');
   ver_soft.remove(val_srt);
   Serial.println(ver_soft);
-
- // Serial.println(__FILE__);
 
   SERIAL_FLUSH();
 
@@ -148,7 +143,7 @@ void setup()
   SoC->Button_setup();
 
   ThisAircraft.addr = SoC->getChipId() & 0x00FFFFFF;
-  esp_task_wdt_reset();
+
   hw_info.rf = RF_setup();
 
   delay(100);
@@ -175,7 +170,6 @@ void setup()
   ThisAircraft.no_track = settings->no_track;
 
   Battery_setup();
-  esp_task_wdt_reset();
   Traffic_setup();
 
   SoC->swSer_enableRx(false);
@@ -183,8 +177,6 @@ void setup()
   LED_setup();
 
   WiFi_setup();
-
-  esp_task_wdt_reset();
 
   if (SoC->USB_ops) {
      SoC->USB_ops->setup();
@@ -201,14 +193,14 @@ void setup()
 #if defined(ENABLE_TTN)
   TTN_setup();
 #endif
-  esp_task_wdt_reset();
+
   delay(1000);
 
   /* expedite restart on WDT reset */
   if (resetInfo->reason != REASON_WDT_RST) {
     LED_test();
   }
-  esp_task_wdt_reset();
+
   Sound_setup();
   SoC->Sound_test(resetInfo->reason);
 
@@ -228,22 +220,41 @@ void setup()
   }
 
   Recorder_setup();
-  esp_task_wdt_reset();
-  SoC->post_init();
 
+  SoC->post_init();
   tftModule.Setup();
   MainScreen->saveVer(ver_soft);  // Сохранить строку с текущей версией.
 
- // xTaskCreatePinnedToCore(Radar_Task, "Radar_Task", 2048, NULL, 10, NULL, 0);
-  esp_task_wdt_reset();
   SoC->WDT_setup();
 
-  start_setup = true;
+  // xTaskCreatePinnedToCore(
+ //Task1code, /* Функция, содержащая код задачи */
+ // "Task1", /* Название задачи */
+ //     10000, /* Размер стека в словах */
+ //     NULL, /* Параметр создаваемой задачи */
+ //     0, /* Приоритет задачи */
+ //     & Task1, /* Идентификатор задачи */
+ //     0); /* Ядро, на котором будет выполняться задача */
+
+
+
+  xTaskCreatePinnedToCore(
+      DUMP1090_Task            // 
+      , "DUMP1090_Task"
+      , 2048                       // Размер стека
+      , NULL                       // Когда параметр не используется, просто передайте NULL
+      , 3                          // Priority
+      , NULL                       // С дескриптором задачи мы сможем манипулировать этой задачей.
+      , 0//ARDUINO_RUNNING_CORE       // Ядро, на котором будет выполняться задача
+  );
+
+
+  start_setup = true;            // Настройки завершены, включаем в работу ядро "0"
 }
 
 void loop()
 {
-  // Do common RF stuff first
+  // Сначала займитесь обычными радиочастотными делами
   RF_loop();
   esp_task_wdt_reset();
   switch (settings->mode)
@@ -282,21 +293,21 @@ void loop()
 
   // Handle DNS
   WiFi_loop();
-  esp_task_wdt_reset();
+
   // Handle Web
   Web_loop();
-  esp_task_wdt_reset();
+
   // Handle OTA update.
   OTA_loop();
-  esp_task_wdt_reset();
+
   Recorder_loop();
-  esp_task_wdt_reset();
+
   SoC->loop();
 
   if (SoC->Bluetooth_ops) {
     SoC->Bluetooth_ops->loop();
   }
-  esp_task_wdt_reset();
+
   if (SoC->USB_ops) {
     SoC->USB_ops->loop();
   }
@@ -304,13 +315,11 @@ void loop()
   if (SoC->UART_ops) {
      SoC->UART_ops->loop();
   }
-  esp_task_wdt_reset();
+
   Battery_loop();
 
   SoC->Button_loop();
-  esp_task_wdt_reset();
   tftModule.Update();
-  esp_task_wdt_reset();
   Time_loop();
 
   yield();
@@ -447,7 +456,8 @@ void uav()
 
   ThisAircraft.timestamp = now();
 
-  if (isValidMAVFix()) {
+  if (isValidMAVFix()) 
+  {
     ThisAircraft.latitude  = the_aircraft.location.gps_lat / 1e7;
     ThisAircraft.longitude = the_aircraft.location.gps_lon / 1e7;
     ThisAircraft.altitude  = the_aircraft.location.gps_alt / 1000.0;
@@ -532,7 +542,8 @@ void watchout()
     }
   }
 
-  if (isTimeToDisplay()) {
+  if (isTimeToDisplay()) 
+  {
     LED_Clear();
     LEDTimeMarker = millis();
   }
@@ -544,50 +555,78 @@ void watchout()
 unsigned int pos_ndx = 0;
 unsigned long TxPosUpdMarker = 0;
 
-
 float altitude1 = 100.0;
 float speed1 = 300.0;
 bool alt_high = false;
 bool alien_dist = false;
 
+//
+////55.945148, 37.188258 Деревня Рузино
+//float alien_lat1 = 55.945148;
+//float alien_lon1 = 37.188258;
+//
+//// 55.976033, 37.306534 Деревня Чёрная Грязь
+//float alien_lat2 = 55.976033;
+//float alien_lon2 = 37.306534;
 
-//55.945148, 37.188258 Деревня Рузино
-float alien_lat1 = 55.945148;
-float alien_lon1 = 37.188258;
+// 55.980740, 37.409649 //  Шереметьево аэропорт
+//float alien_lat0 = 55.980740;
+//float alien_lon0 = 37.409649;
 
-// 55.976033, 37.306534 Деревня Чёрная Грязь
-float alien_lat2 = 55.976033;
-float alien_lon2 = 37.306534;
 
-float alien_lat = 55.945148;
-float alien_lon = 37.188258;
+// деревня Верескино
+float alien_lat2 = 55.932420; 
+float alien_lon2 = 37.353540;
+
+//Точка 1 посёлок Андреевка
+float alien_lat1 = 55.980951;
+float alien_lon1 = 37.130935;
+
+// Точка 2 деревня Верескино 55.932420, 37.353540
+float alien_lat = 55.932420;
+float alien_lon = 37.353540;
+
+// Точка центр
+//float alien_lat0 = 55.955023;  // Дом
+//float alien_lon0 = 37.231561;
+//
+
+//float alien_lat = 55.945148;
+//float alien_lon = 37.188258;
+
+
+
+//float alien_lat0 = 55.951577;  // микрорайон Сходня
+//float alien_lon0 = 37.295610;
+
+float alien_lat0 = 55.955982;  // улица Чкалова, 20А
+float alien_lon0 = 37.249766;
+
 
 float test_curse = 0.0;
-float latitude_old = 0.0;
-float longitude_old = 0.0;
+float Aircraft_latitude_old = 0.0;
+float Aircraft_longitude_old = 0.0;
 
 
-int set_air = 1;   //  
+int set_air = 2;   //  
 
 
 void txrx_test()
 {
-    bool success = false;
+  bool success = false;
 #if DEBUG_TIMING
-    unsigned long baro_start_ms, baro_end_ms;
-    unsigned long tx_start_ms, tx_end_ms, rx_start_ms, rx_end_ms;
-    unsigned long parse_start_ms, parse_end_ms, led_start_ms, led_end_ms;
-    unsigned long export_start_ms, export_end_ms;
-    unsigned long oled_start_ms, oled_end_ms;
+  unsigned long baro_start_ms, baro_end_ms;
+  unsigned long tx_start_ms, tx_end_ms, rx_start_ms, rx_end_ms;
+  unsigned long parse_start_ms, parse_end_ms, led_start_ms, led_end_ms;
+  unsigned long export_start_ms, export_end_ms;
+  unsigned long oled_start_ms, oled_end_ms;
 #endif
-    ThisAircraft.timestamp = now();
+  ThisAircraft.timestamp = now();
 
- 
-    if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 2000)
-    {
-        //ThisAircraft.latitude  = pgm_read_float( &txrx_test_positions[pos_ndx][0]);
-        //ThisAircraft.longitude = pgm_read_float( &txrx_test_positions[pos_ndx][1]);
-        pos_ndx = (pos_ndx + 1) % TXRX_TEST_NUM_POSITIONS;
+  if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 2000 ) {
+   // ThisAircraft.latitude  = pgm_read_float( &txrx_test_positions[pos_ndx][0]);
+   // ThisAircraft.longitude = pgm_read_float( &txrx_test_positions[pos_ndx][1]);
+    pos_ndx = (pos_ndx + 1) % TXRX_TEST_NUM_POSITIONS;
 
         switch (set_air)
         {
@@ -618,50 +657,53 @@ void txrx_test()
             break;
         case 1:
         
-            ThisAircraft.latitude = alien_lat1 + (0.000772125*20);   //55.996177;  //
-            ThisAircraft.longitude = alien_lon1 + (0.0029569*20);   //38.345584; //
+            ThisAircraft.latitude = alien_lat0 ;    // 
+            ThisAircraft.longitude = alien_lon0 ;   // 
             
-            Serial.print(ThisAircraft.latitude,5);
-            Serial.print("/");
-            Serial.println(ThisAircraft.longitude, 5);
-            
+    //        ThisAircraft.latitude = alien_lat2 + (0.001213275 * 20);   //55.996177;  //
+    //        ThisAircraft.longitude = alien_lon1 + (0.005565125 * 20);   //38.345584; //
+    //
+    
+    /*        
             test_curse = test_curse + 2.0;
             if (test_curse >= 360.0)
                 test_curse = 0.0;
  
-            speed1 = speed1-1.0;
-            if (speed1 <=0.0)
-                speed1 = 50.0;
+            speed1 = speed1-2.0;
+            if (speed1 <=2.0)
+                speed1 = 200.0;*/
 
-            altitude1 = 100.0;
+            test_curse = 360.0;
+
+            altitude1 = 1000.0;
            // test_curse = 40;
             break;
         case 2:
 
             if (!alien_dist)
             {
-                alien_lat += 0.000772125;
-                alien_lon += 0.0029569;
+                alien_lat += 0.001213275;
+                alien_lon -= 0.005565125;
 
-                if (alien_lat >= alien_lat2)
+                if (alien_lat >= alien_lat1)
                 {
-                    alien_lat = alien_lat2;
+                    alien_lat = alien_lat1;
                     alien_dist = true;
                 }
-                test_curse = 57.0;
+                test_curse = 291.33;
             }
 
             if (alien_dist)
             {
-                alien_lat -= 0.000772125;
-                alien_lon -= 0.0029569;
+                alien_lat -= 0.001213275;
+                alien_lon += 0.005565125;
 
-                if (alien_lat <= alien_lat1)
+                if (alien_lat <= alien_lat2)
                 {
-                    alien_lat = alien_lat1;
+                    alien_lat = alien_lat2;
                     alien_dist = false;
                 }
-                test_curse = 240.0;
+                test_curse = 111.14;
             }
             ThisAircraft.latitude = alien_lat;
             ThisAircraft.longitude = alien_lon;
@@ -670,9 +712,9 @@ void txrx_test()
             if (!alt_high)
             {
                 altitude1 += 10.0;
-                if (altitude1 > 200.0)
+                if (altitude1 > 1200.0)
                 {
-                    altitude1 = 200.0;
+                    altitude1 = 1200.0;
                     alt_high = true;
                 }
             }
@@ -686,10 +728,7 @@ void txrx_test()
                     alt_high = false;
                 }
             }
-            Serial.print(ThisAircraft.latitude,5);
-            Serial.print("/");
-            Serial.println(ThisAircraft.longitude, 5);
-            speed1 = speed1 - 1.0;
+            speed1 = speed1 - 2.0;
             if (speed1 <= 2.0)
                 speed1 = 300.0;
              break;
@@ -748,7 +787,8 @@ void txrx_test()
 #if DEBUG_TIMING
   led_start_ms = millis();
 #endif
-  if (isTimeToDisplay()) {
+  if (isTimeToDisplay()) 
+  {
     LED_DisplayTraffic();
     LEDTimeMarker = millis();
   }
@@ -757,6 +797,7 @@ void txrx_test()
 #endif
 
   Sound_loop();
+
 
 #if DEBUG_TIMING
   export_start_ms = millis();
@@ -832,6 +873,5 @@ void txrx_test()
 
   ClearExpired();
 }
-
 
 #endif /* EXCLUDE_TEST_MODE */
