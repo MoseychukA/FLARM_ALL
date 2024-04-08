@@ -146,20 +146,20 @@ bool Traffic_Add(ufo_t *fop)
   int i;
 
 
-      //SerialOutput.print("\n\nflight=");
-      //SerialOutput.print(fo.flight);
+ /*     SerialOutput.print("\n\nflight=");
+      SerialOutput.print(fo.flight);*/
 
-      //SerialOutput.print("\naddr=");
-      //SerialOutput.print(fo.addr, HEX);
+      SerialOutput.print("\naddr=");
+      SerialOutput.print(fo.addr, HEX);
 
-      //SerialOutput.print("\nlat=");
-      //SerialOutput.print(fo.latitude);
+      SerialOutput.print("\nlat=");
+      SerialOutput.print(fo.latitude);
 
-      //SerialOutput.print("\nlon=");
-      //SerialOutput.print(fo.longitude);
+      SerialOutput.print("\nlon=");
+      SerialOutput.print(fo.longitude);
 
-      //SerialOutput.print("\naltitude=");
-      //SerialOutput.print(fo.altitude);
+      SerialOutput.print("\naltitude=");
+      SerialOutput.print(fo.altitude);
 
       //SerialOutput.print("\nspeed=");
       //SerialOutput.print(fo.speed);
@@ -173,7 +173,7 @@ bool Traffic_Add(ufo_t *fop)
       //SerialOutput.print("\nseen=");
       //SerialOutput.print(fo.seen);
 
-      //SerialOutput.print("\n");
+      SerialOutput.print("\n");
 
 
 

@@ -595,7 +595,6 @@ float alien_lon = 37.353540;
 //float alien_lon = 37.188258;
 
 
-
 //float alien_lat0 = 55.951577;  // микрорайон Сходня
 //float alien_lon0 = 37.295610;
 
