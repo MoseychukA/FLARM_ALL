@@ -606,7 +606,7 @@ float Aircraft_latitude_old = 0.0;
 float Aircraft_longitude_old = 0.0;
 
 
-int set_air = 2;   //  
+int set_air = 1;   //  
 
 
 void txrx_test()
