@@ -38,28 +38,28 @@
 #define Serial_GNSS_In          Serial1
 #define Serial_GNSS_Out         Serial_GNSS_In
 
-#if defined(CONFIG_IDF_TARGET_ESP32)
-#define UATSerial               Serial2
-#elif defined(CONFIG_IDF_TARGET_ESP32S2)
-#if ARDUINO_USB_CDC_ON_BOOT
-#define UATSerial               Serial0
-#undef  SerialOutput
-#define SerialOutput            Serial0
-#else
-#define UATSerial               Serial
-#endif /* ARDUINO_USB_CDC_ON_BOOT */
-#elif defined(CONFIG_IDF_TARGET_ESP32S3)
-#define UATSerial               Serial2
-#define SA8X8_Serial            Serial2
-#if ARDUINO_USB_CDC_ON_BOOT
-#undef  SerialOutput
-#define SerialOutput            Serial0
-#endif /* ARDUINO_USB_CDC_ON_BOOT */
-#elif defined(CONFIG_IDF_TARGET_ESP32C3)
-#define UATSerial               Serial
-#else
-#error "This ESP32 family build variant is not supported!"
-#endif /* CONFIG_IDF_TARGET_ESP32 */
+//#if defined(CONFIG_IDF_TARGET_ESP32)
+//#define UATSerial               Serial2
+//#elif defined(CONFIG_IDF_TARGET_ESP32S2)
+//#if ARDUINO_USB_CDC_ON_BOOT
+//#define UATSerial               Serial0
+//#undef  SerialOutput
+//#define SerialOutput            Serial0
+//#else
+//#define UATSerial               Serial
+//#endif /* ARDUINO_USB_CDC_ON_BOOT */
+//#elif defined(CONFIG_IDF_TARGET_ESP32S3)
+//#define UATSerial               Serial2
+//#define SA8X8_Serial            Serial2
+//#if ARDUINO_USB_CDC_ON_BOOT
+//#undef  SerialOutput
+//#define SerialOutput            Serial0
+//#endif /* ARDUINO_USB_CDC_ON_BOOT */
+//#elif defined(CONFIG_IDF_TARGET_ESP32C3)
+//#define UATSerial               Serial
+//#else
+//#error "This ESP32 family build variant is not supported!"
+//#endif /* CONFIG_IDF_TARGET_ESP32 */
 
 #define EEPROM_commit()         EEPROM.commit()
 
@@ -147,11 +147,11 @@ extern Adafruit_NeoPixel strip;
                                   SOC_GPIO_PIN_HELTRK_GNSS_PPS :          \
                                   SOC_UNUSED_PIN)))
 
-#define SOC_GPIO_PIN_BUZZER   (hw_info.model == SOFTRF_MODEL_PRIME_MK2 ? \
-                                SOC_UNUSED_PIN :                         \
-                                (esp32_board == ESP32_DEVKIT    ? 13 :   \
-                                (esp32_board == ESP32_C3_DEVKIT ?        \
-                                SOC_GPIO_PIN_C3_BUZZER : SOC_UNUSED_PIN)))
+//#define SOC_GPIO_PIN_BUZZER   (hw_info.model == SOFTRF_MODEL_PRIME_MK2 ? \
+//                                SOC_UNUSED_PIN :                         \
+//                                (esp32_board == ESP32_DEVKIT    ? 13 :   \
+//                                (esp32_board == ESP32_C3_DEVKIT ?        \
+//                                SOC_GPIO_PIN_C3_BUZZER : SOC_UNUSED_PIN)))
 
 /* SPI (does match Heltec & TTGO LoRa32 pins mapping) */
 #define SOC_GPIO_PIN_MOSI       27
@@ -159,10 +159,10 @@ extern Adafruit_NeoPixel strip;
 #define SOC_GPIO_PIN_SCK        5
 #define SOC_GPIO_PIN_SS         18
 
-/* NRF905 */
-#define SOC_GPIO_PIN_TXE        26
-#define SOC_GPIO_PIN_CE         2
-#define SOC_GPIO_PIN_PWR        14
+///* NRF905 */
+//#define SOC_GPIO_PIN_TXE        26
+//#define SOC_GPIO_PIN_CE         2
+//#define SOC_GPIO_PIN_PWR        14
 
 /* SX1276 [RFM95W] (does match Heltec & TTGO LoRa32 pins mapping) */
 #define SOC_GPIO_PIN_RST        14
@@ -181,38 +181,24 @@ extern Adafruit_NeoPixel strip;
 #include "LilyGO_TWatch.h"
 #include "LilyGO_T8S2.h"
 
-#define SOC_GPIO_PIN_TDISPLAY_S2_LED    39
-#define SOC_GPIO_PIN_TDONGLE_S2_LED     39
+//#define SOC_GPIO_PIN_TDISPLAY_S2_LED    39
+//#define SOC_GPIO_PIN_TDONGLE_S2_LED     39
 
-#if defined(CONFIG_IDF_TARGET_ESP32S2)
-#define LV_HOR_RES                      (135) //Horizontal
-#elif defined(CONFIG_IDF_TARGET_ESP32S3)
-#define LV_HOR_RES                      (80) //Horizontal
-#else
-#define LV_HOR_RES                      (240) //Horizontal
-#endif
-
-#if defined(CONFIG_IDF_TARGET_ESP32S3)
-#define LV_VER_RES                      (160) //vertical
-#else
-#define LV_VER_RES                      (240) //vertical
-#endif
+//#if defined(CONFIG_IDF_TARGET_ESP32S2)
+//#define LV_HOR_RES                      (135) //Horizontal
+//#elif defined(CONFIG_IDF_TARGET_ESP32S3)
+//#define LV_HOR_RES                      (80) //Horizontal
+//#else
+//#define LV_HOR_RES                      (240) //Horizontal
+//#endif
+//
+//#if defined(CONFIG_IDF_TARGET_ESP32S3)
+//#define LV_VER_RES                      (160) //vertical
+//#else
+//#define LV_VER_RES                      (240) //vertical
+//#endif
 
 #include "LilyGO_TBeam_Supreme.h"
-
-/* ESP32-S3 section 3 (spare pins) */
-// 3(S), 21, 39, 45(S), 46(S), 48
-
-// battery voltage (ADC)
-#define SOC_GPIO_PIN_S3_BATTERY         3 // (S)
-
-/* auxillary */
-// Devkit LEDs, active state - HIGH
-#define SOC_GPIO_PIN_S3_LED_RED         5
-#define SOC_GPIO_PIN_S3_LED_GREEN       6
-#define SOC_GPIO_PIN_S3_LED_BLUE        7
-#define SOC_GPIO_PIN_S3_LED_WHITE       38
-#define SOC_GPIO_PIN_S3_LED_YELLOW      39
 
 #include "AiThinker_C3_12F.h"
 #include "LilyGO_TTWR.h"
@@ -290,8 +276,7 @@ struct rst_info {
 #define USE_NMEALIB
 #define USE_OLED
 #define EXCLUDE_OLED_049
-//#define EXCLUDE_OLED_BARO_PAGE
-#define USE_TFT
+
 #define USE_NMEA_CFG
 #define USE_BASICMAC
 
@@ -299,9 +284,7 @@ struct rst_info {
 
 /* Experimental */
 #define USE_BLE_MIDI
-//#define USE_GDL90_MSL
 #define USE_OGN_ENCRYPTION
-//#define ENABLE_PROL
 
 //#define EXCLUDE_GNSS_UBLOX    /* Neo-6/7/8, M10 */
 #define ENABLE_UBLOX_RFS        /* revert factory settings (when necessary)  */
@@ -309,67 +292,9 @@ struct rst_info {
 //#define EXCLUDE_GNSS_AT65     /* L76K, Air530Z */
 #define EXCLUDE_GNSS_SONY
 #define EXCLUDE_GNSS_MTK
-//#define EXCLUDE_GNSS_UC65
 
-#define EXCLUDE_CC13XX
 #define EXCLUDE_SOFTRF_HEARTBEAT
 #define EXCLUDE_LK8EX1
-//#define EXCLUDE_IMU
-//#define EXCLUDE_MAG
-
-
-#if !defined(CONFIG_IDF_TARGET_ESP32)
-#define EXCLUDE_UATM
-
-#if defined(CONFIG_IDF_TARGET_ESP32S2) || defined(CONFIG_IDF_TARGET_ESP32S3)
-#define EXCLUDE_NRF905
-#define EXCLUDE_LED_RING
-
-/* Experimental */
-//#define USE_ADAFRUIT_MSC
-//#define USE_USB_HOST
-
-#if defined(CONFIG_IDF_TARGET_ESP32S3)
-#define USE_U10_EXT
-//#define ENABLE_RECORDER
-//#define USE_SA8X8
-#endif /* CONFIG_IDF_TARGET_ESP32S3 */
-
-#if defined(USE_USB_HOST)
-#undef  SOC_GPIO_PIN_T8_S2_CONS_RX
-#undef  SOC_GPIO_PIN_T8_S2_CONS_TX
-#define SOC_GPIO_PIN_T8_S2_CONS_RX      46 // 43
-#define SOC_GPIO_PIN_T8_S2_CONS_TX      45 // 44
-
-/* Experimental */
-#define ENABLE_D1090_INPUT
-
-#include <cdc_acm_host.h>
-
-typedef struct {
-    bool connected;
-    int index;
-    CdcAcmDevice *device;
-} ESP32_USBSerial_device_t;
-
-typedef struct {
-    uint16_t vid;
-    uint16_t pid;
-    uint8_t type;
-    uint8_t model;
-    const char *first_name;
-    const char *last_name;
-} USB_Device_List_t;
-
-extern ESP32_USBSerial_device_t ESP32_USB_Serial;
-extern const USB_Device_List_t supported_USB_devices[];
-
-#endif /* USE_USB_HOST */
-#elif defined(CONFIG_IDF_TARGET_ESP32C3)
-#undef USE_OLED
-#undef USE_TFT
-#endif /* CONFIG_IDF_TARGET_ESP32SX | C3 */
-#endif /* NOT CONFIG_IDF_TARGET_ESP32 */
 
 #define POWER_SAVING_WIFI_TIMEOUT 600000UL /* 10 minutes */
 

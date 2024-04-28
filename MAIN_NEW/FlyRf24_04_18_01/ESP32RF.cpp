@@ -53,9 +53,9 @@
 #include "GDL90.h"
 #include "D1090.h"
 
-#if defined(USE_TFT)
-#include <TFT_eSPI.h>
-#endif /* USE_TFT */
+//#if defined(USE_TFT)
+//#include <TFT_eSPI.h>
+//#endif /* USE_TFT */
 
 #include <battery.h>
 
@@ -66,7 +66,7 @@ lmic_pinmap lmic_pins = {
     .rxe  = LMIC_UNUSED_PIN,
     .rst  = SOC_GPIO_PIN_RST,
     .dio  = {LMIC_UNUSED_PIN, LMIC_UNUSED_PIN, LMIC_UNUSED_PIN},
-    .busy = SOC_GPIO_PIN_TXE,
+    //.busy = SOC_GPIO_PIN_TXE,
     .tcxo = LMIC_UNUSED_PIN,
 };
 
@@ -92,40 +92,40 @@ U8X8_OLED_I2C_BUS_TYPE u8x8_heltec(HELTEC_OLED_PIN_RST);
 U8X8_SH1106_128X64_NONAME_HW_I2C u8x8_1_3(U8X8_PIN_NONE);
 #endif /* USE_OLED */
 
-#if defined(USE_TFT)
-static TFT_eSPI *tft = NULL;
-
-void TFT_off()
-{
-#ifndef ST7735_DRIVER
-    tft->writecommand(TFT_DISPOFF);
-    tft->writecommand(TFT_SLPIN);
-#else
-    tft->writecommand(ST7735_DISPOFF);
-    tft->writecommand(ST7735_SLPIN);
-#endif /* ST7735_DRIVER */
-}
-
-void TFT_backlight_adjust(uint8_t level)
-{
-    ledcWrite(BACKLIGHT_CHANNEL, level);
-}
-
-bool TFT_isBacklightOn()
-{
-    return (bool)ledcRead(BACKLIGHT_CHANNEL);
-}
-
-void TFT_backlight_off()
-{
-    ledcWrite(BACKLIGHT_CHANNEL, 0);
-}
-
-void TFT_backlight_on()
-{
-    ledcWrite(BACKLIGHT_CHANNEL, 250);
-}
-#endif /* USE_TFT */
+//#if defined(USE_TFT)
+//static TFT_eSPI *tft = NULL;
+//
+//void TFT_off()
+//{
+//#ifndef ST7735_DRIVER
+//    tft->writecommand(TFT_DISPOFF);
+//    tft->writecommand(TFT_SLPIN);
+//#else
+//    tft->writecommand(ST7735_DISPOFF);
+//    tft->writecommand(ST7735_SLPIN);
+//#endif /* ST7735_DRIVER */
+//}
+//
+//void TFT_backlight_adjust(uint8_t level)
+//{
+//    ledcWrite(BACKLIGHT_CHANNEL, level);
+//}
+//
+//bool TFT_isBacklightOn()
+//{
+//    return (bool)ledcRead(BACKLIGHT_CHANNEL);
+//}
+//
+//void TFT_backlight_off()
+//{
+//    ledcWrite(BACKLIGHT_CHANNEL, 0);
+//}
+//
+//void TFT_backlight_on()
+//{
+//    ledcWrite(BACKLIGHT_CHANNEL, 250);
+//}
+//#endif /* USE_TFT */
 
 AXP20X_Class axp_xxx;
 XPowersPMU   axp_2xxx;
@@ -521,10 +521,10 @@ static void ESP32_setup()
 #endif /* CONFIG_IDF_TARGET_ESP32 */
   }
 
-  if (SOC_GPIO_PIN_BUZZER != SOC_UNUSED_PIN) {
+ /* if (SOC_GPIO_PIN_BUZZER != SOC_UNUSED_PIN) {
     ledcAttachPin(SOC_GPIO_PIN_BUZZER, LEDC_CHANNEL_BUZZER);
     ledcSetup(LEDC_CHANNEL_BUZZER, 0, LEDC_RESOLUTION_BUZZER);
-  }
+  }*/
 
   if (hw_info.model == SOFTRF_MODEL_SKYWATCH) {
     esp32_board = ESP32_TTGO_T_WATCH;
@@ -2692,51 +2692,53 @@ static byte ESP32_Display_setup()
     SoC->ADB_ops && SoC->ADB_ops->setup();
 #endif /* USE_OLED */
 
-  } else {
+  }
+ else 
+{
 
-#if defined(USE_TFT)
-    tft = new TFT_eSPI(LV_HOR_RES, LV_VER_RES);
-    tft->init();
-#if LV_HOR_RES != 135 && LV_HOR_RES != 80
-    tft->setRotation(0);
-#else
-    tft->setRotation(1);
-#endif /* LV_HOR_RES */
-    tft->fillScreen(TFT_NAVY);
-
-    int bl_pin = (esp32_board == ESP32_S2_T8_V1_1) ?
-                 SOC_GPIO_PIN_T8_S2_TFT_BL :
-                 (esp32_board == ESP32_HELTEC_TRACKER && hw_info.revision == 3) ?
-                 SOC_GPIO_PIN_HELTRK_TFT_BL_V03 :
-                 (esp32_board == ESP32_HELTEC_TRACKER && hw_info.revision == 5) ?
-                 SOC_GPIO_PIN_HELTRK_TFT_BL_V05 :
-                 SOC_GPIO_PIN_TWATCH_TFT_BL;
-
-    ledcAttachPin(bl_pin, BACKLIGHT_CHANNEL);
-    ledcSetup(BACKLIGHT_CHANNEL, 12000, 8);
-
-    tft->setTextFont(4);
-    tft->setTextSize(2);
-    tft->setTextColor(TFT_WHITE, TFT_NAVY);
-
-    uint16_t tbw = tft->textWidth(SoftRF_text1);
-    uint16_t tbh = tft->fontHeight();
-    tft->setCursor((tft->width() - tbw)/2, (tft->height() - tbh)/2);
-    tft->println(SoftRF_text1);
-
-    for (int level = 0; level < 255; level += 25) {
-      TFT_backlight_adjust(level);
-      delay(100);
-    }
-
-#if LV_HOR_RES == 135
-    rval = DISPLAY_TFT_TTGO_135;
-#elif LV_HOR_RES == 80
-    rval = DISPLAY_TFT_HELTEC_80;
-#else
-    rval = DISPLAY_TFT_TTGO_240;
-#endif /* LV_HOR_RES */
-#endif /* USE_TFT */
+//#if defined(USE_TFT)
+//    tft = new TFT_eSPI(LV_HOR_RES, LV_VER_RES);
+//    tft->init();
+//#if LV_HOR_RES != 135 && LV_HOR_RES != 80
+//    tft->setRotation(0);
+//#else
+//    tft->setRotation(1);
+//#endif /* LV_HOR_RES */
+//    tft->fillScreen(TFT_NAVY);
+//
+//    int bl_pin = (esp32_board == ESP32_S2_T8_V1_1) ?
+//                 SOC_GPIO_PIN_T8_S2_TFT_BL :
+//                 (esp32_board == ESP32_HELTEC_TRACKER && hw_info.revision == 3) ?
+//                 SOC_GPIO_PIN_HELTRK_TFT_BL_V03 :
+//                 (esp32_board == ESP32_HELTEC_TRACKER && hw_info.revision == 5) ?
+//                 SOC_GPIO_PIN_HELTRK_TFT_BL_V05 :
+//                 SOC_GPIO_PIN_TWATCH_TFT_BL;
+//
+//    ledcAttachPin(bl_pin, BACKLIGHT_CHANNEL);
+//    ledcSetup(BACKLIGHT_CHANNEL, 12000, 8);
+//
+//    tft->setTextFont(4);
+//    tft->setTextSize(2);
+//    tft->setTextColor(TFT_WHITE, TFT_NAVY);
+//
+//    uint16_t tbw = tft->textWidth(SoftRF_text1);
+//    uint16_t tbh = tft->fontHeight();
+//    tft->setCursor((tft->width() - tbw)/2, (tft->height() - tbh)/2);
+//    tft->println(SoftRF_text1);
+//
+//    for (int level = 0; level < 255; level += 25) {
+//      TFT_backlight_adjust(level);
+//      delay(100);
+//    }
+//
+//#if LV_HOR_RES == 135
+//    rval = DISPLAY_TFT_TTGO_135;
+//#elif LV_HOR_RES == 80
+//    rval = DISPLAY_TFT_HELTEC_80;
+//#else
+//    rval = DISPLAY_TFT_TTGO_240;
+//#endif /* LV_HOR_RES */
+//#endif /* USE_TFT */
   }
 
   return rval;
@@ -2753,336 +2755,336 @@ static void ESP32_Display_loop()
   switch (hw_info.display)
   {
 
-#if defined(USE_TFT)
-#if LV_HOR_RES == 240
-  case DISPLAY_TFT_TTGO_240:
-    if (tft) {
-      if (!TFT_display_frontpage) {
-        tft->fillScreen(TFT_NAVY);
-
-        tft->setTextFont(2);
-        tft->setTextSize(2);
-        tft->setTextColor(TFT_WHITE, TFT_NAVY);
-
-        tbw = tft->textWidth(ID_text);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth(" "), tft->height()/6 - tbh);
-        tft->print(ID_text);
-
-        tbw = tft->textWidth(PROTOCOL_text);
-
-        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
-                       tft->height()/6 - tbh);
-        tft->print(PROTOCOL_text);
-
-        tbw = tft->textWidth(RX_text);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth("   "), tft->height()/2 - tbh);
-        tft->print(RX_text);
-
-        tbw = tft->textWidth(TX_text);
-
-        tft->setCursor(tft->width()/2 + tft->textWidth("   "),
-                       tft->height()/2 - tbh);
-        tft->print(TX_text);
-
-        tft->setTextFont(4);
-        tft->setTextSize(2);
-
-        snprintf (buf, sizeof(buf), "%06X", ThisAircraft.addr);
-
-        tbw = tft->textWidth(buf);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth(" "), tft->height()/6);
-        tft->print(buf);
-
-        tbw = tft->textWidth("O");
-
-        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
-                       tft->height()/6);
-        //tft->print(Protocol_ID[ThisAircraft.protocol][0]);
-
-        itoa(rx_packets_counter % 1000, buf, 10);
-        tft->setCursor(tft->textWidth(" "), tft->height()/2);
-        tft->print(buf);
-
-        itoa(tx_packets_counter % 1000, buf, 10);
-        tft->setCursor(tft->width()/2 + tft->textWidth(" "), tft->height()/2);
-        tft->print(buf);
-
-        TFT_display_frontpage = true;
-
-      } else { /* TFT_display_frontpage */
-
-        if (rx_packets_counter > prev_rx_packets_counter) {
-          disp_value = rx_packets_counter % 1000;
-          itoa(disp_value, buf, 10);
-
-          if (disp_value < 10) {
-            strcat_P(buf,PSTR("  "));
-          } else {
-            if (disp_value < 100) {
-              strcat_P(buf,PSTR(" "));
-            };
-          }
-
-          tft->setTextFont(4);
-          tft->setTextSize(2);
-
-          tft->setCursor(tft->textWidth(" "), tft->height()/2);
-          tft->print(buf);
-
-          prev_rx_packets_counter = rx_packets_counter;
-        }
-        if (tx_packets_counter > prev_tx_packets_counter) {
-          disp_value = tx_packets_counter % 1000;
-          itoa(disp_value, buf, 10);
-
-          if (disp_value < 10) {
-            strcat_P(buf,PSTR("  "));
-          } else {
-            if (disp_value < 100) {
-              strcat_P(buf,PSTR(" "));
-            };
-          }
-
-          tft->setTextFont(4);
-          tft->setTextSize(2);
-
-          tft->setCursor(tft->width()/2 + tft->textWidth(" "), tft->height()/2);
-          tft->print(buf);
-
-          prev_tx_packets_counter = tx_packets_counter;
-        }
-      }
-    }
-
-    break;
-#endif /* LV_HOR_RES == 240 */
-
-#if LV_HOR_RES == 135
-  case DISPLAY_TFT_TTGO_135:
-    if (tft) {
-      if (!TFT_display_frontpage) {
-        tft->fillScreen(TFT_NAVY);
-
-        tft->setTextFont(2);
-        tft->setTextSize(2);
-        tft->setTextColor(TFT_WHITE, TFT_NAVY);
-
-        tbw = tft->textWidth(ID_text);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth(" "), tft->height()/4 - tbh - 1);
-        tft->print(ID_text);
-
-        tbw = tft->textWidth(PROTOCOL_text);
-
-        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
-                       tft->height()/4 - tbh - 1);
-        tft->print(PROTOCOL_text);
-
-        tbw = tft->textWidth(RX_text);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth("   "), 3*tft->height()/4 - tbh - 1);
-        tft->print(RX_text);
-
-        tbw = tft->textWidth(TX_text);
-
-        tft->setCursor(tft->width()/2 + tft->textWidth("   "),
-                       3*tft->height()/4 - tbh - 1);
-        tft->print(TX_text);
-
-        tft->setTextFont(2);
-        tft->setTextSize(3);
-
-        snprintf (buf, sizeof(buf), "%06X", ThisAircraft.addr);
-
-        tbw = tft->textWidth(buf);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth(" "), tft->height()/4 - 7);
-        tft->print(buf);
-
-        tbw = tft->textWidth("O");
-
-        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
-                       tft->height()/4 - 7);
-        //tft->print(Protocol_ID[ThisAircraft.protocol][0]);
-
-        itoa(rx_packets_counter % 1000, buf, 10);
-        tft->setCursor(tft->textWidth(" "), 3*tft->height()/4 - 7);
-        tft->print(buf);
-
-        itoa(tx_packets_counter % 1000, buf, 10);
-        tft->setCursor(tft->width()/2 + tft->textWidth(" "), 3*tft->height()/4 - 7);
-        tft->print(buf);
-
-        TFT_display_frontpage = true;
-
-      } else { /* TFT_display_frontpage */
-
-        if (rx_packets_counter > prev_rx_packets_counter) {
-          disp_value = rx_packets_counter % 1000;
-          itoa(disp_value, buf, 10);
-
-          if (disp_value < 10) {
-            strcat_P(buf,PSTR("  "));
-          } else {
-            if (disp_value < 100) {
-              strcat_P(buf,PSTR(" "));
-            };
-          }
-
-          tft->setTextFont(2);
-          tft->setTextSize(3);
-
-          tft->setCursor(tft->textWidth(" "), 3*tft->height()/4 - 7);
-          tft->print(buf);
-
-          prev_rx_packets_counter = rx_packets_counter;
-        }
-        if (tx_packets_counter > prev_tx_packets_counter) {
-          disp_value = tx_packets_counter % 1000;
-          itoa(disp_value, buf, 10);
-
-          if (disp_value < 10) {
-            strcat_P(buf,PSTR("  "));
-          } else {
-            if (disp_value < 100) {
-              strcat_P(buf,PSTR(" "));
-            };
-          }
-
-          tft->setTextFont(2);
-          tft->setTextSize(3);
-
-          tft->setCursor(tft->width()/2 + tft->textWidth(" "), 3*tft->height()/4 - 7);
-          tft->print(buf);
-
-          prev_tx_packets_counter = tx_packets_counter;
-        }
-      }
-    }
-
-    break;
-
-#endif /* LV_HOR_RES == 135 */
-
-#if LV_HOR_RES == 80
-  case DISPLAY_TFT_HELTEC_80:
-    if (tft) {
-      if (!TFT_display_frontpage) {
-        tft->fillScreen(TFT_NAVY);
-
-        tft->setTextFont(2);
-        tft->setTextSize(1);
-        tft->setTextColor(TFT_WHITE, TFT_NAVY);
-
-        tbw = tft->textWidth(ID_text);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth(" "), tft->height()/4 - tbh - 6);
-        tft->print(ID_text);
-
-        tbw = tft->textWidth(PROTOCOL_text);
-
-        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
-                       tft->height()/4 - tbh - 6);
-        tft->print(PROTOCOL_text);
-
-        tbw = tft->textWidth(RX_text);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth("   "), 3*tft->height()/4 - tbh - 4);
-        tft->print(RX_text);
-
-        tbw = tft->textWidth(TX_text);
-
-        tft->setCursor(tft->width()/2 + tft->textWidth("   "),
-                       3*tft->height()/4 - tbh - 4);
-        tft->print(TX_text);
-
-        tft->setTextFont(2);
-        tft->setTextSize(2);
-
-        snprintf (buf, sizeof(buf), "%06X", ThisAircraft.addr);
-
-        tbw = tft->textWidth(buf);
-        tbh = tft->fontHeight();
-
-        tft->setCursor(tft->textWidth(" "), tft->height()/4 - 9);
-        tft->print(buf);
-
-        tbw = tft->textWidth("O");
-
-        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
-                       tft->height()/4 - 9);
-        //tft->print(Protocol_ID[ThisAircraft.protocol][0]);
-
-        itoa(rx_packets_counter % 1000, buf, 10);
-        tft->setCursor(tft->textWidth(" "), 3*tft->height()/4 - 7);
-        tft->print(buf);
-
-        itoa(tx_packets_counter % 1000, buf, 10);
-        tft->setCursor(tft->width()/2 + tft->textWidth(" "), 3*tft->height()/4 - 7);
-        tft->print(buf);
-
-        TFT_display_frontpage = true;
-
-      } else { /* TFT_display_frontpage */
-
-        if (rx_packets_counter > prev_rx_packets_counter) {
-          disp_value = rx_packets_counter % 1000;
-          itoa(disp_value, buf, 10);
-
-          if (disp_value < 10) {
-            strcat_P(buf,PSTR("  "));
-          } else {
-            if (disp_value < 100) {
-              strcat_P(buf,PSTR(" "));
-            };
-          }
-
-          tft->setTextFont(2);
-          tft->setTextSize(2);
-
-          tft->setCursor(tft->textWidth(" "), 3*tft->height()/4 - 7);
-          tft->print(buf);
-
-          prev_rx_packets_counter = rx_packets_counter;
-        }
-        if (tx_packets_counter > prev_tx_packets_counter) {
-          disp_value = tx_packets_counter % 1000;
-          itoa(disp_value, buf, 10);
-
-          if (disp_value < 10) {
-            strcat_P(buf,PSTR("  "));
-          } else {
-            if (disp_value < 100) {
-              strcat_P(buf,PSTR(" "));
-            };
-          }
-
-          tft->setTextFont(2);
-          tft->setTextSize(2);
-
-          tft->setCursor(tft->width()/2 + tft->textWidth(" "), 3*tft->height()/4 - 7);
-          tft->print(buf);
-
-          prev_tx_packets_counter = tx_packets_counter;
-        }
-      }
-    }
-
-    break;
-
-#endif /* LV_HOR_RES == 80 */
-#endif /* USE_TFT */
+//#if defined(USE_TFT)
+//#if LV_HOR_RES == 240
+//  case DISPLAY_TFT_TTGO_240:
+//    if (tft) {
+//      if (!TFT_display_frontpage) {
+//        tft->fillScreen(TFT_NAVY);
+//
+//        tft->setTextFont(2);
+//        tft->setTextSize(2);
+//        tft->setTextColor(TFT_WHITE, TFT_NAVY);
+//
+//        tbw = tft->textWidth(ID_text);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth(" "), tft->height()/6 - tbh);
+//        tft->print(ID_text);
+//
+//        tbw = tft->textWidth(PROTOCOL_text);
+//
+//        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
+//                       tft->height()/6 - tbh);
+//        tft->print(PROTOCOL_text);
+//
+//        tbw = tft->textWidth(RX_text);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth("   "), tft->height()/2 - tbh);
+//        tft->print(RX_text);
+//
+//        tbw = tft->textWidth(TX_text);
+//
+//        tft->setCursor(tft->width()/2 + tft->textWidth("   "),
+//                       tft->height()/2 - tbh);
+//        tft->print(TX_text);
+//
+//        tft->setTextFont(4);
+//        tft->setTextSize(2);
+//
+//        snprintf (buf, sizeof(buf), "%06X", ThisAircraft.addr);
+//
+//        tbw = tft->textWidth(buf);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth(" "), tft->height()/6);
+//        tft->print(buf);
+//
+//        tbw = tft->textWidth("O");
+//
+//        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
+//                       tft->height()/6);
+//        //tft->print(Protocol_ID[ThisAircraft.protocol][0]);
+//
+//        itoa(rx_packets_counter % 1000, buf, 10);
+//        tft->setCursor(tft->textWidth(" "), tft->height()/2);
+//        tft->print(buf);
+//
+//        itoa(tx_packets_counter % 1000, buf, 10);
+//        tft->setCursor(tft->width()/2 + tft->textWidth(" "), tft->height()/2);
+//        tft->print(buf);
+//
+//        TFT_display_frontpage = true;
+//
+//      } else { /* TFT_display_frontpage */
+//
+//        if (rx_packets_counter > prev_rx_packets_counter) {
+//          disp_value = rx_packets_counter % 1000;
+//          itoa(disp_value, buf, 10);
+//
+//          if (disp_value < 10) {
+//            strcat_P(buf,PSTR("  "));
+//          } else {
+//            if (disp_value < 100) {
+//              strcat_P(buf,PSTR(" "));
+//            };
+//          }
+//
+//          tft->setTextFont(4);
+//          tft->setTextSize(2);
+//
+//          tft->setCursor(tft->textWidth(" "), tft->height()/2);
+//          tft->print(buf);
+//
+//          prev_rx_packets_counter = rx_packets_counter;
+//        }
+//        if (tx_packets_counter > prev_tx_packets_counter) {
+//          disp_value = tx_packets_counter % 1000;
+//          itoa(disp_value, buf, 10);
+//
+//          if (disp_value < 10) {
+//            strcat_P(buf,PSTR("  "));
+//          } else {
+//            if (disp_value < 100) {
+//              strcat_P(buf,PSTR(" "));
+//            };
+//          }
+//
+//          tft->setTextFont(4);
+//          tft->setTextSize(2);
+//
+//          tft->setCursor(tft->width()/2 + tft->textWidth(" "), tft->height()/2);
+//          tft->print(buf);
+//
+//          prev_tx_packets_counter = tx_packets_counter;
+//        }
+//      }
+//    }
+//
+//    break;
+//#endif /* LV_HOR_RES == 240 */
+//
+//#if LV_HOR_RES == 135
+//  case DISPLAY_TFT_TTGO_135:
+//    if (tft) {
+//      if (!TFT_display_frontpage) {
+//        tft->fillScreen(TFT_NAVY);
+//
+//        tft->setTextFont(2);
+//        tft->setTextSize(2);
+//        tft->setTextColor(TFT_WHITE, TFT_NAVY);
+//
+//        tbw = tft->textWidth(ID_text);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth(" "), tft->height()/4 - tbh - 1);
+//        tft->print(ID_text);
+//
+//        tbw = tft->textWidth(PROTOCOL_text);
+//
+//        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
+//                       tft->height()/4 - tbh - 1);
+//        tft->print(PROTOCOL_text);
+//
+//        tbw = tft->textWidth(RX_text);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth("   "), 3*tft->height()/4 - tbh - 1);
+//        tft->print(RX_text);
+//
+//        tbw = tft->textWidth(TX_text);
+//
+//        tft->setCursor(tft->width()/2 + tft->textWidth("   "),
+//                       3*tft->height()/4 - tbh - 1);
+//        tft->print(TX_text);
+//
+//        tft->setTextFont(2);
+//        tft->setTextSize(3);
+//
+//        snprintf (buf, sizeof(buf), "%06X", ThisAircraft.addr);
+//
+//        tbw = tft->textWidth(buf);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth(" "), tft->height()/4 - 7);
+//        tft->print(buf);
+//
+//        tbw = tft->textWidth("O");
+//
+//        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
+//                       tft->height()/4 - 7);
+//        //tft->print(Protocol_ID[ThisAircraft.protocol][0]);
+//
+//        itoa(rx_packets_counter % 1000, buf, 10);
+//        tft->setCursor(tft->textWidth(" "), 3*tft->height()/4 - 7);
+//        tft->print(buf);
+//
+//        itoa(tx_packets_counter % 1000, buf, 10);
+//        tft->setCursor(tft->width()/2 + tft->textWidth(" "), 3*tft->height()/4 - 7);
+//        tft->print(buf);
+//
+//        TFT_display_frontpage = true;
+//
+//      } else { /* TFT_display_frontpage */
+//
+//        if (rx_packets_counter > prev_rx_packets_counter) {
+//          disp_value = rx_packets_counter % 1000;
+//          itoa(disp_value, buf, 10);
+//
+//          if (disp_value < 10) {
+//            strcat_P(buf,PSTR("  "));
+//          } else {
+//            if (disp_value < 100) {
+//              strcat_P(buf,PSTR(" "));
+//            };
+//          }
+//
+//          tft->setTextFont(2);
+//          tft->setTextSize(3);
+//
+//          tft->setCursor(tft->textWidth(" "), 3*tft->height()/4 - 7);
+//          tft->print(buf);
+//
+//          prev_rx_packets_counter = rx_packets_counter;
+//        }
+//        if (tx_packets_counter > prev_tx_packets_counter) {
+//          disp_value = tx_packets_counter % 1000;
+//          itoa(disp_value, buf, 10);
+//
+//          if (disp_value < 10) {
+//            strcat_P(buf,PSTR("  "));
+//          } else {
+//            if (disp_value < 100) {
+//              strcat_P(buf,PSTR(" "));
+//            };
+//          }
+//
+//          tft->setTextFont(2);
+//          tft->setTextSize(3);
+//
+//          tft->setCursor(tft->width()/2 + tft->textWidth(" "), 3*tft->height()/4 - 7);
+//          tft->print(buf);
+//
+//          prev_tx_packets_counter = tx_packets_counter;
+//        }
+//      }
+//    }
+//
+//    break;
+//
+//#endif /* LV_HOR_RES == 135 */
+//
+//#if LV_HOR_RES == 80
+//  case DISPLAY_TFT_HELTEC_80:
+//    if (tft) {
+//      if (!TFT_display_frontpage) {
+//        tft->fillScreen(TFT_NAVY);
+//
+//        tft->setTextFont(2);
+//        tft->setTextSize(1);
+//        tft->setTextColor(TFT_WHITE, TFT_NAVY);
+//
+//        tbw = tft->textWidth(ID_text);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth(" "), tft->height()/4 - tbh - 6);
+//        tft->print(ID_text);
+//
+//        tbw = tft->textWidth(PROTOCOL_text);
+//
+//        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
+//                       tft->height()/4 - tbh - 6);
+//        tft->print(PROTOCOL_text);
+//
+//        tbw = tft->textWidth(RX_text);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth("   "), 3*tft->height()/4 - tbh - 4);
+//        tft->print(RX_text);
+//
+//        tbw = tft->textWidth(TX_text);
+//
+//        tft->setCursor(tft->width()/2 + tft->textWidth("   "),
+//                       3*tft->height()/4 - tbh - 4);
+//        tft->print(TX_text);
+//
+//        tft->setTextFont(2);
+//        tft->setTextSize(2);
+//
+//        snprintf (buf, sizeof(buf), "%06X", ThisAircraft.addr);
+//
+//        tbw = tft->textWidth(buf);
+//        tbh = tft->fontHeight();
+//
+//        tft->setCursor(tft->textWidth(" "), tft->height()/4 - 9);
+//        tft->print(buf);
+//
+//        tbw = tft->textWidth("O");
+//
+//        tft->setCursor(tft->width() - tbw - tft->textWidth(" "),
+//                       tft->height()/4 - 9);
+//        //tft->print(Protocol_ID[ThisAircraft.protocol][0]);
+//
+//        itoa(rx_packets_counter % 1000, buf, 10);
+//        tft->setCursor(tft->textWidth(" "), 3*tft->height()/4 - 7);
+//        tft->print(buf);
+//
+//        itoa(tx_packets_counter % 1000, buf, 10);
+//        tft->setCursor(tft->width()/2 + tft->textWidth(" "), 3*tft->height()/4 - 7);
+//        tft->print(buf);
+//
+//        TFT_display_frontpage = true;
+//
+//      } else { /* TFT_display_frontpage */
+//
+//        if (rx_packets_counter > prev_rx_packets_counter) {
+//          disp_value = rx_packets_counter % 1000;
+//          itoa(disp_value, buf, 10);
+//
+//          if (disp_value < 10) {
+//            strcat_P(buf,PSTR("  "));
+//          } else {
+//            if (disp_value < 100) {
+//              strcat_P(buf,PSTR(" "));
+//            };
+//          }
+//
+//          tft->setTextFont(2);
+//          tft->setTextSize(2);
+//
+//          tft->setCursor(tft->textWidth(" "), 3*tft->height()/4 - 7);
+//          tft->print(buf);
+//
+//          prev_rx_packets_counter = rx_packets_counter;
+//        }
+//        if (tx_packets_counter > prev_tx_packets_counter) {
+//          disp_value = tx_packets_counter % 1000;
+//          itoa(disp_value, buf, 10);
+//
+//          if (disp_value < 10) {
+//            strcat_P(buf,PSTR("  "));
+//          } else {
+//            if (disp_value < 100) {
+//              strcat_P(buf,PSTR(" "));
+//            };
+//          }
+//
+//          tft->setTextFont(2);
+//          tft->setTextSize(2);
+//
+//          tft->setCursor(tft->width()/2 + tft->textWidth(" "), 3*tft->height()/4 - 7);
+//          tft->print(buf);
+//
+//          prev_tx_packets_counter = tx_packets_counter;
+//        }
+//      }
+//    }
+//
+//    break;
+//
+//#endif /* LV_HOR_RES == 80 */
+//#endif /* USE_TFT */
 
 #if defined(USE_OLED)
   case DISPLAY_OLED_TTGO:
@@ -3120,67 +3122,67 @@ static void ESP32_Display_fini(int reason)
     break;
 #endif /* USE_OLED */
 
-#if defined(USE_TFT)
-  case DISPLAY_TFT_TTGO_240:
-  case DISPLAY_TFT_TTGO_135:
-  case DISPLAY_TFT_HELTEC_80:
-    if (tft) {
-        int level;
-        const char *msg = (reason == SOFTRF_SHUTDOWN_LOWBAT) ?
-                   "LOW BAT" : "  OFF  ";
-
-        for (level = 250; level >= 0; level -= 25) {
-          TFT_backlight_adjust(level);
-          delay(100);
-        }
-
-        tft->fillScreen(TFT_NAVY);
-        tft->setTextFont(4);
-#if LV_VER_RES == 160
-        if (reason == SOFTRF_SHUTDOWN_LOWBAT) {
-          tft->setTextSize(1);
-        } else
-#endif
-        {
-          tft->setTextSize(2);
-        }
-        tft->setTextColor(TFT_WHITE, TFT_NAVY);
-
-        uint16_t tbw = tft->textWidth(msg);
-        uint16_t tbh = tft->fontHeight();
-
-        tft->setCursor((tft->width() - tbw)/2, (tft->height() - tbh)/2);
-        tft->print(msg);
-
-        for (level = 0; level <= 250; level += 25) {
-          TFT_backlight_adjust(level);
-          delay(100);
-        }
-
-        delay(2000);
-
-        for (level = 250; level >= 0; level -= 25) {
-          TFT_backlight_adjust(level);
-          delay(100);
-        }
-
-        TFT_backlight_off();
-        int bl_pin = (esp32_board == ESP32_S2_T8_V1_1) ?
-                     SOC_GPIO_PIN_T8_S2_TFT_BL :
-                     (esp32_board == ESP32_HELTEC_TRACKER && hw_info.revision == 3) ?
-                     SOC_GPIO_PIN_HELTRK_TFT_BL_V03 :
-                     (esp32_board == ESP32_HELTEC_TRACKER && hw_info.revision == 5) ?
-                     SOC_GPIO_PIN_HELTRK_TFT_BL_V05 :
-                     SOC_GPIO_PIN_TWATCH_TFT_BL;
-
-        ledcDetachPin(bl_pin);
-        pinMode(bl_pin, INPUT_PULLDOWN);
-
-        tft->fillScreen(TFT_NAVY);
-        TFT_off();
-    }
-    break;
-#endif /* USE_TFT */
+//#if defined(USE_TFT)
+//  case DISPLAY_TFT_TTGO_240:
+//  case DISPLAY_TFT_TTGO_135:
+//  case DISPLAY_TFT_HELTEC_80:
+//    if (tft) {
+//        int level;
+//        const char *msg = (reason == SOFTRF_SHUTDOWN_LOWBAT) ?
+//                   "LOW BAT" : "  OFF  ";
+//
+//        for (level = 250; level >= 0; level -= 25) {
+//          TFT_backlight_adjust(level);
+//          delay(100);
+//        }
+//
+//        tft->fillScreen(TFT_NAVY);
+//        tft->setTextFont(4);
+//#if LV_VER_RES == 160
+//        if (reason == SOFTRF_SHUTDOWN_LOWBAT) {
+//          tft->setTextSize(1);
+//        } else
+//#endif
+//        {
+//          tft->setTextSize(2);
+//        }
+//        tft->setTextColor(TFT_WHITE, TFT_NAVY);
+//
+//        uint16_t tbw = tft->textWidth(msg);
+//        uint16_t tbh = tft->fontHeight();
+//
+//        tft->setCursor((tft->width() - tbw)/2, (tft->height() - tbh)/2);
+//        tft->print(msg);
+//
+//        for (level = 0; level <= 250; level += 25) {
+//          TFT_backlight_adjust(level);
+//          delay(100);
+//        }
+//
+//        delay(2000);
+//
+//        for (level = 250; level >= 0; level -= 25) {
+//          TFT_backlight_adjust(level);
+//          delay(100);
+//        }
+//
+//        TFT_backlight_off();
+//        int bl_pin = (esp32_board == ESP32_S2_T8_V1_1) ?
+//                     SOC_GPIO_PIN_T8_S2_TFT_BL :
+//                     (esp32_board == ESP32_HELTEC_TRACKER && hw_info.revision == 3) ?
+//                     SOC_GPIO_PIN_HELTRK_TFT_BL_V03 :
+//                     (esp32_board == ESP32_HELTEC_TRACKER && hw_info.revision == 5) ?
+//                     SOC_GPIO_PIN_HELTRK_TFT_BL_V05 :
+//                     SOC_GPIO_PIN_TWATCH_TFT_BL;
+//
+//        ledcDetachPin(bl_pin);
+//        pinMode(bl_pin, INPUT_PULLDOWN);
+//
+//        tft->fillScreen(TFT_NAVY);
+//        TFT_off();
+//    }
+//    break;
+//#endif /* USE_TFT */
 
   case DISPLAY_NONE:
   default:
@@ -3407,51 +3409,51 @@ static bool ESP32_Baro_setup()
   return true;
 }
 
-static void ESP32_UATSerial_begin(unsigned long baud)
-{
-#if defined(USE_SA8X8)
-  if (esp32_board == ESP32_LILYGO_T_TWR_V2_0 ||
-      esp32_board == ESP32_LILYGO_T_TWR_V2_1) {
-    SA8X8_Serial.begin(baud, SERIAL_IN_BITS,
-                       SOC_GPIO_PIN_TWR2_RADIO_RX,
-                       SOC_GPIO_PIN_TWR2_RADIO_TX);
-  }
-  else
-#endif /* USE_SA8X8 */
-  {
-    /* open Standalone's I2C/UATSerial port */
-    UATSerial.begin(baud, SERIAL_IN_BITS, SOC_GPIO_PIN_CE, SOC_GPIO_PIN_PWR);
-  }
-}
+//static void ESP32_UATSerial_begin(unsigned long baud)
+//{
+//#if defined(USE_SA8X8)
+//  if (esp32_board == ESP32_LILYGO_T_TWR_V2_0 ||
+//      esp32_board == ESP32_LILYGO_T_TWR_V2_1) {
+//    SA8X8_Serial.begin(baud, SERIAL_IN_BITS,
+//                       SOC_GPIO_PIN_TWR2_RADIO_RX,
+//                       SOC_GPIO_PIN_TWR2_RADIO_TX);
+//  }
+//  else
+//#endif /* USE_SA8X8 */
+//  {
+//    /* open Standalone's I2C/UATSerial port */
+//    UATSerial.begin(baud, SERIAL_IN_BITS, SOC_GPIO_PIN_CE, SOC_GPIO_PIN_PWR); 
+//  }
+//}
+//
+//static void ESP32_UATSerial_updateBaudRate(unsigned long baud)
+//{
+//  UATSerial.updateBaudRate(baud);
+//}
 
-static void ESP32_UATSerial_updateBaudRate(unsigned long baud)
-{
-  UATSerial.updateBaudRate(baud);
-}
-
-static void ESP32_UATModule_restart()
-{
-#if defined(USE_SA8X8)
-  if (esp32_board == ESP32_LILYGO_T_TWR_V2_0) {
-    /* TBD */
-  } else if (esp32_board == ESP32_LILYGO_T_TWR_V2_1) {
-    /* TBD */
-  }
-  else
-#endif /* USE_SA8X8 */
-  {
-    digitalWrite(SOC_GPIO_PIN_TXE, LOW);
-    pinMode(SOC_GPIO_PIN_TXE, OUTPUT);
-
-    delay(100);
-
-    digitalWrite(SOC_GPIO_PIN_TXE, HIGH);
-
-    delay(100);
-
-    pinMode(SOC_GPIO_PIN_TXE, INPUT);
-  }
-}
+//static void ESP32_UATModule_restart()
+//{
+//#if defined(USE_SA8X8)
+//  if (esp32_board == ESP32_LILYGO_T_TWR_V2_0) {
+//    /* TBD */
+//  } else if (esp32_board == ESP32_LILYGO_T_TWR_V2_1) {
+//    /* TBD */
+//  }
+//  else
+//#endif /* USE_SA8X8 */
+//  {
+//    digitalWrite(SOC_GPIO_PIN_TXE, LOW);
+//    pinMode(SOC_GPIO_PIN_TXE, OUTPUT);
+//
+//    delay(100);
+//
+//    digitalWrite(SOC_GPIO_PIN_TXE, HIGH);
+//
+//    delay(100);
+//
+//    pinMode(SOC_GPIO_PIN_TXE, INPUT);
+//  }
+//}
 
 static void ESP32_WDT_setup()
 {
@@ -3570,7 +3572,8 @@ static void ESP32_Button_loop()
       esp32_board == ESP32_S2_T8_V1_1          ||
       esp32_board == ESP32_LILYGO_T_TWR_V2_0   ||
       esp32_board == ESP32_HELTEC_TRACKER      ||
-      esp32_board == ESP32_S3_DEVKIT) {
+      esp32_board == ESP32_S3_DEVKIT)
+  {
     button_1.check();
   }
 }
@@ -4189,8 +4192,8 @@ const SoC_ops_t ESP32_ops = {
   ESP32_GNSS_PPS_Interrupt_handler,
   ESP32_get_PPS_TimeMarker,
   ESP32_Baro_setup,
-  ESP32_UATSerial_begin,
-  ESP32_UATModule_restart,
+  NULL,
+  NULL,
   ESP32_WDT_setup,
   ESP32_WDT_fini,
   ESP32_Button_setup,
