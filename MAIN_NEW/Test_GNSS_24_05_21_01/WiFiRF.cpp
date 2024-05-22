@@ -190,8 +190,10 @@ void WiFi_loop()
 
 #if defined(POWER_SAVING_WIFI_TIMEOUT)
   if ((settings->power_save & POWER_SAVE_WIFI) && WiFi.getMode() == WIFI_AP) {
-    if (SoC->WiFi_clients_count() == 0) {
-      if ((millis() - WiFi_No_Clients_Time_ms) > POWER_SAVING_WIFI_TIMEOUT) {
+    if (SoC->WiFi_clients_count() == 0) 
+    {
+      if ((millis() - WiFi_No_Clients_Time_ms) > POWER_SAVING_WIFI_TIMEOUT) 
+      {
         NMEA_fini();
         Web_fini();
         WiFi_fini();
@@ -200,10 +202,16 @@ void WiFi_loop()
           StdOut.println(F("$PSRFS,WIFI_OFF"));
         }
       }
-    } else {
+    }
+    else 
+    {
       WiFi_No_Clients_Time_ms = millis();
     }
   }
+#endif
+
+#if defined(POWER_SAVING_WIFI_TIMEOUT)
+  WiFi_No_Clients_Time_ms = millis();
 #endif
 }
 

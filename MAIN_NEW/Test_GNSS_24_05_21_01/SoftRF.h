@@ -27,10 +27,9 @@
 #include <TimeLib.h>
 #endif /* ENERGIA_ARCH_CC13XX || ENERGIA_ARCH_CC13X2 || defined(HACKRF_ONE) */
 
-#define SOFTRF_IDENT            "FlyRF"
-#define SOFTRF_FIRMWARE_VERSION "1.3"
-//#define FLYRF_FIRMWARE_VERSION "FlyRf_24_05_13_01"
-#define SOFTRF_USB_FW_VERSION   0x0103
+#define SOFTRF_IDENT            "Test GNSS"
+#define SOFTRF_FIRMWARE_VERSION "1.0"
+#define SOFTRF_USB_FW_VERSION   0x0100
 
 #define ENTRY_EXPIRATION_TIME   5 //10 /* seconds */
 #define LED_EXPIRATION_TIME     5 /* seconds */

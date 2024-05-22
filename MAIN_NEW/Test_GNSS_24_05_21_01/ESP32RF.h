@@ -51,36 +51,6 @@
 #define LED_STATE_ON            HIGH  // State when LED is litted
 
 
-///*
-// * NeoPixelBus is already "flickering-free" on ESP32 (with I2S or RMT)
-// * but the "Core" needs update onto the most recent one
-// */
-//#define USE_NEOPIXELBUS_LIBRARY
-//
-//#if defined(USE_NEOPIXELBUS_LIBRARY)
-//#include <NeoPixelBus.h>
-//
-//#define uni_begin()             strip.Begin()
-//#define uni_show()              strip.Show()
-//#define uni_setPixelColor(i, c) strip.SetPixelColor(i, c)
-//#define uni_numPixels()         strip.PixelCount()
-//#define uni_Color(r,g,b)        RgbColor(r,g,b)
-//#define color_t                 RgbColor
-//
-//extern NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip;
-//#else /* USE_ADAFRUIT_NEO_LIBRARY */
-//#include <Adafruit_NeoPixel.h>
-//
-//#define uni_begin()             strip.begin()
-//#define uni_show()              strip.show()
-//#define uni_setPixelColor(i, c) strip.setPixelColor(i, c)
-//#define uni_numPixels()         strip.numPixels()
-//#define uni_Color(r,g,b)        strip.Color(r,g,b)
-//#define color_t                 uint32_t
-//
-//extern Adafruit_NeoPixel strip;
-//#endif /* USE_NEOPIXELBUS_LIBRARY */
-
 #define LEDC_CHANNEL_BUZZER     0
 #define BACKLIGHT_CHANNEL       ((uint8_t)1)
 #define LEDC_RESOLUTION_BUZZER  8
@@ -101,16 +71,6 @@
                                     (hw_info.revision == 11 ?           \
                                       SOC_GPIO_PIN_TBEAM_LED_V11 :      \
                                       SOC_UNUSED_PIN))))
-
-//#define SOC_GPIO_PIN_GNSS_PPS (hw_info.model == SOFTRF_MODEL_PRIME_MK3 ?  \
-//                                SOC_GPIO_PIN_S3_GNSS_PPS :                \
-//                                (hw_info.model == SOFTRF_MODEL_PRIME_MK2 ?\
-//                                  (hw_info.revision >= 8 ?                \
-//                                    SOC_GPIO_PIN_TBEAM_V08_PPS :          \
-//                                    SOC_UNUSED_PIN) :                     \
-//                                (hw_info.model == SOFTRF_MODEL_MIDI ?     \
-//                                  SOC_GPIO_PIN_HELTRK_GNSS_PPS :          \
-//                                  SOC_UNUSED_PIN)))
 
 #define SOC_GPIO_PIN_GNSS_PPS SOC_UNUSED_PIN
 
@@ -225,7 +185,7 @@ struct rst_info {
 //#define EXCLUDE_GNSS_UBLOX    /* Neo-6/7/8, M10 */
 #define ENABLE_UBLOX_RFS        /* revert factory settings (when necessary)  */
 #define EXCLUDE_GNSS_GOKE       /* 'Air530' GK9501 GPS/GLO/BDS (GAL inop.)   */
-//#define EXCLUDE_GNSS_AT65     /* L76K, Air530Z */
+#define EXCLUDE_GNSS_AT65       /* L76K, Air530Z */
 #define EXCLUDE_GNSS_SONY
 #define EXCLUDE_GNSS_MTK
 

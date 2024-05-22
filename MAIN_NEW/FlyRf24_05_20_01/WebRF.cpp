@@ -24,12 +24,6 @@ void Web_fini()     {}
 #include "TimeRF.h"
 #include "TFTMenu.h"
 
-#if defined(ENABLE_RECORDER)
-#include "Recorder.h"
-#endif /* ENABLE_RECORDER */
-
-//String versionFlyRf = "";
-
 static uint32_t prev_rx_pkt_cnt = 0;
 
 String ver_soft1 = "";
@@ -64,16 +58,16 @@ static const char about_html[] PROGMEM = "<html>\
   </head>\
 <body>\
 <h1 align=center>Информация</h1>\
-<p>This firmware is a part of FlyRF project</p>\
+<p>Эта программа часть проекта FlyRF.</p>\
 <p>URL: https://t.me/flyrf_Support</p>\
+<p>URL: https://www.decima.ru/contacts/</p>\
 <p>Author: <b>Александр Мосейчук</b></p>\
 <p>E-mail: Aleksandr.Moseychuk@decima.ru</p>\
-<h2 align=center>Параметры системы</h2>\
-<p align=center>(in historical order)</p>\
+<p>E-mail: decima@decima.ru</p>\
 <table width=100%%>\
 </table>\
 <hr>\
-Copyright (C) 2023-2024 &nbsp;&nbsp;&nbsp; OOO Decima\
+Copyright (C) 2023-2024 &nbsp;&nbsp;&nbsp; OOO Децима\
 </body>\
 </html>";
 

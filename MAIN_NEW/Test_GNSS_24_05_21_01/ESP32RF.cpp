@@ -63,13 +63,6 @@ static uint32_t prev_rx_packets_counter = 0;
 extern uint32_t tx_packets_counter, rx_packets_counter;
 extern bool loopTaskWDTEnabled;
 
-const char *ESP32SX_Device_Manufacturer = SOFTRF_IDENT;
-const char *ESP32SX_Model_Stand  = "Standalone Edition"; /* 303a:8132 */
-const char *ESP32S3_Model_Prime3 = "Prime Edition Mk.3"; /* 303a:8133 */
-const char *ESP32S3_Model_Ham    = "Ham Edition";        /* 303a:818F */
-const char *ESP32S3_Model_Midi   = "Midi Edition";       /* 303a:81A0 */
-const uint16_t ESP32SX_Device_Version = SOFTRF_USB_FW_VERSION;
-
 #include <mode-s.h>
 
 mode_s_t state;

@@ -228,21 +228,5 @@ void normal()
 #endif /* EXCLUDE_EGM96 */
 
     }
-
- 
-
-    //if (isTimeToDisplay()) {
-    //    if (isValidFix()) {
-    //        LED_DisplayTraffic();
-    //    }
-    //    else {
-    //        LED_Clear();
-    //    }
-    //    LEDTimeMarker = millis();
-    //}
-    //// Handle Air Connect
-    //NMEA_loop();
-
-    //ClearExpired();
 }
 

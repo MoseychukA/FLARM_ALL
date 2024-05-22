@@ -572,7 +572,7 @@ static void ESP32_loop()
 
       axp_2xxx.getIrqStatus();
 
-      if (axp_2xxx.isPekeyLongPressIrq()) {
+      if (axp_2xxx.isPekeyLongPressIrq()) { 
         down = true;
       }
       if (axp_2xxx.isPekeyShortPressIrq()) {
