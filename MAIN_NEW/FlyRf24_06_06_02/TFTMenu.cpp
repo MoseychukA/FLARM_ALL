@@ -611,18 +611,13 @@ void TFTMenu::resetIdleTimer()
           flipping_count_message = count_message;
           SettingsMail.setFlippingCountMessage(flipping_count_message);             // Установить номер листания на позицию пришедшего сообщения
           View_flipping_count_message = 0;                                          // Номер просмотра переключить в "0"
-          //Serial.print("**count_message  ");
-          //Serial.println(count_message);
           drawMessage(menuManager, count_message, View_flipping_count_message);     // вызвать программу отображения информации на дисплее
       }
 
       //******************** выполнение действий кнопок ******************************
-      
-      //pressed_button released_button
 
       if (pressed_button_Retention != -1)
       {
-
           if (pressed_button_Retention == BUTTON_MAIL)
           {
               pressed_button_Retention = -1;
@@ -643,8 +638,7 @@ void TFTMenu::resetIdleTimer()
           }
       }
 
- 
-      else if (released_button != -1)
+       else if (released_button != -1)
       {
           if (released_button == BUTTON_MAIL)
           {
@@ -661,9 +655,7 @@ void TFTMenu::resetIdleTimer()
               confirmation_OK = MemRead(cur_adr + addr_read_NOT_TRANSMITTED);                   // 1 байт - флаг передачи подтверждения "ОК". "1" подтверждение прочтения НЕ ПЕРЕДАНО
               uint8_t  num_receive_in_message = MemRead(cur_adr + addr_number_this_message);    // Получить номер сообщения пришедшего из центра. Листать сообщения максимально ограничиваться этим номером
               uint8_t not_read = SettingsMail.getCoutNotReadMessage();                              // получить показания счетчика не подтвержденного количества сообщений. 
-            
-
-
+  
               /* проконтролируем в КОМ порту количество неподтвержденных сообщений*/
   
               //----------------------------------------------------------------------------------
@@ -704,9 +696,7 @@ void TFTMenu::resetIdleTimer()
                   View_flipping_count_message = count_message - flipping_count_message;
                   drawMessage(menuManager, flipping_count_message, View_flipping_count_message); // вызвать программу отображения информации на дисплее
               }
-
           }
-
       }
 
 
@@ -715,8 +705,7 @@ void TFTMenu::resetIdleTimer()
     /* Проверяем наличие новой информации */ 
     if (millis() - tmr > DATA_MEASURE_THRESHOLD)
     {
- 
-        tmr = millis();
+         tmr = millis();
         int Air_txt_x = 41;              // Расположение текста в формуляре стороннего самолета 
  
         /* Проверяем есть ли данные GPS. Ждем 20 секунд */
@@ -734,7 +723,6 @@ void TFTMenu::resetIdleTimer()
                     text_call = true;          // Запретить повторный вывод нового сообщения 
                 }
             }
-
         }
         else
         {
@@ -2255,64 +2243,8 @@ void TFTMenu::resetIdleTimer()
  uint16_t TFTMenuScreen::getPowerVoltageAkk(uint16_t pin) // Контроль напряжения питания внутренних источников (аккумуляторов).
  {
 
-
-     //float ina_voltage = ina.readBusVoltage();
-     //voltageAkk1 = ina_voltage * 100;
-
-     ////float BusPower = ina.readBusPower();
-
-     ////float ShuntVoltage = ina.readShuntVoltage();
-
-     ////float ShuntCurrent = ina.readShuntCurrent();
-
-     //////DBG("Bus voltage:   ");
-     //////DBG(ina_voltage);
-     ////////DBGLN(" V");
-
-     //////DBG("Bus power:     ");
-     //////DBG(BusPower);
-     ////////DBGLN(" W");
-
-     /////*
-     //////DBG("Shunt voltage: ");
-     ////Serial.print(ina.readShuntVoltage(), 5); 
-     ////////DBGLN(" V");*/
-
-     //////DBG("Shunt current: ");
-     ////Serial.print(ina.readShuntCurrent(), 5);
-     ////////DBGLN(" A");
-
-     ////////DBGLN("");
-
-     //dimension_array[array_count] = voltageAkk1;
-     //array_count++;
      int val_voltage = 0;
-     //if (array_count > array_size)                    // проверка заполнения массива первичными данными о уровне напряжения аккумулятора
-     //{
-     //    array_count = 0;
-     //    array_countMax = true;                       //Разрешить выдавать данные об уровне напряжения аккумулятора
-     //}
-
-     //sum = 0;                                         //
-
-     //if (array_countMax)                              // формируем данные об уровне напряжения аккумулятора
-     //{
-     //    for (int i = 0; i < array_size; i++)
-     //    {
-     //        sum += dimension_array[i];
-     //    }
-     //    val_voltage = sum / array_size;
-     //}
-     //else
-     //{
-     //    for (int i = 0; i < array_count; i++)       //формируем первичные (заполняем массив) данные об уровне напряжения аккумулятора
-     //    {
-     //        sum += dimension_array[array_count - 1];
-     //    }
-     //    val_voltage = sum / array_count;
-     //}
-
-     //sum = 0;
+ 
      return val_voltage;                                 //Напряжение питания аккумулятора
  }
 
@@ -2441,7 +2373,6 @@ void TFTMenu::resetIdleTimer()
                  endOfPacketCounter = 0;
              }
          }
-
      }
  }
 

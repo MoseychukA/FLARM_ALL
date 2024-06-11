@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C5F80730-F44F-4478-BDAE-6634EFC2CA88}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <ProjectName>FlyRf24_06_09_06</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>
+    </PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>
+    </PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>
+    </PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>
+    </PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\FlyRf24_06_09_06;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\libraries\FS\src;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\libraries\SPI\src;$(ProjectDir)libraries\TFT_eSPI;$(ProjectDir)libraries\Time;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\variants\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\cores\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\cores\esp32\apps;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\cores\esp32\libb64;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\newlib\platform_include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\freertos\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\freertos\include\esp_additions\freertos;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\freertos\port\xtensa\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\freertos\include\esp_additions;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_hw_support\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_hw_support\include\soc;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_hw_support\include\soc\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_hw_support\port\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_hw_support\port\esp32\private_include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\heap\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\log\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\lwip\include\apps;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\lwip\include\apps\sntp;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\lwip\lwip\src\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\lwip\port\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\lwip\port\esp32\include\arch;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\soc\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\soc\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\soc\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\hal\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\hal\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\hal\platform_port\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_rom\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_rom\include\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_rom\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_common\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_system\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_system\port\soc;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_system\port\public_compat;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\xtensa\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\xtensa\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\driver\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\driver\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_pm\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_ringbuf\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\efuse\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\efuse\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\vfs\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_wifi\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_event\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_netif\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_eth\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\tcpip_adapter\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_phy\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_phy\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_ipc\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\app_trace\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_timer\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\mbedtls\port\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\mbedtls\mbedtls\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\mbedtls\esp_crt_bundle\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\app_update\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\spi_flash\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bootloader_support\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\nvs_flash\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\pthread\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_gdbstub\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_gdbstub\xtensa;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_gdbstub\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espcoredump\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espcoredump\include\port\xtensa;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\wpa_supplicant\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\wpa_supplicant\port\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\wpa_supplicant\esp_supplicant\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\ieee802154\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\console;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\asio\asio\asio\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\asio\port\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\common\osi\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\include\esp32\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\common\api\include\api;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\common\btc\profile\esp\blufi\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\common\btc\profile\esp\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\host\bluedroid\api\include\api;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\mesh_common\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\mesh_common\tinycrypt\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\mesh_core;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\mesh_core\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\mesh_core\storage;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\btc\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\mesh_models\common\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\mesh_models\client\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\mesh_models\server\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\api\core\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\api\models\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\bt\esp_ble_mesh\api;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\cbor\port\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\unity\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\unity\unity\src;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\cmock\CMock\src;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\coap\port\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\coap\libcoap\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\nghttp\port\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\nghttp\nghttp2\lib\includes;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-tls;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-tls\esp-tls-crypto;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_adc_cal\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_hid\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\tcp_transport\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_http_client\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_http_server\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_https_ota\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_https_server\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_lcd\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_lcd\interface;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\protobuf-c\protobuf-c;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\protocomm\include\common;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\protocomm\include\security;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\protocomm\include\transports;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\mdns\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_local_ctrl\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\sdmmc\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_serial_slave_link\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_websocket_client\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\expat\expat\expat\lib;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\expat\port\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\wear_levelling\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\fatfs\diskio;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\fatfs\vfs;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\fatfs\src;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\freemodbus\freemodbus\common\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\idf_test\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\idf_test\include\esp32;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\jsmn\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\json\cJSON;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\libsodium\libsodium\src\libsodium\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\libsodium\port_include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\mqtt\esp-mqtt\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\openssl\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\perfmon\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\spiffs\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\ulp\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\wifi_provisioning\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\rmaker_common\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_diagnostics\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\rtc_store\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_insights\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\json_parser\upstream\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\json_parser\upstream;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\json_generator\upstream;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_schedule\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp_secure_cert_mgr\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_rainmaker\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\gpio_button\button\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\qrcode\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\ws2812_led;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp_littlefs\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include\tool;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include\typedef;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include\image;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include\math;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include\nn;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include\layer;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include\detect;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp-dl\include\model_zoo;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp32-camera\driver\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\esp32-camera\conversions\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\dotprod\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\support\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\support\mem\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\windows\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\windows\hann\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\windows\blackman\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\windows\blackman_harris\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\windows\blackman_nuttall\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\windows\nuttall\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\windows\flat_top\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\iir\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\fir\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\math\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\math\add\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\math\sub\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\math\mul\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\math\addc\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\math\mulc\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\math\sqrt\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\matrix\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\fft\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\dct\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\conv\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\common\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\kalman\ekf\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\espressif__esp-dsp\modules\kalman\ekf_imu13states\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\include\fb_gfx\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\esp32\dio_qspi\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\tools\xtensa-esp32-elf-gcc\esp-2021r2-patch5-8.4.0\lib\gcc\xtensa-esp32-elf\5.2.0\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\tools\xtensa-esp32-elf-gcc\esp-2021r2-patch5-8.4.0\xtensa-esp32-elf\include\c++\5.2.0\xtensa-esp32-elf;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\tools\xtensa-esp32-elf-gcc\esp-2021r2-patch5-8.4.0\xtensa-esp32-elf\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\tools\xtensa-esp32-elf-gcc\esp-2021r2-patch5-8.4.0\xtensa-esp32-elf\include\c++\5.2.0;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\tools\xtensa-esp32-elf-gcc\esp-2021r2-patch5-8.4.0\include\c++\5.2.0;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\tools\xtensa-esp32-elf-gcc\esp-2021r2-patch5-8.4.0\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp8266\tools\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2\xtensa-lx106-elf\include\c++\4.8.2;C:\Users\Alex\AppData\Local\arduino15\packages\esp8266\tools\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2\xtensa-lx106-elf\include\c++\4.8.2\xtensa-lx106-elf;C:\Users\Alex\AppData\Local\arduino15\packages\esp8266\tools\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2\xtensa-lx106-elf\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp8266\tools\xtensa-lx106-elf-gcc\1.20.0-26-gb404fb9-2\lib\gcc\xtensa-lx106-elf\4.8.2\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\hardware\esp32\2.0.11\tools\sdk\include;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\tools\xtensa-esp32-elf-gcc\esp-2021r2-patch5-8.4.0\lib\gcc\xtensa-esp32-elf\5.2.0\new;C:\Users\Alex\AppData\Local\arduino15\packages\esp32\tools\xtensa-esp32-elf-gcc\esp-2021r2-patch5-8.4.0\lib\gcc\xtensa-esp32-elf\5.2.0\bits;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)__vm\.FlyRf24_06_09_06.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <PreprocessorDefinitions>__ESP32_esp32__;__ESP32_ESP32__;HAVE_CONFIG_H;MBEDTLS_CONFIG_FILE=mbedtls/esp_config.h;UNITY_INCLUDE_CONFIG_H;WITH_POSIX;_GNU_SOURCE;IDF_VER=v4.4.5;ESP_PLATFORM;_POSIX_READER_WRITER_LOCKS;F_CPU=240000000L;ARDUINO=10809;ARDUINO_ESP32_DEV;ARDUINO_ARCH_ESP32;ARDUINO_BOARD=ESP32_DEV;ARDUINO_VARIANT=esp32;ARDUINO_PARTITION_default_8MB;ESP32;CORE_DEBUG_LEVEL=0;ARDUINO_RUNNING_CORE=1;ARDUINO_EVENT_RUNNING_CORE=1;BOARD_HAS_PSRAM;ARDUINO_USB_CDC_ON_BOOT=0;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="VisualMicro" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FlyRf24_06_09_06.ino">
+      <FileType>CppCode</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AbstractModule.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="AiThinker_C3_12F.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="APRS.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="ASR66.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="AVR.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Baro.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="BatteryRF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="BigRusFont.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Bluetooth.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Blue_Pill.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="build_opt.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="CC13XX.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Configuration_ESP32.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="CoreButton.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="CoreCommandBuffer.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="D1090.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="EEPROMRF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="EPD.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="ES1090.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="ESP32RF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="ESP8266.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="FANET.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="GDL90.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="GNSS.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="hal_conf_extra.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Heltec_Tracker.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="JSON.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LED.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Legacy.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LilyGO_T22.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LilyGO_T3.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LilyGO_T8S2.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LilyGO_TBeam_Supreme.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LilyGO_TMotion.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LilyGO_TTWR.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LilyGO_TWatch.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Logo.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="LPC43.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="MAVLinkRF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="NMEA.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="NotoSansBold15.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="NotoSansMonoSCB20.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="nRF52.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="OGNTP.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="OLED.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Olimex_STM32WL.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="OTA.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="P3I.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="PSoC4.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="RAK_3172.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Recorder.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="RF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="RP2040.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="RPi.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="RusFont.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="SAMD.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="SettingsMail.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="SmallRusFont.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="SoC.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="SoftRF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="STM32.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="TFTMenu.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="TFTModule.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="TFTRus.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="TFT_Includes.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="TimeRF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="TinyVector.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="TrafficHelper.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="TTNHelper.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="UAT978.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="WebRF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="WiFiRF.h">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClInclude Include="__vm\.FlyRf24_06_09_06.vsarduino.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AbstractModule.cpp" />
+    <ClCompile Include="APRS.cpp" />
+    <ClCompile Include="ASR66.cpp" />
+    <ClCompile Include="AVR.cpp" />
+    <ClCompile Include="Baro.cpp" />
+    <ClCompile Include="Baro_EPD.cpp" />
+    <ClCompile Include="BatteryRF.cpp" />
+    <ClCompile Include="Bluetooth.cpp" />
+    <ClCompile Include="CC13XX.cpp" />
+    <ClCompile Include="CoreButton.cpp" />
+    <ClCompile Include="CoreCommandBuffer.cpp" />
+    <ClCompile Include="D1090.cpp" />
+    <ClCompile Include="Deprecated.cpp" />
+    <ClCompile Include="EEPROMRF.cpp" />
+    <ClCompile Include="EPD.cpp" />
+    <ClCompile Include="ES1090.cpp" />
+    <ClCompile Include="ESP32RF.cpp" />
+    <ClCompile Include="ESP8266.cpp" />
+    <ClCompile Include="FANET.cpp" />
+    <ClCompile Include="GDL90.cpp" />
+    <ClCompile Include="GNSS.cpp" />
+    <ClCompile Include="IMU_EPD.cpp" />
+    <ClCompile Include="JSON.cpp" />
+    <ClCompile Include="LED.cpp" />
+    <ClCompile Include="Legacy.cpp" />
+    <ClCompile Include="Library.cpp" />
+    <ClCompile Include="LPC43.cpp" />
+    <ClCompile Include="MAVLinkRF.cpp" />
+    <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="NMEA.cpp" />
+    <ClCompile Include="nRF52.cpp" />
+    <ClCompile Include="OGNTP.cpp" />
+    <ClCompile Include="OLED.cpp" />
+    <ClCompile Include="OTA.cpp" />
+    <ClCompile Include="P3I.cpp" />
+    <ClCompile Include="PSoC4.cpp" />
+    <ClCompile Include="Radar_EPD.cpp" />
+    <ClCompile Include="Recorder.cpp" />
+    <ClCompile Include="RF.cpp" />
+    <ClCompile Include="RP2040.cpp" />
+    <ClCompile Include="RPi.cpp" />
+    <ClCompile Include="SAMD.cpp" />
+    <ClCompile Include="SettingsMail.cpp" />
+    <ClCompile Include="SoC.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Status_EPD.cpp" />
+    <ClCompile Include="STM32.cpp" />
+    <ClCompile Include="Text_EPD.cpp" />
+    <ClCompile Include="TFTMenu.cpp" />
+    <ClCompile Include="TFTModule.cpp" />
+    <ClCompile Include="TFTRus.cpp" />
+    <ClCompile Include="TimeRF.cpp" />
+    <ClCompile Include="Time_EPD.cpp" />
+    <ClCompile Include="TrafficHelper.cpp" />
+    <ClCompile Include="TTNHelper.cpp" />
+    <ClCompile Include="UAT978.cpp" />
+    <ClCompile Include="WebRF.cpp" />
+    <ClCompile Include="WiFiRF.cpp" />
+  </ItemGroup>
+  <PropertyGroup>
+    <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
