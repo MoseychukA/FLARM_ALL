@@ -212,7 +212,7 @@ static void ESP32_Bluetooth_setup()
       char SerialNum[9];
       snprintf(SerialNum, sizeof(SerialNum), "%08X", SoC->getChipId());
 
-      const char *Firmware      = "Arduino ESP32 " ARDUINO_ESP32_RELEASE;
+      const char *Firmware      = "FlyRf ESP32 " ARDUINO_ESP32_RELEASE;
 
       char Hardware[9];
       snprintf(Hardware, sizeof(Hardware), "%08X", hw_info.revision);
@@ -392,8 +392,7 @@ static size_t ESP32_Bluetooth_write(const uint8_t *buffer, size_t size)
     break;
 #endif /* CONFIG_IDF_TARGET_ESP32 */
   case BLUETOOTH_LE_HM10_SERIAL:
-    rval = BLE_FIFO_TX->write((char *) buffer,
-                        (BLE_FIFO_TX->room() > size ? size : BLE_FIFO_TX->room()));
+    rval = BLE_FIFO_TX->write((char *) buffer,(BLE_FIFO_TX->room() > size ? size : BLE_FIFO_TX->room()));
     break;
   case BLUETOOTH_NONE:
   case BLUETOOTH_A2DP_SOURCE:
