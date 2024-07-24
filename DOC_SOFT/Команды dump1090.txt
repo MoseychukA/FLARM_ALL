@@ -1,0 +1,342 @@
+ifconfig IP адрес   //Определить IP адрес
+
+sudo raspi-config
+
+https://raspberrypi-ru.com/включить-порт-последовательный-мали
+откройте терминал на Raspberry Pi напрямую или через SSH, затем выполните команду sudo raspi-config 
+для доступа к инструменту управления конфигурацией Raspberry.
+
+Запустить программу Bitvise SSH Client
+
+ls -la /dev/tty*   //Определить КОМ порт адрес
+ls /dev/tty*
+dmesg | grep tty
+ls -l /dev/serial*
+
+cd /boot/firmware/
+sudo nano cmdline.txt
+/*Нужно удалить строку
+console=tty1 - удалил из файла
+
+
+
+sudo apt-get update 
+sudo apt-get upgrade -y
+sudo apt-get install git -y
+sudo apt-get install cmake -y
+sudo apt-get install libusb-1.0-0-dev -y
+sudo apt-get install build-essential 
+#sudo apt-get install libncurses5-dev -y
+
+git clone https://github.com/promavto/rtl-sdr.git
+#git clone http://git.osmocom.org/rtl-sdr.git
+
+cd rtl-sdr
+mkdir build
+cd build
+cmake ../ -DINSTALL_UDEV_RULES=ON
+make
+
+sudo make install
+sudo ldconfig
+
+cd ~
+sudo cp ./rtl-sdr/rtl-sdr.rules /etc/udev/rules.d/
+
+cd /etc/modprobe.d
+sudo nano no-rtl.conf
+
+blacklist dvb_usb_rtl28xxu
+blacklist rtl2832
+blacklist rtl2830
+
+// сохранить Ctrl+o Выход Ctrl x
+
+sudo reboot
+
+rtl_test -t
+
+//Результат должен быть следующий
+Found 1 device(s):
+  0:  Realtek, RTL2838UHIDIR, SN: 00000001
+
+Using device 0: Generic RTL2832U OEM
+Found Rafael Micro R820T tuner
+Supported gain values (29): 0.0 0.9 1.4 2.7 3.7 7.7 8.7 12.5 14.4 15.7 16.6 19.7 20.7 22.9 25.4 28.0 29.7 32.8 33.8 36.4 37.2 38.6 40.2 42.1 43.4 43.9 44.5 48.0 49.6
+[R82XX] PLL not locked!
+Sampling at 2048000 S/s.
+No E4000 tuner found, aborting.
+//==============================================================
+
+//Установка DUMP1090
+
+cd ~
+sudo rm -r dump1090
+git clone https://github.com/promavto/dump1090.git
+cd dump1090
+make
+#sudo reboot
+
+
+//==============================================================
+// Содержимое файла автоматического запуска программы в конце текста
+
+sudo nano /etc/init.d/dump1090.sh
+//Записать содержимое файла автоматического запуска
+
+sudo chmod +x /etc/init.d/dump1090.sh
+
+sudo update-rc.d dump1090.sh defaults
+ 
+sudo reboot
+
+sudo /etc/init.d/dump1090.sh stop
+
+sudo /etc/init.d/dump1090.sh start
+
+
+//Проверка работы dump1090
+ 
+./dump1090/dump1090 --net
+./dump1090/dump1090 --interactive --net
+
+
+
+
+#git clone https://github.com/promavto/dump10901.git
+#git clone https://github.com/flightaware/dump1090.git
+#mv dump10901 dump1090
+#ls -al
+#git clone http://github.com/MalcolmRobb/dump1090.git
+
+"--net-beast              TCP raw output in Beast binary format\n"
+"--net-only               Enable just networking, no RTL device or file used\n"
+"--net-bind-address <ip>  IP address to bind to (default: Any; Use 127.0.0.1 for private)\n"
+"--net-http-port <port>   HTTP server port (default: 8080)\n"
+"--net-ri-port <port>     TCP raw input listen port  (default: 30001)\n"
+"--net-ro-port <port>     TCP raw output listen port (default: 30002)\n"
+"--net-sbs-port <port>    TCP BaseStation output listen port (default: 30003)\n"
+"--net-bi-port <port>     TCP Beast input listen port  (default: 30004)\n"
+"--net-bo-port <port>     TCP Beast output listen port (default: 30005)\n"
+"--net-ro-size <size>     TCP raw output minimum size (default: 0)\n"
+"--net-ro-rate <rate>     TCP raw output memory flush rate (default: 0)\n"
+
+
+
+//=============================== Конец ==============================================
+
+
+// файл автоматического запуска программы
+
+#!/bin/bash
+### BEGIN INIT INFO
+#
+# Provides:		dump1090
+# Required-Start:	$remote_fs
+# Required-Stop:	$remote_fs
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	dump1090 initscript
+
+#
+### END INIT INFO
+## Fill in name of program here.
+PROG="dump1090"
+PROG_PATH="/home/admin/dump1090"
+PROG_ARGS="--interactive --net"
+#PROG_ARGS="--interactive --net --no-fix --net-ro-size 500 --net-ro-rate 5 --net-heartbeat 60 --gain -10"
+PIDFILE="/var/run/dump1090.pid"
+
+start() {
+      if [ -e $PIDFILE ]; then
+          ## Program is running, exit with error.
+          echo "Error! $PROG is currently running!" 1>&2
+          exit 1
+      else
+          ## Change from /dev/null to something like /var/log/$PROG if you want to save output.
+          cd $PROG_PATH
+          ./$PROG $PROG_ARGS 2>&1 >/dev/null &
+          echo "$PROG started"
+          touch $PIDFILE
+      fi
+}
+
+stop() {
+      if [ -e $PIDFILE ]; then
+          ## Program is running, so stop it
+         echo "$PROG is running"
+         killall $PROG
+         rm -f $PIDFILE
+         echo "$PROG stopped"
+      else
+          ## Program is not running, exit with error.
+          echo "Error! $PROG not started!" 1>&2
+          exit 1
+      fi
+}
+
+## Check to see if we are running as root first.
+## Found at http://www.cyberciti.biz/tips/shell-root-user-check-script.html
+if [ "$(id -u)" != "0" ]; then
+      echo "This script must be run as root" 1>&2
+      exit 1
+fi
+
+case "$1" in
+      start)
+          start
+          exit 0
+      ;;
+      stop)
+          stop
+          exit 0
+      ;;
+      reload|restart|force-reload)
+          stop
+          start
+          exit 0
+      ;;
+      **)
+          echo "Usage: $0 {start|stop|reload}" 1>&2
+          exit 1
+      ;;
+esac
+exit 0
+
+
+
+====== Конец файла
+
+
+sudo apt-get install libncurses5-dev
+
+
+
+#include <termios.h>
+
+    int serial_port = open("/dev/serial0", O_RDWR);
+	// int serial_port = open("/dev/ttyAMA0", O_RDWR);
+    //int serial_port = open("/dev/ttyS0", O_RDWR); // OrangePi
+    struct termios tty;
+
+    if (tcgetattr(serial_port, &tty) != 0)
+    {
+        printf("Error %i from tcgetattr: %s\n", errno, strerror(errno));
+    }
+    /* настройки порта */
+    tty.c_cflag &= ~PARENB;   // Clear parity bit, disabling parity (most common)
+    tty.c_cflag &= ~CSTOPB;   // Clear stop field, only one stop bit used in communication (most common)
+    tty.c_cflag &= ~CSIZE;    // Clear all the size bits, then use one of the statements bel
+    tty.c_cflag |= CS8;       // 8 bits per byte (most common)
+    tty.c_cflag &= ~CRTSCTS;  // Disable RTS/CTS hardware flow control (most common)
+    tty.c_cflag |= CREAD | CLOCAL; // Turn on READ & ignore ctrl lines (CLOCAL = 1)
+
+    tty.c_lflag &= ~ICANON;   //Canonical mode is disabled with:
+    tty.c_lflag &= ~ECHO;     // Disable echo
+    tty.c_lflag &= ~ECHOE;    // Disable erasure
+    tty.c_lflag &= ~ECHONL;   // Disable new-line echo
+    tty.c_lflag &= ~ISIG;     // Disable interpretation of INTR, QUIT and SUSP
+    tty.c_iflag &= ~(IXON | IXOFF | IXANY); // Turn off s/w flow ctrl
+    tty.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL); // Disable any special handling of received bytes
+
+    tty.c_oflag &= ~OPOST;   // Prevent special interpretation of output bytes (e.g. newline chars)
+    tty.c_oflag &= ~ONLCR;   // Prevent conversion of newline to carriage return/line feed 
+
+    tty.c_cc[VTIME] = 10;    // Wait for up to 1s (10 deciseconds), returning as soon as any data is received.
+    tty.c_cc[VMIN] = 0;
+
+    cfsetispeed(&tty, B115200);
+    cfsetospeed(&tty, B115200);
+
+
+    if (tcsetattr(serial_port, TCSANOW, &tty) != 0)
+    {
+        printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
+    }
+	printf("Test RTLSDR ttyAMA0\n");
+
+
+
+    int serial_port1 = open("/dev/serial1", O_RDWR); // OrangePi
+    struct termios tty1;
+
+    if (tcgetattr(serial_port1, &tty1) != 0)
+    {
+        printf("Error %i from tcgetattr: %s\n", errno, strerror(errno));
+    }
+    /* настройки порта */
+    tty1.c_cflag &= ~PARENB;
+    tty1.c_cflag &= ~CSTOPB;
+    tty1.c_cflag &= ~CSIZE;
+    tty1.c_cflag |= CS8;
+    tty1.c_cflag &= ~CRTSCTS;
+    tty1.c_cflag |= CREAD | CLOCAL;
+
+    tty1.c_lflag &= ~ICANON;
+    tty1.c_lflag &= ~ECHO;
+    tty1.c_lflag &= ~ECHOE;
+    tty1.c_lflag &= ~ECHONL;
+    tty1.c_lflag &= ~ISIG;
+    tty1.c_iflag &= ~(IXON | IXOFF | IXANY);
+    tty1.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL);
+
+    tty1.c_oflag &= ~OPOST;
+    tty1.c_oflag &= ~ONLCR;
+
+    tty1.c_cc[VTIME] = 10;
+    tty1.c_cc[VMIN] = 0;
+
+    cfsetispeed(&tty1, B115200);
+    cfsetospeed(&tty1, B115200);
+
+    if (tcsetattr(serial_port1, TCSANOW, &tty1) != 0)
+    {
+        printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
+    }
+	printf("Test RTLSDR ttyS0\n");
+
+
+
+     write(serial_port, msg, p - msg);
+     close(serial_port);
+	 
+	 
+     write(serial_port1, msg, p - msg);
+     close(serial_port1);
+	 
+	//Вариант КОМ порта 
+	 
+#include <fcntl.h>  // for open()
+#include <unistd.h> // for write()
+
+int main()
+{
+    // Open the serial port as a file
+    int serial_port = open("/dev/ttyS0", O_WRONLY);
+
+    // Write some data to the serial port
+    const char* data = "Hello, World!\n";
+    write(serial_port, data, strlen(data));
+
+    // Close the serial port
+    close(serial_port);
+
+    return 0;
+}
+
+
+
+
+
+//==========================================================
+
+//Вариант dump1090 flightaware Пока не работает
+cd ~
+sudo rm -r dump1090
+git clone https://github.com/promavto/dump10901.git
+mv dump10901 dump1090
+cd dump1090
+make
+cd ~
+sudo cp ./rtl-sdr/rtl-sdr.rules /etc/udev/rules.d/
+sudo reboot
