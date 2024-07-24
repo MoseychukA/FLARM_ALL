@@ -35,7 +35,6 @@
 #include "MAVLinkRF.h"
 #include "GDL90.h"
 #include "NMEA.h"
-//#include "D1090.h"
 #include "SoC.h"
 #include "WiFiRF.h"
 #include "WebRF.h"

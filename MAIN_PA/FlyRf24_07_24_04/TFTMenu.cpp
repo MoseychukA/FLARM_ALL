@@ -1216,8 +1216,22 @@ if (released_button != -1) // Короткое нажатие кнопки оч�
                          rssi_txt = String(Container[i].rssi);
                          rssi_info.drawString(rssi_txt + " db", 40, 4);
                      }
-
                  }
+
+                 if (Container[0].rssi >= 0 && Container[1].rssi >= 0 && Container[2].rssi >= 0 && Container[3].rssi >= 0 && Container[4].rssi >= 0 && Container[5].rssi >= 0 && Container[6].rssi >= 0 && Container[7].rssi >= 0)
+                 {
+                     rssi_info.fillSprite(TFT_BLACK);
+                     rssi_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
+                     rssi_info.drawString("--- db", 40, 4);
+                 }
+
+             }
+             else
+             {
+                 rssi_info.fillSprite(TFT_BLACK);
+                 rssi_info.drawRect(0, 0, 80, 25, TFT_DARKGREY);
+                 rssi_info.drawString("--- db", 40, 4);
+
              }
 
              //============================== Формируем неподвижное базовое изображение на экране =========================================== 

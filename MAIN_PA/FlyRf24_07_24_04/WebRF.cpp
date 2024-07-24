@@ -362,56 +362,6 @@ void handleSettings() {
   }
 
 
-
-//  /* SoC specific part 2 */
-//  if (SoC->id == SOC_ESP32   || SoC->id == SOC_ESP32S3 ||
-//      SoC->id == SOC_ESP32C3 || SoC->id == SOC_RP2040) {
-//    snprintf_P ( offset, size,
-//      PSTR("\
-//<option %s value='%d'>TCP</option>\
-//<option %s value='%d'>Bluetooth</option>"),
-//      (settings->nmea_out == NMEA_TCP       ? "selected" : ""), NMEA_TCP,
-//      (settings->nmea_out == NMEA_BLUETOOTH ? "selected" : ""), NMEA_BLUETOOTH);
-//
-//    len = strlen(offset);
-//    offset += len;
-//    size -= len;
-//  }
-//  if (SoC->id == SOC_ESP32S2 || SoC->id == SOC_ESP32S3 ||      SoC->id == SOC_RP2040) {
-//    snprintf_P ( offset, size,
-//      PSTR("<option %s value='%d'>USB</option>"),
-//      (settings->nmea_out == NMEA_USB       ? "selected" : ""), NMEA_USB);
-//
-//    len = strlen(offset);
-//    offset += len;
-//    size -= len;
-//  }
-
-//#if !defined(EXCLUDE_BLUETOOTH)
-//  /* SoC specific part 3 */
-//  if (SoC->id == SOC_ESP32   || SoC->id == SOC_ESP32S3 ||
-//      SoC->id == SOC_ESP32C3 || SoC->id == SOC_RP2040) {
-//    snprintf_P ( offset, size,
-//      PSTR("<option %s value='%d'>Bluetooth</option>"),
-//      (settings->gdl90 == GDL90_BLUETOOTH ? "selected" : ""), GDL90_BLUETOOTH);
-//
-//    len = strlen(offset);
-//    offset += len;
-//    size -= len;
-//  }
-//#endif /* EXCLUDE_BLUETOOTH */
-//
-//  if (SoC->id == SOC_ESP32S2 || SoC->id == SOC_ESP32S3 ||
-//      SoC->id == SOC_RP2040) {
-//    snprintf_P ( offset, size,
-//      PSTR("<option %s value='%d'>USB</option>"),
-//      (settings->gdl90 == GDL90_USB       ? "selected" : ""), GDL90_USB);
-//
-//    len = strlen(offset);
-//    offset += len;
-//    size -= len;
-//  }
-
   /* Common part 5 */
   snprintf_P ( offset, size,
     PSTR("\
@@ -431,29 +381,6 @@ void handleSettings() {
   offset += len;
   size -= len;
 
-//#if !defined(EXCLUDE_BLUETOOTH)
-//  /* SoC specific part 4 */
-//  if (SoC->id == SOC_ESP32   || SoC->id == SOC_ESP32S3 ||
-//      SoC->id == SOC_ESP32C3) {
-//    snprintf_P ( offset, size,
-//      PSTR("<option %s value='%d'>Bluetooth</option>"),
-//      (settings->d1090 == D1090_BLUETOOTH ? "selected" : ""), D1090_BLUETOOTH);
-//
-//    len = strlen(offset);
-//    offset += len;
-//    size -= len;
-//  }
-//#endif /* EXCLUDE_BLUETOOTH */
-
- /* if (SoC->id == SOC_ESP32S2 || SoC->id == SOC_ESP32S3) {
-    snprintf_P ( offset, size,
-      PSTR("<option %s value='%d'>USB</option>"),
-      (settings->d1090 == D1090_USB       ? "selected" : ""), D1090_USB);
-
-    len = strlen(offset);
-    offset += len;
-    size -= len;
-  }*/
 
   /* Common part 6 */
   snprintf_P ( offset, size,
@@ -792,7 +719,7 @@ void handleRoot() {
 
 void handleInput() {
 
-  size_t size = 2000; //1700;3100
+  size_t size = 2080; //1700;3100
 
   char *Input_temp = (char *) malloc(size);
   if (Input_temp == NULL) {
