@@ -99,8 +99,8 @@ enum
 #define SOC_GPIO_PIN_SCK        5
 #define SOC_GPIO_PIN_SS         18
 // еще есть IO23 RESET
-#define SOC_GPIO_PIN_LORA_TXE   32 //Управление PA LoRa
-#define SOC_GPIO_PIN_LORA_RXE   33 //Управление PA LoRa
+#define SOC_GPIO_PIN_LORA_TXE   32 //“правление PA LoRa
+#define SOC_GPIO_PIN_LORA_RXE   33 //“правление PA LoRa
 
 
 /* NRF905 */
