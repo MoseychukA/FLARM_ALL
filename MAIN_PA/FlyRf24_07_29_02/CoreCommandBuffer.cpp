@@ -683,7 +683,7 @@ bool CommandHandlerClass::Traffic_Msg_Add(ufo_t* fop)
         if (Container_msg[i].addr == fo_msg.addr) // Если объект записан - обновить и завершить
         {
             Container_msg[i] = fo_msg;
-            Serial.print(i); Serial.print(" | "); Serial.println(Container_msg[i].addr, HEX);
+           // Serial.print(i); Serial.print(" | "); Serial.println(Container_msg[i].addr, HEX);
             return true;
         }
     }
@@ -694,7 +694,7 @@ bool CommandHandlerClass::Traffic_Msg_Add(ufo_t* fop)
         if(Container_msg[i].addr == 0)
         {
             Container_msg[i] = fo_msg;
-            Serial.print(i); Serial.print(" / "); Serial.println(Container_msg[i].addr, HEX);
+           // Serial.print(i); Serial.print(" / "); Serial.println(Container_msg[i].addr, HEX);
             return true;
         }
 

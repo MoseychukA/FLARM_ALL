@@ -144,7 +144,7 @@ bool Traffic_Add(ufo_t *fop)
   {
     if (Container[i].addr == fo.addr) // Если объект записан - обновить и завершить
     {
-        Serial.print(i); Serial.print(" | "); Serial.println(Container_msg[i].addr, HEX);
+      //  Serial.print(i); Serial.print(" | "); Serial.println(Container_msg[i].addr, HEX);
        Container[i] = fo;
        return true;
     }
@@ -157,7 +157,7 @@ bool Traffic_Add(ufo_t *fop)
   {
     if (now() - Container[i].timestamp > ENTRY_EXPIRATION_TIME) 
     {
-      Serial.print(i); Serial.print(" - "); Serial.println(Container_msg[i].addr, HEX);
+     // Serial.print(i); Serial.print(" - "); Serial.println(Container_msg[i].addr, HEX);
       Container[i] = fo;
   
       return true;

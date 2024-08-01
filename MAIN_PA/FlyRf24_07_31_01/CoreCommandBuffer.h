@@ -80,8 +80,7 @@ class CommandHandlerClass // класс-обработчик команд из �
     bool Traffic_Msg_Add(ufo_t* fop);
     void SendTraffic_Msg();
     /* вариант второй */
-    void test2coordinat(double lat1, double lon1, double d, int brng);
-
+  
  private:
 
     void onUnknownCommand(const String& command, Stream* outStream);
@@ -102,16 +101,17 @@ class CommandHandlerClass // класс-обработчик команд из �
 
    
     ///* вариант второй */
-   // void test2coordinat(double lat1, double lon1, double d, int brng);
+    void test2coordinat(double lat1, double lon1, double d, int brng);
+    float ConvertData(float RawDegrees);
+
     double lat2;
     double lon2;
    // double dist;
-    double degress;
+    //double degress;
 
     double lat11;
     double lon11;
 
-    //double R = 6371e3;
     double R = 6371000; //radius of earth in meters
 
     int DD, MM;

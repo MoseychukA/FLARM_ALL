@@ -752,7 +752,7 @@ void CommandHandlerClass::SendTraffic_Msg()
         }
         if (fo.latitude != 0 && fo.longitude != 0)
         {
-            test1coordinat(fo.latitude, fo.longitude, 1000, fo.course);
+            test2coordinat(fo.latitude, fo.longitude, 1000, fo.course);
         }
     }
 
@@ -884,140 +884,98 @@ int CommandHandlerClass::test1coordinat(double lat1, double lon1, double dist, i
 }
 
 
-//void CommandHandlerClass::test2coordinat(double lat1, double lon1, double d, int brng)
-//{
-//   // lat2 = asin(sin(lat1) * cos(d / R) + cos(lat1) * sin(d / R) * cos((brng + 180) % 360));
-//
-//  /*  DD_DDDDDtoDDMMSS(lat1, &DD, &MM, &SS);
-//
-//    Serial.println(DD);
-//    Serial.println(MM);
-//    Serial.println(SS, 7);
-//
-//    double lat11 = DD + MM + SS;
-//    Serial.println(lat11, 4);*/
-//
-//    lat11 = ((int)lat1) * 100.0;
-//    lat11 += (lat1 - (int)lat1) * 60.0;
-//    lon11 = ((int)lon1) * 100.0;
-//    lon11 += (lon1 - (int)lon1) * 60.0;
-//
-//    Serial.print("lat11 - ");
-//    Serial.println(lat11, 5);
-//    Serial.print("lon11 - ");
-//    Serial.println(lon11, 5);
-//
-//
-//   
-//    lat2 = asin(sin(lat1) * cos(d / R) + cos(lat1) * sin(d / R) * cos(radians(brng)));
-//   // lon2 = lon1 + atan2(cos(d / R) - sin(lat1) * sin(lat2), sin(radians((brng + 180) % 360)) * sin(d / R) * cos(lat1));
-//    lon2 = lon1 + atan2(sin(radians(brng)) * sin(d / R) * cos(lat1), cos(d / R) - sin(lat1) * sin(lat2));
-//
-// /*   lat2 = asin(sin(lat) * cos(dr) + cos(lat) * sin(dr) * cos(bearing))
-//      lon2 = lon + atan2(sin(bearing) * sin(dr) * cos(lat), cos(dr) - sin(lat) * sin(lat2))*/
-//
-//
-//    Serial.print("lat2 - ");
-//    Serial.println(lat2,5);
-//    Serial.print("lon2 - ");
-//    Serial.println(lon2,5);
-//
-//   /* DD_DDDDDtoDDMMSS(lat1, &DD, &MM, &SS);
-//
-//    Serial.println(DD);
-//    Serial.println(MM);
-//    Serial.println(SS, 7);*/
-//
-//
-//
-//    //new_rel_x = constrain(((int)Container[i].distance / 2) * sin(radians(new_angle[i])), -32768, 32767);
-//    //new_rel_y = constrain(((int)Container[i].distance / 2) * cos(radians(new_angle[i])), -32768, 32767);
-//
-//
-//   // lon2 = lon1 + atan2(cos(d / R) - sin(lat1) * sin(lat2), sin(brng) * sin(d / R) * cos(lat1));
-//
-///*
-//Formula:	φ2 = asin( sin φ1 ⋅ cos δ + cos φ1 ⋅ sin δ ⋅ cos θ )
-//λ2 = λ1 + atan2( sin θ ⋅ sin δ ⋅ cos φ1, cos δ − sin φ1 ⋅ sin φ2 )
-//where:	
-//φ is latitude, 
-//λ is longitude,
-//θ is the bearing (clockwise from north по часовой стрелке с севера), 
-//δ is the angular distance это угловое расстояние d/R; 
-//d being the distance travelled пройденное расстояние, 
-//R the earth’s radius радиус земли
-//
-//
-//The longitude can be normalised to −180…+180 using (lon+540)%360-180
-//Долготу можно нормализовать до −180…+180, используя (lon+540)%360-180
-//Excel:
-//(all angles
-//in radians)
-//lat2: =ASIN(SIN(lat1)*COS(d/R) + COS(lat1)*SIN(d/R)*COS(brng))
-//lon2: =lon1 + ATAN2(COS(d/R)-SIN(lat1)*SIN(lat2), SIN(brng)*SIN(d/R)*COS(lat1))
-//* Remember that Excel reverses the arguments to ATAN2 – see notes below
-//For final bearing, simply take the initial bearing from the end point to the start point and reverse it with (brng+180)%360.
-//
-//
-//def getcords(lat, lon, dr, bearing):
-//    lat2=asin(sin(lat)*cos(dr)+cos(lat)*sin(dr)*cos(bearing))
-//    lon2=lon+atan2(sin(bearing)*sin(dr)*cos(lat),cos(dr)-sin(lat)*sin(lat2))
-//    return [lat2,lon2]
-//
-//
-//*/
-//
-//    /*
-//    
-//
-//    1000m 
-//    1.0°
-//
-//    lat1,lon1
-//    56.097114,37.243040
-//    
-//    lat2,lon2
-//    56.106118, 37.243378
-//    
-//
-//    int DD,MM;
-//double SS;
-//DD_DDDDDtoDDMMSS(gps.location.lat() , &DD, &MM, &SS );
-//
-//Serial.println(DD);
-//Serial.println(MM);
-//Serial.println(SS,7);
-//
-//
-//I guess you wanna know how to do that in C (although you actually didn't ask a question).
-//
-//float long = 45.124783;
-//int deglong = long;
-//long -= deglong; // remove the degrees from the calculation
-//long *= 60; // convert to minutes
-//int minlong = long;
-//long -= minlong; // remove the minuts from the calculation
-//long *= 60; // convert to seconds
-//This is what you've written in your math section converted to C code.
-//
-//  info.latitude = ((int) latitude) * 100.0;
+void CommandHandlerClass::test2coordinat(double lat1, double lon1, double d, int brng)
+{
+
+    //  info.latitude = ((int) latitude) * 100.0;
 //  info.latitude += (latitude - (int) latitude) * 60.0;
 //  info.longitude = ((int) longitude) * 100.0;
 //  info.longitude += (longitude - (int) longitude) * 60.0;
-//
-//
-//
-//  56.097114,37.243040
-//  1000 метров
-//  45° градусов
-//  56.103024, 37.255223
-//    
-//    */
-//
-//
-//}
+ 
+
+    lat11 = ((int)lat1) * 100.0;
+    lat11 += (lat1 - (int)lat1) * 60.0;
+    lon11 = ((int)lon1) * 100.0;
+    lon11 += (lon1 - (int)lon1) * 60.0;
 
 
+    Serial.print("lat1 - ");
+    Serial.print(lat1, 5);
+    Serial.print(" lat11 - ");
+    Serial.println(lat11, 4);
+
+    DD_DDDDDtoDDMMSS(lat1, &DD, &MM, &SS );
+
+    Serial.print(DD);
+    Serial.print(MM);
+    Serial.println(SS,4);
+    Serial.println("-----------------------");
+
+
+    //float longlat = lat1;
+    //int deglong = longlat;
+    //longlat -= deglong; // убрать градусы из расчета
+    //Serial.print("longlat ");
+    //Serial.println(longlat);
+    //longlat *= 60; // convert to minutes
+    //int minlong = longlat;
+    //longlat -= minlong; // убрать минуты из расчета
+    //longlat *= 60; // convert to seconds
+
+    //Serial.print("longlat ");
+    //Serial.println(longlat,4);
+    Serial.println("-----------------------");
+
+    Serial.print("lon1 - ");
+    Serial.print(lon1, 5);
+    Serial.print("lon11 - ");
+    Serial.println(lon11, 4);
+
+    DD_DDDDDtoDDMMSS(lon1, &DD, &MM, &SS);
+    Serial.print("DDMMSS ");
+    Serial.print(DD);
+    Serial.print(MM);
+    Serial.println(SS, 4);
+    Serial.println("=======================");
+
+    // lat2 = asin(sin(lat1) * cos(d / R) + cos(lat1) * sin(d / R) * cos((brng + 180) % 360));
+    lat2 = asin(sin(radians(lat11)) * cos(d / R) + cos(radians(lat11)) * sin(d / R) * cos(radians(brng)));
+   // lon2 = lon1 + atan2(cos(d / R) - sin(lat1) * sin(lat2), sin(radians((brng + 180) % 360)) * sin(d / R) * cos(lat1));
+    lon2 = lon1 + atan2(sin(radians(brng)) * sin(d / R) * cos(lat1), cos(d / R) - sin(lat1) * sin(lat2));
+
+ /*   lat2 = asin(sin(lat) * cos(dr) + cos(lat) * sin(dr) * cos(bearing))
+      lon2 = lon + atan2(sin(bearing) * sin(dr) * cos(lat), cos(dr) - sin(lat) * sin(lat2))*/
+
+
+    Serial.print("lat2 - ");
+    Serial.println(lat2,5);
+    Serial.print("lon2 - ");
+    Serial.println(lon2,5);
+    /*
+    float long = 45.124783;
+int deglong = long;
+long -= deglong; // remove the degrees from the calculation
+long *= 60; // convert to minutes
+int minlong = long;
+long -= minlong; // remove the minuts from the calculation
+long *= 60; // convert to seconds
+    
+    
+    
+    
+    */
+
+}
+
+//Conversion function
+float CommandHandlerClass::ConvertData(float RawDegrees)
+{
+    float RawAsFloat = RawDegrees;
+    int firstdigits = ((int)RawAsFloat) / 100; // Get the first digits by turning f into an integer, then doing an integer divide by 100;
+    float nexttwodigits = RawAsFloat - (float)(firstdigits * 100);
+    float Converted = (float)(firstdigits + nexttwodigits / 60.0);
+    return Converted;
+}
 
 
 
@@ -1027,10 +985,33 @@ void CommandHandlerClass::DD_DDDDDtoDDMMSS(double DD_DDDDD, int* DD, int* MM, do
     *DD = (int)DD_DDDDD;//сделали из 37.45545 это 37 т.е. Градусы
     *MM = (int)((DD_DDDDD - *DD) * 60);//получили минуты
     *SS = ((DD_DDDDD - *DD) * 60 - *MM) * 60;//получили секунды
+
 }
 
 
+/*
 
+
+
+    1000m
+    1.0°
+
+    lat1,lon1
+    56.097114,37.243040
+    lat2,lon2
+    56.106118, 37.243378
+
+
+    1000 метров
+    45° градусов
+
+    lat1,lon1
+    56.097114,37.243040
+    lat2,lon2
+    56.103024, 37.255223
+
+
+*/
 
 
 
