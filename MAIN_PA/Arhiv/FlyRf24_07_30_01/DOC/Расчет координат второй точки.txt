@@ -1,0 +1,147 @@
+float CurLon = 0.000; 
+float CurLat = 52.000;
+float r_CurLon;
+float r_CurLat;
+float Bearing = 45; // Bearing of travel
+float r_Bearing;
+float Distance = 10; // km per update 
+int Eradius = 6371; // mean radius of the earth 
+
+void setup(void) 
+{ 
+  Serial.begin(9600);
+  while(!Serial);
+  delay(1000);
+  r_CurLon = radians(CurLon);
+  r_CurLat = radians(CurLat);
+  r_Bearing = radians(Bearing);
+  float DestLat = asin(sin(r_CurLat)*cos(Distance/Eradius)+cos(r_CurLat)*sin(Distance/Eradius)*cos(r_Bearing)); 
+  float DestLon = r_CurLon + atan2(sin(r_Bearing)*sin(Distance/Eradius)*cos(r_CurLat),cos(Distance/Eradius)-sin(r_CurLat)*sin(DestLat)); 
+  DestLon = (DestLon+3*PI)/(2*PI);
+  int i = DestLon;
+  DestLon = (DestLon - i) * (2*PI) - PI;  // normalise to -180..+180º 
+  
+//System.out.printf("starting at a Longitude of %f and a Latitude of %f ",CurLon,CurLat); 
+  Serial.print("starting at a Longitude of ");
+  Serial.print(CurLon,6);
+  Serial.print(" and a Latitude of ");
+  Serial.println(CurLat,6);
+//System.out.printf("if we travel %f km on a bearing of %f degrees ",Distance,Bearing); 
+  Serial.print("if we travel ");
+  Serial.print(Distance,6);
+  Serial.print(" km on a bearing of ");
+  Serial.print(Bearing,6);
+  Serial.println(" degrees");
+//System.out.printf("we end up at Longitude of %f and a Latitude of %f ",degrees(DestLon),degrees(DestLat)); 
+  Serial.print("we end up at a Longitude of ");
+  Serial.print(degrees(DestLon),6);
+  Serial.print(" and a Latitude of ");
+  Serial.println(degrees(DestLat),6);
+} 
+
+void loop(void)
+{
+}
+
+
+
+
+
+Destination point given distance and bearing from start point
+Given a start point, initial bearing, and distance, this will calculate the destination point and final bearing travelling along a (shortest distance) great circle arc.
+
+Destination point along great-circle given distance and bearing from start point
+Start point:	
+53°19′14″N
+, 
+001°43′47″W
+Bearing:	
+096°01′18″
+Distance:	
+124,8
+ km
+Destination point:	53° 11′ 18″ N, 000° 08′ 00″ E
+Final bearing:	097° 30′ 52″
+view map
+
+Formula:	φ2 = asin( sin φ1 ⋅ cos δ + cos φ1 ⋅ sin δ ⋅ cos θ )
+λ2 = λ1 + atan2( sin θ ⋅ sin δ ⋅ cos φ1, cos δ − sin φ1 ⋅ sin φ2 )
+where:	φ is latitude, λ is longitude, θ is the bearing (clockwise from north), δ is the angular distance d/R; d being the distance travelled, R the earth’s radius
+JavaScript:
+(all angles
+in radians)
+const φ2 = Math.asin( Math.sin(φ1)*Math.cos(d/R) +
+                      Math.cos(φ1)*Math.sin(d/R)*Math.cos(brng) );
+const λ2 = λ1 + Math.atan2(Math.sin(brng)*Math.sin(d/R)*Math.cos(φ1),
+                           Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
+The longitude can be normalised to −180…+180 using (lon+540)%360-180
+Excel:
+(все углы в радианах)
+lat2: =ASIN(SIN(lat1)*COS(d/R) + COS(lat1)*SIN(d/R)*COS(brng))
+lon2: =lon1 + ATAN2(COS(d/R)-SIN(lat1)*SIN(lat2), SIN(brng)*SIN(d/R)*COS(lat1))
+* Remember that Excel reverses the arguments to ATAN2 – see notes below
+For final bearing, simply take the initial bearing from the end point to the start point and reverse it with (brng+180)%360.
+
+ Помните, что Excel меняет аргументы на ATAN2 – см. примечания ниже
+Для окончательного направления просто возьмите начальное направление от конечной точки до начальной точки и 
+измените его на обратное с помощью (brng+180)%360.
+
+R = 6371e3;
+
+==============================================================================================================
+Как перевести широту и долготу в минуты секунды и градусы
+Для этого следует всего лишь умножить число 0,331195 (т. е. десятичные доли градуса) на 60: 0,331195 • 60 = 19,8717 это и есть минуты и десятичные доли минуты. А целое число градусов, разумеется, остаётся прежним. 
+
+Таким образом получается: 56,331195 = 56° 19,8717' 
+
+Чтобы получить секунды из географических координат 56,331195 с. ш.: полученные доли минут (указанные выше) переводим в секунды путём умножения на 60: 0,8717' • 60 = 52,302" это и есть секунды и десятичные доли секунд. А целое число градусов остаётся прежним. 
+
+Итого получается: 56° 19,8717' 52,302" 
+
+Теперь попробуем округлить минуты и секунды до целых: 
+
+Правило. Чтобы округлить десятичную дробь до определенного разряда целой или дробной части, все меньшие разряды заменяются нулями или отбрасываются, а предшествующий отбрасываемой при округлении цифре разряд не изменяет своей величины, если за ним идут цифры 0, 1, 2, 3, 4, и увеличивается на 1 (единицу), если идут цифры 5, 6, 7, 8, 9.
+Пример. Округлить дробь 93,70584 до:
+десятитысячных: 93,7058
+тысячных: 93,706
+сотых: 93,71
+десятых: 93,7
+целого числа: 94
+десятков: 90
+сотен: 100 
+
+Итого: 
+
+19,8717' ≈ 20' 
+
+52,302 ≈ 52" 
+
+Северная широта равна: 56° 20' 52" 
+
+Расклад восточной долготы точно такой же как и с. ш. поэтому восточная долгота равна: 
+
+46° 33' 45" 
+
+Обратный перевод также прост. Следует наши секунды и минуты а также
+ десятичные доли секунд и минут разделить на 60 - это и будут наши 
+ десятичные доли градуса. 52,302/60 = 0,8717 ≈ 19,8717 / 60 = 0,331195, 
+ целое число градусов и в этом случае сохраняется. 
+
+Таким образом: 
+56° 20' 52" = 56° 19,8717' 52,302" = 56.331195° с. ш. 
+
+Расклад восточной долготы выполняется по такому же принципу как это сделано с северной широтой. 
+
+Цифра 60 это: 1° = 60 минут = 3600 секунд
+
+
+Как перевести координаты из вида: N56°40.076' E33°50.683' в вид в десятичных градусах (Например: 55.12345 и 37.67890).
+Элементарно, при помощи калькулятора. 
+
+1. Градусы не трогаем. 
+2. Минуты в десятичные доли градуса переводятся делением на 0,6. 
+
+Итого получаем: 
+N56°40.076' = N56,66793° 
+E33°50.683' = E33,84472°
+
