@@ -316,17 +316,17 @@ AbstractTFTScreen* TFTMenu::getActiveScreen()
        arrow[i]->setColorDepth(8);
 
        little_airplane [i] = new TFT_eSprite(&tft);   // Спрайт информации стороннего воздушного объекта
-       little_airplane [i]->createSprite(100, 100);
+       little_airplane [i]->createSprite(100, 100);   // Спрайт отображения объекта, полученного из DUMP1090. 
        little_airplane[i]->setPivot(50,50); 
        little_airplane[i]->setColorDepth(8);
 
        LoRa_airplane[i] = new TFT_eSprite(&tft);     // Спрайт информации стороннего воздушного объекта LoRa
-       LoRa_airplane[i]->createSprite(100, 100);
+       LoRa_airplane[i]->createSprite(100, 100);     // Спрайт отображения объекта LoRa
        LoRa_airplane[i]->setPivot(50, 50);
        LoRa_airplane[i]->setColorDepth(8);
 
        msg_airplane[i] = new TFT_eSprite(&tft);   // Спрайт информации стороннего воздушного объекта
-       msg_airplane[i]->createSprite(100, 100);
+       msg_airplane[i]->createSprite(100, 100);   // Спрайт отображения объекта, полученного из сообщения.
        msg_airplane[i]->setPivot(50, 50);
        msg_airplane[i]->setColorDepth(8);
 
@@ -895,7 +895,8 @@ AbstractTFTScreen* TFTMenu::getActiveScreen()
                                  Air_txt_left[i] = true;
                              }
 
-                             if (alient_course[i] >= 90 && alient_course[i] <= 270)
+
+                             if (height_difference[i] >= 0)  //height_difference[i] >= 0
                              {
 
                                  form_x = new_x - 23;     // Спрайт текста  находтся ниже самолета
@@ -980,20 +981,17 @@ AbstractTFTScreen* TFTMenu::getActiveScreen()
                              if (min_distance >= settings->alarm_attention)   // Чужой самолет очень далеко
                              {
                                  little_air_color[i] = TFT_WHITE;    // Цвет для вывода изображения самолетика 
-                                 txt_color = TFT_GREEN;              // Цвет для вывода текста на табло вверху слева расстояния и курса ближайшего самолетика 
                              }
                              else if (min_distance*2 <= settings->alarm_attention && min_distance*2  > settings->alarm_warning) // Чужой самолет на расстоянии предупреждения
                              {
                                  if (VerticalSet > settings->alarm_height)   //  Чужой самолет выше расстояния опасности
                                  {
                                      little_air_color[i] = TFT_WHITE;
-                                     txt_color = TFT_GREEN;
                                  }
                                  else
                                  {
                                      //  Чужой самолет на расстоянии предупреждения
                                      little_air_color[i] = TFT_YELLOW;
-                                     txt_color = TFT_YELLOW;
                                  }
                              }
                              else if (min_distance * 2 <= settings->alarm_warning && min_distance * 2 > settings->alarm_danger)   // Чужой самолет на расстоянии предупреждения
@@ -1001,19 +999,16 @@ AbstractTFTScreen* TFTMenu::getActiveScreen()
                                  if (VerticalSet > settings->alarm_height)                                                // Чужой самолет выше расстояния предупреждения
                                  {
                                      little_air_color[i] = TFT_WHITE;
-                                     txt_color = TFT_GREEN;
                                  }
                                  else if (VerticalSet <= settings->alarm_height)
                                  {
                                      // Чужой самолет на расстоянии предупреждения
                                      little_air_color[i] = TFT_ORANGE;
-                                     txt_color = TFT_ORANGE;
                                  }
                              }
                              else if (min_distance * 2 <= settings->alarm_danger && VerticalSet <= settings->alarm_height)  // Чужой самолет на близком расстоянии и по высоте опасен
                              {
                                  little_air_color[i] = TFT_RED;
-                                 txt_color = TFT_RED;
                              }
                              esp_task_wdt_reset();
 
@@ -1027,34 +1022,12 @@ AbstractTFTScreen* TFTMenu::getActiveScreen()
 
                              /*===============  Этот фрагмент для вывода самолета в движении*/
                              /* Запись параметров высоты в формуляр */
-                             if (height_difference[i] >= 0)                    // Чужой самолет выше нашего
-                             {
-                                 if (Container[i].signal_source == 2)
-                                 {
-                                     Air_txt_Sprite[i]->drawString("+" + String(int(height_difference[i])), 27, 1, 0);
-                                 }
-                                 else
-                                 {
-                                     Air_txt_Sprite[i]->drawString("+" + String(int(height_difference[i])), 27, 1, 0);
-                                 }
-                             }
-                             else
-                             {
-                                 // Чужой самолет ниже нашего
 
-                                 if (Container[i].signal_source == 2)
-                                 {
-                                     Air_txt_Sprite[i]->drawString(String(int(height_difference[i])), 27, 1, 0);
-                                 }
-                                 else
-                                 {
-                                     Air_txt_Sprite[i]->drawString(String(int(height_difference[i])), 27, 1, 0);
-                                 }
-                             }
+                             Air_txt_Sprite[i]->drawString(String(int(height_difference[i])), 27, 1, 0);
 
-                             /* Записать скорость в формуляр  движущегося самолета*/
+                              /* Записать скорость в формуляр  движущегося самолета*/
                              alien_speed_view[i] = 50 - ((int)Container[i].speed / 60 * 3);  // Расстояние стороннего самолета для вывода на дисплей
-                             //alien_speed_view[i] = 50 - (alien_speed_tmr[i]/17);           // Скорость стороннего самолета для вывода на дисплей
+ 
                              if (alien_speed_view[i] > 40)
                              {
                                  alien_speed_view[i] = 40;
@@ -1104,41 +1077,65 @@ AbstractTFTScreen* TFTMenu::getActiveScreen()
                              else if (Container[i].signal_source == 1)  // С учетом данных, полученных с приемника DUMP1090
                              {
                                  /*Рисуем маленький самолетик */
-                                 little_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле самолетика
+                                little_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле самолетика
 
-                                 little_airplane[i]->drawLine(49, 44, 49, 57, little_air_color[i]);
-                                 little_airplane[i]->drawLine(50, 43, 50, 57, little_air_color[i]);
-                                 little_airplane[i]->drawLine(51, 44, 51, 57, little_air_color[i]);
+                                little_airplane[i]->drawLine(49, 43, 49, 57, little_air_color[i]);
+                                little_airplane[i]->drawLine(50, 42, 50, 57, little_air_color[i]);
+                                little_airplane[i]->drawLine(51, 43, 51, 57, little_air_color[i]);
 
-                                 little_airplane[i]->drawLine(46, 47, 54, 47, little_air_color[i]);
-                                 little_airplane[i]->drawLine(44, 48, 56, 48, little_air_color[i]);
-                                 little_airplane[i]->drawLine(42, 49, 58, 49, little_air_color[i]);
 
-                                 little_airplane[i]->drawLine(46, 56, 54, 56, little_air_color[i]);
-                                 little_airplane[i]->drawLine(45, 57, 55, 57, little_air_color[i]);
+                                little_airplane[i]->drawLine(48, 46, 52, 46, little_air_color[i]);
+                                little_airplane[i]->drawLine(47, 47, 53, 47, little_air_color[i]);
+                                little_airplane[i]->drawLine(46, 48, 54, 48, little_air_color[i]);
+                                little_airplane[i]->drawLine(45, 49, 55, 49, little_air_color[i]);
+                                little_airplane[i]->drawLine(44, 50, 47, 50, little_air_color[i]);
+                                little_airplane[i]->drawLine(53, 50, 56, 50, little_air_color[i]);
+                                little_airplane[i]->drawLine(43, 51, 45, 51, little_air_color[i]);
+                                little_airplane[i]->drawLine(55, 51, 57, 51, little_air_color[i]);
+                                little_airplane[i]->drawLine(42, 52, 43, 52, little_air_color[i]);
+                                little_airplane[i]->drawLine(57, 52, 58, 52, little_air_color[i]);
 
-                                 little_airplane[i]->drawLine(50, 41, 50, alien_speed_view[i] - 4, little_air_color[i]); // Рисуем прямую линию"скорости" с носа самолета
-                                 area_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле 
-                                // area_airplane[i]->drawSmoothRoundRect(0, 0, 1, 1, 99, 99, TFT_YELLOW); //!! Только для теста
+                                little_airplane[i]->drawLine(48, 56, 52, 56, little_air_color[i]);
+                                little_airplane[i]->drawLine(47, 57, 53, 57, little_air_color[i]);
+                                little_airplane[i]->drawLine(46, 58, 48, 58, little_air_color[i]);
+                                little_airplane[i]->drawLine(52, 58, 54, 58, little_air_color[i]);
+                                little_airplane[i]->drawLine(45, 59, 46, 59, little_air_color[i]);
+                                little_airplane[i]->drawLine(54, 59, 55, 59, little_air_color[i]);
+
+                                little_airplane[i]->drawLine(50, 41, 50, alien_speed_view[i] - 4, little_air_color[i]); // Рисуем прямую линию"скорости" с носа самолета
+                                area_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле 
+                            // area_airplane[i]->drawSmoothRoundRect(0, 0, 1, 1, 99, 99, TFT_YELLOW); //!! Только для теста
                              }
                              else if (Container[i].signal_source == 2)  // С учетом данных, полученных с текстовой строки
                              {
-                                 /*Рисуем маленький самолетик */
-                                 msg_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле самолетика
-                                // little_airplane[i]->drawCircle(50, 50, 11, little_air_color[i]);                        // Рисуем кружок вокруг самолета
-                                 msg_airplane[i]->drawLine(49, 44, 49, 57, little_air_color[i]);
-                                 msg_airplane[i]->drawLine(50, 43, 50, 57, little_air_color[i]);
-                                 msg_airplane[i]->drawLine(51, 44, 51, 57, little_air_color[i]);
+                                /*Рисуем маленький самолетик */
+                                msg_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле самолетика
 
-                                 msg_airplane[i]->drawLine(46, 47, 54, 47, little_air_color[i]);
-                                 msg_airplane[i]->drawLine(44, 48, 56, 48, little_air_color[i]);
-                                 msg_airplane[i]->drawLine(42, 49, 58, 49, little_air_color[i]);
+                                msg_airplane[i]->drawLine(49, 43, 49, 57, little_air_color[i]);
+                                msg_airplane[i]->drawLine(50, 42, 50, 57, little_air_color[i]);
+                                msg_airplane[i]->drawLine(51, 43, 51, 57, little_air_color[i]);
 
-                                 msg_airplane[i]->drawLine(46, 56, 54, 56, little_air_color[i]);
-                                 msg_airplane[i]->drawLine(45, 57, 55, 57, little_air_color[i]);
 
-                                 msg_airplane[i]->drawLine(50, 41, 50, alien_speed_view[i] - 4, little_air_color[i]); // Рисуем прямую линию"скорости" с носа самолета
-                                 area_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле 
+                                msg_airplane[i]->drawLine(48, 46, 52, 46, little_air_color[i]);
+                                msg_airplane[i]->drawLine(47, 47, 53, 47, little_air_color[i]);
+                                msg_airplane[i]->drawLine(46, 48, 54, 48, little_air_color[i]);
+                                msg_airplane[i]->drawLine(45, 49, 55, 49, little_air_color[i]);
+                                msg_airplane[i]->drawLine(44, 50, 47, 50, little_air_color[i]);
+                                msg_airplane[i]->drawLine(53, 50, 56, 50, little_air_color[i]);
+                                msg_airplane[i]->drawLine(43, 51, 45, 51, little_air_color[i]);
+                                msg_airplane[i]->drawLine(55, 51, 57, 51, little_air_color[i]);
+                                msg_airplane[i]->drawLine(42, 52, 43, 52, little_air_color[i]);
+                                msg_airplane[i]->drawLine(57, 52, 58, 52, little_air_color[i]);
+
+                                msg_airplane[i]->drawLine(48, 56, 52, 56, little_air_color[i]);
+                                msg_airplane[i]->drawLine(47, 57, 53, 57, little_air_color[i]);
+                                msg_airplane[i]->drawLine(46, 58, 48, 58, little_air_color[i]);
+                                msg_airplane[i]->drawLine(52, 58, 54, 58, little_air_color[i]);
+                                msg_airplane[i]->drawLine(45, 59, 46, 59, little_air_color[i]);
+                                msg_airplane[i]->drawLine(54, 59, 55, 59, little_air_color[i]);
+
+                                msg_airplane[i]->drawLine(50, 41, 50, alien_speed_view[i] - 4, little_air_color[i]); // Рисуем прямую линию"скорости" с носа самолета
+                                area_airplane[i]->fillSprite(TFT_BLACK);      // Закрасим поле 
 
                                 // area_airplane[i]->drawSmoothRoundRect(0, 0, 1, 1, 99, 99, TFT_YELLOW); //!! Только для теста
                              }
