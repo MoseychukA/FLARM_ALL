@@ -1,5 +1,0 @@
-
-
-
-#include <User_Setups/Setup24_ST7789.h>            
- IC 240(RGB)* 320,
