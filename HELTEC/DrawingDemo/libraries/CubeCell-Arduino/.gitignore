@@ -1,0 +1,15 @@
+.git
+/libraries/LoraWan104
+tools/flash6601
+tools/CubeCellelftool
+tools/dist
+tools/CubeCellflash
+tools/gcc-arm-none-eabi
+tools/._gcc-arm-none-eabi
+tools/LoRaWan_CLASS_HT
+.DS_Store
+.development
+.vscode
+.idea
+libraries/LoRa/examples/LoRaWAN/LoRaWAN_Sensors/LoRaWAN_GPS/build
+libraries/LoRa/examples/LoRaWAN/LoRaWAN_Sensors/LoRaWAN_GPS/.vscode

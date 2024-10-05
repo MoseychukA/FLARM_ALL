@@ -1,0 +1,309 @@
+#+TITLE: Working with the Heltec ESP32 Boards (V3)
+
+* Table of Contents :TOC:
+- [[#introduction][Introduction]]
+  - [[#development-tool-support][Development Tool Support]]
+- [[#heltec-wifi-lora-32-v3][Heltec WiFi LoRa 32 (V3)]]
+  - [[#other-assessories][Other Assessories]]
+  - [[#overview][Overview]]
+  - [[#datasheet][Datasheet]]
+  - [[#documentation-and-resources][Documentation and Resources]]
+  - [[#heltec-automation-product-documentation][Heltec Automation Product Documentation]]
+  - [[#lora-radio-hardware][LoRa Radio Hardware]]
+- [[#software-development][Software Development]]
+  - [[#software-development-libraries][Software Development Libraries]]
+  - [[#hardware--software-interface-pins][Hardware / Software Interface (Pins)]]
+- [[#issues][Issues]]
+  - [[#jan-2023][Jan 2023]]
+
+* Introduction
+Existing boards:
+- heltec_wifi_kit_32 :: 
+- heltec_wifi_kit_32_v2
+- heltec_wifi_lora_32
+- heltec_wifi_lora_32_v2
+- heltec_wireless_stick
+- heltec_wireless_stick_lite
+
+New Boards
+- heltec_wifi_kit_32_v3 :: https://heltec.org/project/wifi-kit-32-v3/
+- heltec_wifi_lora_32_v3 :: https://heltec.org/project/wifi-lora-32-v3/
+- heltec_wireless_stick_v3 :: https://heltec.org/project/wireless-stick-v3/
+- heltec_wireless_stick_lite_v3 :: https://heltec.org/project/wireless-stick-lite-v2/
+- heltec_wireless_shell_v3 :: https://heltec.org/project/wireless-shell-v3/
+
+** Development Tool Support
+| Board                  | Arduino | ESP-IDE | ESPHome |
+|------------------------+---------+---------+---------|
+| wifi_kit_32_v2         |         |         |         |
+| wifi_lora_32           |         |         |         |
+| wifi_lora_32_v2        |         |         |         |
+| wireless_stick         |         |         |         |
+| wireless_stick_lite    |         |         |         |
+|------------------------+---------+---------+---------|
+| wifi_kit_32_v3         |         |         |         |
+| wifi_lora_32_v3        |         |         |         |
+| wireless_stick_v3      |         |         |         |
+| wireless_stick_lite_v3 |         |         |         |
+| wireless_shell_v3      |         |         |         |
+|------------------------+---------+---------+---------|
+
+* Heltec WiFi LoRa 32 (V3)
+[[file:images/LORA320-V3.png]]
+
+The following is mostly taken from the Heltec Automation webpage on the WiFi
+LoRa 32 (V3) developer board, but with ‘fixes’. For definitive details, please
+refer to the [[https://heltec.org/project/wifi-lora-32-v3][original web page]]. (Changes have been made to improve readability
+and add details useful for developers.)
+
+This board is planned to be included in a major hardware project, and this
+information will assist with development and maintenance.
+
+This information was initially hosted on a page at [[https://mawsonlakes.org][MawsonLakes.Org]] (WorkPress),
+but it has been moved to a github repository to allow better development
+workflow based access.
+
+- [[https://heltec.org/project/wifi-lora-32-v3/][Product Page]]
+- Price : US18.90 (from Heltec, Jan 2023)
+- What's in the Package
+
+  Included
+  - Antenna
+  - SH1.25 x 2 battery connector
+  - 2 x 54 pin headers (not soldered by default),
+
+  Not included
+  - Battery
+  - Package Notes
+
+When purchased with the shell, the pin headers are soldered underneath the
+board. The glue stick antenna is too long to fit inside the shell, and will be
+connected but outside of the enclosure.
+
+- LoRa Bands : 470-510MHz, 863-870MHz, *902-928MHz* (band in use)
+
+** Other Assessories
+- Battery: 3.7V/1000mAh Lithium (Sale only available inside mainland China)
+- Cooling rib
+- Antenna
+- [[https://heltec.org/product/bread-board][Bread Board]]
+- [[https://heltec.org/product/lora-32-shell][Plastic shell]]
+
+Categories: ESP Arduino, LoRa Node SKU: ZC-153-868-1
+
+Tags: Arduino ESP32 LoRa Node LoRaWAN
+
+The WiFi LoRa 32 (V3) is a classic IoT dev-board designed & produced by Heltec
+Automation. Since its launch in 2017, it has been loved by developers and
+makers. The newly launched V3 version has the same pin sequence as the V2
+version and retains Wi-Fi, BLE, LoRa, and the OLED display.
+
+This board is the best option for smart cities, farms, homes, industrial
+control, house security, wireless meter reading, and IoT developers.
+
+** Overview
+WiFi LoRa 32 (V3) is a member of the “Heltec LoRa“ series, with the following features:
+
+- *Microprocessor:* ESP32-S3FN8 (Xtensa® 32-bit LX7 dual-core processor,
+  five-stage pipeline rack Structure, frequency up to 240 MHz).
+- *LoRa Radio:* SX1262 LoRa node chip.
+- *Type-C USB interface:* Includes voltage regulator, ESD protection, short
+  circuit protection, and RF shielding.
+- *Onboard SH1.25-2 battery interface:* Includes integrated lithium battery
+  management system (charge and discharge management, overcharge protection,
+  battery power detection, USB / battery power automatic switching).
+- *Integrated WiFi, LoRa, Bluetooth:* Onboard Wi-Fi, Bluetooth dedicated 2.4GHz
+  metal spring antenna. IPEX (U.FL) interface for external LoRa antenna.
+- *OLED Display:* Onboard 0.96-inch 128*64 dot matrix OLED display. (This can be
+  used to display debugging information, battery power, and other information.)
+  Specified as SSD1306.
+- *Integrated CP2102 USB to serial port chip:* Use of convenient (re)programming,
+  and printing debugging information.
+- Support available for the [[https://heltec.org/wifi_kit_install][Arduino development environment]].
+- Downloadable [[https://github.com/HelTecAutomation/ESP32_LoRaWAN][ESP32 + LoRaWAN Arduino® library]]. This uses the standard LoRaWAN
+  protocol that can communicate with LoRa gateways running the LoRaWAN protocol.
+  To make this code run, a unique license is needed. it can be found on [[https://resource.heltec.cn/search/][this
+  page]]. /(Development on this library has been discontinued.)/
+- /NEW/ Arduino Development Environment (0.0.7) - [[https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series]]
+
+** Datasheet
+
+- [[file:docs/HTIT-WB32LA_V3Rev1.1.pdf]] : Datasheet
+
+** Documentation and Resources
+*** Heltec ESP (ESP 32 & ESP8266) Framework
+https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series
+
+*** Heltec ESP32 Library
+https://github.com/HelTecAutomation/Heltec_ESP32
+
+*** Schematic Diagram
+- Original: https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3_Schematic_Diagram.pdf
+- Archived: [[docs/HTIT-WB32LA(F)_V3_Schematic_Diagram.pdf]]
+
+*** Pin Map
+- Original: https://resource.heltec.cn/download/WiFi_LoRa32_V3/HTIT-WB32LA(F)_V3.png
+- Archived: [[file:docs/HTIT-WB32LA_V3_pinout.pdf]]
+
+*** Downloadable Resources
+https://resource.heltec.cn/download/WiFi_LoRa32_V3
+- Binaries and installer (esptool) for [[https://meshtastic.org/][meshtastic]] (Modified: 16 Nov 2022)- Windows Version
+
+*** Heltec LoRa Test Server (Based on TTS V3)
+https://lora.heltec.org/
+
+*** Frequently Asked Questions
+
+https://heltec-automation-docs.readthedocs.io/en/latest/esp32/frequently_asked_questions.html
+
+(This link currently returnes: 404 – Page does not exist)
+
+*** Interesting Applicatons made by WiFi LoRa 32
+- Paxcounter： https://github.com/cyberman54/ESP32-Paxcounter
+- A low-cost LoRa ioT solution：https://github.com/CongducPham/LowCostLoRaGw
+- As a model remote control：http://www.moz8.com/thread-172414-1-1.html?_dsign=4feb6948
+- Used to prevent hay and straw fires： https://www.ibm.com/developerworks/cn/iot/library/iot-lpwan-lora-nodemcu-dhtsensors/
+- WiFi instant camera： https://hackaday.io/project/162256-esp32-8266-wifi-instant-camera
+- morserino (Morse code with a multi-functional morserino device) : http://www.morserino.info/morserino-32.html
+- MicroPython example (IoT examples with many sensors and detail docs):
+https://www.rosietheredrobot.com/2019/04/lora-wan-kenobi.html
+https://www.rosietheredrobot.com/2020/02/battle-of-bletain.html
+- LoRa sensor node config & usage video: https://youtu.be/YJwjZOkhdD8 https://youtu.be/8-bIp66ON1I
+- Single-channel LoRa gateway solution: https://github.com/things4u/ESP-1ch-Gateway-v5.0
+
+***  User Test Info Report
+General test report: https://robotzero.one/heltec-wifi-lora-32/
+Communication distance test:
+- YouKu:   [[http://v.youku.com/v_show/id_XNDAwOTUyMTI3Ng==.html?spm=a2h3j.8428770.3416059.1][click to play video]]
+- YouTube: [[https://youtu.be/sUsJuhakQ0E][click to play video]]
+
+** Heltec Automation Product Documentation
+ESP32 + LoRa Node
+- [[https://github.com/PaulSchulz/heltec-wifi-lora-32-v3][Hardware Log]] -> [[https://docs.heltec.org/en/node/esp32/dev-board/hardware_update_log.html#v3][V3]]
+
+The Heltec WiFi Lora 32 (V3) board was first made available for public sale on
+15 September 2022. MCU is changed from ESP32-D0WDQ6 to ESP32-S3FN8. Specific
+differences of MCU are shown in：
+https://products.espressif.com/#/product-comparison.
+
+Differences between ESP32-D0WDQ6 (used in V2) and ESP32-S3FN8 (used in V3).
+
+|----------------------+------------------------------+------------------------------|
+|                      | ESP32-D0WDQ6                 | ESP32-S3FN8                  |
+|----------------------+------------------------------+------------------------------|
+| *Overview*             |                              |                              |
+| Series               | ESP32                        | ESP32-S3                     |
+| CPU                  | Xtensa® dual-core 32-bit LX6 | Xtensa® dual-core 32-bit LX7 |
+| Package (mm)         | QFN48 (66)                   | QFN56(77)                    |
+| Dimensions (mm)      | 6*6                          | 7*7                          |
+| Voltage (V)          | 2.3 ~ 3.6                    | 3.0 ~ 3.6                    |
+| Temp. (degC)         | -40 ~ 125                    | -40 ~ 85                     |
+| Status               | NRND                         | Mass Production              |
+| ECO                  | ECO V1                       | standard version             |
+|                      |                              |                              |
+| *Wireless*             |                              |                              |
+| Bluetooth            | BR/EDR + Bluetooth LE v4.2   | Bluetooth LE v5.0            |
+|                      |                              |                              |
+| *Memory*               |                              |                              |
+| SRAM (KB)            | 520                          | 512                          |
+| ROM (KB)             | 448                          | 384                          |
+| Flash (MB)           | 0                            | 8                            |
+|                      |                              |                              |
+| *Peripherals*          |                              |                              |
+| ADC                  | 2*12-bit ADC, 18 channels    | 2*12-bit ADC, 20 channels    |
+| DAC                  | DAC                          | 0                            |
+| Touch                | 10                           | 14                           |
+| Temp Sensor          | 0                            | 1                            |
+| GPIO                 | 34                           | 45                           |
+| Strapping GPIO       | 0, 2, 5, 12, 15              | 0, 3, 45, 46                 |
+| GPIO for flash/PSRAM | 6, 7, 8, 9, 10, 11 /         | 27, 28, 29, 30, 31, 32 /     |
+| SDIO HOST            | 1                            | 2                            |
+| LED PWM              | 2*8 channels                 | 1*8 channels                 |
+| USB OTG              | 0                            | 1                            |
+| Hall                 | 1                            | 0                            |
+| Ethernet             | 1                            | 0                            |
+|                      |                              |                              |
+| *Certification*        |                              |                              |
+| BT Certification     |                              | BT SIG                       |
+|----------------------+------------------------------+------------------------------|
+
+Comparison of Bluetooth BR/EDR and Bluetooth LE Specifications (Wolfram MathWorks Help Center)
+
+USB interface changed from Micro USB to Type-C.
+
+LoRa chip changed from SX1276 to SX1262.
+
+The LoRa crystal oscillator is upgraded to temperature compensated crystal oscillator.
+
+The size, appearance, pin layout and power pins remain unchanged, but the GPIO sequence has changed. Please refer to Pinout diagram.
+
+*** Processor Datasheet
+
+[[file:esp32-s3_datasheet_en.pdf]]
+
+** LoRa Radio Hardware
+LoRa chip changed from SX1276 to SX1262. The main differences are:
+
+The operating frequency range is larger: SX1262 has range 150~960HMZ, and the
+SX1276 is only available in 868/915 MHz;
+
+The SX1262 also uses a high-precision TCXO crystal oscillator to provide more
+precise and stable control during the operation.
+
+Ultra-low-consumption receiving current, SX1278 receiving current is 10.8mA, SX1262 receiving current <6.5mA.
+
+LoRa in V2: https://www.semtech.com/products/wireless-rf/lora-connect/sx1276
+
+LoRa in V3: https://www.semtech.com/products/wireless-rf/lora-connect/sx1262
+
+* Software Development
+** Software Development Libraries
+https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series
+
+Add the following line in Arduino IDE to import platform definitions:
+https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series/releases/download/0.0.7/package_heltec_esp32_index.json
+
+Based in Expressif ESP32 Libraries – https://github.com/espressif/arduino-esp32
+
+** Hardware / Software Interface (Pins)
+See:https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series/blob/master/esp32/variants/WIFI_LoRa_32_V3/pins_arduino.h
+
+| *Serial*   |     |                                           |
+| TX       |  43 |                                           |
+| RX       |  44 |                                           |
+|          |     |                                           |
+| *SPI*      |     |                                           |
+| MOSI     | 10* | Note 1. (was documented as 11)            |
+| MISO     | 11* | Note 1. (was documented as 13)            |
+| SCK      |  9* | Note 1. (was documented as 12)            |
+| SS       |  8* | Note 1. (was documented as 10)            |
+|          |     | Chip select (CS) for LoRa                 |
+| *I2C*      |     |                                           |
+| SDA_OLED |  17 | i2c_id: a_bus (used by OLED, not exposed) |
+| SCL_OLED |  18 |                                           |
+| RST_OLED |  21 |                                           |
+| SDA      |  41 | i2c_id: b_bus, Note 2.                    |
+| SCL      |  42 | Note 2.                                   |
+|          |     |                                           |
+| LED      |  35 |                                           |
+
+Notes
+
+- Note 1. :: See the definition in [[https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series/blob/master/esp32/variants/WIFI_LoRa_32_V3/pins_arduino.h][pins_arduino.h]]. An [[https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series/issues/156][issue]] has been raised noting
+that this mapping is actually different to that defined in the library header.
+
+- Note 2. :: The Heltec pinout diagram list pins 41, 42 as MTDI, MTMS
+  respectfully. Not sure what is correct here.
+
+* Issues
+** Jan 2023
+**** /OUTSTANDING/ - Heltec Development Kit for Arduino does not contain entry for V3
+Apparently this is being addressed.
+
+**** /ONGOING/ - Wifi_Lora_32_ v3 bootloop with version 0.0.7 of Arduino Dev Kit
+*TL;DR* The Heltec Arduino development kit (0.0.7) causes the board to go into a bootloop. The cause of this is known and has been fixed upstream in the Expressif development tools. Downgrading the bootloader image or the programming software fixes this problem.
+
+References
+- WiFi Kit Issue – https://github.com/Heltec-Aaron-Lee/WiFi_Kit_series/issues/159
+    
+- Expressif Arduino ESP32 Github – https://github.com/espressif/arduino-esp32/issues/6980 This page describes what was found when investigating the issue.

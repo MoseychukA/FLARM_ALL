@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.35229.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SSD1306DrawingDemo", "SSD1306DrawingDemo.vcxproj", "{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Debug|ARM.ActiveCfg = Debug|ARM
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Debug|ARM.Build.0 = Debug|ARM
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Debug|ARM.Deploy.0 = Debug|ARM
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Debug|ARM64.Build.0 = Debug|ARM64
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Release|ARM.ActiveCfg = Release|ARM
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Release|ARM.Build.0 = Release|ARM
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Release|ARM.Deploy.0 = Release|ARM
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Release|ARM64.ActiveCfg = Release|ARM64
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Release|ARM64.Build.0 = Release|ARM64
+		{9CB073B8-E74C-4E3B-A10C-12BC443A9C04}.Release|ARM64.Deploy.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33DA27D0-EB7C-43F7-9810-40B0E52153B7}
+	EndGlobalSection
+EndGlobal
