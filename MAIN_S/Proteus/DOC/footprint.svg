@@ -1,0 +1,191 @@
+<svg width='294mm' height='294mm' viewBox='-3.675 -3.675 7.35 7.35' version='1.1'  xmlns='http://www.w3.org/2000/svg'>
+<title>PCB Footprint for SamacSys Part ID 11345151</title>
+<desc>Rendered to SVG format from the SamacSys part library on Tue, 08 Oct 2024 20:35:53 +0100.
+The latest version of this part can be downloaded here: https://componentsearchengine.com/part.php?partID=11345151.
+To find out how to download this and other parts to a CAD tool of your choice see https://componentsearchengine.com/pcb-libraries.php</desc>
+<style type='text/css'>
+.Courtyard.Draw {stroke: #FC00FF; fill: #FC00FF; }
+.AssemblyDrawingTop.Draw {stroke: #FAA62C; fill: #FAA62C; }
+.SilkscreenTop.Draw {stroke: #C1C1C1; fill: #C1C1C1; }
+.Top.Draw {stroke: #468EF8; fill: #468EF8; }
+.PinNumbers.Draw {stroke: #FFFF54; fill: #FFFF54; }
+polygon {stroke-linecap:round; stroke-linejoin:round;}
+line {stroke-linecap:round;}
+path {stroke-linecap:round;}
+.PinNumbers.Text {fill:#FFFF54;}
+text {font-family:monospace;}
+.keepout {display:none; stroke:red; stroke-width:0.02;}
+.Cut {stroke:white; fill:white}
+.Drills {fill:#404040; stroke:darkblue;}
+</style>
+<defs>
+<pattern class='keepout' id='hatchSparse'
+		width='1' height='1'
+		patternUnits='userSpaceOnUse'>
+		<line x1='0' y1='0' x2='1' y2='1' width='1'/>
+		<line x1='1' y1='0' x2='0' y2='1' width='1'/>
+		</pattern>
+</defs>
+<g id='outerGroup'>
+<g stroke='#FC00FF' fill='#FC00FF'  class='Courtyard Draw' display='inherit'>
+ <path  d='M-3.625,-3.625 L3.625,-3.625 L3.625,3.625 L-3.625,3.625 L-3.625,-3.625 ' stroke-width='0.05' fill='none'  sl='7' />
+</g>
+<g stroke='#FAA62C' fill='#FAA62C'  class='AssemblyDrawingTop Draw' display='inherit'>
+ <line  x1='-3' y1='-2.6' x2='-2.6' y2='-3' style='stroke-width:0.1' sl='19'/>
+ <path  d='M-3,-3 L3,-3 L3,3 L-3,3 L-3,-3 ' stroke-width='0.1' fill='none'  sl='13' />
+</g>
+<g stroke='#C1C1C1' fill='#C1C1C1'  class='SilkscreenTop Draw' display='inherit'>
+ <circle fill='#C1C1C1'  cx='-3.375' cy='-2.8' r='0.1' stroke-width='0'  sl='22'/>
+</g>
+<g stroke='#468EF8' fill='#468EF8'  class='Top Draw' display='inherit'>
+ <polygon   points='-2.175,-2.175 -2.175,2.175 2.175,2.175 2.175,-2.175 ' stroke-width='0'  sl='361,366' />
+ <circle fill='#468EF8'  cx='-2.95' cy='-2.2' r='0.1' stroke-width='0'  sl='313,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='-1.8' r='0.1' stroke-width='0'  sl='314,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='-1.4' r='0.1' stroke-width='0'  sl='315,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='-1' r='0.1' stroke-width='0'  sl='316,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='-0.6' r='0.1' stroke-width='0'  sl='317,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='-0.2' r='0.1' stroke-width='0'  sl='318,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='0.2' r='0.1' stroke-width='0'  sl='319,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='0.6' r='0.1' stroke-width='0'  sl='320,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='1' r='0.1' stroke-width='0'  sl='321,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='1.4' r='0.1' stroke-width='0'  sl='322,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='1.8' r='0.1' stroke-width='0'  sl='323,362'/>
+ <circle fill='#468EF8'  cx='-2.95' cy='2.2' r='0.1' stroke-width='0'  sl='324,362'/>
+ <circle fill='#468EF8'  cx='-2.2' cy='2.95' r='0.1' stroke-width='0'  sl='325,362'/>
+ <circle fill='#468EF8'  cx='-1.8' cy='2.95' r='0.1' stroke-width='0'  sl='326,362'/>
+ <circle fill='#468EF8'  cx='-1.4' cy='2.95' r='0.1' stroke-width='0'  sl='327,362'/>
+ <circle fill='#468EF8'  cx='-1' cy='2.95' r='0.1' stroke-width='0'  sl='328,362'/>
+ <circle fill='#468EF8'  cx='-0.6' cy='2.95' r='0.1' stroke-width='0'  sl='329,362'/>
+ <circle fill='#468EF8'  cx='-0.2' cy='2.95' r='0.1' stroke-width='0'  sl='330,362'/>
+ <circle fill='#468EF8'  cx='0.2' cy='2.95' r='0.1' stroke-width='0'  sl='331,362'/>
+ <circle fill='#468EF8'  cx='0.6' cy='2.95' r='0.1' stroke-width='0'  sl='332,362'/>
+ <circle fill='#468EF8'  cx='1' cy='2.95' r='0.1' stroke-width='0'  sl='333,362'/>
+ <circle fill='#468EF8'  cx='1.4' cy='2.95' r='0.1' stroke-width='0'  sl='334,362'/>
+ <circle fill='#468EF8'  cx='1.8' cy='2.95' r='0.1' stroke-width='0'  sl='335,362'/>
+ <circle fill='#468EF8'  cx='2.2' cy='2.95' r='0.1' stroke-width='0'  sl='336,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='2.2' r='0.1' stroke-width='0'  sl='337,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='1.8' r='0.1' stroke-width='0'  sl='338,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='1.4' r='0.1' stroke-width='0'  sl='339,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='1' r='0.1' stroke-width='0'  sl='340,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='0.6' r='0.1' stroke-width='0'  sl='341,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='0.2' r='0.1' stroke-width='0'  sl='342,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='-0.2' r='0.1' stroke-width='0'  sl='343,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='-0.6' r='0.1' stroke-width='0'  sl='344,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='-1' r='0.1' stroke-width='0'  sl='345,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='-1.4' r='0.1' stroke-width='0'  sl='346,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='-1.8' r='0.1' stroke-width='0'  sl='347,362'/>
+ <circle fill='#468EF8'  cx='2.95' cy='-2.2' r='0.1' stroke-width='0'  sl='348,362'/>
+ <circle fill='#468EF8'  cx='2.2' cy='-2.95' r='0.1' stroke-width='0'  sl='349,362'/>
+ <circle fill='#468EF8'  cx='1.8' cy='-2.95' r='0.1' stroke-width='0'  sl='350,362'/>
+ <circle fill='#468EF8'  cx='1.4' cy='-2.95' r='0.1' stroke-width='0'  sl='351,362'/>
+ <circle fill='#468EF8'  cx='1' cy='-2.95' r='0.1' stroke-width='0'  sl='352,362'/>
+ <circle fill='#468EF8'  cx='0.6' cy='-2.95' r='0.1' stroke-width='0'  sl='353,362'/>
+ <circle fill='#468EF8'  cx='0.2' cy='-2.95' r='0.1' stroke-width='0'  sl='354,362'/>
+ <circle fill='#468EF8'  cx='-0.2' cy='-2.95' r='0.1' stroke-width='0'  sl='355,362'/>
+ <circle fill='#468EF8'  cx='-0.6' cy='-2.95' r='0.1' stroke-width='0'  sl='356,362'/>
+ <circle fill='#468EF8'  cx='-1' cy='-2.95' r='0.1' stroke-width='0'  sl='357,362'/>
+ <circle fill='#468EF8'  cx='-1.4' cy='-2.95' r='0.1' stroke-width='0'  sl='358,362'/>
+ <circle fill='#468EF8'  cx='-1.8' cy='-2.95' r='0.1' stroke-width='0'  sl='359,362'/>
+ <circle fill='#468EF8'  cx='-2.2' cy='-2.95' r='0.1' stroke-width='0'  sl='360,362'/>
+ <path  d='M-3.375,-2.3 L-2.625,-2.3 A0.1,0.1 1.5707963267949 0 1 -2.625,-2.1 L-3.375,-2.1 L-3.375,-2.3 ' stroke-width='0'  sl='25' />
+ <path  d='M-3.375,-1.9 L-2.625,-1.9 A0.1,0.1 1.5707963267949 0 1 -2.625,-1.7 L-3.375,-1.7 L-3.375,-1.9 ' stroke-width='0'  sl='31' />
+ <path  d='M-3.375,-1.5 L-2.625,-1.5 A0.1,0.1 1.5707963267949 0 1 -2.625,-1.3 L-3.375,-1.3 L-3.375,-1.5 ' stroke-width='0'  sl='37' />
+ <path  d='M-3.375,-1.1 L-2.625,-1.1 A0.1,0.1 1.5707963267949 0 1 -2.625,-0.9 L-3.375,-0.9 L-3.375,-1.1 ' stroke-width='0'  sl='43' />
+ <path  d='M-3.375,-0.7 L-2.625,-0.7 A0.1,0.1 1.5707963267949 0 1 -2.625,-0.5 L-3.375,-0.5 L-3.375,-0.7 ' stroke-width='0'  sl='49' />
+ <path  d='M-3.375,-0.3 L-2.625,-0.3 A0.1,0.1 1.5707963267949 0 1 -2.625,-0.1 L-3.375,-0.1 L-3.375,-0.3 ' stroke-width='0'  sl='55' />
+ <path  d='M-3.375,0.1 L-2.625,0.1 A0.1,0.1 1.5707963267949 0 1 -2.625,0.3 L-3.375,0.3 L-3.375,0.1 ' stroke-width='0'  sl='61' />
+ <path  d='M-3.375,0.5 L-2.625,0.5 A0.1,0.1 1.5707963267949 0 1 -2.625,0.7 L-3.375,0.7 L-3.375,0.5 ' stroke-width='0'  sl='67' />
+ <path  d='M-3.375,0.9 L-2.625,0.9 A0.1,0.1 1.5707963267949 0 1 -2.625,1.1 L-3.375,1.1 L-3.375,0.9 ' stroke-width='0'  sl='73' />
+ <path  d='M-3.375,1.3 L-2.625,1.3 A0.1,0.1 1.5707963267949 0 1 -2.625,1.5 L-3.375,1.5 L-3.375,1.3 ' stroke-width='0'  sl='79' />
+ <path  d='M-3.375,1.7 L-2.625,1.7 A0.1,0.1 1.5707963267949 0 1 -2.625,1.9 L-3.375,1.9 L-3.375,1.7 ' stroke-width='0'  sl='85' />
+ <path  d='M-3.375,2.1 L-2.625,2.1 A0.1,0.1 1.5707963267949 0 1 -2.625,2.3 L-3.375,2.3 L-3.375,2.1 ' stroke-width='0'  sl='91' />
+ <path  d='M-2.3,3.375 L-2.3,2.625 A0.1,0.1 0 0 1 -2.1,2.625 L-2.1,3.375 L-2.3,3.375 ' stroke-width='0'  sl='97' />
+ <path  d='M-1.9,3.375 L-1.9,2.625 A0.1,0.1 0 0 1 -1.7,2.625 L-1.7,3.375 L-1.9,3.375 ' stroke-width='0'  sl='103' />
+ <path  d='M-1.5,3.375 L-1.5,2.625 A0.1,0.1 0 0 1 -1.3,2.625 L-1.3,3.375 L-1.5,3.375 ' stroke-width='0'  sl='109' />
+ <path  d='M-1.1,3.375 L-1.1,2.625 A0.1,0.1 0 0 1 -0.9,2.625 L-0.9,3.375 L-1.1,3.375 ' stroke-width='0'  sl='115' />
+ <path  d='M-0.7,3.375 L-0.7,2.625 A0.1,0.1 0 0 1 -0.5,2.625 L-0.5,3.375 L-0.7,3.375 ' stroke-width='0'  sl='121' />
+ <path  d='M-0.3,3.375 L-0.3,2.625 A0.1,0.1 0 0 1 -0.1,2.625 L-0.1,3.375 L-0.3,3.375 ' stroke-width='0'  sl='127' />
+ <path  d='M0.1,3.375 L0.1,2.625 A0.1,0.1 0 0 1 0.3,2.625 L0.3,3.375 L0.1,3.375 ' stroke-width='0'  sl='133' />
+ <path  d='M0.5,3.375 L0.5,2.625 A0.1,0.1 0 0 1 0.7,2.625 L0.7,3.375 L0.5,3.375 ' stroke-width='0'  sl='139' />
+ <path  d='M0.9,3.375 L0.9,2.625 A0.1,0.1 0 0 1 1.1,2.625 L1.1,3.375 L0.9,3.375 ' stroke-width='0'  sl='145' />
+ <path  d='M1.3,3.375 L1.3,2.625 A0.1,0.1 0 0 1 1.5,2.625 L1.5,3.375 L1.3,3.375 ' stroke-width='0'  sl='151' />
+ <path  d='M1.7,3.375 L1.7,2.625 A0.1,0.1 0 0 1 1.9,2.625 L1.9,3.375 L1.7,3.375 ' stroke-width='0'  sl='157' />
+ <path  d='M2.1,3.375 L2.1,2.625 A0.1,0.1 0 0 1 2.3,2.625 L2.3,3.375 L2.1,3.375 ' stroke-width='0'  sl='163' />
+ <path  d='M3.375,2.3 L2.625,2.3 A0.1,0.1 1.5707963267949 0 1 2.625,2.1 L3.375,2.1 L3.375,2.3 ' stroke-width='0'  sl='169' />
+ <path  d='M3.375,1.9 L2.625,1.9 A0.1,0.1 1.5707963267949 0 1 2.625,1.7 L3.375,1.7 L3.375,1.9 ' stroke-width='0'  sl='175' />
+ <path  d='M3.375,1.5 L2.625,1.5 A0.1,0.1 1.5707963267949 0 1 2.625,1.3 L3.375,1.3 L3.375,1.5 ' stroke-width='0'  sl='181' />
+ <path  d='M3.375,1.1 L2.625,1.1 A0.1,0.1 1.5707963267949 0 1 2.625,0.9 L3.375,0.9 L3.375,1.1 ' stroke-width='0'  sl='187' />
+ <path  d='M3.375,0.7 L2.625,0.7 A0.1,0.1 1.5707963267949 0 1 2.625,0.5 L3.375,0.5 L3.375,0.7 ' stroke-width='0'  sl='193' />
+ <path  d='M3.375,0.3 L2.625,0.3 A0.1,0.1 1.5707963267949 0 1 2.625,0.1 L3.375,0.1 L3.375,0.3 ' stroke-width='0'  sl='199' />
+ <path  d='M3.375,-0.1 L2.625,-0.1 A0.1,0.1 1.5707963267949 0 1 2.625,-0.3 L3.375,-0.3 L3.375,-0.1 ' stroke-width='0'  sl='205' />
+ <path  d='M3.375,-0.5 L2.625,-0.5 A0.1,0.1 1.5707963267949 0 1 2.625,-0.7 L3.375,-0.7 L3.375,-0.5 ' stroke-width='0'  sl='211' />
+ <path  d='M3.375,-0.9 L2.625,-0.9 A0.1,0.1 1.5707963267949 0 1 2.625,-1.1 L3.375,-1.1 L3.375,-0.9 ' stroke-width='0'  sl='217' />
+ <path  d='M3.375,-1.3 L2.625,-1.3 A0.1,0.1 1.5707963267949 0 1 2.625,-1.5 L3.375,-1.5 L3.375,-1.3 ' stroke-width='0'  sl='223' />
+ <path  d='M3.375,-1.7 L2.625,-1.7 A0.1,0.1 1.5707963267949 0 1 2.625,-1.9 L3.375,-1.9 L3.375,-1.7 ' stroke-width='0'  sl='229' />
+ <path  d='M3.375,-2.1 L2.625,-2.1 A0.1,0.1 1.5707963267949 0 1 2.625,-2.3 L3.375,-2.3 L3.375,-2.1 ' stroke-width='0'  sl='235' />
+ <path  d='M2.3,-3.375 L2.3,-2.625 A0.1,0.1 -0 0 1 2.1,-2.625 L2.1,-3.375 L2.3,-3.375 ' stroke-width='0'  sl='241' />
+ <path  d='M1.9,-3.375 L1.9,-2.625 A0.1,0.1 -0 0 1 1.7,-2.625 L1.7,-3.375 L1.9,-3.375 ' stroke-width='0'  sl='247' />
+ <path  d='M1.5,-3.375 L1.5,-2.625 A0.1,0.1 -0 0 1 1.3,-2.625 L1.3,-3.375 L1.5,-3.375 ' stroke-width='0'  sl='253' />
+ <path  d='M1.1,-3.375 L1.1,-2.625 A0.1,0.1 -0 0 1 0.9,-2.625 L0.9,-3.375 L1.1,-3.375 ' stroke-width='0'  sl='259' />
+ <path  d='M0.7,-3.375 L0.7,-2.625 A0.1,0.1 -0 0 1 0.5,-2.625 L0.5,-3.375 L0.7,-3.375 ' stroke-width='0'  sl='265' />
+ <path  d='M0.3,-3.375 L0.3,-2.625 A0.1,0.1 -0 0 1 0.1,-2.625 L0.1,-3.375 L0.3,-3.375 ' stroke-width='0'  sl='271' />
+ <path  d='M-0.1,-3.375 L-0.1,-2.625 A0.1,0.1 -0 0 1 -0.3,-2.625 L-0.3,-3.375 L-0.1,-3.375 ' stroke-width='0'  sl='277' />
+ <path  d='M-0.5,-3.375 L-0.5,-2.625 A0.1,0.1 -0 0 1 -0.7,-2.625 L-0.7,-3.375 L-0.5,-3.375 ' stroke-width='0'  sl='283' />
+ <path  d='M-0.9,-3.375 L-0.9,-2.625 A0.1,0.1 -0 0 1 -1.1,-2.625 L-1.1,-3.375 L-0.9,-3.375 ' stroke-width='0'  sl='289' />
+ <path  d='M-1.3,-3.375 L-1.3,-2.625 A0.1,0.1 -0 0 1 -1.5,-2.625 L-1.5,-3.375 L-1.3,-3.375 ' stroke-width='0'  sl='295' />
+ <path  d='M-1.7,-3.375 L-1.7,-2.625 A0.1,0.1 -0 0 1 -1.9,-2.625 L-1.9,-3.375 L-1.7,-3.375 ' stroke-width='0'  sl='301' />
+ <path  d='M-2.1,-3.375 L-2.1,-2.625 A0.1,0.1 -0 0 1 -2.3,-2.625 L-2.3,-3.375 L-2.1,-3.375 ' stroke-width='0'  sl='307' />
+</g>
+<g stroke='#FFFF54' fill='#FFFF54' class='PinNumbers Text' display='inherit'>
+ <text x='-2.95' y='-2.13' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[1]]></text>
+ <text x='-2.95' y='-1.73' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[2]]></text>
+ <text x='-2.95' y='-1.33' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[3]]></text>
+ <text x='-2.95' y='-0.93' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[4]]></text>
+ <text x='-2.95' y='-0.53' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[5]]></text>
+ <text x='-2.95' y='-0.13' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[6]]></text>
+ <text x='-2.95' y='0.27' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[7]]></text>
+ <text x='-2.95' y='0.67' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[8]]></text>
+ <text x='-2.95' y='1.07' font-size='0.2' stroke='none' text-anchor='middle' ><![CDATA[9]]></text>
+ <text x='-2.95' y='1.435' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[10]]></text>
+ <text x='-2.95' y='1.835' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[11]]></text>
+ <text x='-2.95' y='2.235' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[12]]></text>
+ <text x='-2.2' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[13]]></text>
+ <text x='-1.8' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[14]]></text>
+ <text x='-1.4' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[15]]></text>
+ <text x='-1' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[16]]></text>
+ <text x='-0.6' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[17]]></text>
+ <text x='-0.2' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[18]]></text>
+ <text x='0.2' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[19]]></text>
+ <text x='0.6' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[20]]></text>
+ <text x='1' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[21]]></text>
+ <text x='1.4' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[22]]></text>
+ <text x='1.8' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[23]]></text>
+ <text x='2.2' y='2.985' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[24]]></text>
+ <text x='2.95' y='2.235' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[25]]></text>
+ <text x='2.95' y='1.835' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[26]]></text>
+ <text x='2.95' y='1.435' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[27]]></text>
+ <text x='2.95' y='1.035' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[28]]></text>
+ <text x='2.95' y='0.635' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[29]]></text>
+ <text x='2.95' y='0.235' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[30]]></text>
+ <text x='2.95' y='-0.165' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[31]]></text>
+ <text x='2.95' y='-0.565' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[32]]></text>
+ <text x='2.95' y='-0.965' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[33]]></text>
+ <text x='2.95' y='-1.365' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[34]]></text>
+ <text x='2.95' y='-1.765' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[35]]></text>
+ <text x='2.95' y='-2.165' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[36]]></text>
+ <text x='2.2' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[37]]></text>
+ <text x='1.8' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[38]]></text>
+ <text x='1.4' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[39]]></text>
+ <text x='1' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[40]]></text>
+ <text x='0.6' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[41]]></text>
+ <text x='0.2' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[42]]></text>
+ <text x='-0.2' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[43]]></text>
+ <text x='-0.6' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[44]]></text>
+ <text x='-1' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[45]]></text>
+ <text x='-1.4' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[46]]></text>
+ <text x='-1.8' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[47]]></text>
+ <text x='-2.2' y='-2.915' font-size='0.1' stroke='none' text-anchor='middle' ><![CDATA[48]]></text>
+ <text x='0' y='0.76125' font-size='2.175' stroke='none' text-anchor='middle' ><![CDATA[49]]></text>
+</g>
+</g>
+</svg>

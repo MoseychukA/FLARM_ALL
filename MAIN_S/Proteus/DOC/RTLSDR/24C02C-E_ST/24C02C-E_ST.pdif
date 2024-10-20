@@ -1,0 +1,139 @@
+;Proteus Design Interchange Format
+
+(PDIF
+  (vendor "Labcenter Electronics")
+  (version 1 0)
+  (library
+    (part "SOP8P65_300X640X120L60X24N"
+      (family "ANA")
+      (package "SOP8P65_300X640X120L60X24N")
+      (attribute "PKG_TYPE" "SOP8P65_300X640X120L60X24N")
+    )
+    (package "SOP8P65_300X640X120L60X24N"
+      (units THOU)
+      (layer TSLK
+        (graphic
+          (stroke 5.0)
+          (path (pt -86.61 53.94) (pt -86.61 59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -86.61 59.06) (pt 86.61 59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 86.61 59.06) (pt 86.61 53.94))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -86.61 -53.54) (pt -86.61 -59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -86.61 -59.06) (pt 86.61 -59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 86.61 -59.06) (pt 86.61 -53.54))
+        )
+        (graphic
+          (stroke 11.81)
+          (fill NONE)
+          (circle (pt -64.96 34.25) (pt -53.15 34.25))
+        )
+        (graphic
+          (stroke 5.91)
+          (circle (pt -136.42 61.02) (pt -130.51 61.02))
+        )
+      )
+      (layer TASM
+        (graphic
+          (stroke 5.0)
+          (path (pt -86.61 59.06) (pt 86.61 59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 86.61 59.06) (pt 86.61 -59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 86.61 -59.06) (pt -86.61 -59.06))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -86.61 -59.06) (pt -86.61 59.06))
+        )
+      )
+      (layer OCCA
+        (graphic
+          (stroke 1.97)
+          (path (pt -144.29 68.9) (pt 144.29 68.9))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 144.29 68.9) (pt 144.29 -68.9))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 144.29 -68.9) (pt -144.29 -68.9))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt -144.29 -68.9) (pt -144.29 68.9))
+        )
+      )
+      (leg 1 (pt -111.02 38.39) (padstack 1))
+      (leg 2 (pt -111.02 12.8) (padstack 2))
+      (leg 3 (pt -111.02 -12.8) (padstack 3))
+      (leg 4 (pt -111.02 -38.39) (padstack 4))
+      (leg 5 (pt 111.02 -38.39) (padstack 5))
+      (leg 6 (pt 111.02 -12.8) (padstack 6))
+      (leg 7 (pt 111.02 12.8) (padstack 7))
+      (leg 8 (pt 111.02 38.39) (padstack 8))
+      (padstack 1
+        (pad (layer TCOP) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TRES) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TPST) (rectf 15.35 50.79 0 4.07 0))
+      )
+      (padstack 2
+        (pad (layer TCOP) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TRES) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TPST) (rectf 15.35 50.79 0 4.07 0))
+      )
+      (padstack 3
+        (pad (layer TCOP) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TRES) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TPST) (rectf 15.35 50.79 0 4.07 0))
+      )
+      (padstack 4
+        (pad (layer TCOP) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TRES) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TPST) (rectf 15.35 50.79 0 4.07 0))
+      )
+      (padstack 5
+        (pad (layer TCOP) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TRES) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TPST) (rectf 15.35 50.79 0 4.07 0))
+      )
+      (padstack 6
+        (pad (layer TCOP) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TRES) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TPST) (rectf 15.35 50.79 0 4.07 0))
+      )
+      (padstack 7
+        (pad (layer TCOP) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TRES) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TPST) (rectf 15.35 50.79 0 4.07 0))
+      )
+      (padstack 8
+        (pad (layer TCOP) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TRES) (rectf 15.35 50.79 0 4.07 0))
+        (pad (layer TPST) (rectf 15.35 50.79 0 4.07 0))
+      )
+      (model 24C02C-E_ST.step
+        (euler 0 0 0)
+        (offset 0 0 0)
+      )
+    )
+  )
+)

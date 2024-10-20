@@ -26,7 +26,6 @@
 #include "SettingsMain.h"
 #include "ESP32RF.h"
 #include "OTA.h"
-#include "TimeRF.h"
 #include "GNSS.h"
 #include "RF.h"
 #include "EEPROMRF.h"
