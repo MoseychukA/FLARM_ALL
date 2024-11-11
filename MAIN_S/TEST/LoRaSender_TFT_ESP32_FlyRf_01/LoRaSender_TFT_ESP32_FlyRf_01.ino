@@ -7,7 +7,7 @@ TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
 int counter = 0;
 //const int ledPin =  2;//LED_BUILTIN;// the number of the LED pin
 //const int ledTFT = 5; 
-int ledState = LOW;             // ledState used to set the LED
+int ledState = LOW;             // ledState used to set the LED 
 
 unsigned long previousMillis = 0;        // will store last time LED was updated
 
@@ -17,7 +17,7 @@ const long interval = 3000;           // interval at which to blink (millisecond
 
 # define LORA_SS_PIN 46
 # define LORA_RESET_PIN 7
-# define LORA_DIO0_PIN -1
+# define LORA_DIO0_PIN 3
 
 void setup() {
   Serial.begin(115200);

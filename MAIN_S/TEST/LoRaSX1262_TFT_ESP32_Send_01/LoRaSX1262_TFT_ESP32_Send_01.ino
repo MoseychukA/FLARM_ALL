@@ -1,0 +1,191 @@
+//#include <SPI.h>
+#include <LoraSx1262.h>
+//#include <TFT_eSPI.h> // Hardware-specific library
+//
+//TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+
+byte* payload = (byte*)"Hello world!";
+
+
+LoraSx1262 radio;
+
+
+int counter = 0;
+const int ledPin =  4;// the number of the LED pin
+
+int ledState = LOW;             // ledState used to set the LED 
+
+unsigned long previousMillis = 0;        // will store last time LED was updated
+
+// constants won't change:
+const long interval = 3000;           // interval at which to blink (milliseconds)
+
+
+# define LORA_SS_PIN 46
+# define LORA_RESET_PIN 7
+# define LORA_DIO0_PIN 3
+
+void setup() {
+  Serial.begin(115200);
+  Serial1.begin(115200);
+
+  delay(500);
+  Serial.println("Starting setup!");
+ 
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, HIGH);
+
+ /*while (!Serial){};*/
+ pinMode (ledPin, OUTPUT);
+
+ //// Use this initializer if you're using a 1.8" TFT
+ //tft.init();   // initialize
+ //tft.setRotation(3); // Set the display image orientation to 0, 1, 2 or 3
+
+ //tft.fillScreen(TFT_BLACK);
+
+ //tft.setTextWrap(false);
+ //tft.fillScreen(TFT_BLACK);
+ //tft.setCursor(0, 10);
+ //tft.setTextColor(TFT_WHITE);
+ //tft.setTextSize(2);
+ //tft.println("LoRa Sender");
+
+
+ 
+  Serial.println("LoRa Sender start");
+ 
+  if (psramInit() == false)
+      Serial.println("PSRAM failed to initialize");
+  else
+      Serial.println("PSRAM initialized");
+
+  Serial.printf("PSRAM Size available (bytes): %d\r\n", ESP.getFreePsram());
+
+  heap_caps_malloc_extmem_enable(8000); //Use PSRAM for memory requests larger than 1,000 bytes
+
+  Serial.printf("PSRAM Size available (bytes): %d\r\n", ESP.getFreePsram());
+  Serial.println(ESP.getPsramSize());
+
+
+  if (!radio.begin()) 
+  { 
+      Serial.println("***Failed to initialize radio.");
+      while (1);
+  }
+  else
+  {
+      Serial.println("***LoRa to initialize radio Ok!.");
+
+  }
+
+
+  
+ /******************************
+* ДОПОЛНИТЕЛЬНАЯ КОНФИГУРАЦИЯ
+*************************
+* Предустановки дают некоторую гибкость, чтобы радио работало так, как вам нужно, без необходимости
+* понимать базовые концепции. См. пример AdvancedRadioConfig для более продвинутой конфигурации.
+* Вообще говоря, большая дальность означает более медленную скорость, а меньшая дальность позволяет более высокую скорость
+*
+* ВСЕ ПЕРЕДАТЧИКИ/ПРИЕМНИКИ ДОЛЖНЫ ИМЕТЬ СООТВЕТСТВУЮЩИЕ КОНФИГУРАЦИИ, иначе
+* они не смогут общаться друг с другом
+*/
+
+  // radio.configSetFrequency(902000000);  //Freq in Hz. Must comply with your local radio regulations
+
+   radio.configSetFrequency(868800000);  //Freq in Hz. Must comply with your local radio regulations
+
+  //Предустановки конфигурации. Комментируйте/раскомментируйте, чтобы увидеть, сколько времени занимает передача каждого пакета
+ // radio.configSetPreset(PRESET_DEFAULT);      //По умолчанию - Средний диапазон, средняя скорость
+  radio.configSetPreset(PRESET_FAST);       //Быстрый - Быстрее, но менее надежный на больших расстояниях. Используйте, когда вам нужна быстрая скорость, а радиостанции ближе.
+ // radio.configSetPreset(PRESET_LONGRANGE);  //LongRange - Медленнее и надежнее. Подходит для больших расстояний или когда надежность важнее скорости
+
+
+Serial.println("Setup END!");
+
+}
+
+void loop() 
+{
+ 
+ 
+  //tft.setTextWrap(true, true);
+
+  //// Font and background colour, background colour is used for anti-alias blending
+  //tft.setTextColor(TFT_WHITE, TFT_BLACK);
+
+  //int packetSize = LoRa.parsePacket();
+  //if (packetSize)
+  //{
+  //    // received a packet
+  //    Serial.print("Received packet '");
+
+  //    String recv = "";
+  //    // read packet
+  //    while (LoRa.available()) {
+  //        recv += (char)LoRa.read();
+  //    }
+
+  //    Serial.println(recv);
+
+  //    // print RSSI of packet
+  //    Serial.print("' with RSSI ");
+  //    Serial.println(LoRa.packetRssi());
+ 
+  //    char buf[256];
+  //    tft.setCursor(0, 30);
+  //    tft.println("Received OK!");
+  //    tft.drawString("Received: ", 0, 60, 1);
+  //  //  tft.fillRect(40, 38, 20, 12, TFT_BLACK);
+  //    tft.drawString(recv.c_str(),60, 60);
+  //    snprintf(buf, sizeof(buf), "RSSI:%i", LoRa.packetRssi());
+
+  //    tft.drawString(buf,0, 50);
+  // 
+
+  //}
+
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval)
+  {
+      // save the last time you blinked the LED
+      previousMillis = currentMillis;
+
+      Serial.print("Sending packet: ");
+      Serial.println(counter);
+
+      // send packet "Hello world!"
+       uint32_t startTime = millis();
+     // radio.transmit(payload, strlen(payload));
+      radio.transmit(payload, 12);
+      uint32_t elapsed = millis() - startTime;
+      Serial.print("Transmission time (ms): ");
+      Serial.println(elapsed);
+      delay(100);
+
+
+      //tft.setCursor(10, 70);
+      //tft.println(" Transmitting: OK!");
+      //tft.drawString("Sending: hello", 10, 120, 1);
+      //tft.drawNumber(counter, 195, 120, 1);
+
+
+      if (ledState == LOW) 
+      {
+          ledState = HIGH;
+      }
+      else 
+      {
+          ledState = LOW;
+      }
+
+   
+      digitalWrite(ledPin, ledState);
+
+      counter++;
+
+  }
+
+}
