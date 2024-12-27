@@ -1,11 +1,12 @@
-//#include <SPI.h>
+#include <SPI.h>
 #include <LoraSx1262.h>
-//#include <TFT_eSPI.h> // Hardware-specific library
-//
-//TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+#include <TFT_eSPI.h> // Hardware-specific library
+
+TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
 
 byte* payload = (byte*)"Hello world!";
-
+//byte* payload = (byte*)"$PSRFO, 20, e09de1035f859f3ea159a7d5238cc629f9d16ffa";
+//byte* payload = (byte*)"e09de1035f859f3ea159a7d5238cc629f9d16ffa";
 
 LoraSx1262 radio;
 
@@ -27,7 +28,6 @@ const long interval = 3000;           // interval at which to blink (millisecond
 
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(115200);
 
   delay(500);
   Serial.println("Starting setup!");
@@ -36,9 +36,9 @@ void setup() {
   digitalWrite(ledPin, HIGH);
 
  /*while (!Serial){};*/
- pinMode (ledPin, OUTPUT);
+ 
 
- //// Use this initializer if you're using a 1.8" TFT
+ // Use this initializer if you're using a 1.8" TFT
  //tft.init();   // initialize
  //tft.setRotation(3); // Set the display image orientation to 0, 1, 2 or 3
 
@@ -97,8 +97,8 @@ void setup() {
    radio.configSetFrequency(868800000);  //Freq in Hz. Must comply with your local radio regulations
 
   //Предустановки конфигурации. Комментируйте/раскомментируйте, чтобы увидеть, сколько времени занимает передача каждого пакета
- // radio.configSetPreset(PRESET_DEFAULT);      //По умолчанию - Средний диапазон, средняя скорость
-  radio.configSetPreset(PRESET_FAST);       //Быстрый - Быстрее, но менее надежный на больших расстояниях. Используйте, когда вам нужна быстрая скорость, а радиостанции ближе.
+  radio.configSetPreset(PRESET_DEFAULT);      //По умолчанию - Средний диапазон, средняя скорость
+ // radio.configSetPreset(PRESET_FAST);       //Быстрый - Быстрее, но менее надежный на больших расстояниях. Используйте, когда вам нужна быстрая скорость, а радиостанции ближе.
  // radio.configSetPreset(PRESET_LONGRANGE);  //LongRange - Медленнее и надежнее. Подходит для больших расстояний или когда надежность важнее скорости
 
 
@@ -115,7 +115,7 @@ void loop()
   //// Font and background colour, background colour is used for anti-alias blending
   //tft.setTextColor(TFT_WHITE, TFT_BLACK);
 
-  //int packetSize = LoRa.parsePacket();
+  //int packetSize = radio.parsePacket();
   //if (packetSize)
   //{
   //    // received a packet
@@ -159,17 +159,17 @@ void loop()
       // send packet "Hello world!"
        uint32_t startTime = millis();
      // radio.transmit(payload, strlen(payload));
-      radio.transmit(payload, 12);
+      radio.transmit(payload, 40);
       uint32_t elapsed = millis() - startTime;
       Serial.print("Transmission time (ms): ");
       Serial.println(elapsed);
       delay(100);
 
 
-      //tft.setCursor(10, 70);
-      //tft.println(" Transmitting: OK!");
-      //tft.drawString("Sending: hello", 10, 120, 1);
-      //tft.drawNumber(counter, 195, 120, 1);
+     // tft.setCursor(10, 70);
+     //// tft.println("Transmitting: OK!");
+     // tft.drawString("Sending: hello", 10, 120, 1);
+     // tft.drawNumber(counter, 195, 120, 1);
 
 
       if (ledState == LOW) 

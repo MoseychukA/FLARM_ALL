@@ -1,0 +1,67 @@
+// Порт GPIO к которому подключена кнопка
+#define PIN_BUTTON 27
+// Минимальный таймаут между событиями нажатия кнопки
+#define TM_BUTTON 100
+
+void taskButton1( void *pvParameters );
+SemaphoreHandle_t btn1Semaphore;
+
+void setup() {
+   Serial.begin(115200);
+   Serial.println("ESP32 button. Example 3");
+// Запускается задача работы с кнопкой   
+   xTaskCreateUniversal(taskButton1, "btn1", 4096, NULL, 2, NULL,1);   
+}
+
+void loop(void) {}
+
+void IRAM_ATTR ISR_btn1(){
+// Прерывание по кнопке, отпускаем семафор  
+   xSemaphoreGiveFromISR( btn1Semaphore, NULL );
+}
+
+void taskButton1( void *pvParameters ){
+   bool isISR1     = true;
+   bool state_btn  = true;
+   uint32_t ms_btn = 0;
+// Определяем режим работы GPIO с кнопкой   
+   pinMode(PIN_BUTTON,INPUT_PULLUP);
+// Создаем семафор     
+   btn1Semaphore = xSemaphoreCreateBinary();
+// Сразу "берем" семафор чтобы не было первого ложного срабатывания кнопки   
+   xSemaphoreTake( btn1Semaphore, 100 );
+// Запускаем обработчик прерывания (кнопка замыкает GPIO на землю)
+   attachInterrupt(PIN_BUTTON, ISR_btn1, FALLING);   
+   while(true){
+// Обработчик прерывания выключен, функция ждет окончания действия с кнопкой     
+      if( isISR1 ){
+// Ждем "отпускание" семафора
+         xSemaphoreTake( btn1Semaphore, portMAX_DELAY );
+// Отключаем прерывание для устранения повторного срабатывания прерывания во время обработки
+         detachInterrupt(PIN_BUTTON);
+// переводим задачу в цикл обработки кнопки
+         isISR1 = false;   
+      }
+      else {
+         bool st = digitalRead(PIN_BUTTON);
+// Проверка изменения состояния кнопки      
+         if( st != state_btn ){
+            state_btn = st;
+            if( st == LOW ){
+// Фиксируем время нажатия кнопки               
+               ms_btn = millis();
+               Serial.println("Button pressed");
+            }
+            else {
+// Рассчитываем продолжительность нажатия кнопки
+               uint32_t ms_duration = millis() - ms_btn;
+               Serial.print("Button released ");            
+               Serial.println(ms_duration);            
+               attachInterrupt(PIN_BUTTON, ISR_btn1, FALLING); 
+               isISR1 = true;
+            }
+         }        
+         vTaskDelay(100);
+      }
+   }
+}

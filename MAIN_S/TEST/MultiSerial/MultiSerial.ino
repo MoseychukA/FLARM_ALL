@@ -30,17 +30,17 @@
 
 
 
-//const int MySerialRX = 37;
-//const int MySerialTX = 38;
+const int MySerialRX = 38;
+const int MySerialTX = 39;
 
 
 
 void setup() {
   // initialize both serial ports:
   Serial.begin(115200);
-  Serial1.begin(9600);
+ // Serial1.begin(9600);
 
-//Serial2.begin(115200, SERIAL_8N1, MySerialRX, MySerialTX);
+Serial2.begin(115200, SERIAL_8N1, MySerialRX, MySerialTX);
 
 
   
@@ -98,17 +98,17 @@ void setup() {
 
 void loop() {
   // read from port 1, send to port 0:
-  /*
-  if (Serial1.available()) 
+  
+  if (Serial2.available()) 
   {
-    int inByte = Serial1.read();
+    int inByte = Serial2.read();
     Serial.write(inByte);
   }
 
   // read from port 0, send to port 1:
   if (Serial.available()) {
     int inByte = Serial.read();
-    Serial1.write(inByte);
+    Serial2.write(inByte);
   }
-  */
+  
 }
