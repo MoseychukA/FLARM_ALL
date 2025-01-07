@@ -1394,8 +1394,8 @@ bool coordinates_waiting()
 bool array_countMax = false;
 int sum_filtre = 0;
 uint8_t array_count = 0;
-uint8_t array_size = 30;
-int dimension_array[30];
+uint8_t array_size = 50;
+int dimension_array[50];
 
 
 float battery_read()
@@ -1456,6 +1456,10 @@ float battery_read()
         }
         val_voltage = sum_filtre / array_count;
     }
+    Serial.print("array_count: ");
+    Serial.print(array_count);
+    Serial.print(" val_voltage: ");
+    Serial.println(val_voltage);
 
     sum_filtre = 0;
 
