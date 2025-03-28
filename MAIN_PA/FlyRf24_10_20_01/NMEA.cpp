@@ -431,10 +431,12 @@ void NMEA_Export()
           Serial.println(fo.stealth);
           Serial.println(fo.no_track);
 #endif
-          if (settings->nmea_l) {
+          if (settings->nmea_l) 
+          {
             distance = Container[i].distance;
 
-            if (distance < ALARM_ZONE_NONE) {
+            if (distance < ALARM_ZONE_NONE) 
+            {
 
               total_objects++;
 
@@ -446,7 +448,8 @@ void NMEA_Export()
               alarm_level = Container[i].alarm_level;
               alt_diff = (int) (Container[i].altitude - ThisAircraft.altitude);
 
-              if (!Container[i].stealth && !ThisAircraft.stealth) {
+              if (!Container[i].stealth && !ThisAircraft.stealth) 
+              {
                 dtostrf(
                   constrain(Container[i].vs / (_GPS_FEET_PER_METER * 60.0), -32.7, 32.7),
                   5, 1, str_climb_rate);
@@ -459,15 +462,20 @@ void NMEA_Export()
                */
               memset((void *) NMEA_Callsign, 0, sizeof(NMEA_Callsign));
 
-              if (strnlen((char *) Container[i].callsign, sizeof(Container[i].callsign)) > 0) {
+              if (strnlen((char *) Container[i].callsign, sizeof(Container[i].callsign)) > 0) 
+              {
                 memcpy(NMEA_Callsign, Container[i].callsign, sizeof(Container[i].callsign));
-                for (int j=0; j < sizeof(NMEA_Callsign); j++) {
-                  if (NMEA_Callsign[j] == ' ' || NMEA_Callsign[j] == ',' || NMEA_Callsign[j] == '*') {
+                for (int j=0; j < sizeof(NMEA_Callsign); j++) 
+                {
+                  if (NMEA_Callsign[j] == ' ' || NMEA_Callsign[j] == ',' || NMEA_Callsign[j] == '*') 
+                  {
                     NMEA_Callsign[j] = 0;
                     break;
                   }
                 }
-              } else {
+              } 
+              else 
+              {
                 memcpy(NMEA_Callsign, NMEA_CallSign_Prefix[Container[i].protocol],
                   strlen(NMEA_CallSign_Prefix[Container[i].protocol]));
 
