@@ -1,0 +1,297 @@
+P-CAD Schematic ASCII File Export Log :
+      Information : Start export of symbol definitions for parts
+      Warning :     Symbol name [USB_B_4M], mode [Normal], part [1] changed to [USB_B_4M_1_N]
+      Warning :     Symbol name [CAPC], mode [Normal], part [1] changed to [CAPC_1_N]
+      Warning :     Symbol name [AP1117], mode [Normal], part [1] changed to [AP1117_1_N]
+      Warning :     Rectangle [0mil : -400mil]-[600mil : 0mil] exported as lines.
+      Warning :     Symbol name [STM32F0], mode [Normal], part [1] changed to [STM32F0_1_N]
+      Warning :     Rectangle [0mil : -2500mil]-[1200mil : 0mil] exported as lines.
+      Warning :     Symbol name [BGM1013], mode [Normal], part [1] changed to [BGM1013_1_N]
+      Warning :     Rectangle [0mil : -400mil]-[700mil : 0mil] exported as lines.
+      Warning :     Symbol name [TA0232A], mode [Normal], part [1] changed to [TA0232A_1_N]
+      Warning :     Rectangle [0mil : -800mil]-[1100mil : 0mil] exported as lines.
+      Warning :     Symbol name [TA1090EC], mode [Normal], part [1] changed to [TA1090EC_1_N]
+      Warning :     Rectangle [0mil : -800mil]-[1100mil : 0mil] exported as lines.
+      Warning :     Symbol name [RES], mode [Normal], part [1] changed to [RES_1_N]
+      Warning :     Symbol name [BTN-4N], mode [Normal], part [1] changed to [BTN-4N_1_N]
+      Warning :     Ellipse at position [-100mil : -50mil] approximated with a circular arc
+      Warning :     Ellipse at position [100mil : -50mil] approximated with a circular arc
+      Warning :     Symbol name [LED_GRN], mode [Normal], part [1] changed to [LED_GRN_1_N]
+      Warning :     Symbol name [RF_SMA_RCPT_BRD_EDGE], mode [Normal], part [1] changed to [RF_SMA_RCPT_BRD_EDGE_1_N]
+      Warning :     Symbol name [MOV], mode [Normal], part [1] changed to [MOV_1_N]
+      Warning :     Symbol name [HDR1X3], mode [Normal], part [1] changed to [HDR1X3_1_N]
+      Warning :     Rectangle [0mil : -400mil]-[200mil : 0mil] exported as lines.
+      Warning :     Symbol name [XTAL_COMPACT], mode [Normal], part [1] changed to [XTAL_COMPACT_1_N]
+      Warning :     Symbol name [HDR2X10], mode [Normal], part [1] changed to [HDR2X10_1_N]
+      Warning :     Rectangle [0mil : -1100mil]-[400mil : 0mil] exported as lines.
+      Warning :     Symbol name [INDUCTOR], mode [Normal], part [1] changed to [INDUCTOR_1_N]
+      Warning :     Elliptical arc at position [0mil : 0mil] converted to circular arc
+      Warning :     Elliptical arc at position [80mil : 0mil] converted to circular arc
+      Warning :     Elliptical arc at position [-80mil : 0mil] converted to circular arc
+      Warning :     Symbol name [LED_REDGREEN_CA], mode [Normal], part [1] changed to [LED_REDGREEN_CA_1_N]
+      Warning :     Symbol name [SHIELD-SMD], mode [Normal], part [1] changed to [SHIELD-SMD_1_N]
+      Warning :     Rectangle [0mil : -100mil]-[400mil : 0mil] exported as lines.
+      Warning :     Symbol name [BTN-2N-2G], mode [Normal], part [1] changed to [BTN-2N-2G_1_N]
+      Warning :     Ellipse at position [-100mil : -50mil] approximated with a circular arc
+      Warning :     Ellipse at position [100mil : -50mil] approximated with a circular arc
+      Warning :     Symbol name [MECH], mode [Normal], part [1] changed to [MECH_1_N]
+      Warning :     Rectangle [0mil : -100mil]-[400mil : 0mil] exported as lines.
+      Warning :     Symbol name [FT230], mode [Normal], part [1] changed to [FT230_1_N]
+      Warning :     Rectangle [0mil : -1200mil]-[1200mil : 0mil] exported as lines.
+      Warning :     Symbol name [LT5538], mode [Normal], part [1] changed to [LT5538_1_N]
+      Warning :     Rectangle [0mil : -800mil]-[800mil : 0mil] exported as lines.
+      Information : End export of symbol definitions for part
+      Information : Start exporting the symbol definitions for power ports
+      Warning :     End exporting the symbol defintions for power ports
+      Information : Start exporting component definitions
+      Warning :     Component [J10] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (USB_B_4M).
+      Warning :        Finish exporting component.
+      Warning :     Component [C10] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (CAPC).
+      Warning :        Finish exporting component.
+      Warning :     Component [U10] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (AP1117).
+      Warning :        Finish exporting component.
+      Warning :     Component [C11] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [U50] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (STM32F0).
+      Warning :        Finish exporting component.
+      Warning :     Component [U101] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (BGM1013).
+      Warning :        Finish exporting component.
+      Warning :     Component [U102] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (TA0232A).
+      Warning :        Finish exporting component.
+      Warning :     Component [U100] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (TA1090EC).
+      Warning :        Finish exporting component.
+      Warning :     Component [C31] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C20] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R20] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (RES).
+      Warning :        Finish exporting component.
+      Warning :     Component [S20] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (BTN-4N).
+      Warning :        Finish exporting component.
+      Warning :     Component [R21] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C41] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R41] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C40] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R40] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C42] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R42] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [D40] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (LED_GRN).
+      Warning :        Finish exporting component.
+      Warning :     Component [R43] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [D41] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R44] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [D42] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R45] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C54] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R51] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [S50] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R52] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C51] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C52] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C53] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C30] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C32] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C12] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [U11] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C13] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [J101] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (RF_SMA_RCPT_BRD_EDGE).
+      Warning :        Finish exporting component.
+      Warning :     Component [M100] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (MOV).
+      Warning :        Finish exporting component.
+      Warning :     Component [R100] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R101] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [J100] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (HDR1X3).
+      Warning :        Finish exporting component.
+      Warning :     Component [C102] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C103] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C107] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C108] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C110] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C109] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C111] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R103] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C105] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C106] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R50] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C50] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [Y50] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (XTAL_COMPACT).
+      Warning :        Finish exporting component.
+      Warning :     Component [C55] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C56] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [J50] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (HDR2X10).
+      Warning :        Finish exporting component.
+      Warning :     Component [R11] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R10] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C100] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C101] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [C104] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [L100] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (INDUCTOR).
+      Warning :        Finish exporting component.
+      Warning :     Component [R30] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [R31] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [D30] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (LED_REDGREEN_CA).
+      Warning :        Finish exporting component.
+      Warning :     Component [SH1] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (SHIELD-SMD).
+      Warning :        Finish exporting component.
+      Warning :     Component [S40] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (BTN-2N-2G).
+      Warning :        Finish exporting component.
+      Warning :     Component [S41] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [S42] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [MECH1] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (MECH).
+      Warning :        Finish exporting component.
+      Warning :     Component [R102] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :     Component [U30] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (FT230).
+      Warning :        Finish exporting component.
+      Warning :     Component [U103] in sheet [C:\Users\Alex\AppData\Local\Temp\QjzDE10.tmp] doesn't have a library reference
+      Warning :        Exporting component (LT5538).
+      Warning :        Finish exporting component.
+      Information : End exporting component definitions
+      Information : Start exporting component definitions for power ports
+      Warning :     End exporting component definitions for powerports
+      Information : Start export of netlist
+      Information : Start export of component instances
+      Information : End export of component instances
+      Information : Start export of nets
+      Information : End export of nets
+      Information : End export of netlist
+      Information : Start exporting the objects for sheet [planespotter]
+      Information : Start WIRES export
+      Information : End WIRES export
+      Information : Start BUSES export
+      Information : End BUSES export
+      Information : Start PORTS export
+      Information : End PORTS export
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Warning :     Exporting powerport at [3000mil : 9200mil] as component with designator [GND1]
+      Warning :     Exporting powerport at [4700mil : 9600mil] as component with designator [P3V31]
+      Warning :     Exporting powerport at [4400mil : 9200mil] as component with designator [GND2]
+      Warning :     Exporting powerport at [3600mil : 9100mil] as component with designator [GND3]
+      Warning :     Exporting powerport at [1600mil : 9000mil] as component with designator [GND4]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     Exporting powerport at [2600mil : 9600mil] as component with designator [P5V01]
+      Warning :     Rectangle [400mil : 7200mil]-[5200mil : 10600mil] exported as lines.
+      Warning :     Rectangle [7800mil : 7200mil]-[11700mil : 10600mil] exported as lines.
+      Warning :     Rectangle [5400mil : 7200mil]-[7600mil : 10600mil] exported as lines.
+      Warning :     Rectangle [400mil : 450mil]-[9300mil : 7000mil] exported as lines.
+      Warning :     Rectangle [9500mil : 2100mil]-[16600mil : 7000mil] exported as lines.
+      Warning :     Rectangle [11900mil : 7200mil]-[16600mil : 10600mil] exported as lines.
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     Exporting powerport at [14400mil : 9000mil] as component with designator [GND5]
+      Warning :     Exporting powerport at [12900mil : 9000mil] as component with designator [GND6]
+      Warning :     Exporting powerport at [12300mil : 9000mil] as component with designator [GND7]
+      Warning :     Exporting powerport at [15800mil : 9000mil] as component with designator [GND8]
+      Warning :     Exporting powerport at [13300mil : 8300mil] as component with designator [P3V32]
+      Warning :     Exporting powerport at [14300mil : 8300mil] as component with designator [P3V33]
+      Warning :     Exporting powerport at [15200mil : 8300mil] as component with designator [P3V34]
+      Warning :     Exporting powerport at [5800mil : 8150mil] as component with designator [GND9]
+      Warning :     Exporting powerport at [5800mil : 9350mil] as component with designator [P3V35]
+      Warning :     Exporting powerport at [6700mil : 8250mil] as component with designator [GND10]
+      Warning :     Exporting powerport at [15450mil : 5050mil] as component with designator [GND11]
+      Warning :     Exporting powerport at [16100mil : 5050mil] as component with designator [GND12]
+      Warning :     Exporting powerport at [16100mil : 6250mil] as component with designator [P3V36]
+      Warning :     Exporting powerport at [15200mil : 6250mil] as component with designator [P3V37]
+      Warning :     Exporting powerport at [15200mil : 5750mil] as component with designator [GND13]
+      Warning :     Exporting powerport at [13900mil : 3700mil] as component with designator [GND14]
+      Warning :     Exporting powerport at [8500mil : 7700mil] as component with designator [GND15]
+      Warning :     Exporting powerport at [9300mil : 9800mil] as component with designator [P3V38]
+      Warning :     Exporting powerport at [9300mil : 9600mil] as component with designator [GND16]
+      Warning :     Exporting powerport at [8800mil : 9800mil] as component with designator [P5V02]
+      Warning :     Exporting powerport at [8800mil : 9600mil] as component with designator [GND17]
+      Warning :     Exporting powerport at [8500mil : 8900mil] as component with designator [P3V39]
+      Warning :     Exporting powerport at [8250mil : 8900mil] as component with designator [P5V03]
+      Warning :     Exporting powerport at [10300mil : 9000mil] as component with designator [GND18]
+      Warning :     Exporting powerport at [3800mil : 8400mil] as component with designator [P4V01]
+      Warning :     Exporting powerport at [3800mil : 8100mil] as component with designator [GND19]
+      Warning :     Exporting powerport at [3400mil : 7500mil] as component with designator [GND20]
+      Warning :     Exporting powerport at [2000mil : 8100mil] as component with designator [GND21]
+      Warning :     Exporting powerport at [2000mil : 8400mil] as component with designator [P5V04]
+      Warning :     Exporting powerport at [1500mil : 4300mil] as component with designator [GND22]
+      Warning :     Exporting powerport at [2000mil : 4000mil] as component with designator [GND23]
+      Warning :     Exporting powerport at [2600mil : 4100mil] as component with designator [GND24]
+      Warning :     Exporting powerport at [3200mil : 4100mil] as component with designator [GND25]
+      Warning :     Exporting powerport at [6800mil : 4000mil] as component with designator [GND26]
+      Warning :     Exporting powerport at [6250mil : 6500mil] as component with designator [P3V310]
+      Warning :     Exporting powerport at [7150mil : 6500mil] as component with designator [P4V02]
+      Warning :     Exporting powerport at [6700mil : 6500mil] as component with designator [PVRF1]
+      Warning :     Exporting powerport at [6050mil : 5500mil] as component with designator [PVRF2]
+      Warning :     Exporting powerport at [6050mil : 5100mil] as component with designator [GND27]
+      Warning :     Exporting powerport at [6450mil : 5100mil] as component with designator [GND28]
+      Warning :     Exporting powerport at [1400mil : 2000mil] as component with designator [GND29]
+      Warning :     Exporting powerport at [2300mil : 1600mil] as component with designator [GND30]
+      Warning :     Exporting powerport at [5700mil : 1900mil] as component with designator [GND31]
+      Warning :     Exporting powerport at [8100mil : 2650mil] as component with designator [GND32]
+      Warning :     Exporting powerport at [8100mil : 3150mil] as component with designator [PVRF3]
+      Warning :     Exporting powerport at [7400mil : 1800mil] as component with designator [GND33]
+      Warning :     Rectangle [9500mil : 500mil]-[12000mil : 1900mil] exported as lines.
+      Warning :     Exporting powerport at [4400mil : 3500mil] as component with designator [GND34]
+      Warning :     Exporting powerport at [10600mil : 5200mil] as component with designator [GND35]
+      Warning :     Exporting powerport at [14200mil : 4300mil] as component with designator [GND36]
+      Warning :     Exporting powerport at [14800mil : 4300mil] as component with designator [GND37]
+      Warning :     Exporting powerport at [15200mil : 2500mil] as component with designator [GND38]
+      Warning :     Exporting powerport at [16000mil : 3600mil] as component with designator [P3V311]
+      Warning :     Exporting powerport at [11000mil : 8900mil] as component with designator [P3V312]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     P-CAD doesn't support object type [ParameterSet]
+      Warning :     Exporting powerport at [13850mil : 9000mil] as component with designator [GND39]
+      Warning :     Exporting powerport at [15200mil : 9000mil] as component with designator [GND40]
+      Warning :     Exporting powerport at [10300mil : 800mil] as component with designator [GND41]
+      Warning :     P-CAD doesn't support object type [Parameter]
+      Information : End exporting the objects for sheet [planespotter]
+EndLog

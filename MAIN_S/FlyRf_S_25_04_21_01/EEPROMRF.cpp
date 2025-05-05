@@ -124,7 +124,7 @@ void EEPROM_defaults()
   eeprom_block.field.settings.akk_max     = 420;         // Максимальное значение заряда аккумулятора
   eeprom_block.field.settings.akk_koef    = 90;          // Коэффициет пересчета заряда аккумулятора
   eeprom_block.field.settings.input_coordinates = IMPUT_COORD_AUTO;
-  eeprom_block.field.settings.test_latitude   = 55.958320;
+  eeprom_block.field.settings.test_latitude   = 55;
   eeprom_block.field.settings.test_longitude  = 37;
   eeprom_block.field.settings.input_N_S = IMPUT_N;
   eeprom_block.field.settings.input_E_W = IMPUT_E;

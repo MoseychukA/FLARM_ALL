@@ -477,21 +477,18 @@ void hardwareSettings()
 </tr>\
 <tr>\
 <th align=left>Полушарие(северное или южное) </th>\
-<td align=right>\
+<td align=center>\
 <select name='input_N_S'>\
 <option % s value='%d'>N</option>\
 <option % s value='%d'>S</option>\
 </select>\
 </td>\
-</tr>\
-<tr>\
-<th align=left>latitude(широта 0&#176 - 90&#176) </th>\
-<td align=right>\
-<INPUT type='number' name='test_latitude' required='' min=0 step='0.000001' min='0' max='90' 'value='%.06f'>\
+<td align=center>\
+<INPUT type='number' name='test_latitude' required='' min=0 min='0' max='90' 'value='%d'>\
 </td>\
 </tr>\
 <tr>\
-<th align=left>Долгота(восточная или западная) </th>\
+<th align=left>Долгота(восточная или западная)</th>\
 <td align=right>\
 <select name='input_E_W'>\
 <option % s value='%d'>E</option>\
@@ -500,7 +497,7 @@ void hardwareSettings()
 </td>\
 </tr>\
 <tr>\
-<th align=left>longitude(долгота 0&#176 - 180&#176) </th>\
+<th align=left>longitude(долгота 0&#176 - 180&#176)</th>\
 <td align=right>\
 <INPUT type='number' name='test_longitude' min='0' max='180' value='%d'>\
 </td>\
@@ -523,7 +520,7 @@ size -= len;
 
 
 /*
-
+<th align=left>latitude(широта 0&#176 - 90&#176)</th>\
  max='90'
 */
 
@@ -866,7 +863,7 @@ void hardwareInput()
 <tr><th align=left>Block addr</th><td align=right>%06X</td></tr>\
 <tr><th align=left>Вариант ввода координат</th><td align=right>%d</td></tr>\
 <tr><th align=left>Полушарие (северное или южное)</th><td align=right>%d</td></tr>\
-<tr><th align=left>latitude</th><td align=right>%.06f</td></tr>\
+<tr><th align=left>latitude</th><td align=right>%d</td></tr>\
 <tr><th align=left>Долгота(восточная или западная)</th><td align=right>%d</td></tr>\
 <tr><th align=left>longitude</th><td align=right>%d</td></tr>\
 </table>\

@@ -200,12 +200,6 @@ void setup()
   btn->attachDoubleClickEventCb(&onButtonDoubleClickEventCb, NULL);
   btn->attachLongPressStartEventCb(onButtonLongPressStartEventCb, NULL);
  
-  Serial.println("*****************");
-  if (settings->test_latitude == 55.654321)
-  {
-      Serial.println(settings->test_latitude, 6);
-  }
-
   SoC->WDT_setup();
 }
 
@@ -563,7 +557,7 @@ void coordinate_calculation(float lat, float lon, float course, int distance)
     coord[0] = LAT1;
     coord[1] = LON1;
 }
-
+//int count_test = 0;
 
 void txrx_test()
 {
@@ -579,7 +573,12 @@ void txrx_test()
 
     if (TxPosUpdMarker == 0 || (millis() - TxPosUpdMarker) > 2000)
     {
-        pos_ndx = (pos_ndx + 1) % TXRX_TEST_NUM_POSITIONS;
+       // pos_ndx = (pos_ndx + 1) % TXRX_TEST_NUM_POSITIONS;
+
+        //Serial.print("txrx_test: ");
+        //Serial.println(count_test);
+        //count_test++;
+
 
         switch (set_air)
         {

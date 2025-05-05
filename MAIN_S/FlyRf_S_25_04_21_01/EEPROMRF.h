@@ -92,7 +92,7 @@ typedef struct Settings {
     bool     input_coordinates : 2;
     bool     input_N_S : 2;
     bool     input_E_W : 2;
-    int32_t    test_latitude;
+    int32_t  test_latitude;
     int32_t  test_longitude;
 
 } __attribute__((packed)) settings_t;

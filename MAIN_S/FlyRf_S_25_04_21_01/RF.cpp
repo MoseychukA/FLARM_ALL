@@ -266,7 +266,8 @@ void RF_SetChannel(void)
   Serial.print("Channel: "); Serial.println(chan);
 #endif
 
-  if (rf_chip) {
+  if (rf_chip) 
+  {
     rf_chip->channel(chan);
   }
 }
@@ -279,13 +280,21 @@ void RF_loop()
 size_t RF_Encode(ufo_t *fop)
 {
   size_t size = 0;
+
   if (protocol_encode) 
   {
 
-    if (settings->txpower == RF_TX_POWER_OFF ) 
-    {
-      return size;
-    }
+    //if (settings->txpower == RF_TX_POWER_OFF ) 
+    //{
+    //  return size;
+    //}
+
+
+    //  StdOut.print("*** protocol_encode: "); 
+     // StdOut.println(protocol_encode);
+
+
+
 
     if (millis() > TxTimeMarker) 
     {
@@ -295,8 +304,11 @@ size_t RF_Encode(ufo_t *fop)
   return size;
 }
 
+int count_test = 0;
+
 bool RF_Transmit(size_t size, bool wait)
 {
+
   if (rf_chip && (size > 0)) 
   {
     RF_tx_size = size;
@@ -306,6 +318,12 @@ bool RF_Transmit(size_t size, bool wait)
       return true;
     }*/
 
+
+    StdOut.print("*** RF_tx_size: ");
+    StdOut.println(RF_tx_size);
+
+
+
     if (!wait || millis() > TxTimeMarker) 
     {
 
@@ -313,6 +331,14 @@ bool RF_Transmit(size_t size, bool wait)
 
       if (memcmp(TxBuffer, RxBuffer, RF_tx_size) != 0) 
       { 
+
+          StdOut.print("*** rf_chip->transmit: ");
+          StdOut.println(count_test);
+          count_test++;
+          if (count_test > 1000)
+              count_test = 0;
+
+
 
         rf_chip->transmit();
 
