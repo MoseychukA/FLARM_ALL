@@ -173,7 +173,7 @@ enum
 #define SOC_GPIO_PIN_SCK        12
 #define SOC_GPIO_PIN_SS         46
 #define SOC_GPIO_PIN_RST        7
-#define SOC_GPIO_PIN_BUSY       SOC_UNUSED_PIN
+#define SOC_GPIO_PIN_BUSY       14
 
 #define SOC_GPIO_PIN_SDA        8
 #define SOC_GPIO_PIN_SCL        9
