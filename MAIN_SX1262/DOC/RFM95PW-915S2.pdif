@@ -1,0 +1,371 @@
+;Proteus Design Interchange Format
+
+(PDIF
+  (vendor "Labcenter Electronics")
+  (version 1 0)
+  (library
+    (part "RFM95PW915S2"
+      (family "ANA")
+      (package "XCVR_RFM95PW915S2")
+      (description "Module:_transceiver;_RF;_FSK,GFSK,GMSK,LoRa,MSK,OOK;_915MHz;_SMD")
+      (attribute "PKG_TYPE" "XCVR_RFM95PW915S2")
+      (attribute "MF" "HOPE_Microelectronics")
+      (attribute "MAXIMUM_PACKAGE_HEIGHT" "3.85mm")
+      (attribute "PACKAGE" "None")
+      (attribute "PRICE" "None")
+      (attribute "CHECK_PRICES" "https://www.snapeda.com/parts/RFM95PW-915S2/Hoperf+Microelectronics/view-part/?ref=eda")
+      (attribute "STANDARD" "IPC-7351B")
+      (attribute "PARTREV" "1.1")
+      (attribute "SNAPEDA_LINK" "https://www.snapeda.com/parts/RFM95PW-915S2/Hoperf+Microelectronics/view-part/?ref=snap")
+      (attribute "MP" "RFM95PW-915S2")
+      (attribute "AVAILABILITY" "Not_in_stock")
+      (attribute "MANUFACTURER" "Hoperf_Microelectronics")
+      (gate
+        (swap 1)
+        (symbol "RFM95PW915S2")
+        (pin "3_3V" 9 (type PP))
+        (pin "ANT" 1 (type IO))
+        (pin "DIO0" 6 (type IO))
+        (pin "DIO1/DCLK" 7 (type IO))
+        (pin "DIO2/DATA" 8 (type IO))
+        (pin "DIO3" 3 (type IO))
+        (pin "DIO4" 4 (type IO))
+        (pin "DIO5" 15 (type IO))
+        (pin "GND" 2 (type PP))
+        (pin "GND__1" 16 (type PP))
+        (pin "GND__2" 17 (type PP))
+        (pin "MISO" 10 (type OP))
+        (pin "MOSI" 11 (type IP))
+        (pin "NSS" 13 (type IP))
+        (pin "RESET" 14 (type IP))
+        (pin "SCK" 12 (type IP))
+        (pin "VCC" 5 (type PP))
+      )
+    )
+    (symbol "RFM95PW915S2"
+      (units THOU)
+      (graphic
+        (stroke 1)
+        (path (pt -500 600) (pt 500 600) (pt 500 -800) (pt -500 -800) (pt -500 600) (closed))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 400.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 200.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 100.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 0.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 -100.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 -200.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 -300.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 -400.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 -500.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 -600.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 -700.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 0.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 -100.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 -300.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R0_U_L200") (pt -700.0 300.0) (rot 0) (mir 0) (visible true))
+        (name (pt 239.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE LEFT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_C_L200") (pt 700.0 -200.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 700.0 500.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible true))
+      )
+    )
+    (symbol "PIN_R180_U_L200"
+      (units THOU)
+      (graphic
+        (stroke 6.5)
+        (path (pt 0.0 0.0) (pt -200.0 0.0))
+      )
+    )
+    (symbol "PIN_R0_U_L200"
+      (units THOU)
+      (graphic
+        (stroke 6.5)
+        (path (pt 0.0 0.0) (pt 200.0 0.0))
+      )
+    )
+    (symbol "PIN_R180_C_L200"
+      (units THOU)
+      (graphic
+        (stroke 6.5)
+        (path (pt -200.0 39.37) (pt -278.74 0.0))
+      )
+      (graphic
+        (stroke 6.5)
+        (path (pt -278.74 0.0) (pt -200.0 -39.37))
+      )
+      (graphic
+        (stroke 6.5)
+        (path (pt 0.0 0.0) (pt -200.0 0.0))
+      )
+    )
+    (package "XCVR_RFM95PW915S2"
+      (units THOU)
+      (layer TSLK
+        (graphic
+          (stroke 5.0)
+          (path (pt -696.85 312.01) (pt -696.85 354.33))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -696.85 -354.33) (pt -696.85 -312.01))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 696.85 354.33) (pt 696.85 312.01))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 696.85 -354.33) (pt 696.85 -312.01))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -696.85 354.33) (pt 696.85 354.33))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 696.85 -354.33) (pt -696.85 -354.33))
+        )
+        (graphic
+          (stroke 7.87)
+          (circle (pt -763.98 275.59) (pt -756.1 275.59))
+        )
+      )
+      (layer TASM
+        (graphic
+          (stroke 5.0)
+          (path (pt -696.85 -354.33) (pt -696.85 354.33))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -696.85 354.33) (pt 696.85 354.33))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 696.85 354.33) (pt 696.85 -354.33))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 696.85 -354.33) (pt -696.85 -354.33))
+        )
+        (graphic
+          (stroke 7.87)
+          (circle (pt -763.98 275.59) (pt -756.1 275.59))
+        )
+      )
+      (layer OCCA
+        (graphic
+          (stroke 1.97)
+          (path (pt -730.51 364.17) (pt -730.51 -364.17))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt -730.51 -364.17) (pt 730.51 -364.17))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 730.51 -364.17) (pt 730.51 364.17))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 730.51 364.17) (pt -730.51 364.17))
+        )
+      )
+      (layer TPST
+        (graphic
+          (stroke 1)
+          (path (pt -149.8 -22.44) (pt -98.23 -22.44) (pt -98.23 -115.35) (pt -149.8 -115.35) (pt -149.8 -22.44) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -214.37 -22.44) (pt -162.8 -22.44) (pt -162.8 -115.35) (pt -214.37 -115.35) (pt -214.37 -22.44) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -278.94 -22.44) (pt -227.36 -22.44) (pt -227.36 -115.35) (pt -278.94 -115.35) (pt -278.94 -22.44) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -343.5 -22.44) (pt -291.93 -22.44) (pt -291.93 -115.35) (pt -343.5 -115.35) (pt -343.5 -22.44) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -85.24 -22.44) (pt -33.66 -22.44) (pt -33.66 -115.35) (pt -85.24 -115.35) (pt -85.24 -22.44) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt -20.67 -22.44) (pt 30.91 -22.44) (pt 30.91 -115.35) (pt -20.67 -115.35) (pt -20.67 -22.44) (closed))
+        )
+        (graphic
+          (stroke 1)
+          (path (pt 43.9 -22.44) (pt 95.47 -22.44) (pt 95.47 -115.35) (pt 43.9 -115.35) (pt 43.9 -22.44) (closed))
+        )
+      )
+      (leg 1 (pt -671.26 275.59) (padstack 1))
+      (leg 2 (pt -671.26 196.85) (padstack 2))
+      (leg 3 (pt -671.26 118.11) (padstack 3))
+      (leg 4 (pt -671.26 39.37) (padstack 4))
+      (leg 5 (pt -671.26 -39.37) (padstack 5))
+      (leg 6 (pt -671.26 -118.11) (padstack 6))
+      (leg 7 (pt -671.26 -196.85) (padstack 7))
+      (leg 8 (pt -671.26 -275.59) (padstack 8))
+      (leg 9 (pt 671.26 -275.59) (padstack 9))
+      (leg 10 (pt 671.26 -196.85) (padstack 10))
+      (leg 11 (pt 671.26 -118.11) (padstack 11))
+      (leg 12 (pt 671.26 -39.37) (padstack 12))
+      (leg 13 (pt 671.26 39.37) (padstack 13))
+      (leg 14 (pt 671.26 118.11) (padstack 14))
+      (leg 15 (pt 671.26 196.85) (padstack 15))
+      (leg 16 (pt 671.26 275.59) (padstack 16))
+      (leg 17 (pt -124.02 -68.9) (padstack 17))
+      (padstack 1
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 2
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 3
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 4
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 5
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 6
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 7
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 8
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 9
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 10
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 11
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 12
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 13
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 14
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 15
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 16
+        (pad (layer TCOP) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TRES) (rectf 47.64 98.82 0 0.95 0))
+        (pad (layer TPST) (rectf 47.64 98.82 0 0.95 0))
+      )
+      (padstack 17
+        (pad (layer TCOP) (rectf 185.04 452.76 0 0.0 0))
+        (pad (layer TRES) (rectf 185.04 452.76 0 0.0 0))
+      )
+    )
+  )
+)
