@@ -57,8 +57,6 @@ hardware_info_t hw_info = {
 unsigned long LEDTimeMarker = 0;
 unsigned long ExportTimeMarker = 0;
 
-
-
 static void onButtonPressDownCb(void* button_handle, void* usr_data) 
 {
    service.set_num_buttton(1);
@@ -96,6 +94,9 @@ void setup()
     ver_soft.remove(val_srt);
     Serial.println(ver_soft);
     service.saveVer(ver_soft);  // Сохранить строку с текущей версией.
+
+    pinMode(lmic_pins.nss, INPUT);
+
 
   SERIAL_FLUSH();
 

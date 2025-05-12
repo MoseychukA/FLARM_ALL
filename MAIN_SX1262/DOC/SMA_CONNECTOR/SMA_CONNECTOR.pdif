@@ -1,0 +1,236 @@
+;Proteus Design Interchange Format
+
+(PDIF
+  (vendor "Labcenter Electronics")
+  (version 1 0)
+  (library
+    (part "SMA_CONNECTOR"
+      (family "CON")
+      (package "LPRS_SMA_CONNECTOR")
+      (description "RF_Coaxial_Straight_SMA_Connector")
+      (attribute "PKG_TYPE" "LPRS_SMA_CONNECTOR")
+      (attribute "MF" "LPRS")
+      (attribute "MAXIMUM_PACKAGE_HEIGHT" "8.3_mm")
+      (attribute "PACKAGE" "None")
+      (attribute "PRICE" "None")
+      (attribute "CHECK_PRICES" "https://www.snapeda.com/parts/SMA%20CONNECTOR/LPRS/view-part/?ref=eda")
+      (attribute "STANDARD" "Manufacturer_Recommendations")
+      (attribute "PARTREV" "1.3")
+      (attribute "SNAPEDA_LINK" "https://www.snapeda.com/parts/SMA%20CONNECTOR/LPRS/view-part/?ref=snap")
+      (attribute "MP" "SMA_CONNECTOR")
+      (attribute "AVAILABILITY" "In_Stock")
+      (attribute "MANUFACTURER" "LPRS")
+      (gate
+        (swap 1)
+        (symbol "SMA_CONNECTOR")
+        (pin "1" 1 (type PS))
+        (pin "2" G1 (type PS))
+        (pin "2__1" G2 (type PS))
+        (pin "2__2" G3 (type PS))
+        (pin "2__3" G4 (type PS))
+      )
+    )
+    (symbol "SMA_CONNECTOR"
+      (units THOU)
+      (graphic
+        (stroke 10.0)
+        (fill NONE)
+        (circle (pt -40 0) (pt 40 0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -40.0 -40.0) (pt 0.0 -40.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 -40.0) (pt 40.0 -40.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 -40.0) (pt 0.0 -130.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (fill NONE)
+        (circle (pt -10 -100) (pt 10 -100))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 -130.0) (pt -30.0 -130.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 -130.0) (pt 30.0 -130.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -30.0 -130.0) (pt -50.0 -160.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 -130.0) (pt -20.0 -160.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 30.0 -130.0) (pt 10.0 -160.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path
+          (arc (pt -125 -25) (pt -150 -25) (pt -100 25) (start 180) (sweep 270))
+          (pt -125 25)
+        )
+      )
+      (graphic
+        (stroke 10.0)
+        (path
+          (arc (pt -125 -125) (pt -150 -125) (pt -100 -75) (start 180) (sweep 270))
+          (pt -125 -75)
+        )
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 0.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 -100.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 -200.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 -300.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 -400.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+    )
+    (symbol "PIN_R180_U_L200"
+      (units THOU)
+      (graphic
+        (stroke 6.5)
+        (path (pt 0.0 0.0) (pt -200.0 0.0))
+      )
+    )
+    (package "LPRS_SMA_CONNECTOR"
+      (units THOU)
+      (layer TSLK
+        (graphic
+          (stroke 5.0)
+          (path (pt -39.37 125.98) (pt 39.37 125.98))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -125.98 -39.37) (pt -125.98 39.37))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 39.37 -125.98) (pt -39.37 -125.98))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 125.98 39.37) (pt 125.98 -39.37))
+        )
+      )
+      (layer TASM
+        (graphic
+          (stroke 5.0)
+          (path (pt -125.98 125.98) (pt 125.98 125.98))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 125.98 125.98) (pt 125.98 -125.98))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt 125.98 -125.98) (pt -125.98 -125.98))
+        )
+        (graphic
+          (stroke 5.0)
+          (path (pt -125.98 -125.98) (pt -125.98 125.98))
+        )
+      )
+      (layer OCCA
+        (graphic
+          (stroke 1.97)
+          (path (pt -142.13 142.13) (pt 142.13 142.13))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 142.13 142.13) (pt 142.13 -142.13))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 142.13 -142.13) (pt -142.13 -142.13))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt -142.13 -142.13) (pt -142.13 142.13))
+        )
+      )
+      (leg 1 (pt 0 0) (padstack 1))
+      (leg G1 (pt -94.49 94.49) (padstack 2))
+      (leg G2 (pt -94.49 -94.49) (padstack 3))
+      (leg G3 (pt 94.49 -94.49) (padstack 4))
+      (leg G4 (pt 94.49 94.49) (padstack 5))
+      (padstack 1
+        (hole 39)
+        (plated true)
+        (pad (layer TCOP) (round 59.37))
+        (pad (layer INNER) (round 59.37))
+        (pad (layer BCOP) (round 59.37))
+        (pad (layer TRES) (round 63.31))
+        (pad (layer BRES) (round 63.31))
+      )
+      (padstack 2
+        (hole 50)
+        (plated true)
+        (pad (layer TCOP) (round 75.59))
+        (pad (layer INNER) (round 75.59))
+        (pad (layer BCOP) (round 75.59))
+        (pad (layer TRES) (round 79.53))
+        (pad (layer BRES) (round 79.53))
+      )
+      (padstack 3
+        (hole 50)
+        (plated true)
+        (pad (layer TCOP) (round 75.59))
+        (pad (layer INNER) (round 75.59))
+        (pad (layer BCOP) (round 75.59))
+        (pad (layer TRES) (round 79.53))
+        (pad (layer BRES) (round 79.53))
+      )
+      (padstack 4
+        (hole 50)
+        (plated true)
+        (pad (layer TCOP) (round 75.59))
+        (pad (layer INNER) (round 75.59))
+        (pad (layer BCOP) (round 75.59))
+        (pad (layer TRES) (round 79.53))
+        (pad (layer BRES) (round 79.53))
+      )
+      (padstack 5
+        (hole 50)
+        (plated true)
+        (pad (layer TCOP) (round 75.59))
+        (pad (layer INNER) (round 75.59))
+        (pad (layer BCOP) (round 75.59))
+        (pad (layer TRES) (round 79.53))
+        (pad (layer BRES) (round 79.53))
+      )
+      (model SMA_CONNECTOR.step
+        (euler 0 0 0)
+        (offset 0 0 0)
+      )
+    )
+  )
+)

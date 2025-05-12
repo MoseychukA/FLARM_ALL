@@ -17,12 +17,12 @@ static const int NUM_DIO = 3;
 struct lmic_pinmap {
     u1_t nss;
 
-    // Written HIGH in TX mode, LOW otherwise.
-    // Typically used with a single RXTX switch pin.
+    // Записывается как HIGH в режиме TX, LOW в противном случае.
+    // Обычно используется с одним контактом переключателя RXTX.
     u1_t txe;
-    // Written HIGH in RX mode, LOW otherwise.
-    // Typicaly used with separate RX/TX pins, to allow switching off
-    // the antenna switch completely.
+    // Записывается как HIGH в режиме RX, LOW в противном случае. 
+    // Обычно используется с отдельными контактами RX/TX, чтобы позволить 
+    // полностью отключить переключатель антенны.
     u1_t rxe;
 
     u1_t rst;

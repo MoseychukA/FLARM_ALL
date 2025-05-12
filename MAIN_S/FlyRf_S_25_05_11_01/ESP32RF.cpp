@@ -6,10 +6,8 @@
 #include <SPI.h>
 #include <esp_err.h>
 #include <esp_wifi.h>
-#if !defined(CONFIG_IDF_TARGET_ESP32S2)
 #include <esp_bt.h>
 #include <BLEDevice.h>
-#endif /* CONFIG_IDF_TARGET_ESP32S2 */
 #include <soc/rtc_cntl_reg.h>
 #include <soc/efuse_reg.h>
 #include <Wire.h>
@@ -42,11 +40,9 @@
 
 #if defined(USE_TFT)
 #include <TFT_eSPI.h>
-
-
 #endif /* USE_TFT */
 
-#include <battery.h>
+//#include <battery.h>
 
 // SX12xx pin mapping
 lmic_pinmap lmic_pins = {
@@ -227,7 +223,6 @@ bool TFT_LED_TEST    = false;                // Управление подсветкой дисплея в 
 #endif /* USE_TFT */
 
 extern CommandHandlerClass CommandHandler;
-//int count_buttton_tmp = 0;
 
 bool setMessageRead = false;
 int set_view_range = 0;
@@ -261,7 +256,6 @@ const uint16_t ESP32SX_Device_Version = FLYRF_USB_FW_VERSION;
 #include <Adafruit_SPIFlash.h>
 #include "uCDB.hpp"
 
-/// Flash device list count
 enum {
   EXTERNAL_FLASH_DEVICE_COUNT
 };
@@ -285,11 +279,11 @@ static uint32_t calibrate_one(rtc_cal_sel_t cal_clk, const char *name)
 
 #endif /* CONFIG_IDF_TARGET_ESP32S3 */
 
-#if defined(ENABLE_D1090_INPUT)
-#include <mode-s.h>
-
-mode_s_t state;
-#endif /* ENABLE_D1090_INPUT */
+//#if defined(ENABLE_D1090_INPUT)
+//#include <mode-s.h>
+//
+//mode_s_t state;
+//#endif /* ENABLE_D1090_INPUT */
 
 
 
@@ -343,18 +337,6 @@ static void ESP32_setup()
 
   esp_partition_iterator_t it;
   const esp_partition_t *part;
-
-  /*
-  //Interrupt Modes
-#define DISABLED  0x00
-#define RISING    0x01
-#define FALLING   0x02
-#define CHANGE    0x03
-#define ONLOW     0x04
-#define ONHIGH    0x05
-#define ONLOW_WE  0x0C
-#define ONHIGH_WE 0x0D
-  */
 
   it = esp_partition_find(ESP_PARTITION_TYPE_APP, ESP_PARTITION_SUBTYPE_ANY, NULL);
   if (it) 
@@ -423,8 +405,7 @@ static void ESP32_post_init()
     Serial.println();
     Serial.println(F("Power-on Self Test is complete."));
     Serial.flush();
- 
- 
+  
     Serial.println();
     Serial.println(F("Data output device(s):"));
 
@@ -464,13 +445,10 @@ static void ESP32_loop()
 {
   bool is_irq = false;
   bool down = false;
-
-
 }
 
 static void ESP32_fini(int reason)
 {
-
   esp_deep_sleep_start();
 }
 
@@ -640,9 +618,12 @@ static IPAddress ESP32_WiFi_get_broadcast()
   tcpip_adapter_ip_info_t info;
   IPAddress broadcastIp;
 
-  if (WiFi.getMode() == WIFI_STA) {
+  if (WiFi.getMode() == WIFI_STA) 
+  {
     tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_STA, &info);
-  } else {
+  }
+  else 
+  {
     tcpip_adapter_get_ip_info(TCPIP_ADAPTER_IF_AP, &info);
   }
   broadcastIp = ~info.netmask.addr | info.ip.addr;
@@ -1060,7 +1041,6 @@ static void waiting_txt() // Вывод текста ожидания определения координат
 
 static void drawMessage()
 {
-
     char msg_mem[Number_of_bytes_block] = "";
     char time_msg[Number_of_bytes_time] = "";
     //Serial2.println(msg_mem);
@@ -1077,27 +1057,27 @@ static void drawMessage()
 
     // Необходимо вычислить количество символов в каждой строке.
 
-    int lette_num = mb_strlen(msg_mem, 27);  // Определяем реальное количество байт 26 символов в первой строчке
+    int lette_num = mb_strlen(msg_mem, 26);  // Определяем реальное количество байт 26 символов в первой строчке
 
-    char str1[28] = { 0 };
+    char str1[27] = { 0 };
     strncpy(str1, msg_mem, lette_num);      // Сформировали первую строчку  из 26 символов
     str1[lette_num] = 0;                // записать 0 в конес первой строчки
     rows_Message.drawString(str1, 0, 0);    // Запишем первую строчку в спрайт
 
-    char str_tmp[55] = { 0 };               // Временный массив для второй строчки
+    char str_tmp[54] = { 0 };               // Временный массив для второй строчки
     strcpy(str_tmp, msg_mem + lette_num);   // Записать в str_tmp текст начиная со второй строчки
-    lette_num = mb_strlen(str_tmp, 27);     // Определяем реальное количество байт 27 символов во второй строчке
-    char str2[28] = { 0 };                  // Назначить массив для второй строчки
+    lette_num = mb_strlen(str_tmp, 26);     // Определяем реальное количество байт 27 символов во второй строчке
+    char str2[27] = { 0 };                  // Назначить массив для второй строчки
     strncpy(str2, str_tmp, lette_num);      // Копируем вторую строчку с ограничением  
     str2[lette_num] = 0;                // записать 0 в конес второй строчки
     rows_Message.drawString(str2, 0, 17);   // Запишем вторую строчку в спрайт
 
     char str_tmp1[80] = { 0 };
-    lette_num = mb_strlen(msg_mem, 54);     // Ищем конец второй строчки
+    lette_num = mb_strlen(msg_mem, 52);     // Ищем конец второй строчки
     strcpy(str_tmp1, msg_mem + lette_num);  // Копируем текст третьей строчки
 
-    lette_num = mb_strlen(str_tmp1, 27);    // Ищем конец третьей строчки
-    char str3[28] = { 0 };
+    lette_num = mb_strlen(str_tmp1, 26);    // Ищем конец третьей строчки
+    char str3[26] = { 0 };
 
     strncpy(str3, str_tmp1, lette_num);
     str3[lette_num] = 0;

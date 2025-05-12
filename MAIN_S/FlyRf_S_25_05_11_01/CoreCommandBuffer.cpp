@@ -78,7 +78,7 @@ bool CoreCommandBuffer::hasCommand()                // проверяет на �
             if (strBuff->length() >= BUFFER_SIZE)   // Если иформации больше чем BUFFER_SIZE - принимать не будем и очистим буфер
             {
                 pStream->print(CORE_COMMAND_ANSWER_ERROR);
-                pStream->println(F("The text is very long. !Maximum 75 characters"));
+                pStream->println(F("The text is very long. !Maximum 78 characters"));
                 clearCommand();
                 return true;
             } // if
@@ -109,7 +109,7 @@ bool CoreCommandBuffer::bluetoothCommand()                // проверяет 
             if (ch == '\r')                         // Пропустить, не записывать в буфер
             {
                 continue;
-            }
+            } 
 
             if (ch == '\n')                         // Пропустить, не записывать в буфер
             {
@@ -123,7 +123,7 @@ bool CoreCommandBuffer::bluetoothCommand()                // проверяет 
             if (strBuff->length() >= BUFFER_SIZE)   // Если иформации больше чем BUFFER_SIZE - принимать не будем и очистим буфер
             {
                 pStream->print(CORE_COMMAND_ANSWER_ERROR);
-                pStream->println(F("The text is very long. !Maximum 75 characters"));
+                pStream->println(F("The text is very long. !Maximum 72 characters")); 
                 clearCommand();
                 return true;
             } // if
@@ -584,19 +584,19 @@ bool CommandHandlerClass::setTXT(const char* commandPassed, CommandParser& parse
 
         strncpy(msg_tmp, textString.c_str(), textString.length() + 1);          // Преобразование принятую строку String в массив char для последующей обработки
         int tmp_msg_len = mb_strlen(msg_tmp, textString.length()+1);
-        //pStream->println(tmp_msg_len);
+        pStream->println(tmp_msg_len);
 
         if ((minute_all - minute_msg) <= 10 && minute_msg < minute_all || (minute_all - minute_msg) == 0)
         {
 
             if (textString.length() != 0)
             {
-                if (tmp_msg_len > 75)  // Проверить максимальную длину сообщения
+                if (tmp_msg_len > 72)  // Проверить максимальную длину сообщения
                 {
                     pStream->print(CORE_COMMAND_ANSWER_ERROR);
-                    pStream->println(F("The text is very long. !Maximum 75 characters"));
+                    pStream->println(F("The text is very long. !Maximum 72 characters"));
                     msg_tmp[textString.length() + 1] = { 0 };
-                    strncpy(msg_tmp, textString.c_str(), 78 + 1);          // Преобразование принятую строку String в массив char для последующей обработки
+                    strncpy(msg_tmp, textString.c_str(), 72 + 1);          // Преобразование принятую строку String в массив char для последующей обработки
                 }
 
                 if (timeString.length() != 0)

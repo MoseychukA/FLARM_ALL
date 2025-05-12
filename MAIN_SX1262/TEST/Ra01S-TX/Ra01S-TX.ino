@@ -89,7 +89,7 @@ SX126x  lora(2,               //Port-Pin Output: SPI select
 
 #endif // ESP8266
 
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 
 // Software Serial object to interface with my SIM900
 //SoftwareSerial TestSerial(1, 2);

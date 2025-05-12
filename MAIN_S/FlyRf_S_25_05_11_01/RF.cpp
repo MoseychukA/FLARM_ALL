@@ -8,7 +8,6 @@
 #include "EEPROMRF.h"
 #include "WebRF.h"
 
-
 #include <LibAPRSesp.h>
 
 byte RxBuffer[MAX_PKT_SIZE] __attribute__((aligned(sizeof(uint32_t))));
@@ -31,10 +30,6 @@ bool RF_SX12XX_RST_is_connected = true;
 const char *Protocol_ID[] = {
   [RF_PROTOCOL_LEGACY]    = "LEG",
   [RF_PROTOCOL_OGNTP]     = "OGN",
-  [RF_PROTOCOL_P3I]       = "P3I",
-  [RF_PROTOCOL_ADSB_1090] = "ADS",
-  [RF_PROTOCOL_ADSB_UAT]  = "UAT",
-  [RF_PROTOCOL_FANET]     = "FAN",
 };
 
 size_t (*protocol_encode)(void *, ufo_t *);
@@ -520,6 +515,10 @@ static uint8_t sx1262_ReadReg (uint16_t addr)
 static bool sx1262_probe()
 {
   u1_t v, v_reset;
+ /* pinMode(14, OUTPUT);
+  pinMode(17, OUTPUT);
+  digitalWrite(14, HIGH);
+  digitalWrite(17, LOW);*/
 
   SoC->SPI_begin();
 

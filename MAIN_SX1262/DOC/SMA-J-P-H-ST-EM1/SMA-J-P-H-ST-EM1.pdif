@@ -1,0 +1,282 @@
+;Proteus Design Interchange Format
+
+(PDIF
+  (vendor "Labcenter Electronics")
+  (version 1 0)
+  (library
+    (part "SMAJPHSTEM1"
+      (family "CON")
+      (package "SAMTEC_SMAJPHSTEM1")
+      (description "SMA_Connector_Jack,_Female_Socket_50_Ohms_Board_Edge,_End_Launch_Solder")
+      (attribute "PKG_TYPE" "SAMTEC_SMAJPHSTEM1")
+      (attribute "MF" "Samtec")
+      (attribute "MAXIMUM_PACKAGE_HEIGHT" "3.675mm")
+      (attribute "PACKAGE" "None")
+      (attribute "PRICE" "None")
+      (attribute "CHECK_PRICES" "https://www.snapeda.com/parts/SMA-J-P-H-ST-EM1/Samtec+Inc./view-part/?ref=eda")
+      (attribute "STANDARD" "Manufacturer_Recommendations")
+      (attribute "PARTREV" "G")
+      (attribute "SNAPEDA_LINK" "https://www.snapeda.com/parts/SMA-J-P-H-ST-EM1/Samtec+Inc./view-part/?ref=snap")
+      (attribute "MP" "SMA-J-P-H-ST-EM1")
+      (attribute "AVAILABILITY" "In_Stock")
+      (attribute "MANUFACTURER" "Samtec")
+      (gate
+        (swap 1)
+        (symbol "SMAJPHSTEM1")
+        (pin "1" 1 (type PS))
+        (pin "2" 2_1 (type PS))
+        (pin "2__1" 2_2 (type PS))
+        (pin "2__2" 3_1 (type PS))
+        (pin "2__3" 3_2 (type PS))
+      )
+    )
+    (symbol "SMAJPHSTEM1"
+      (units THOU)
+      (graphic
+        (stroke 10.0)
+        (fill NONE)
+        (circle (pt -40 100) (pt 40 100))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -40.0 60.0) (pt 0.0 60.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 60.0) (pt 40.0 60.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 0.0) (pt -90.0 0.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -130.0 130.0) (pt -100.0 100.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -130.0 70.0) (pt -100.0 100.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 60.0) (pt 0.0 0.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (fill NONE)
+        (circle (pt -10 0) (pt 10 0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -100.0 100.0) (pt 100.0 100.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 100.0 0.0) (pt 0.0 0.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 0.0) (pt 0.0 -30.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 -30.0) (pt -30.0 -30.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 -30.0) (pt 30.0 -30.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -30.0 -30.0) (pt -50.0 -60.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 0.0 -30.0) (pt -20.0 -60.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt 30.0 -30.0) (pt 10.0 -60.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -130.0 30.0) (pt -100.0 0.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -130.0 -30.0) (pt -100.0 0.0))
+      )
+      (graphic
+        (stroke 10.0)
+        (path (pt -100.0 0.0) (pt 0.0 0.0))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 100.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 0.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 -100.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 -200.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+      (terminal
+        (body (symbol "PIN_R180_U_L200") (pt 100.0 -300.0) (rot 0) (mir 0) (visible true))
+        (name (pt -239.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+        (number (pt -39.37 0.0) (rot 0) (just MIDDLE RIGHT) (visible false))
+      )
+    )
+    (symbol "PIN_R180_U_L200"
+      (units THOU)
+      (graphic
+        (stroke 6.5)
+        (path (pt 0.0 0.0) (pt -200.0 0.0))
+      )
+    )
+    (package "SAMTEC_SMAJPHSTEM1"
+      (units THOU)
+      (layer TSLK
+        (graphic
+          (stroke 7.87)
+          (path (pt -70.87 -74.8) (pt -39.37 -74.8))
+        )
+        (graphic
+          (stroke 7.87)
+          (path (pt 39.37 -74.8) (pt 70.87 -74.8))
+        )
+        (graphic
+          (stroke 7.87)
+          (path (pt -70.87 75.2) (pt -39.37 75.2))
+        )
+        (graphic
+          (stroke 7.87)
+          (path (pt 39.37 75.2) (pt 70.87 75.2))
+        )
+        (graphic
+          (stroke 7.87)
+          (circle (pt -2.76 103.15) (pt 5.12 103.15))
+        )
+      )
+      (layer TASM
+        (graphic
+          (stroke 3.94)
+          (path (pt 124.61 -74.8) (pt 124.61 -449.61))
+        )
+        (graphic
+          (stroke 3.94)
+          (path (pt 124.61 -449.61) (pt -124.61 -449.61))
+        )
+        (graphic
+          (stroke 3.94)
+          (path (pt -124.61 -449.61) (pt -124.61 -74.8))
+        )
+        (graphic
+          (stroke 3.94)
+          (path (pt -196.85 -74.8) (pt -124.61 -74.8))
+        )
+        (graphic
+          (stroke 3.94)
+          (path (pt -124.61 -74.8) (pt 124.61 -74.8))
+        )
+        (graphic
+          (stroke 3.94)
+          (path (pt 124.61 -74.8) (pt 196.85 -74.8))
+        )
+        (graphic
+          (stroke 3.94)
+          (path (pt -124.61 -74.8) (pt -125.0 75.2))
+        )
+        (graphic
+          (stroke 3.94)
+          (path (pt -125.0 75.2) (pt 125.0 75.2))
+        )
+        (graphic
+          (stroke 3.94)
+          (path (pt 125.0 75.2) (pt 124.61 -74.8))
+        )
+        (graphic
+          (stroke 7.87)
+          (circle (pt -2.76 103.15) (pt 5.12 103.15))
+        )
+      )
+      (layer OCCA
+        (graphic
+          (stroke 1.97)
+          (path (pt -147.64 100.39) (pt 147.64 100.39))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 147.64 100.39) (pt 147.64 -84.65))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 147.64 -84.65) (pt 134.45 -84.65))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 134.45 -84.65) (pt 134.45 -459.45))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt 134.45 -459.45) (pt -134.45 -459.45))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt -134.45 -459.45) (pt -134.45 -84.65))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt -134.45 -84.65) (pt -147.64 -84.65))
+        )
+        (graphic
+          (stroke 1.97)
+          (path (pt -147.64 -84.65) (pt -147.64 100.39))
+        )
+      )
+      (leg 1 (pt 0 0) (padstack 1))
+      (leg 2_1 (pt -111.22 7.87) (padstack 2))
+      (leg 2_2 (pt -111.22 7.87) (padstack 3))
+      (leg 3_1 (pt 111.22 7.87) (padstack 4))
+      (leg 3_2 (pt 111.22 7.87) (padstack 5))
+      (padstack 1
+        (pad (layer TCOP) (rectf 50.0 141.73 0 0.0 90.0))
+        (pad (layer TRES) (rectf 50.0 141.73 0 0.0 90.0))
+        (pad (layer TPST) (rectf 50.0 141.73 0 0.0 90.0))
+      )
+      (padstack 2
+        (pad (layer TCOP) (rectf 53.15 165.35 0 0.0 90.0))
+        (pad (layer TRES) (rectf 53.15 165.35 0 0.0 90.0))
+        (pad (layer TPST) (rectf 53.15 165.35 0 0.0 90.0))
+      )
+      (padstack 3
+        (pad (layer BCOP) (rectf 53.15 165.35 0 0.0 90.0))
+        (pad (layer BRES) (rectf 53.15 165.35 0 0.0 90.0))
+        (pad (layer BPST) (rectf 53.15 165.35 0 0.0 90.0))
+      )
+      (padstack 4
+        (pad (layer TCOP) (rectf 53.15 165.35 0 0.0 90.0))
+        (pad (layer TRES) (rectf 53.15 165.35 0 0.0 90.0))
+        (pad (layer TPST) (rectf 53.15 165.35 0 0.0 90.0))
+      )
+      (padstack 5
+        (pad (layer BCOP) (rectf 53.15 165.35 0 0.0 90.0))
+        (pad (layer BRES) (rectf 53.15 165.35 0 0.0 90.0))
+        (pad (layer BPST) (rectf 53.15 165.35 0 0.0 90.0))
+      )
+      (model SMA-J-P-H-ST-EM1.step
+        (euler 0 0 0)
+        (offset 0 0 0)
+      )
+    )
+  )
+)
