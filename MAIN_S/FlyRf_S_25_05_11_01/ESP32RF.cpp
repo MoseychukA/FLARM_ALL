@@ -1061,7 +1061,7 @@ static void drawMessage()
 
     char str1[27] = { 0 };
     strncpy(str1, msg_mem, lette_num);      // —формировали первую строчку  из 26 символов
-    str1[lette_num] = 0;                // записать 0 в конес первой строчки
+    str1[lette_num] = 0;                    // записать 0 в конес первой строчки
     rows_Message.drawString(str1, 0, 0);    // «апишем первую строчку в спрайт
 
     char str_tmp[54] = { 0 };               // ¬ременный массив дл€ второй строчки
@@ -1069,7 +1069,7 @@ static void drawMessage()
     lette_num = mb_strlen(str_tmp, 26);     // ќпредел€ем реальное количество байт 27 символов во второй строчке
     char str2[27] = { 0 };                  // Ќазначить массив дл€ второй строчки
     strncpy(str2, str_tmp, lette_num);      //  опируем вторую строчку с ограничением  
-    str2[lette_num] = 0;                // записать 0 в конес второй строчки
+    str2[lette_num] = 0;                    // записать 0 в конес второй строчки
     rows_Message.drawString(str2, 0, 17);   // «апишем вторую строчку в спрайт
 
     char str_tmp1[80] = { 0 };

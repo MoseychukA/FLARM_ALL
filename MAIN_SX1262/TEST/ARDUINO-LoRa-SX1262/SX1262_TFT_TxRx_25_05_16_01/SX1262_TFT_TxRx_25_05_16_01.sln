@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.36107.64
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SX1262_TFT_TxRx_25_05_16_01", "SX1262_TFT_TxRx_25_05_16_01.vcxproj", "{8FAA098B-75B6-4542-AED7-817886C7F1E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Debug|ARM.ActiveCfg = Debug|ARM
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Debug|ARM.Build.0 = Debug|ARM
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Debug|ARM.Deploy.0 = Debug|ARM
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Debug|ARM64.Build.0 = Debug|ARM64
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Release|ARM.ActiveCfg = Release|ARM
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Release|ARM.Build.0 = Release|ARM
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Release|ARM.Deploy.0 = Release|ARM
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Release|ARM64.ActiveCfg = Release|ARM64
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Release|ARM64.Build.0 = Release|ARM64
+		{8FAA098B-75B6-4542-AED7-817886C7F1E2}.Release|ARM64.Deploy.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8AAE3C75-1E93-48B2-B9A7-302962B3A7BD}
+	EndGlobalSection
+EndGlobal

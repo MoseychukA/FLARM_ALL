@@ -158,8 +158,8 @@ enum
 #define SOC_GPIO_PIN_SOS        42 //Кнопка SOS
 //#define SOC_GPIO_PIN_AKK        3 //Напряжение аккумулятора
 
-#define SOC_GPIO_PIN_LORA_TXE   1//SOC_UNUSED_PIN //Управление PA LoRa
-#define SOC_GPIO_PIN_LORA_RXE   2//SOC_UNUSED_PIN //Управление PA LoRa
+#define SOC_GPIO_PIN_LORA_TXE   -1//SOC_UNUSED_PIN //Управление PA LoRa
+#define SOC_GPIO_PIN_LORA_RXE   -1//SOC_UNUSED_PIN //Управление PA LoRa
 
 #define SOC_GPIO_PIN_LED        4 /* TBD 14? */
 #define SOC_GPIO_PIN_TFT_LED   21 

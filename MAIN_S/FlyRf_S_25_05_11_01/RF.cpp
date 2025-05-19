@@ -736,6 +736,12 @@ static bool sx12xx_receive()
     RF_last_rssi = LMIC.rssi;
     rx_packets_counter++;
     success = true;
+
+    //Serial.print("RF_last_rssi: ");
+    //Serial.println(RF_last_rssi);
+    //Serial.print("counter: ");
+    //Serial.println(rx_packets_counter);
+
   }
 
   return success;
@@ -743,6 +749,7 @@ static bool sx12xx_receive()
 
 static void sx12xx_transmit()
 {
+    digitalWrite(SOC_GPIO_PIN_LED, LOW);
     sx12xx_transmit_complete = false;
     sx12xx_receive_active = false;
 
@@ -767,7 +774,7 @@ static void sx12xx_transmit()
       yield();
     };
 
-    
+    digitalWrite(SOC_GPIO_PIN_LED, HIGH);
 }
 
 static void sx1276_shutdown()

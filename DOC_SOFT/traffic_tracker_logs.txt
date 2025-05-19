@@ -1,0 +1,127 @@
+[2025-05-08T17:13:26Z] tracker connection - disconnected
+[2025-05-08T17:13:26Z] feature is on: true
+[2025-05-08T17:13:26Z] start observe network switched
+[2025-05-08T17:13:26Z] try connect to port: 10110
+[2025-05-08T17:13:26Z] tracker connection - disconnected
+[2025-05-08T17:18:26Z] try connect to port: 10110
+[2025-05-08T17:18:26Z] tracker connection - disconnected
+[2025-05-08T17:20:02Z] try connect to port: 10110
+[2025-05-08T17:20:02Z] tracker connection - disconnected
+[2025-05-12T07:53:03Z] tracker connection - disconnected
+[2025-05-12T07:53:04Z] feature is on: true
+[2025-05-12T07:53:04Z] start observe network switched
+[2025-05-12T07:53:04Z] try connect to port: 10110
+[2025-05-12T07:53:04Z] tracker connection - disconnected
+[2025-05-12T08:03:15Z] try connect to port: 10110
+[2025-05-12T08:03:15Z] tracker connection - disconnected
+[2025-05-12T08:03:15Z] UDP listener failed irrecoverably.
+Listener: [L2 failed, local endpoint: <NULL>, parameters: udp, local: ::.10110, definite, attribution: developer, server, port: 0, path <NULL>, service: <NULL>]
+Reason: The operation couldn’t be completed. (Network.NWError error 48 - Address already in use)
+The listener has been terminated.
+[2025-05-12T08:03:15Z] tracker connection - disconnected
+[2025-05-12T08:03:27Z] try connect to port: 10110
+[2025-05-12T08:03:27Z] tracker connection - disconnected
+[2025-05-12T08:03:28Z] tracker connection - connecting
+[2025-05-12T08:03:28Z] tracker connection - established
+[2025-05-12T08:04:12Z] try connect to port: 10110
+[2025-05-12T08:04:12Z] tracker connection - disconnected
+[2025-05-12T08:04:12Z] tracker connection - connecting
+[2025-05-12T08:04:12Z] tracker connection - established
+[2025-05-12T08:05:24Z] try connect to port: 10110
+[2025-05-12T08:05:24Z] tracker connection - disconnected
+[2025-05-12T08:05:24Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:05:25Z] tracker connection - connecting
+[2025-05-12T08:05:25Z] tracker connection - established
+[2025-05-12T08:06:25Z] try connect to port: 10110
+[2025-05-12T08:06:25Z] tracker connection - disconnected
+[2025-05-12T08:06:25Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:06:25Z] tracker connection - connecting
+[2025-05-12T08:06:25Z] tracker connection - established
+[2025-05-12T08:07:26Z] try connect to port: 10110
+[2025-05-12T08:07:26Z] tracker connection - disconnected
+[2025-05-12T08:07:26Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:07:26Z] tracker connection - connecting
+[2025-05-12T08:07:26Z] tracker connection - established
+[2025-05-12T08:08:32Z] try connect to port: 10110
+[2025-05-12T08:08:32Z] tracker connection - disconnected
+[2025-05-12T08:08:32Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:08:33Z] tracker connection - connecting
+[2025-05-12T08:08:33Z] tracker connection - established
+[2025-05-12T08:09:33Z] try connect to port: 10110
+[2025-05-12T08:09:33Z] tracker connection - disconnected
+[2025-05-12T08:09:33Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:09:34Z] tracker connection - connecting
+[2025-05-12T08:09:34Z] tracker connection - established
+[2025-05-12T08:10:34Z] try connect to port: 10110
+[2025-05-12T08:10:34Z] tracker connection - disconnected
+[2025-05-12T08:10:34Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:10:34Z] tracker connection - connecting
+[2025-05-12T08:10:34Z] tracker connection - established
+[2025-05-12T08:11:34Z] try connect to port: 10110
+[2025-05-12T08:11:34Z] tracker connection - disconnected
+[2025-05-12T08:11:34Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:11:35Z] tracker connection - connecting
+[2025-05-12T08:11:35Z] tracker connection - established
+[2025-05-12T08:12:35Z] try connect to port: 10110
+[2025-05-12T08:12:35Z] tracker connection - disconnected
+[2025-05-12T08:12:35Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:12:35Z] tracker connection - connecting
+[2025-05-12T08:12:35Z] tracker connection - established
+[2025-05-12T08:13:36Z] try connect to port: 10110
+[2025-05-12T08:13:36Z] tracker connection - disconnected
+[2025-05-12T08:13:36Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:13:37Z] tracker connection - connecting
+[2025-05-12T08:13:37Z] tracker connection - established
+[2025-05-12T08:14:37Z] try connect to port: 10110
+[2025-05-12T08:14:37Z] tracker connection - disconnected
+[2025-05-12T08:14:37Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:14:38Z] tracker connection - connecting
+[2025-05-12T08:14:38Z] tracker connection - established
+[2025-05-12T08:15:38Z] try connect to port: 10110
+[2025-05-12T08:15:38Z] tracker connection - disconnected
+[2025-05-12T08:15:38Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:15:39Z] tracker connection - connecting
+[2025-05-12T08:15:39Z] tracker connection - established
+[2025-05-12T08:16:39Z] try connect to port: 10110
+[2025-05-12T08:16:39Z] tracker connection - disconnected
+[2025-05-12T08:16:39Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:16:40Z] tracker connection - connecting
+[2025-05-12T08:16:40Z] tracker connection - established
+[2025-05-12T08:17:40Z] try connect to port: 10110
+[2025-05-12T08:17:40Z] tracker connection - disconnected
+[2025-05-12T08:17:40Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:17:41Z] tracker connection - connecting
+[2025-05-12T08:17:41Z] tracker connection - established
+[2025-05-12T08:18:41Z] try connect to port: 10110
+[2025-05-12T08:18:41Z] tracker connection - disconnected
+[2025-05-12T08:18:41Z] UDP message transfer did not complete.
+Reason: The operation couldn’t be completed. (Network.NWError error 89 - Operation canceled)
+The data may have been truncated or the connection interrupted.
+[2025-05-12T08:18:41Z] tracker connection - connecting
+[2025-05-12T08:18:41Z] tracker connection - established
