@@ -1,0 +1,91 @@
+esphome:
+  name: t-display-s3-long
+  friendly_name: LilyGo-T-Display-Long
+  platformio_options:
+    upload_speed: 921600
+    build_unflags: -Werror=all
+    board_build.flash_mode: dio
+    board_build.f_flash: 80000000L
+    board_build.f_cpu: 240000000L
+
+psram:
+  mode: octal
+  speed: 120MHz
+
+esp32:
+  board: esp32-s3-devkitc-1
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+
+external_components:
+  - source: github://buglloc/esphome-components
+    components: [axs15231]
+
+spi:
+  id: display_qspi
+  clk_pin: 17
+  data_pins:
+    - 13
+    - 18
+    - 21
+    - 14
+
+i2c:
+  sda: 15
+  scl: 10
+  id: touchscreen_bus
+
+font:
+  - file: "gfonts://Roboto"
+    id: font_std
+    size: 40
+    glyphs: "!\"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/\\[]|&@#'"
+  - file: "gfonts://Roboto@700"
+    id: font_title
+    size: 40
+    glyphs: "!\"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz/\\[]|&@#'"
+
+globals:
+  - id: bgcolor
+    type: Color
+    initial_value: "Color::random_color()"
+
+display:
+  - platform: axs15231
+    id: main_display
+    spi_id: display_qspi
+    dimensions:
+      height: 640
+      width: 180
+    cs_pin: 12
+    reset_pin: 16
+    backlight_pin: 1
+    transform:
+      swap_xy: false
+    rotation: 90
+    auto_clear_enabled: false
+    lambda: |-
+      it.fill(id(bgcolor));
+      it.print(it.get_width()/2, it.get_height()/2-20, id(font_title), TextAlign::CENTER, "ESPHome");
+      it.print(it.get_width()/2, it.get_height()/2+20, id(font_std), TextAlign::CENTER, "@UTBDK");
+
+touchscreen:
+  - platform: axs15231
+    id: main_touch
+    display: main_display
+    i2c_id: touchscreen_bus
+    transform:
+      swap_xy: true
+    on_touch:
+      - lambda: |-
+          Color newColor;
+          do { newColor =  Color::random_color(); } while (newColor == id(bgcolor));
+          id(bgcolor) = newColor;
+
+          ESP_LOGI("cal", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
+            touch.x,
+            touch.y,
+            touch.x_raw,
+            touch.y_raw
+          );
