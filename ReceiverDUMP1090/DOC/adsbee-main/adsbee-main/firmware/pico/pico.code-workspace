@@ -1,0 +1,157 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../common"
+		},
+		{
+			"path": "../modules"
+		}
+	],
+	"settings": {
+		"cortex-debug.variableUseNaturalFormat": false,
+		"files.associations": {
+			"cstdint": "cpp",
+			"type_traits": "cpp"
+		},
+		// "cortex-debug.variableUseNaturalFormat": true,
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			// {
+			// 	"cwd": "${workspaceFolder}",
+			// 	"executable": "./bin/executable.elf",
+			// 	"name": "Debug with JLink",
+			// 	"request": "launch",
+			// 	"type": "cortex-debug",
+			// 	"device": "",
+			// 	"runToEntryPoint": "main",
+			// 	"showDevDebugOutput": "none",
+			// 	"servertype": "jlink"
+			// },
+			{
+				"name": "Core0 Debug",
+				"type": "cortex-debug",
+				"cwd": "/adsbee/pico",
+				"executable": "${command:cmake.launchTargetPath}",
+				"request": "attach",
+				"servertype": "external",
+				// "gdbPath": "arm-none-eabi-gdb",
+				"gdbTarget": "host.docker.internal:2331",
+				"showDevDebugOutput": "raw",
+				"svdFile": "/usr/local/pico-sdk/src/rp2040/hardware_regs/RP2040.svd",
+				"preRestartCommands": [
+					"file ${command:cmake.launchTargetPath}",
+					"load",
+					"monitor reset"
+				],
+				"armToolchainPath": "/usr/bin",
+				"device": "RP2040",
+			},
+			{
+				"name": "Core1 Debug",
+				"type": "cortex-debug",
+				"cwd": "/adsbee/pico",
+				"executable": "${command:cmake.launchTargetPath}",
+				"request": "attach",
+				"servertype": "external",
+				// "gdbPath": "arm-none-eabi-gdb",
+				"gdbTarget": "host.docker.internal:2431",
+				"showDevDebugOutput": "raw",
+				"svdFile": "/usr/local/pico-sdk/src/rp2040/hardware_regs/RP2040.svd",
+				"preRestartCommands": [
+					"file ${command:cmake.launchTargetPath}",
+					"load",
+					"monitor reset"
+				],
+				"armToolchainPath": "/usr/bin",
+				"device": "RP2040",
+			},
+			{
+				"name": "Bootloader Debug",
+				"type": "cortex-debug",
+				"cwd": "/adsbee/pico",
+				"executable": "/adsbee/pico/build/Debug/bootloader/bootloader.elf",
+				"request": "attach",
+				"servertype": "external",
+				// "gdbPath": "arm-none-eabi-gdb",
+				"gdbTarget": "host.docker.internal:2331",
+				"showDevDebugOutput": "raw",
+				"svdFile": "/usr/local/pico-sdk/src/rp2040/hardware_regs/RP2040.svd",
+				"preRestartCommands": [
+					"file /adsbee/pico/build/Debug/bootloader/bootloader.elf",
+					"load",
+					"monitor reset"
+				],
+				"armToolchainPath": "/usr/bin",
+				"device": "RP2040",
+			},
+			{
+				"name": "Application Debug",
+				"type": "cortex-debug",
+				"cwd": "/adsbee/pico",
+				"executable": "/adsbee/pico/build/Debug/application/application.elf",
+				"request": "attach",
+				"servertype": "external",
+				// "gdbPath": "arm-none-eabi-gdb",
+				"gdbTarget": "host.docker.internal:2331",
+				"showDevDebugOutput": "raw",
+				"svdFile": "/usr/local/pico-sdk/src/rp2040/hardware_regs/RP2040.svd",
+				"preRestartCommands": [
+					"file /adsbee/pico/build/Debug/application/application.elf",
+					"load",
+					"monitor reset"
+				],
+				"armToolchainPath": "/usr/bin",
+				"device": "RP2040",
+			},
+			{
+				"name": "Combined Debug",
+				"type": "cortex-debug",
+				"cwd": "/adsbee/pico",
+				"executable": "/adsbee/pico/build/Debug/application/combined.elf",
+				"request": "attach",
+				"servertype": "external",
+				// "gdbPath": "arm-none-eabi-gdb",
+				"gdbTarget": "host.docker.internal:2331",
+				"showDevDebugOutput": "raw",
+				"svdFile": "/usr/local/pico-sdk/src/rp2040/hardware_regs/RP2040.svd",
+				"preRestartCommands": [
+					"file /adsbee/pico/build/Debug/application/combined.elf",
+					"load",
+					"monitor reset"
+				],
+				"armToolchainPath": "/usr/bin",
+				"device": "RP2040",
+			},
+			{
+				"name": "(gdb) Launch",
+				"type": "cppdbg",
+				"request": "launch",
+				"cwd": "/adsbee/pico",
+				"program": "/adsbee/pico/build/Test/host_test/host_test",
+				"args": [],
+				"stopAtEntry": false,
+				"cwd": "${fileDirname}",
+				"environment": [],
+				"externalConsole": false,
+				"MIMode": "gdb",
+				"setupCommands": [
+					{
+						"description": "Enable pretty-printing for gdb",
+						"text": "-enable-pretty-printing",
+						"ignoreFailures": true
+					},
+					// Print values as hex.
+					{
+						"text": "set output-radix 16"
+					}
+				],
+				"miDebuggerPath": "/usr/bin/gdb",
+			}
+		]
+	},
+}

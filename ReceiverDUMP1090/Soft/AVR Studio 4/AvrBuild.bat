@@ -1,0 +1,2 @@
+@ECHO OFF
+"C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\avrasm2.exe" -S "D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\labels.tmp" -fI -W+ie -C V2E -o "D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\ADSB_ATMEGA48_2.hex" -d "D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\ADSB_ATMEGA48_2.obj" -e "D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\ADSB_ATMEGA48_2.eep" -m "D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\ADSB_ATMEGA48_2.map" "D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\ADSB_ATMEGA48_2.asm"

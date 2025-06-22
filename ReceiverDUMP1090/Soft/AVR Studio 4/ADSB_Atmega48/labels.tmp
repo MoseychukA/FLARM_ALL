@@ -1,0 +1,49 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.1.42</VERSION>
+ <DEVICE>ATmega48</DEVICE>
+ <WORKING_DIR>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\Appnotes</DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\Appnotes\m48def.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.map</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <wlp2><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>130</LINE></wlp2>
+  <wlp1><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>132</LINE></wlp1>
+  <twi_1><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>165</LINE></twi_1>
+  <twi_2><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>175</LINE></twi_2>
+  <twi_3><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>185</LINE></twi_3>
+  <twi_4><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>196</LINE></twi_4>
+  <twi_5><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>206</LINE></twi_5>
+  <twi_6><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>216</LINE></twi_6>
+  <main_loop><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>232</LINE></main_loop>
+  <edge_det><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>245</LINE></edge_det>
+  <sync_cont1><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>299</LINE></sync_cont1>
+  <mdecode_err1><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>296</LINE></mdecode_err1>
+  <CheckForShort><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>544</LINE></CheckForShort>
+  <manchester_decode><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>364</LINE></manchester_decode>
+  <manchester_done_ext><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>355</LINE></manchester_done_ext>
+  <manchester_done><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>518</LINE></manchester_done>
+  <mdecode_err1_ext><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>357</LINE></mdecode_err1_ext>
+  <mdecode_errex><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>419</LINE></mdecode_errex>
+  <mdecode_error><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>491</LINE></mdecode_error>
+  <COUT_0><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>604</LINE></COUT_0>
+  <HEXOUT><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>589</LINE></HEXOUT>
+  <serial_loop><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>526</LINE></serial_loop>
+  <HEXOUT_Reshuffle><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>580</LINE></HEXOUT_Reshuffle>
+  <serial_loop2><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>558</LINE></serial_loop2>
+  <HexNibble><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>596</LINE></HexNibble>
+  <DisplHexDigit><FILE>D:\1GIT FLARM_ALL\ReceiverDUMP1090\Soft\AVR Studio 4\ADSB_Atmega48\ADSB_Atmega48.asm</FILE><LINE>602</LINE></DisplHexDigit>
+ </LABELS>
+</ASSEMBLER_INFO>

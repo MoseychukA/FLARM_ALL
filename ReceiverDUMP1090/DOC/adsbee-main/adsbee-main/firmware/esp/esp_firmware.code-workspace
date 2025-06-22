@@ -1,0 +1,109 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../common"
+		}
+	],
+	"settings": {
+		"C_Cpp.default.compilerPath": "/home/jmcnelly/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc",
+		"C_Cpp.dimInactiveRegions": true,
+		"C_Cpp.default.defines": [
+			"ON_ESP32"
+		],
+		"files.associations": {
+			"compare": "cpp",
+			"cstdint": "cpp",
+			"chrono": "cpp",
+			"cstring": "cpp",
+			"variant": "cpp",
+			"*.inc": "cpp",
+			"functional": "cpp",
+			"system_error": "cpp",
+			"array": "cpp",
+			"atomic": "cpp",
+			"bit": "cpp",
+			"*.tcc": "cpp",
+			"cctype": "cpp",
+			"charconv": "cpp",
+			"clocale": "cpp",
+			"cmath": "cpp",
+			"concepts": "cpp",
+			"condition_variable": "cpp",
+			"cstdarg": "cpp",
+			"cstddef": "cpp",
+			"cstdio": "cpp",
+			"cstdlib": "cpp",
+			"ctime": "cpp",
+			"cwchar": "cpp",
+			"cwctype": "cpp",
+			"deque": "cpp",
+			"list": "cpp",
+			"map": "cpp",
+			"set": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"vector": "cpp",
+			"exception": "cpp",
+			"algorithm": "cpp",
+			"iterator": "cpp",
+			"memory": "cpp",
+			"memory_resource": "cpp",
+			"numeric": "cpp",
+			"optional": "cpp",
+			"random": "cpp",
+			"ratio": "cpp",
+			"string_view": "cpp",
+			"tuple": "cpp",
+			"type_traits": "cpp",
+			"utility": "cpp",
+			"format": "cpp",
+			"future": "cpp",
+			"initializer_list": "cpp",
+			"iomanip": "cpp",
+			"iosfwd": "cpp",
+			"iostream": "cpp",
+			"istream": "cpp",
+			"limits": "cpp",
+			"mutex": "cpp",
+			"new": "cpp",
+			"numbers": "cpp",
+			"ostream": "cpp",
+			"semaphore": "cpp",
+			"span": "cpp",
+			"sstream": "cpp",
+			"stdexcept": "cpp",
+			"stop_token": "cpp",
+			"streambuf": "cpp",
+			"thread": "cpp",
+			"cinttypes": "cpp",
+			"typeinfo": "cpp"
+		},
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"type": "gdbtarget",
+				"request": "attach",
+				"name": "Eclipse CDT Remote",
+				"program": "${workspaceFolder:esp}/build/${command:espIdf.getProjectName}.elf",
+				"initCommands": [
+					"set remote hardware-watchpoint-limit {IDF_TARGET_CPU_WATCHPOINT_NUM}",
+					"mon reset halt",
+					"maintenance flush register-cache"
+				],
+				"gdb": "${command:espIdf.getToolchainGdb}",
+				"target": {
+					"connectCommands": [
+						"set remotetimeout 20",
+						"-target-select extended-remote localhost:3333"
+					]
+				}
+			}
+		],
+		"compounds": []
+	}
+}
