@@ -1,3 +1,0 @@
-[submodule "software/stm32loader"]
-	path = software/stm32loader
-	url = git@github.com:jsnyder/stm32loader.git
