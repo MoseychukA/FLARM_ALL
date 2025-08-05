@@ -1,8 +1,0 @@
-#define TFT_QSPI_CS           45 //12
-#define TFT_QSPI_SCK          47 //17
-#define TFT_QSPI_D0           21 //13
-#define TFT_QSPI_D1           48 //18
-#define TFT_QSPI_D2           40 //21
-#define TFT_QSPI_D3           39 //14
-#define TFT_QSPI_RST          -1 //16 , I don't know this one
-#define TFT_BL                1
