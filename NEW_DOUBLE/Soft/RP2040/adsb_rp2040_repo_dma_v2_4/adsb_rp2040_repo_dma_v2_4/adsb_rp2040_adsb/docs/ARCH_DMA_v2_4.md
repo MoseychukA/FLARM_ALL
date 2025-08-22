@@ -1,0 +1,2 @@
+v2.4: Autoload settings at boot, added Urban/Remote profiles, DF18 support with SRC tagging (ADSB/TISB/ADSR/MLAT), persisted settings via LittleFS.
+v2.4: Автоматическая загрузка настроек при загрузке, добавлены профили Urban/Remote, поддержка DF18 с тегированием SRC (ADSB/TISB/ADSR/MLAT), сохраненные настройки через LittleFS.

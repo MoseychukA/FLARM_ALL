@@ -1,0 +1,55 @@
+Понял. Ошибка “adsb_sampler.pio.h: No such file or directory” означает, что Arduino IDE не сгенерировал заголовок из файла .pio
+ с помощью pioasm (функция ядра Earle Philhower для RP2040). Вот как это исправить.
+
+Чек‑лист быстрых причин и решений
+
+Открыт не тот каталог скетча
+В Arduino IDE обязательно открывайте именно папку adsb_rp2040_adsb как скетч (а не корень архива).
+В этой папке одновременно должны лежать файлы:
+adsb_rp2040_adsb.ino
+adsb_sampler.pio
+остальные .h/.cpp
+Имя папки скетча должно совпадать с именем .ino: adsb_rp2040_adsb/adsb_rp2040_adsb.ino
+Файл adsb_sampler.pio отсутствует или лежит в подкаталоге
+Файл adsb_sampler.pio должен лежать в корне папки скетча, не в docs/ и не в другом подпапке.
+Убедитесь, что расширение именно .pio, а не .pio.txt (Windows часто прячет расширения).
+Содержимое .pio и регистр имени
+Файл должен содержать в первых строках:
+.program adsb_sampler
+loop:
+in pins, 1
+jmp loop
+Имя программы в .pio (.program adsb_sampler) должно совпадать с используемым в коде.
+Include в .ino: #include "adsb_sampler.pio.h" — регистр и имя должны совпадать с именем файла .pio.
+Версии ядра RP2040 и наличие pioasm
+Установите ядро Earle Philhower RP2040 версии 3.7.2 (Менеджер плат):
+Boards Manager URL:
+84ccfcf0-02f9-4b01-964c-dbf4fbe59e55?sp=r&sv=2018-11-09&sr=b&spr=https&se=2025-08-21T09%3A06%3A28Z&rscd=attachment%3B+filename%3Dpackage_rp2040_index.json&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2025-08-21T08%3A05%3A37Z&ske=2025-08-21T09%3A06%3A28Z&sks=b&skv=2018-11-09&sig=TH103j1CuqYPn7e1oy90OMx2ejTpN6OUkWGKsTeWV9s%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc1NTc2NDkzMSwibmJmIjoxNzU1NzY0NjMxLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.fqohabz0My_2Hts7y6b3E-BNUkrBJeHQq-AzjyGP6YY&response-content-disposition=attachment%3B%20filename%3Dpackage_rp2040_index.json&response-content-type=application%2Foctet-stream
+
+release-assets.githubusercontent.com
+
+Выберите плату из этого ядра: Tools → Board → Raspberry Pi Pico
+Инструменты: не требуется дополнительной настройки для pioasm — генерация .pio.h происходит автоматически.
+Проблемы IDE/пути
+Путь к проекту и его родительские папки — без кириллицы, спецсимволов и очень длинных путей (известный баг на Windows/Arduino 2.x).
+Закройте IDE и снова откройте папку скетча.
+Включите “Verbose output during compilation” в Preferences, сделайте “Clean build” (Скетч → Очистить сборку) и соберите заново.
+Проверка pioasm средой
+Откройте пример из ядра: File → Examples → Raspberry Pi Pico → PIO → какой‑нибудь простой (например, PIO blink). Если пример не собирается — переустановите ядро RP2040.
+Если пример собирается, а ваш скетч нет — значит IDE не видит ваш .pio: вернитесь к пунктам 1–3.
+DF: если вы открываете .ino напрямую (двойной клик) — Arduino может создать новый скетч в другом месте
+Всегда открывайте через Файл → Открыть → укажите папку adsb_rp2040_adsb.
+Если хотите, я могу:
+
+Пересобрать архив v2.4 в варианте “header-included”: положить уже сгенерированный adsb_sampler.pio.h вместе с .pio, чтобы сборка шла без вызова pioasm. Напишите — выложу ссылку.
+Дополнительно: проверка на месте
+
+Убедитесь, что в вашем каталоге:
+.../adsb_rp2040_adsb/adsb_rp2040_adsb.ino
+.../adsb_rp2040_adsb/adsb_sampler.pio
+Строка include в .ino:
+#include "adsb_sampler.pio.h"
+Плата: Raspberry Pi Pico (Earle Philhower)
+Версия ядра: 3.7.2
+После этого “Скетч → Очистить сборку”, затем “Скетч → Проверить/Компилировать”.
+Если после всех шагов ошибка повторится, пришлите полный лог сборки (с включённым Verbose), я подскажу точечно.

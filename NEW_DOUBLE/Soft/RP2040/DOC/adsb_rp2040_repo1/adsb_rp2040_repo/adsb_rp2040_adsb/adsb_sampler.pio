@@ -1,0 +1,9 @@
+
+// adsb_sampler.pio
+.program adsb_sampler
+; 1-bit sampler to ISR with autopush every 32 bits, shift-right
+; Pins must be set as IN externally. SM clock set from host to get 10 MHz sampling.
+
+loop:
+    in pins, 1
+    jmp loop

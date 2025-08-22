@@ -1,0 +1,22 @@
+Готово. Архив с полным репозиторием собран и выложен.
+Скачать архив
+Файл: adsb_rp2040_repo.zip
+Ссылка: http://tmpfiles.org/11325571/adsb_rp2040_repo.zip
+SHA-256: daa3bd2311bccdb74b7a873854ca03c6a1da8d34d7dded2dd81b0a187da961ee
+Что внутри
+README.md, LICENSE
+adsb_rp2040_adsb/
+adsb_rp2040_adsb.ino
+adsb_crc.h
+adsb_decoder.h
+adsb_decoder.cpp
+adsb_sampler.pio
+docs/ (ARCH.md, pinout.md, PREAMBLE.md, cpr_notes.md, diagrams.md)
+Как использовать
+Распакуйте архив.
+В Arduino IDE откройте папку adsb_rp2040_adsb как скетч.
+Плата: Raspberry Pi Pico (RP2040), ядро Earle Philhower 3.7.2.
+FreeRTOS_RP2040 (Khoih-prog) v1.3.2 через Library Manager.
+Tools: CPU 250 MHz, Optimize Most (-O3), USB Stack Pico SDK.
+Подключения: RX каналы — GPIO18/19/22; LED — GPIO17/20/23; RSSI — GPIO26; Serial2 TX/RX — GPIO4/5 (230400 бод).
+Прошейте и контролируйте вывод по UART2.

@@ -1,0 +1,4 @@
+.program adsb_sampler
+loop:
+    in pins, 1
+    jmp loop

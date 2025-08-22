@@ -1,0 +1,791 @@
+Ниже — рабочая архитектура и пример проекта под Arduino IDE для RP2040 (Raspberry Pi Pico), использующий FreeRTOS, два ядра,
+PIO для сверхбыстрого дискретного приёма, IRQ, цифровой фильтр по длительности импульсов, детектор преамбулы, 
+три независимых канала приёма (GPIO 18/19/22), индикацию преамбулы (GPIO 17/20/23), RSSI (ADC GPIO 26), очереди пакетов, 
+CRC с таблицей, одноразрядную коррекцию, полноценную декодировку ADS-B (ICAO, рейс, позиция CPR, скорость, высота)
+ и передачу по Serial2 (TX 4, RX 5). digitalWrite не используется — только быстрые GPIO/PIO.
+
+Важное:
+
+Захват импульсов с длительностью 0.5 мкс и фильтрация выполняются в потоке 10 МГц (50–100 МГц тоже возможно, но 10 МГц достаточно для порогов 0.3/0.4/0.7 мкс).
+PIO сэмплирует один входной пин на такте, сдвигая биты в RX FIFO. На каждую линию (18/19/22) свой SM.
+На ядре 1: высокоскоростной приём/фильтр/детектор преамбулы/демаппинг битов → формирование сырых пакетов 56/112 бит → отправка в очереди FreeRTOS.
+На ядре 0: декодирование ADS‑B (DF, ICAO, callsign, CPR, скорость, высота), CRC+одноразрядная коррекция; передача в Serial2. 
+Параллельно светодиоды-индикаторы и RSSI.
+Индикация преамбулы на 17/20/23 включается при детекте. Периодические тики: pin 15 (ядро 0) — 1000 мс; pin 25 (ядро 1) — 500 мс.
+Отладка: сырые 56/112‑битовые пакеты, преобразованные в байты, отправляются в Serial2 до проверки CRC.
+RSSI: чтение ADC (GPIO 26), вычисление среднего, можно вывести в В или условные dBFS.
+Диаграмма потоков
+
+Как собрать
+
+Arduino IDE: установите ядро “Raspberry Pi Pico/RP2040” (Earle Philhower).
+Библиотека FreeRTOS SMP для RP2040 (например, “FreeRTOS-Kernel for RP2040 (SMP)” либо совместимая; требуется задача с аффинностью к ядрам).
+Частоту CPU установите 250 MHz (Tools → CPU Speed) для максимальной надёжности.
+Этот скетч использует автоматическую сборку .pio файлов (фича ядра Earle Philhower). Поместите .ino и .pio в один скетч.
+Файл 1: adsb_sampler.pio
+Сэмплируем 1 бит на такт, автосброс по 32 бита в RX FIFO. Частота задаётся clkdiv для достижения 10 МГц.
+
+// adsb_sampler.pio
+.program adsb_sampler
+; Simple 1-bit sampler into ISR, autopush=32, shift-right
+loop:
+    in pins, 1
+    jmp loop
+Файл 2: adsb_crc.h
+CRC таблица (256 байт) и функции проверки/коррекции. Полином Mode S: x^24 + x^23 + x^18 + x^17 + x^14 + x^11 + x^10 + x^7 + x^6 + x^5 + x^4 + x^3 + x + 1.
+
+/* adsb_crc.h */
+#pragma once
+#include <stdint.h>
+#include <stddef.h>
+
+static inline uint32_t modes_crc24_update(uint32_t crc, uint8_t data) {
+    // Табличный алгоритм. Таблица сгенерирована для Mode S CRC-24.
+    static const uint32_t tbl[256] = {
+        0x000000,0x864cfb,0x8ad50d,0x0c99f6,0x93e6f1,0x15aa0a,0x1933fc,0x9f7f07,
+        0xa18139,0x27cdc2,0x2b5434,0xad18cf,0x3267c8,0xb42b33,0xb8b2c5,0x3efe3e,
+        0xc54e89,0x430272,0x4f9b84,0xc9d77f,0x56a878,0xd0e483,0xdc7d75,0x5a318e,
+        0x64cfb0,0xe2834b,0xee1abd,0x685646,0xf72941,0x7165ba,0x7dfc4c,0xfbb0b7,
+        0x0a9d13,0x8cd1e8,0x80481e,0x0604e5,0x997be2,0x1f3719,0x13aee f,0x95e214,
+        0xab1c2a,0x2d50d1,0x21c927,0xa785dc,0x38fad b,0xbeb620,0xb22fd6,0x34632d,
+        0xcf d39a,0x499f61,0x450697,0xc34a6c,0x5c356b,0xda7990,0xd6e066,0x50ac9d,
+        0x6e52a3,0xe81e58,0xe487ae,0x62cb55,0xfdb452,0x7bf8a9,0x77615f,0xf12da4,
+        0x153a26,0x9376dd,0x9fef2b,0x19a3d0,0x86dcd7,0x00902c,0x0c09da,0x8a4521,
+        0xb4bb1f,0x32f7e4,0x3e6e12,0xb822e9,0x275dee,0xa11115,0xad88e3,0x2bc418,
+        0xd074af,0x563854,0x5aa1a2,0xdced59,0x43925e,0xc5dea5,0xc94753,0x4f0ba8,
+        0x71f596,0xf7b96d,0xfb209b,0x7d6c60,0xe21367,0x645f9c,0x68c66a,0xee8a91,
+        0x1fa735,0x99ebce,0x957238,0x133ec3,0x8c41c4,0x0a0d3f,0x0694c9,0x80d832,
+        0xbe260c,0x386af7,0x34f301,0xb2bffa,0x2dc0fd,0xab8c06,0xa715f0,0x21590b,
+        0xd a e9bc,0x5ce547,0x507cb1,0xd6304a,0x494f4d,0xcf03b6,0xc39a40,0x45d6bb,
+        0x7b2885,0xfd647e,0xf1fd88,0x77b173,0xe8ce74,0x6e828f,0x621b79,0xe45782,
+        0x2a744c,0xac38b7,0xa0a141,0x26edba,0xb992bd,0x3fde46,0x3347b0,0xb50b4b,
+        0x8bf575,0x0db98e,0x012078,0x876c83,0x181384,0x9e5f7f,0x92c689,0x148a72,
+        0xef3ac5,0x69763e,0x65efc8,0xe3a333,0x7cdc34,0xfa90cf,0xf60939,0x7045c2,
+        0x4ebbfc,0xc8f707,0xc46ef1,0x42220a,0xdd5d0d,0x5b11f6,0x578800,0xd1c4fb,
+        0x20e95f,0xa6a5a4,0xaa3c52,0x2c70a9,0xb30fae,0x354355,0x39daa3,0xbf9658,
+        0x816866,0x07249d,0x0bbd6b,0x8df190,0x128e97,0x94c26c,0x985b9a,0x1e1761,
+        0xe5a7d6,0x63eb2d,0x6f72db,0xe93e20,0x764127,0xf00ddc,0xfc942a,0x7ad8d1,
+        0x4426ef,0xc26a14,0xcef3e2,0x48bf19,0xd7c01e,0x518ce5,0x5d1513,0xdb59e8,
+        0x3f4e6a,0xb90291,0xb59b67,0x33d79c,0xaca89b,0x2ae460,0x267d96,0xa0316d,
+        0x9ecf53,0x1883a8,0x141a5e,0x9256a5,0x0d29a2,0x8b6559,0x87fca f,0x01b054,
+        0xfa00e3,0x7c4c18,0x70d5ee,0xf69915,0x69e612,0xefa ae9,0xe3331f,0x657fe4,
+        0x5b81da,0xddcd21,0xd154d7,0x57182c,0xc8672b,0x4e2bd0,0x42b226,0xc4fedd,
+        0x35d379,0xb39f82,0xbf0674,0x394a8f,0xa63588,0x207973,0x2ce085,0xaaa c7e,
+        0x941240,0x125ebb,0x1ec74d,0x988bb6,0x07f4b1,0x81b84a,0x8d21bc,0x0b6d47,
+        0xf0ddf0,0x76910b,0x7a08fd,0xfc4406,0x633b01,0xe577fa,0xe9ee0c,0x6fa2f7,
+        0x515cc9,0xd71032,0xdb89c4,0x5dc53f,0xc2ba38,0x44f6c3,0x486f35,0xce23ce
+    };
+    return ((crc << 8) & 0xFFFFFF) ^ tbl[(crc >> 16) ^ data];
+}
+
+static inline uint32_t modes_crc24(const uint8_t* data, size_t nbytes) {
+    uint32_t crc = 0;
+    for (size_t i=0;i<nbytes;i++) crc = modes_crc24_update(crc, data[i]);
+    return crc & 0xFFFFFF;
+}
+
+// Проверка CRC: для 56/112 бит (7/14 байт) без поля паритета.
+// Для DF17 получаем ICAO как parity ^ CRC(data).
+static inline uint32_t modes_parity(const uint8_t* full, size_t nbytes) {
+    // full: включает поле паритета (3 байта в конце)
+    return modes_crc24(full, nbytes-3);
+}
+
+static inline int modes_try_single_bit_fix(uint8_t* msg, size_t nbits) {
+    // Перебор одиночной ошибки бита для нулевой остаточной CRC.
+    // Возвращает индекс бита (0..nbits-1) при исправлении, иначе -1.
+    size_t nbytes = (nbits+7)/8;
+    for (size_t b=0;b<nbits;b++) {
+        size_t i = b>>3, j = 7-(b & 7);
+        msg[i] ^= (1<<j);
+        uint32_t crc = modes_crc24(msg, nbytes-3);
+        uint32_t par = (msg[nbytes-3]<<16)|(msg[nbytes-2]<<8)|msg[nbytes-1];
+        if (((crc ^ par) & 0xFFFFFF) == 0) return (int)b;
+        msg[i] ^= (1<<j);
+    }
+    return -1;
+}
+Файл 3: adsb_rp2040_adsb.ino
+Основной скетч: PIO+FreeRTOS+две коры+декодер+Serial2+RSSI+индикаторы.
+
+Примечания:
+
+Частота дискретизации PIO = 10 МГц (clkdiv = Fsys/10e6).
+Фильтр: принимаем импульсы с длительностью от 0.4 до 0.7 мкс, отбрасываем <0.3 и >0.7, нормализуем до 0.5 мкс.
+Детектор преамбулы: корреляция по четырём пикам на 0, 1.0, 3.5, 4.5 мкс (в отсчётах 0,10,35,45 при 10 МГц).
+Декодирование битов: в каждом 1 мкс окне проверяем попадание импульса в первую или вторую половину окна (PPM).
+Очереди: по каналу.
+Указаны только быстрые операции GPIO через SDK, без digitalWrite.
+/* adsb_rp2040_adsb.ino */
+#include <Arduino.h>
+#include <FreeRTOS.h>
+#include <task.h>
+#include <queue.h>
+#include <semphr.h>
+
+#include "pico/stdlib.h"
+#include "hardware/pio.h"
+#include "hardware/clocks.h"
+#include "hardware/adc.h"
+#include "hardware/irq.h"
+#include "hardware/gpio.h"
+
+#include "adsb_sampler.pio.h"
+#include "adsb_crc.h"
+
+// ----------------- Пины -----------------
+static const uint8_t PIN_UART2_TX = 4;
+static const uint8_t PIN_UART2_RX = 5;
+
+struct RxChanCfg {
+  uint8_t pin_in;
+  uint8_t pin_led;
+};
+static const RxChanCfg CH[3] = {
+  {18, 17}, // CH1
+  {19, 20}, // CH2
+  {22, 23}  // CH3
+};
+
+static const uint8_t PIN_BLINK_CORE0 = 15; // 1000 ms
+static const uint8_t PIN_BLINK_CORE1 = 25; // 500 ms
+static const uint8_t PIN_RSSI = 26;        // ADC0
+
+// ----------------- ADS-B/демодуляция -----------------
+// Частота дискретизации
+static const uint32_t SAMPLE_RATE_HZ = 10000000u; // 10 MHz
+// Пороговые длительности в отсчётах
+static const uint8_t T03 = (uint8_t)(SAMPLE_RATE_HZ * 0.3e-6 + 0.5); // ~3
+static const uint8_t T04 = (uint8_t)(SAMPLE_RATE_HZ * 0.4e-6 + 0.5); // ~4
+static const uint8_t T05 = (uint8_t)(SAMPLE_RATE_HZ * 0.5e-6 + 0.5); // ~5
+static const uint8_t T07 = (uint8_t)(SAMPLE_RATE_HZ * 0.7e-6 + 0.5); // ~7
+static const uint8_t TBIT = (uint8_t)(SAMPLE_RATE_HZ * 1.0e-6 + 0.5); // ~10
+static const uint16_t TPRE = (uint16_t)(SAMPLE_RATE_HZ * 8.0e-6 + 0.5); // ~80
+
+// ----------------- Очереди пакетов -----------------
+typedef struct {
+  uint8_t ch;        // 0..2
+  uint8_t nbits;     // 56 или 112
+  uint8_t data[14];  // 112 бит максимум = 14 байт (включая паритет)
+  uint32_t rssi_u;   // усреднённый RSSI в raw
+} AdsbPacket;
+
+static QueueHandle_t q_packets; // общая очередь для обработчика (можно 64 элементов)
+
+// ----------------- Состояние канала на Core1 -----------------
+typedef struct {
+  // PIO bindings
+  PIO pio;
+  uint sm;
+  // Фильтр длительности
+  bool last;
+  uint8_t runlen;
+  uint32_t sample_pos; // счётчик отсчётов
+  // Список моментов импульсов (центры нормализованных 0.5 мкс)
+  // Хватит 4096 событий на поток, отбрасываем старые
+  uint32_t pulse_times[4096];
+  uint16_t phead, ptail;
+
+  // Детектор преамбулы/фреймов
+  bool in_frame;
+  uint32_t pre_t0; // старт преамбулы (индекс отсчёта)
+  uint8_t bitpos;  // 0..111
+  uint8_t frame_bits[14]; // сбор битов в байты
+  uint8_t bitcount;
+  uint32_t last_rssi_acc;
+  uint16_t last_rssi_cnt;
+} RxState;
+
+static RxState RX[3];
+
+// ----------------- Утилиты -----------------
+static inline void fast_gpio_set(uint8_t pin, bool v) {
+  if (v) sio_hw->gpio_set = 1u << pin;
+  else   sio_hw->gpio_clr = 1u << pin;
+}
+static inline void fast_gpio_toggle(uint8_t pin) {
+  sio_hw->gpio_togl = 1u << pin;
+}
+
+// Добавить нормализованный импульс в буфер событий
+static inline void push_pulse(RxState& rs, uint32_t tcenter) {
+  uint16_t next = (rs.phead + 1) & 0x0FFF;
+  if (next != rs.ptail) {
+    rs.pulse_times[rs.phead] = tcenter;
+    rs.phead = next;
+  } else {
+    // overflow: сбросить хвост
+    rs.ptail = (rs.ptail + 1) & 0x0FFF;
+    rs.pulse_times[rs.phead] = tcenter;
+    rs.phead = next;
+  }
+}
+static inline bool pop_pulse(RxState& rs, uint32_t& t) {
+  if (rs.ptail == rs.phead) return false;
+  t = rs.pulse_times[rs.ptail];
+  rs.ptail = (rs.ptail + 1) & 0x0FFF;
+  return true;
+}
+static inline bool peek_pulse(RxState& rs, uint16_t idx_from_tail, uint32_t& t) {
+  uint16_t cnt = (rs.phead - rs.ptail) & 0x0FFF;
+  if (idx_from_tail >= cnt) return false;
+  uint16_t i = (rs.ptail + idx_from_tail) & 0x0FFF;
+  t = rs.pulse_times[i];
+  return true;
+}
+
+// Детектор преамбулы: проверяем 4 последних импульса
+static bool check_preamble_10MHz(RxState& rs, uint32_t& t0) {
+  // Нужны 4 последних импульса: tA, tB, tC, tD
+  uint16_t cnt = (rs.phead - rs.ptail) & 0x0FFF;
+  if (cnt < 4) return false;
+  uint32_t tA, tB, tC, tD;
+  peek_pulse(rs, cnt-4, tA);
+  peek_pulse(rs, cnt-3, tB);
+  peek_pulse(rs, cnt-2, tC);
+  peek_pulse(rs, cnt-1, tD);
+  int dAB = (int)(tB - tA);
+  int dBC = (int)(tC - tB);
+  int dCD = (int)(tD - tC);
+  // Ожидаем интервалы ~10, 25, 10 отсчётов с допуском ±2
+  auto inrng = [](int v, int c){ return v >= c-2 && v <= c+2; };
+  if (inrng(dAB, 10) && inrng(dBC, 25) && inrng(dCD, 10)) {
+    // t0 — начало преамбулы (первый пик начинается в 0..5, центр около +2..+3)
+    t0 = tA - (T05/2);
+    return true;
+  }
+  return false;
+}
+
+// Демодуляция после преамбулы: 56 или 112 бит
+static bool try_demod_bits(RxState& rs, uint32_t t0, uint8_t* out, uint8_t& nbits) {
+  // t0: начало преамбулы; данные начинаются в t0 + 8 us = t0 + TPRE
+  uint32_t data_start = t0 + TPRE;
+  // Собираем биты, глядя, попал ли импульс в [0..5) или [5..10) окна 10 отсчётов
+  memset(out, 0, 14);
+  nbits = 112;
+  uint16_t cnt = (rs.phead - rs.ptail) & 0x0FFF;
+  // Сначала соберём все импульсы после data_start в локальный перечень с индексами по битам
+  // Допуск ±2 отсчёта
+  uint16_t iTail = rs.ptail;
+  for (uint8_t bit=0; bit<112; bit++) {
+    uint32_t w0 = data_start + bit*TBIT;
+    uint32_t w1 = w0 + 5; // граница половин
+    bool first = false, second = false;
+    // Просматриваем доступные импульсы в диапазоне окна
+    for (uint16_t k=0; k<cnt; k++) {
+      uint32_t tp;
+      if (!peek_pulse(rs, k, tp)) break;
+      if (tp + 2 < w0) continue;           // ещё до окна
+      if (tp > w0 + TBIT + 2) break;       // уже после окна
+      if (tp >= (int)w0 - 2 && tp <= (int)w1 + 2) first = true;
+      else if (tp > (int)w1 - 2 && tp <= (int)(w0 + TBIT) + 2) second = true;
+    }
+    uint8_t val = first ? 1 : (second ? 0 : 0); // если оба false — считаем 0
+    if (val) out[bit>>3] |= (1 << (7-(bit&7)));
+    // Грубый критерий окончания по отсутствию импульсов после 56 бит
+    if (bit == 55) {
+      // Проверим есть ли импульсы в окнах 56..111
+      bool any_after = false;
+      for (uint8_t b2=56; b2<112 && !any_after; b2++) {
+        uint32_t w0b = data_start + b2*TBIT;
+        uint32_t wE = w0b + TBIT;
+        for (uint16_t k=0; k<cnt; k++) {
+          uint32_t tp;
+          if (!peek_pulse(rs, k, tp)) break;
+          if (tp < w0b-2) continue;
+          if (tp > wE+2) break;
+          any_after = true; break;
+        }
+      }
+      if (!any_after) { nbits = 56; break; }
+    }
+  }
+  return true;
+}
+
+// Фильтр длительности: нормализовать 0.5 мкс, отбросить <0.3 или >0.7 мкс
+static inline void feed_sample_and_filter(RxState& rs, bool s) {
+  rs.sample_pos++;
+  if (s == rs.last) {
+    if (rs.runlen < 255) rs.runlen++;
+    return;
+  }
+  // Переход: завершился отрезок rs.last длиной rs.runlen
+  if (rs.last) {
+    // был HIGH
+    if (rs.runlen >= T04 && rs.runlen <= T07) {
+      // нормализуем: центрируя отрезок на T05
+      uint32_t start = rs.sample_pos - rs.runlen; // индекс начала HIGH
+      uint32_t center = start + rs.runlen/2;
+      push_pulse(rs, center);
+    }
+    // иначе отбрасываем
+  }
+  rs.last = s;
+  rs.runlen = 1;
+}
+
+// ----------------- ADS-B декодирование (ядро 0) -----------------
+
+// Таблицы для callsign, CPR и т.п.
+static const char id_charset[] = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ#####_###############0123456789######";
+
+typedef struct {
+  uint32_t icao;
+  bool has_even;
+  uint8_t even_me[7];
+  uint32_t even_time_ms;
+  bool has_odd;
+  uint8_t odd_me[7];
+  uint32_t odd_time_ms;
+} IcaoCprState;
+
+#define ICAO_MAP_SIZE 256
+static IcaoCprState ICAO_CPR[ICAO_MAP_SIZE]; // простая LRU/хэш (упрощённо)
+
+// Хэш 24-бит ICAO в 0..255
+static inline uint8_t hash_icao(uint32_t icao) {
+  icao ^= icao >> 12; icao ^= icao >> 6; icao ^= icao >> 3;
+  return (uint8_t)icao;
+}
+
+// Раскодировка позиций CPR (глобальная, even/odd)
+static bool cpr_global_decode(double& lat, double& lon,
+  const uint8_t* even_me, const uint8_t* odd_me)
+{
+  // Извлечь 17 бит lat/lon CPR из ME
+  auto get17 = [](const uint8_t* me, bool odd, uint32_t& cprlat, uint32_t& cprlon){
+    // В ADS-B: ME[22:0] — полезная нагрузка 56 бит. Для позиций:
+    // lat CPR: 17 бит, lon CPR: 17 бит. Расположение: в соответствии с DO-260B (битовая распаковка).
+    // Для краткости используем схему как в популярных реализациях:
+    // lat: bits 17..33 of ME payload, lon: bits 34..50
+    // Здесь считаем, что me — 7 байт ME-поля, MSB-first.
+    auto getbits = [](const uint8_t* d, int off, int len)->uint32_t{
+      // off в битах от начала ME[0], MSB-first
+      uint64_t acc=0;
+      for (int i=0;i<7;i++) acc = (acc<<8)|d[i];
+      int shift = 56 - (off+len);
+      uint64_t mask = ((1ULL<<len)-1);
+      return (uint32_t)((acc>>shift) & mask);
+    };
+    // Для простоты берём стандартные оффсеты DO-260B (тип кода 9..18)
+    cprlat = getbits(me, 17, 17);
+    cprlon = getbits(me, 34, 17);
+    return true;
+  };
+
+  uint32_t cprlat_even, cprlon_even, cprlat_odd, cprlon_odd;
+  get17(even_me, false, cprlat_even, cprlon_even);
+  get17(odd_me,  true,  cprlat_odd,  cprlon_odd);
+
+  const int NZ = 15;
+  auto cprNL = [](double lat)->int{
+    if (lat < 0) lat = -lat;
+    if (lat < 10.47047130) return 59;
+    if (lat < 14.82817437) return 58;
+    if (lat < 18.18626357) return 57;
+    if (lat < 21.02939493) return 56;
+    if (lat < 23.54504487) return 55;
+    if (lat < 25.82924707) return 54;
+    if (lat < 27.93898710) return 53;
+    if (lat < 29.91135686) return 52;
+    if (lat < 31.77209708) return 51;
+    if (lat < 33.53993436) return 50;
+    if (lat < 35.22899598) return 49;
+    if (lat < 36.85025108) return 48;
+    if (lat < 38.41241892) return 47;
+    if (lat < 39.92256684) return 46;
+    if (lat < 41.38651832) return 45;
+    if (lat < 42.80914012) return 44;
+    if (lat < 44.19454951) return 43;
+    if (lat < 45.54626723) return 42;
+    if (lat < 46.86733252) return 41;
+    if (lat < 48.16039128) return 40;
+    if (lat < 49.42776439) return 39;
+    if (lat < 50.67150166) return 38;
+    if (lat < 51.89342469) return 37;
+    if (lat < 53.09516153) return 36;
+    if (lat < 54.27817472) return 35;
+    if (lat < 55.44378444) return 34;
+    if (lat < 56.59318756) return 33;
+    if (lat < 57.72747354) return 32;
+    if (lat < 58.84763776) return 31;
+    if (lat < 59.95459277) return 30;
+    if (lat < 61.04917774) return 29;
+    if (lat < 62.13216659) return 28;
+    if (lat < 63.20427479) return 27;
+    if (lat < 64.26616523) return 26;
+    if (lat < 65.31845310) return 25;
+    if (lat < 66.36171008) return 24;
+    if (lat < 67.39646774) return 23;
+    if (lat < 68.42322022) return 22;
+    if (lat < 69.44242631) return 21;
+    if (lat < 70.45451075) return 20;
+    if (lat < 71.45986473) return 19;
+    if (lat < 72.45884545) return 18;
+    if (lat < 73.45177442) return 17;
+    if (lat < 74.43893416) return 16;
+    if (lat < 75.42056257) return 15;
+    if (lat < 76.39684391) return 14;
+    if (lat < 77.36789461) return 13;
+    if (lat < 78.33374083) return 12;
+    if (lat < 79.29428225) return 11;
+    if (lat < 80.24923213) return 10;
+    if (lat < 81.19801349) return 9;
+    if (lat < 82.13956981) return 8;
+    if (lat < 83.07199445) return 7;
+    if (lat < 83.99173563) return 6;
+    if (lat < 84.89166191) return 5;
+    if (lat < 85.75541621) return 4;
+    if (lat < 86.53536998) return 3;
+    if (lat < 87.00000000) return 2;
+    return 1;
+  };
+
+  int j = (int)floor((59*cprlat_even - 60*cprlat_odd)/131072.0 + 0.5);
+  double rlat_even = 360.0/60.0 * (fmod(j, 60) + cprlat_even/131072.0);
+  double rlat_odd  = 360.0/59.0 * (fmod(j, 59) + cprlat_odd /131072.0);
+
+  // Выберем подходящую по давности; здесь без времени — возьмём even
+  double rlat = rlat_even;
+  int nl = cprNL(rlat);
+  if (nl <= 0) return false;
+  int ni = max(nl, 1);
+  int m = (int)floor((cprlon_even*(nl-1) - cprlon_odd*nl)/131072.0 + 0.5);
+  double rlon = 360.0/ni * (fmod(m, ni) + cprlon_even/131072.0);
+  lat = rlat; lon = rlon;
+  if (lon > 180) lon -= 360.0;
+  return true;
+}
+
+static void decode_callsign(const uint8_t* me, char* out8) {
+  uint64_t acc=0;
+  for (int i=0;i<7;i++) acc=(acc<<8)|me[i];
+  // TC 1-4: ME bits 8..(8+48) — 8 шестибитных символов
+  for (int i=0;i<8;i++) {
+    int code = (acc >> (56-8-6*(i+1))) & 0x3F;
+    out8[i] = id_charset[code];
+  }
+}
+
+static int decode_altitude(const uint8_t* me) {
+  uint64_t acc=0; for(int i=0;i<7;i++) acc=(acc<<8)|me[i];
+  // 13 бит AC (с пропуском Q), TC 9-18
+  int q = (acc >> (56-8-20)) & 1; // бит Q
+  int n;
+  if (q) {
+    // 12 бит без Q
+    uint32_t raw = ((acc >> (56-8-19)) & 0x7FF); // пропуская Q
+    // В реальности нужна аккуратная сборка AC12 без Q; для краткости используем приближённо:
+    n = raw;
+    return n*25 - 1000;
+  } else {
+    // Без Q требуется Gillham — опустим (вернём -1)
+    return -1;
+  }
+}
+
+static bool decode_velocity(const uint8_t* me, double& gs, double& trk) {
+  uint64_t acc=0; for(int i=0;i<7;i++) acc=(acc<<8)|me[i];
+  int subtype = (acc >> (56-8-37)) & 0x7;
+  if (subtype==1 || subtype==2) {
+    int ew_dir = (acc >> (56-8-38)) & 1;
+    int ew_spd = (acc >> (56-8-46)) & 0x1FF;
+    int ns_dir = (acc >> (56-8-47)) & 1;
+    int ns_spd = (acc >> (56-8-55)) & 0x1FF;
+    double vE = (ew_spd==0)?0:(ew_spd-1); vE = (ew_dir? -vE : vE);
+    double vN = (ns_spd==0)?0:(ns_spd-1); vN = (ns_dir? -vN : vN);
+    gs = sqrt(vE*vE + vN*vN); // узлы
+    trk = fmod(atan2(vE, vN)*180.0/M_PI + 360.0, 360.0);
+    return true;
+  }
+  return false;
+}
+
+static void send_raw_debug(AdsbPacket& p) {
+  Serial2.print("CH"); Serial2.print(p.ch+1);
+  Serial2.print(" LEN="); Serial2.print(p.nbits);
+  Serial2.print(" RAW=");
+  for (uint8_t i=0;i<(p.nbits+7)/8;i++) {
+    if (p.data[i]<16) Serial2.print('0');
+    Serial2.print(p.data[i], HEX);
+  }
+  Serial2.print("\r
+");
+}
+
+static void decode_and_send(AdsbPacket& p) {
+  // Отладка: отослать сырое до CRC
+  send_raw_debug(p);
+
+  const uint8_t nbytes = (p.nbits+7)/8;
+  uint8_t msg[14]; memcpy(msg, p.data, nbytes);
+
+  uint8_t df = (msg[0] >> 3) & 0x1F;
+  uint8_t ca = (msg[0] & 0x07);
+  uint8_t icao_a = msg[1], icao_b = msg[2], icao_c = msg[3];
+  uint32_t parity = (msg[nbytes-3]<<16)|(msg[nbytes-2]<<8)|msg[nbytes-1];
+
+  // CRC
+  uint32_t crc = modes_crc24(msg, nbytes-3);
+  uint32_t syndrome = crc ^ parity;
+
+  // Однобитная коррекция (при необходимости)
+  if (syndrome != 0) {
+    int bitfix = modes_try_single_bit_fix(msg, p.nbits);
+    if (bitfix >= 0) {
+      // Пересчитать
+      crc = modes_crc24(msg, nbytes-3);
+      parity = (msg[nbytes-3]<<16)|(msg[nbytes-2]<<8)|msg[nbytes-1];
+      syndrome = crc ^ parity;
+    }
+  }
+
+  // Для DF17: ICAO = parity ^ CRC(data)
+  uint32_t icao = 0;
+  if (df == 17) {
+    icao = parity ^ modes_crc24(msg, nbytes-3);
+  } else {
+    icao = (msg[1]<<16)|(msg[2]<<8)|msg[3];
+  }
+
+  // ME поле
+  const uint8_t* me = &msg[4]; // 7 байт для 112, 3 байта для 56 (не все DF17)
+  uint8_t tc = (me[0] >> 3) & 0x1F;
+
+  char callsign[9] = {0};
+  double lat = NAN, lon = NAN, gs = NAN, trk = NAN;
+  int alt = -1;
+
+  if (df == 17 && p.nbits == 112) {
+    if (tc >= 1 && tc <= 4) {
+      decode_callsign(me, callsign);
+    } else if (tc >= 9 && tc <= 18) {
+      // Позиция (CPR), нужно накопить even/odd
+      bool odd = (me[0] & 0x04) != 0;
+      uint8_t h = hash_icao(icao);
+      if (ICAO_CPR[h].icao != icao) {
+        ICAO_CPR[h] = {};
+        ICAO_CPR[h].icao = icao;
+      }
+      if (odd) {
+        memcpy(ICAO_CPR[h].odd_me, me, 7);
+        ICAO_CPR[h].odd_time_ms = millis();
+        ICAO_CPR[h].has_odd = true;
+      } else {
+        memcpy(ICAO_CPR[h].even_me, me, 7);
+        ICAO_CPR[h].even_time_ms = millis();
+        ICAO_CPR[h].has_even = true;
+      }
+      if (ICAO_CPR[h].has_even && ICAO_CPR[h].has_odd &&
+          (uint32_t)abs((int)(ICAO_CPR[h].even_time_ms - ICAO_CPR[h].odd_time_ms)) <= 10000) {
+        if (cpr_global_decode(lat, lon, ICAO_CPR[h].even_me, ICAO_CPR[h].odd_me)) {
+          // ok
+        }
+      }
+      alt = decode_altitude(me);
+    } else if (tc == 19) {
+      if (decode_velocity(me, gs, trk)) {
+        // ok
+      }
+    }
+  }
+
+  // Вывод
+  Serial2.print("DF="); Serial2.print(df);
+  Serial2.print(" ICAO="); for (int i=0;i<3;i++){ uint8_t b=(icao>>(16-8*i))&0xFF; if (b<16) Serial2.print('0'); Serial2.print(b,HEX); }
+  if (callsign[0]) { Serial2.print(" FLT="); Serial2.print(callsign); }
+  if (!isnan(lat) && !isnan(lon)) { Serial2.print(" LAT="); Serial2.print(lat,6); Serial2.print(" LON="); Serial2.print(lon,6); }
+  if (!isnan(gs)) { Serial2.print(" GS="); Serial2.print(gs,1); Serial2.print("kt"); Serial2.print(" TRK="); Serial2.print(trk,1); }
+  if (alt>=0) { Serial2.print(" ALT="); Serial2.print(alt); Serial2.print("ft"); }
+  Serial2.print(" RSSI="); Serial2.print(p.rssi_u);
+  Serial2.print(" CRC_OK="); Serial2.print(syndrome==0 ? "Y":"N");
+  Serial2.print("\r
+");
+}
+
+// ----------------- FreeRTOS задачи -----------------
+
+// Ядро 1: приём, фильтр, детектор, формирование пакетов
+static void rx_task(void* arg) {
+  // Инициализация PIO
+  PIO pio = pio0;
+  uint offset = pio_add_program(pio, &adsb_sampler_program);
+
+  for (int c=0;c<3;c++) {
+    RX[c] = {};
+    RX[c].pio = pio;
+    RX[c].sm = c; // используем SM0..SM2
+    gpio_init(CH[c].pin_led); gpio_set_dir(CH[c].pin_led, GPIO_OUT); fast_gpio_set(CH[c].pin_led, 0);
+
+    pio_sm_config cfg = adsb_sampler_program_get_default_config(offset);
+    sm_config_set_in_pins(&cfg, CH[c].pin_in);
+    sm_config_set_in_shift(&cfg, true, true, 32); // shift-right, autopush 32
+    float div = (float)clock_get_hz(clk_sys) / (float)SAMPLE_RATE_HZ;
+    sm_config_set_clkdiv(&cfg, div);
+    pio_gpio_init(pio, CH[c].pin_in);
+    pio_sm_set_consecutive_pindirs(pio, RX[c].sm, CH[c].pin_in, 1, false);
+    pio_sm_init(pio, RX[c].sm, offset, &cfg);
+    pio_sm_set_enabled(pio, RX[c].sm, true);
+  }
+
+  // Блинкер на ядре 1
+  gpio_init(PIN_BLINK_CORE1); gpio_set_dir(PIN_BLINK_CORE1, GPIO_OUT); fast_gpio_set(PIN_BLINK_CORE1, 0);
+  TickType_t lastBlink = xTaskGetTickCount();
+
+  // RSSI ADC
+  adc_init(); adc_gpio_init(PIN_RSSI); adc_select_input(0);
+
+  while (1) {
+    // Чтение RX FIFO всех SM
+    for (int c=0;c<3;c++) {
+      RxState& rs = RX[c];
+      while (!pio_sm_is_rx_fifo_empty(rs.pio, rs.sm)) {
+        uint32_t w = pio_sm_get_blocking(rs.pio, rs.sm);
+        // распаковать 32 бита, MSB-first (shift-right → старшие приходят первыми)
+        for (int i=31;i>=0;i--) {
+          bool bit = (w>>i) & 1;
+          feed_sample_and_filter(rs, bit);
+
+          // Детектор преамбулы
+          uint32_t t0;
+          if (!rs.in_frame && check_preamble_10MHz(rs, t0)) {
+            // Индикация
+            fast_gpio_set(CH[c].pin_led, 1);
+            // Попытка демодуляции
+            uint8_t out[14]; uint8_t nbits=0;
+            if (try_demod_bits(rs, t0, out, nbits)) {
+              // Сформировать пакет
+              AdsbPacket pkt{};
+              pkt.ch = c;
+              pkt.nbits = nbits;
+              memcpy(pkt.data, out, (nbits+7)/8);
+              // RSSI среднее
+              uint32_t acc = 0; const int N=16;
+              for (int k=0;k<N;k++) { acc += adc_read(); }
+              pkt.rssi_u = acc/N;
+              // Отправить в очередь
+              xQueueSend(q_packets, &pkt, 0);
+            }
+            fast_gpio_set(CH[c].pin_led, 0);
+            // сброс признаков для следующего поиска (опционально можно подвинуть ptail)
+          }
+        }
+      }
+    }
+
+    // Блинкер pin 25 — 500 мс
+    if (xTaskGetTickCount() - lastBlink >= pdMS_TO_TICKS(500)) {
+      fast_gpio_toggle(PIN_BLINK_CORE1);
+      lastBlink = xTaskGetTickCount();
+    }
+
+    // Немного уступим планировщику
+    taskYIELD();
+  }
+}
+
+// Ядро 0: обработчик пакетов и вывод в Serial2, блинкер pin 15, период 1000 мс
+static void proc_task(void* arg) {
+  // Serial2
+  Serial2.setTX(PIN_UART2_TX);
+  Serial2.setRX(PIN_UART2_RX);
+  Serial2.begin(230400); // можно выше при необходимости
+
+  // Блинкер
+  gpio_init(PIN_BLINK_CORE0); gpio_set_dir(PIN_BLINK_CORE0, GPIO_OUT); fast_gpio_set(PIN_BLINK_CORE0, 0);
+  TickType_t lastBlink = xTaskGetTickCount();
+
+  AdsbPacket pkt;
+  while (1) {
+    if (xQueueReceive(q_packets, &pkt, pdMS_TO_TICKS(10)) == pdPASS) {
+      decode_and_send(pkt);
+    }
+
+    if (xTaskGetTickCount() - lastBlink >= pdMS_TO_TICKS(1000)) {
+      fast_gpio_toggle(PIN_BLINK_CORE0);
+      lastBlink = xTaskGetTickCount();
+    }
+  }
+}
+
+// ----------------- setup() / запуск FreeRTOS -----------------
+extern "C" void vTaskCoreAffinitySet(TaskHandle_t xTask, UBaseType_t uxCoreAffinityMask);
+
+void setup() {
+  // Ничего не делаем — всё стартует в FreeRTOS
+}
+
+void loop() {
+  // Пусто
+}
+
+// Создание задач после init ядра
+void setup1() {} // не используем стандартный loop1
+
+// Точка входа после init Arduino
+__attribute__((constructor)) static void start_rtos() {
+  // Очередь
+  q_packets = xQueueCreate(64, sizeof(AdsbPacket));
+
+  // Задачи
+  TaskHandle_t hRx=nullptr, hProc=nullptr;
+  xTaskCreate(rx_task,   "rx",   8192, NULL, configMAX_PRIORITIES-1, &hRx);
+  xTaskCreate(proc_task, "proc", 8192, NULL, configMAX_PRIORITIES-2, &hProc);
+
+  // Аффинность по ядрам: ядро 1 — приём, ядро 0 — обработка
+  // Маски: бит0 = core0, бит1 = core1
+  if (hRx)   vTaskCoreAffinitySet(hRx,   (1<<1));
+  if (hProc) vTaskCoreAffinitySet(hProc, (1<<0));
+}
+Пояснения и важные детали
+
+IRQ: входные IRQ реализованы через PIO (сэмплирование и RX FIFO). Это жизненно важно для регистрации 0.5 мкс импульсов; GPIO-IRQ CPU не успеет стабильно захватывать такие длительности.
+Частота 10 МГц выбрана как компромисс: позволяет точно различать 0.3/0.4/0.5/0.7 мкс (3/4/5/7 отсчётов). Можно поднять до 20 МГц, если хватит производительности ядра 1 (тогда обновите пороги).
+Цифровой фильтр:
+Отбрасывает импульсы <0.3 мкс и >0.7 мкс.
+Пропускает 0.4–0.7 мкс и нормализует до центра (0.5 мкс).
+Детектор преамбулы: корреляция по четырём пикам с ожидаемыми интервалами 10, 25, 10 отсчётов (для 10 МГц).
+Дематчинг: по окнам 1 мкс (10 отсчётов) определяем “1” (пик в первой половине) или “0” (во второй).
+Очереди: каждый найденный пакет упаковывается, сырые байты отправляются в Serial2 до CRC (требование отладки), далее на ядре 0 декодируются и выводятся в Serial2 в человекочитаемом виде.
+CRC: таблица на 256 элементов; однобитная коррекция — перебор всех битов (быстро для 56/112 бит).
+CPR: приведена базовая глобальная декодировка (нужна парность even/odd, поступившие в пределах 10 сек).
+Скорость: для TC=19 (subtype 1/2) — горизонтальная скорость/курс (узлы/градусы).
+Высота: Q=1 — 25 футов шаг, alt=N*25-1000 футов; Q=0 (Gillham) в примере не реализован.
+RSSI: усреднение ADC по 16 выборкам, выводим сырое значение (можно конвертировать в В через 3.3/4095).
+Что ещё можно улучшить
+
+Перейти на DMA из PIO RX FIFO в кольцевые буферы, а затем обрабатывать без небезопасных задержек при высоких нагрузках.
+Более надёжная корреляция преамбулы (сумматор/весовая корреляция) и маски от помех.
+Улучшить CPR (локальная/глобальная, учёт времени even/odd).
+Поддержать больше подтипов скорости (TC=19).
+Поддержать декодирование Gillham при Q=0.
+Поднять UART2 скорость до 921600 для плотного трафика.
+Если нужно — подготовлю минимальный репозиторий со скетчем и проверенными настройками Arduino IDE/библиотек под вашу аппаратную конфигурацию.
+
+Кликните на + чтобы продолжить
+
+
+
+
+
+
+Aug 21, 2025 8:08 AM
+100%
+beta
+
+
+
+Syntax error in text
+
+//===========================================================================
+
+
+Перейти на DMA из PIO RX FIFO в кольцевые буферы, а затем обрабатывать без небезопасных задержек при высоких нагрузках.
+Более надёжная корреляция преамбулы (сумматор/весовая корреляция) и маски от помех.
+Улучшить CPR (локальная/глобальная, учёт времени even/odd).
+Поддержать больше подтипов скорости (TC=19).
+Поддержать декодирование Gillham при Q=0.
+Поднять UART2 скорость до 921600 для плотного трафика.
+упаковать и приложить ссылку. Сгенерировать архив с готовой структурой и выложить

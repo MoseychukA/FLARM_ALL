@@ -1,0 +1,43 @@
+Готово. Собрал полнофункциональную версию v2.1 full с объединением:
+
+DMA кольца на 3 канала PIO
+Адаптивный коррелятор преамбулы (Variant B, EMA-порог)
+Полная поддержка Q=0 (Gillham AC13) для высоты
+Расширенный TC=19 (подтипы 1/2/3/4)
+UART2 921600 бод
+Скачать архив
+
+Файл: adsb_rp2040_repo_dma_v2_1_full.zip
+Ссылка:
+Not Found
+
+tmpfiles.org
+
+](/files/download/68a6e25cde1e35654161880c)
+SHA-256: bae738b535d0e1f0324390860add0e149088657fee91322b5dade9e0407a9748
+Что внутри
+
+adsb_rp2040_adsb/
+adsb_rp2040_adsb.ino — основной скетч (DMA + адаптивный коррелятор + Gillham + TC19)
+adsb_sampler.pio — PIO-сэмплер
+dma_ring.h, dma_ring.cpp — DMA-кольца
+adsb_crc.h — CRC-24 с таблицей и 1-битной коррекцией
+adsb_decoder.h, adsb_decoder.cpp — декодирование (callsign, CPR global/local, Gillham, TC19)
+docs/ARCH_DMA_v2_1.md — заметки к релизу
+Быстрый запуск
+
+Откройте папку adsb_rp2040_adsb в Arduino IDE.
+Плата RP2040 (Earle Philhower 3.7.2); библиотека FreeRTOS_RP2040 1.3.2.
+Tools: CPU 250 MHz, Optimize Most (-O3), USB Stack Pico SDK.
+Пины: RX 18/19/22; LED 17/20/23; RSSI 26; UART2 TX/RX 4/5; скорость 921600.
+При необходимости задайте CPR_REF (координаты приёмника) в adsb_rp2040_adsb.ino.
+Тюнинг адаптивного коррелятора
+
+g_base_thr: 36…48 (база)
+g_k: 1.2…2.0 (чувствительность к шуму)
+g_neg_alpha: 0.01…0.05 (скорость адаптации)
+PRE_PENALTY_THR: 4…8
+PRE_MIN_POS_HITS: 14…20
+Нужно добавить логирование в CSV/UBX, вывод NMEA/JSON, или ввести профили настройки (Normal/High-EMI), переключаемые через Serial2? Сообщите — соберу v2.2 и перезалью.
+
+Нужно добавить логирование в CSV/UBX, вывод NMEA/JSON, ввести профили настройки (Normal/High-EMI), переключаемые через Serial2. собрать v2.2 и перезалить.

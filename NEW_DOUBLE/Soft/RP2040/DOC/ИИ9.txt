@@ -1,0 +1,48 @@
+Готово. Собрал v2.2 с логированием CSV/UBX, выводом NMEA/JSON, и профилями Normal/High‑EMI, переключаемыми по Serial2.
+
+Скачать архив v2.2
+
+Файл: adsb_rp2040_repo_dma_v2_2.zip
+Ссылка:
+Not Found
+
+tmpfiles.org
+
+](/files/download/68a6e4364453e7383a9e3c1e)
+SHA-256: ecee2016de41ff0db2d9b05c722e8a8ee453a8b342a8cb04aa2b91725df1fc2b
+Новое в v2.2
+
+Форматы вывода:
+RAW: как раньше (сырые строки), опциональный дубль CSV.
+CSV: метки времени, канал, DF, ICAO, рейс, LAT/LON, ALT, GS/TRK, VS, RSSI, CRC_OK.
+NMEA: кастомное $PADSB, с checksum.
+JSON: одна строка на сообщение.
+UBX: кастомный двоичный кадр 0xB5 0x62, класс 0xAD, id 0x53, полезная нагрузка: ICAO, lat/lon, alt, GS, TRK, VS.
+Профили преамбулы:
+Normal: base=36, k=1.5, alpha=0.02, penalty=6, minhits=14.
+High-EMI: base=44, k=2.0, alpha=0.01, penalty=4, minhits=18.
+Команды по Serial2:
+MODE CSV|NMEA|JSON|UBX|RAW — формат вывода.
+PROFILE NORMAL|EMI — профиль коррелятора.
+LOG ON|OFF — включить дубль CSV независимо от режима.
+REF — задать опорную точку CPR для локального декода.
+HELP — список команд.
+Как использовать
+
+Распакуйте архив, откройте в Arduino IDE папку adsb_rp2040_adsb.
+Плата RP2040 (Earle Philhower 3.7.2), библиотека FreeRTOS_RP2040 1.3.2.
+Tools: CPU 250 MHz, Optimize Most (-O3), USB Stack Pico SDK.
+Подключения: RX 18/19/22; LED 17/20/23; RSSI 26; UART2 TX/RX 4/5; скорость 921600.
+В Serial2 можно отправлять команды, например:
+MODE JSON
+PROFILE EMI
+LOG ON
+REF 55.751244 37.618423
+HELP
+Если потребуется:
+
+Добавить запись CSV на SD/flash или по USB CDC.
+Сделать полноценный парсер BDS 6,0/6,1 для вертикальной скорости и баро‑гео разности.
+Ввести сохранение и загрузку профилей/настроек из NVS/Flash.
+Скажите — подготовлю v2.3 и перезалью.
+

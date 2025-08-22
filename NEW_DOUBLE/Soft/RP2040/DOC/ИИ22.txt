@@ -1,0 +1,961 @@
+Прикладываю полный комплект исправленных исходников “в чат” — готовых к самостоятельной сборке в Arduino IDE (ядро RP2040 4.7.x). Инициализация перенесена в void setup(), как вы просили. Включены:
+
+RP2040 (Pico), FreeRTOS, два ядра:
+core1: прием (PIO+DMA), фильтр, детектор преамбулы, демодуляция, формирование пакетов, RSSI, индикация и мигание pin 25 (500 мс)
+core0: CRC24, 1-бит коррекция, декод ADS-B (DF17/18/20/21), CPR, скорость/курс/высота, вывод в Serial2 (921600) и отладка в Serial USB (115200), мигание pin 15 (1000 мс)
+Три канала приема: входы 18, 19, 22; индикаторы 17, 20, 23
+Регистрация импульсов 0.5 мкс через PIO (10 МГц дискретизация) и цифровой фильтр порогов 0.3/0.4/0.7 мкс
+DMA-кольца на каждый канал (без опроса RX FIFO CPU)
+Отладка: сырые пакеты 56/112 бит в байтах в Serial (USB) до проверки CRC
+Передача в ESP32S3 (Serial2 921600) в виде бинарной структуры с CRC-16; конвертация единиц (ft→m, kt→km/h, fpm→m/min)
+Команды по Serial USB (115200): PROFILE NORMAL|EMI|URBAN|REMOTE, REF , LOG ON|OFF
+Предсобранный заголовок PIO adsb_sampler.pio.h — pioasm не требуется (можно и сгенерировать из .pio)
+Структура “проекта” (скопируйте в папку adsb_rp2040_adsb):
+
+adsb_rp2040_adsb.ino — основной скетч (инициализация в setup())
+adsb_sampler.pio — PIO-программа
+adsb_sampler.pio.h — предсобранный заголовок (без pioasm)
+dma_ring.h / dma_ring.cpp — DMA-кольца для PIO RX FIFO
+adsb_crc.h — CRC-24 Mode S + 1-бит коррекция
+adsb_decoder.h / adsb_decoder.cpp — декод DF/ME: callsign, CPR, alt, speed/track
+storage.h / storage.cpp — сохранение/загрузка конфигурации (LittleFS)
+README.md — краткие указания
+esp32s3_receiver/esp32s3_receiver.ino — скетч-приемник на ESP32S3 (Serial на GPIO41/42), проверка CRC и печать
+ВНИМАНИЕ: Сообщение очень длинное. Если часть текста обрежется — скажите, пришлю конкретные файлы по частям.
+
+Файл: README.md
+Проект ADS-B RP2040 (Pico) + FreeRTOS + PIO+DMA, 3 канала
+
+PIO дискретизация 10 МГц; фильтр импульсов: <0.3µs и >0.7µs отбрасывать, 0.4–0.7µs нормализовать до 0.5µs
+Три канала входа: GPIO 18/19/22; индикаторы преамбулы 17/20/23
+RSSI (ADC): GPIO 26
+Два ядра: core1 прием/демодуляция, core0 CRC/декод/вывод
+Serial USB 115200 — отладка и ввод команд; Serial2 921600 — бинарные пакеты (в ESP32S3)
+Команды по Serial USB: PROFILE NORMAL|EMI|URBAN|REMOTE, REF , LOG ON|OFF
+Периодические тики: pin 15 (ядро 0) 1000 мс, pin 25 (ядро 1) 500 мс
+DF17/DF18/DF20/DF21 (Comm-B BDS 6,0/6,1), CPR глоб./лок., скорость/курс/высота, CRC24 и 1-бит коррекция
+Сборка
+
+Arduino IDE 2.x
+Плата: Raspberry Pi Pico (RP2040), ядро Earle Philhower 4.7.x
+Tools: CPU 200–250 MHz; Optimize Most (-O3); USB Stack Pico SDK; Upload Method: UF2 или Picotool
+Библиотеки ядра: FreeRTOS, LittleFS (уже входят)
+Папку adsb_rp2040_adsb открыть как скетч
+Пины
+
+Входы: 18 (CH1), 19 (CH2), 22 (CH3)
+Индикаторы: 17 (CH1), 20 (CH2), 23 (CH3)
+Serial2: TX 4, RX 5 (921600)
+Serial USB: 115200 (команды/отладка)
+RSSI: ADC GPIO 26
+Тики: CORE0→GPIO15 (1000ms), CORE1→GPIO25 (500ms)
+Файл: adsb_sampler.pio
+.program adsb_sampler
+loop:
+in pins, 1
+jmp loop
+Файл: adsb_sampler.pio.h
+#ifndef ADSB_SAMPLER_PIO_H
+#define ADSB_SAMPLER_PIO_H
+#include "hardware/pio.h"
+
+#define adsb_sampler_wrap_target 0
+#define adsb_sampler_wrap 1
+
+static const uint16_t adsb_sampler_program_instructions[] = {
+(uint16_t)pio_encode_in(pio_pins, 1),
+(uint16_t)pio_encode_jmp(0)
+};
+
+static const struct pio_program adsb_sampler_program = {
+.instructions = adsb_sampler_program_instructions,
+.length = 2,
+.origin = -1,
+};
+
+static inline pio_sm_config adsb_sampler_program_get_default_config(uint offset) {
+pio_sm_config c = pio_get_default_sm_config();
+sm_config_set_wrap(&c, offset + adsb_sampler_wrap_target, offset + adsb_sampler_wrap);
+sm_config_set_in_shift(&c, true, true, 32);
+return c;
+}
+
+#endif // ADSB_SAMPLER_PIO_H
+Файл: dma_ring.h
+#pragma once
+#include <Arduino.h>
+#include "hardware/pio.h"
+#include "hardware/dma.h"
+
+struct DmaRing {
+uint32_t *buf;
+size_t words; // мощность 2
+volatile uint32_t widx; // индекс записи DMA (продвигается по IRQ)
+uint32_t ridx; // индекс чтения CPU
+int dma_ch; // номер DMA канала
+PIO pio;
+uint sm;
+};
+
+bool dma_ring_init(DmaRing &r, PIO pio, uint sm, size_t words);
+void dma_ring_deinit(DmaRing &r);
+size_t dma_ring_available(const DmaRing &r);
+bool dma_ring_get_word(DmaRing &r, uint32_t &w);
+Файл: dma_ring.cpp
+#include "dma_ring.h"
+#include "hardware/regs/dreq.h"
+
+static void __isr __time_critical_func(dma_irq0_handler)();
+static DmaRing *g_rings[12] = {0};
+
+bool dma_ring_init(DmaRing &r, PIO pio, uint sm, size_t words) {
+if ((words & (words - 1)) != 0) return false;
+r.buf = (uint32_t*)malloc(words * sizeof(uint32_t));
+if (!r.buf) return false;
+r.words = words; r.widx = 0; r.ridx = 0; r.pio = pio; r.sm = sm;
+r.dma_ch = dma_claim_unused_channel(true);
+
+dma_channel_config c = dma_channel_get_default_config(r.dma_ch);
+channel_config_set_read_increment(&c, false);
+channel_config_set_write_increment(&c, true);
+channel_config_set_dreq(&c, pio == pio0 ? (DREQ_PIO0_RX0 + sm) : (DREQ_PIO1_RX0 + sm));
+channel_config_set_transfer_data_size(&c, DMA_SIZE_32);
+dma_channel_configure(r.dma_ch, &c, r.buf, &r.pio->rxf[sm], r.words, false);
+
+dma_channel_set_irq0_enabled(r.dma_ch, true);
+
+static bool irq_installed = false;
+if (!irq_installed) {
+irq_set_exclusive_handler(DMA_IRQ_0, dma_irq0_handler);
+irq_set_enabled(DMA_IRQ_0, true);
+irq_installed = true;
+}
+g_rings[r.dma_ch] = &r;
+dma_channel_start(r.dma_ch);
+return true;
+}
+
+void dma_ring_deinit(DmaRing &r) {
+if (r.dma_ch >= 0) {
+dma_channel_abort(r.dma_ch);
+dma_channel_set_irq0_enabled(r.dma_ch, false);
+g_rings[r.dma_ch] = nullptr;
+dma_channel_unclaim(r.dma_ch);
+}
+if (r.buf) { free(r.buf); r.buf = nullptr; }
+}
+
+size_t dma_ring_available(const DmaRing &r) {
+return (r.widx - r.ridx) & (r.words - 1);
+}
+
+bool dma_ring_get_word(DmaRing &r, uint32_t &w) {
+if (!dma_ring_available(r)) return false;
+w = r.buf[r.ridx];
+r.ridx = (r.ridx + 1) & (r.words - 1);
+return true;
+}
+
+static void __isr __time_critical_func(dma_irq0_handler)() {
+uint32_t pending = dma_hw->ints0;
+for (int ch=0; ch<12; ch++) if (pending & (1u<<ch)) {
+auto *r = g_rings[ch];
+if (r) {
+r->widx = (r->widx + r->words) & (r->words - 1);
+dma_hw->ints0 = (1u<<ch);
+dma_channel_set_trans_count(ch, r->words, false);
+dma_channel_start(ch);
+} else {
+dma_hw->ints0 = (1u<<ch);
+}
+}
+}
+Файл: adsb_crc.h
+#pragma once
+#include <stdint.h>
+#include <stddef.h>
+#include <string.h>
+
+// CRC-24 для Mode S
+typedef struct {
+uint32_t tbl[256];
+uint8_t inited;
+} crc24_ctx_t;
+
+static crc24_ctx_t g_crc24_ctx;
+
+static inline void crc24_init_table() {
+if (g_crc24_ctx.inited) return;
+const uint32_t POLY = 0x864CFB;
+for (uint32_t i=0; i<256; i++) {
+uint32_t crc = i << 16;
+for (int j=0;j<8;j++){ crc <<= 1; if (crc & 0x1000000) crc ^= POLY; }
+g_crc24_ctx.tbl[i] = crc & 0xFFFFFF;
+}
+g_crc24_ctx.inited = 1;
+}
+
+static inline uint32_t crc24_update(uint32_t crc, uint8_t data) {
+uint8_t idx = (uint8_t)((crc >> 16) ^ data);
+crc = ((crc << 8) & 0xFFFFFF) ^ g_crc24_ctx.tbl[idx];
+return crc & 0xFFFFFF;
+}
+
+static inline uint32_t modes_crc24(const uint8_t* data, size_t nbytes) {
+crc24_init_table();
+uint32_t crc = 0;
+for (size_t i=0;i<nbytes;i++) crc = crc24_update(crc, data[i]);
+return crc & 0xFFFFFF;
+}
+
+static inline uint32_t modes_parity_syndrome(const uint8_t* full, size_t nbytes) {
+uint32_t parity = (full[nbytes-3]<<16)|(full[nbytes-2]<<8)|full[nbytes-1];
+uint32_t crc = modes_crc24(full, nbytes-3);
+return (crc ^ parity) & 0xFFFFFF;
+}
+
+// Исправление одиночной ошибки бита
+static inline int modes_try_single_bit_fix(uint8_t* msg, size_t nbits) {
+crc24_init_table();
+const size_t nbytes = (nbits + 7) / 8;
+for (size_t b=0; b<nbits; b++) {
+size_t i = b >> 3;
+uint8_t m = 1u << (7 - (b & 7));
+msg[i] ^= m;
+uint32_t synd = modes_parity_syndrome(msg, nbytes);
+if (synd == 0) return (int)b;
+msg[i] ^= m;
+}
+return -1;
+}
+Файл: adsb_decoder.h
+#pragma once
+#include <Arduino.h>
+
+struct DecodedInfo {
+uint8_t df;
+uint32_t icao;
+char callsign[9];
+bool has_pos;
+double lat, lon;
+bool has_vel;
+double gs, trk;
+int alt;
+int vs; // ft/min (для пересчета в м/мин)
+int baro_geo; // ft (для пересчета в м)
+};
+
+struct CprRef { double ref_lat; double ref_lon; };
+
+void decode_callsign(const uint8_t* me, char* out8);
+bool cpr_global_decode(double& lat, double& lon, const uint8_t* even_me, const uint8_t* odd_me);
+bool cpr_local_decode(double& lat, double& lon, const uint8_t* me, const CprRef& ref);
+int decode_altitude(const uint8_t* me);
+int decode_altitude_gillham(uint16_t ac13);
+bool decode_velocity_tc19(const uint8_t* me, double& gs, double& trk, int& vs, int& baro_geo);
+bool parse_bds60_vs(const uint8_t* me, int& vs_baro, int& vs_inertial);
+bool parse_bds61_baro_geo(const uint8_t* me, int& baro_geo_diff);
+Файл: adsb_decoder.cpp
+#include "adsb_decoder.h"
+#include <math.h>
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+static const char id_charset[] = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ#####_###############0123456789######";
+
+void decode_callsign(const uint8_t* me, char* out8) {
+uint64_t acc=0; for(int i=0;i<7;i++) acc=(acc<<8)|me[i];
+for (int i=0;i<8;i++) { int code=(acc>>(56-8-6*(i+1)))&0x3F; out8[i] = id_charset[code]; }
+out8[8]=0;
+}
+
+static inline uint32_t getbits56(const uint8_t* d, int off, int len){
+uint64_t acc=0; for(int i=0;i<7;i++) acc=(acc<<8)|d[i];
+int shift=56-(off+len);
+uint64_t mask=(len==32)?0xFFFFFFFFULL:((1ULL<<len)-1);
+return (uint32_t)((acc>>shift)&mask);
+}
+static inline uint32_t getbits(const uint8_t* d, int off, int len){ return getbits56(d, off, len); }
+
+bool cpr_global_decode(double& lat, double& lon, const uint8_t* even_me, const uint8_t* odd_me) {
+uint32_t cprlat_even=getbits(even_me,17,17), cprlon_even=getbits(even_me,34,17),
+cprlat_odd =getbits(odd_me,17,17), cprlon_odd =getbits(odd_me,34,17);
+
+auto cprNL=[](double lat)->int{
+double a=fabs(lat);
+if(a<10.47047130) return 59; if(a<14.82817437) return 58; if(a<18.18626357) return 57; if(a<21.02939493) return 56; if(a<23.54504487) return 55; if(a<25.82924707) return 54; if(a<27.93898710) return 53; if(a<29.91135686) return 52; if(a<31.77209708) return 51; if(a<33.53993436) return 50; if(a<35.22899598) return 49; if(a<36.85025108) return 48; if(a<38.41241892) return 47; if(a<39.92256684) return 46; if(a<41.38651832) return 45; if(a<42.80914012) return 44; if(a<44.19454951) return 43; if(a<45.54626723) return 42; if(a<46.86733252) return 41; if(a<48.16039128) return 40; if(a<49.42776439) return 39; if(a<50.67150166) return 38; if(a<51.89342469) return 37; if(a<53.09516153) return 36; if(a<54.27817472) return 35; if(a<55.44378444) return 34; if(a<56.59318756) return 33; if(a<57.72747354) return 32; if(a<58.84763776) return 31; if(a<59.95459277) return 30; if(a<61.04917774) return 29; if(a<62.13216659) return 28; if(a<63.20427479) return 27; if(a<64.26616523) return 26; if(a<65.31845310) return 25; if(a<66.36171008) return 24; if(a<67.39646774) return 23; if(a<68.42322022) return 22; if(a<69.44242631) return 21; if(a<70.45451075) return 20; if(a<71.45986473) return 19; if(a<72.45884545) return 18; if(a<73.45177442) return 17; if(a<74.43893416) return 16; if(a<75.42056257) return 15; if(a<76.39684391) return 14; if(a<77.36789461) return 13; if(a<78.33374083) return 12; if(a<79.29428225) return 11; if(a<80.24923213) return 10; if(a<81.19801349) return 9; if(a<82.13956981) return 8; if(a<83.07199445) return 7; if(a<83.99173563) return 6; if(a<84.89166191) return 5; if(a<85.75541621) return 4; if(a<86.53536998) return 3; if(a<87.00000000) return 2; return 1;
+};
+
+int j=(int)floor((59.0cprlat_even - 60.0cprlat_odd)/131072.0 + 0.5);
+double rlat_even = 360.0/60.0 * (fmod(j,60) + cprlat_even/131072.0);
+double rlat_odd = 360.0/59.0 * (fmod(j,59) + cprlat_odd /131072.0);
+double rlat = rlat_even;
+
+int nl = cprNL(rlat);
+if (nl <= 0) return false;
+int ni = (nl > 1) ? nl : 1;
+int m = (int)floor((cprlon_even*(nl-1) - cprlon_odd*nl)/131072.0 + 0.5);
+double rlon = 360.0/ni * (fmod(m, ni) + cprlon_even/131072.0);
+
+lat = rlat;
+lon = (rlon > 180.0) ? (rlon - 360.0) : rlon;
+return true;
+}
+
+bool cpr_local_decode(double& lat, double& lon, const uint8_t* me, const CprRef& ref){
+bool odd = (me[0] & 0x04) != 0;
+uint32_t cprlat = getbits(me, 17, 17);
+uint32_t cprlon = getbits(me, 34, 17);
+
+auto cprNL=[](double lat)->int{ /* тот же, что выше */
+double a=fabs(lat);
+if(a<10.47047130) return 59; if(a<14.82817437) return 58; if(a<18.18626357) return 57; if(a<21.02939493) return 56; if(a<23.54504487) return 55; if(a<25.82924707) return 54; if(a<27.93898710) return 53; if(a<29.91135686) return 52; if(a<31.77209708) return 51; if(a<33.53993436) return 50; if(a<35.22899598) return 49; if(a<36.85025108) return 48; if(a<38.41241892) return 47; if(a<39.92256684) return 46; if(a<41.38651832) return 45; if(a<42.80914012) return 44; if(a<44.19454951) return 43; if(a<45.54626723) return 42; if(a<46.86733252) return 41; if(a<48.16039128) return 40; if(a<49.42776439) return 39; if(a<50.67150166) return 38; if(a<51.89342469) return 37; if(a<53.09516153) return 36; if(a<54.27817472) return 35; if(a<55.44378444) return 34; if(a<56.59318756) return 33; if(a<57.72747354) return 32; if(a<58.84763776) return 31; if(a<59.95459277) return 30; if(a<61.04917774) return 29; if(a<62.13216659) return 28; if(a<63.20427479) return 27; if(a<64.26616523) return 26; if(a<65.31845310) return 25; if(a<66.36171008) return 24; if(a<67.39646774) return 23; if(a<68.42322022) return 22; if(a<69.44242631) return 21; if(a<70.45451075) return 20; if(a<71.45986473) return 19; if(a<72.45884545) return 18; if(a<73.45177442) return 17; if(a<74.43893416) return 16; if(a<75.42056257) return 15; if(a<76.39684391) return 14; if(a<77.36789461) return 13; if(a<78.33374083) return 12; if(a<79.29428225) return 11; if(a<80.24923213) return 10; if(a<81.19801349) return 9; if(a<82.13956981) return 8; if(a<83.07199445) return 7; if(a<83.99173563) return 6; if(a<84.89166191) return 5; if(a<85.75541621) return 4; if(a<86.53536998) return 3; if(a<87.00000000) return 2; return 1;
+};
+
+int nz = odd ? 59 : 60;
+double dlat = 360.0 / nz;
+int j = (int)floor(ref.ref_lat/dlat) + (int)floor((fmod(ref.ref_lat, dlat)/dlat) - cprlat/131072.0 + 0.5);
+double rlat = dlat * (j + cprlat/131072.0);
+int nl = cprNL(rlat); if (nl <= 0) return false;
+int ni = (nl > 1) ? nl : 1;
+double dlon = 360.0 / ni;
+int m = (int)floor(ref.ref_lon/dlon) + (int)floor((fmod(ref.ref_lon, dlon)/dlon) - cprlon/131072.0 + 0.5);
+double rlon = dlon * (m + cprlon/131072.0);
+if (rlon > 180.0) rlon -= 360.0;
+lat = rlat; lon = rlon; return true;
+}
+
+int decode_altitude_gillham(uint16_t ac) {
+int D1=(ac>>0)&1, D2=(ac>>1)&1, D4=(ac>>2)&1;
+int A1=(ac>>3)&1, A2=(ac>>4)&1, A4=(ac>>5)&1;
+int B1=(ac>>6)&1, B2=(ac>>7)&1, B4=(ac>>8)&1;
+int C1=(ac>>9)&1, C2=(ac>>10)&1, C4=(ac>>11)&1;
+int f100=(D1|D2|D4);
+auto gray2bin=[](int g){ int b=0; for(; g; g>>=1) b^=g; return b; };
+int n500 = gray2bin((A4<<2)|(A2<<1)|A1);
+int n5k = gray2bin((B4<<2)|(B2<<1)|B1);
+int n20k = gray2bin((C4<<2)|(C2<<1)|C1);
+static const int tbl100[8]={0,100,200,300,400,500,600,700};
+int idx100=gray2bin((D4<<2)|(D2<<1)|D1);
+int alt=(n20k16000)+(n5k2000)+(n500*500);
+if (f100) alt += tbl100[idx100];
+alt -= 1300;
+if (alt<-1200 || alt>126000) return -1;
+return alt;
+}
+
+int decode_altitude(const uint8_t* me) {
+uint64_t acc=0; for(int i=0;i<7;i++) acc=(acc<<8)|me[i];
+int q=(acc>>(56-8-20))&1;
+if (q) {
+uint32_t raw=((acc>>(56-8-19))&0x7FF);
+int n=raw; return n*25 - 1000;
+} else {
+uint16_t ac13=(uint16_t)((((acc>>(56-8-8))&0xFF)<<5) | ((acc>>(56-8-21))&0x1F));
+return decode_altitude_gillham(ac13);
+}
+}
+
+bool decode_velocity_tc19(const uint8_t* me, double& gs, double& trk, int& vs, int& baro_geo) {
+uint64_t acc=0; for(int i=0;i<7;i++) acc=(acc<<8)|me[i];
+int subtype=(acc>>(56-8-37))&0x7; gs=NAN; trk=NAN; vs=INT32_MIN; baro_geo=INT32_MIN;
+if (subtype==1 || subtype==2) {
+int ew_dir=(acc>>(56-8-38))&1; int ew_spd=(acc>>(56-8-46))&0x1FF;
+int ns_dir=(acc>>(56-8-47))&1; int ns_spd=(acc>>(56-8-55))&0x1FF;
+double vE=(ew_spd==0)?0:(ew_spd-1); vE=(ew_dir?-vE:vE);
+double vN=(ns_spd==0)?0:(ns_spd-1); vN=(ns_dir?-vN:vN);
+gs=sqrt(vEvE+vNvN);
+trk=fmod(atan2(vE, vN)180.0/M_PI + 360.0, 360.0);
+} else if (subtype==3) {
+int hdg=((acc>>(56-8-46))&0x1FF);
+int spd=((acc>>(56-8-55))&0x1FF);
+if (spd) { trk=hdg360.0/512.0; gs=spd-1; }
+} else if (subtype==4) {
+int hdg=((acc>>(56-8-46))&0x1FF);
+int tas=((acc>>(56-8-55))&0x1FF);
+if (tas) { trk=hdg*360.0/512.0; gs=tas-1; }
+}
+return (!isnan(gs));
+}
+
+bool parse_bds60_vs(const uint8_t* me, int& vs_baro, int& vs_inertial) {
+uint8_t bds1=(me[0]>>4)&0xF, bds2=me[0]&0xF; if (bds1!=6 || bds2!=0) return false;
+int baro_stat=(getbits56(me,37,1)); int baro_sign=(getbits56(me,38,1)); int baro_val=(int)getbits56(me,39,9);
+int iner_stat=(getbits56(me,48,1)); int iner_sign=(getbits56(me,49,1)); int iner_val=(int)getbits56(me,50,9);
+vs_baro=vs_inertial=INT32_MIN;
+if (baro_stat && baro_val) { int v=(baro_val-1)*64; vs_baro = baro_sign ? -v : v; }
+if (iner_stat && iner_val) { int v=(iner_val-1)*64; vs_inertial = iner_sign ? -v : v; }
+return (vs_baro!=INT32_MIN || vs_inertial!=INT32_MIN);
+}
+
+bool parse_bds61_baro_geo(const uint8_t* me, int& baro_geo_diff) {
+uint8_t bds1=(me[0]>>4)&0xF, bds2=me[0]&0xF; if (bds1!=6 || bds2!=1) return false;
+int bg_stat=(getbits56(me,37,1)); int bg_sign=(getbits56(me,38,1)); int bg_val=(int)getbits56(me,39,7);
+if (!bg_stat || bg_val==0) { baro_geo_diff = INT32_MIN; return true; }
+int v = bg_val * 25;
+baro_geo_diff = bg_sign ? -v : v;
+return true;
+}
+Файл: storage.h
+#pragma once
+#include <Arduino.h>
+
+struct Settings {
+String mode; // CSV/NMEA/JSON/UBX/RAW
+String profile; // NORMAL/EMI/URBAN/REMOTE
+bool log_on; // true/false
+double ref_lat; // CPR ref
+double ref_lon; // CPR ref
+};
+
+bool storage_init();
+bool storage_save(const Settings& s);
+bool storage_load(Settings& s);
+Файл: storage.cpp
+#include "storage.h"
+#include <LittleFS.h>
+
+static const char* kFile = "/config.txt";
+
+bool storage_init(){ return LittleFS.begin(); }
+
+static void write_kv(File& f, const char* k, const String& v){ f.print(k); f.print('='); f.println(v); }
+
+bool storage_save(const Settings& s){
+File f = LittleFS.open(kFile, "w"); if (!f) return false;
+write_kv(f, "mode", s.mode);
+write_kv(f, "profile", s.profile);
+write_kv(f, "log_on", s.log_on ? "1":"0");
+write_kv(f, "ref_lat", String(s.ref_lat, 8));
+write_kv(f, "ref_lon", String(s.ref_lon, 8));
+f.close(); return true;
+}
+
+bool storage_load(Settings& s){
+File f = LittleFS.open(kFile, "r"); if (!f) return false;
+while (f.available()){
+String line = f.readStringUntil('
+'); line.trim();
+if (!line.length()) continue;
+int eq = line.indexOf('=');
+if (eq < 0) continue;
+String k = line.substring(0, eq);
+String v = line.substring(eq + 1);
+k.toLowerCase(); v.trim();
+if (k=="mode") s.mode = v;
+else if (k=="profile") s.profile = v;
+else if (k=="log_on") s.log_on = (v=="1");
+else if (k=="ref_lat") s.ref_lat = v.toDouble();
+else if (k=="ref_lon") s.ref_lon = v.toDouble();
+}
+f.close(); return true;
+}
+Файл: adsb_rp2040_adsb.ino
+#include <Arduino.h>
+#include <FreeRTOS.h>
+#include <task.h>
+#include <queue.h>
+#include <semphr.h>
+#include <LittleFS.h>
+
+#include "pico/stdlib.h"
+#include "hardware/pio.h"
+#include "hardware/clocks.h"
+#include "hardware/adc.h"
+#include "hardware/irq.h"
+#include "hardware/gpio.h"
+#include "hardware/structs/sio.h"
+
+#include "adsb_sampler.pio.h"
+#include "adsb_crc.h"
+#include "adsb_decoder.h"
+#include "dma_ring.h"
+#include "storage.h"
+
+// ---------------- Pins ----------------
+static const uint8_t PIN_UART2_TX = 4, PIN_UART2_RX = 5; // Serial2 921600
+static const uint8_t CH_IN[3] = {18,19,22};
+static const uint8_t CH_LED[3] = {17,20,23};
+static const uint8_t PIN_BLINK_CORE0 = 15; // 1000ms
+static const uint8_t PIN_BLINK_CORE1 = 25; // 500ms
+static const uint8_t PIN_RSSI = 26; // ADC0
+
+// ---------------- Timing ----------------
+static const uint32_t SAMPLE_RATE_HZ = 10000000u; // 10 MHz
+static const uint8_t T04 = (uint8_t)(SAMPLE_RATE_HZ * 0.4e-6 + 0.5);
+static const uint8_t T05 = (uint8_t)(SAMPLE_RATE_HZ * 0.5e-6 + 0.5);
+static const uint8_t T07 = (uint8_t)(SAMPLE_RATE_HZ * 0.7e-6 + 0.5);
+static const uint8_t TBIT= (uint8_t)(SAMPLE_RATE_HZ * 1.0e-6 + 0.5);
+static const uint16_t TPRE= (uint16_t)(SAMPLE_RATE_HZ * 8.0e-6 + 0.5);
+
+// ---------------- Adaptive preamble thresholds ----------------
+static float g_neg_avg = 0.0f; static float g_neg_alpha = 0.02f;
+static int g_base_thr = 36; static float g_k = 1.5f;
+static int PRE_PENALTY_THR = 6; static int PRE_MIN_POS_HITS = 14;
+
+struct PreambleProfile{ int base; float k; float alpha; int penalty; int minhits; const char* name; };
+static const PreambleProfile PROF_NORMAL = { 36, 1.5f, 0.02f, 6, 14, "NORMAL" };
+static const PreambleProfile PROF_EMI = { 44, 2.0f, 0.01f, 4, 18, "EMI" };
+static const PreambleProfile PROF_URBAN = { 40, 1.8f, 0.02f, 5, 16, "URBAN" };
+static const PreambleProfile PROF_REMOTE = { 32, 1.2f, 0.03f, 8, 12, "REMOTE" };
+static void apply_profile(const PreambleProfile& p){ g_base_thr=p.base; g_k=p.k; g_neg_alpha=p.alpha; PRE_PENALTY_THR=p.penalty; PRE_MIN_POS_HITS=p.minhits; }
+static const PreambleProfile* profile_from_string(const String& s){
+String up=s; up.toUpperCase();
+if(up=="NORMAL") return &PROF_NORMAL; if(up=="EMI") return &PROF_EMI;
+if(up=="URBAN") return &PROF_URBAN; if(up=="REMOTE") return &PROF_REMOTE;
+return &PROF_NORMAL;
+}
+
+// ---------------- DMA ----------------
+static DmaRing RINGS[3];
+
+// ---------------- Packet ----------------
+typedef struct {
+uint8_t ch; uint8_t nbits; uint8_t data[14]; uint32_t rssi_u;
+} AdsbPacket;
+
+static QueueHandle_t q_packets; static QueueHandle_t q_fixed_packets;
+
+// ---------------- Preamble/demod state ----------------
+struct PreambleState {
+uint32_t shift[4]; bool last; uint8_t runlen; uint32_t sample_pos;
+uint32_t pulse_times[4096]; uint16_t phead, ptail;
+};
+static PreambleState PS[3];
+
+// ---------------- GPIO fast ----------------
+static inline void fast_set(uint8_t pin, bool v){ if(v) sio_hw->gpio_set=1u<<pin; else sio_hw->gpio_clr=1u<<pin; }
+static inline void fast_toggle(uint8_t pin){ sio_hw->gpio_togl=1u<<pin; }
+
+// ---------------- Pulses ring ----------------
+static inline void push_pulse(PreambleState& ps, uint32_t tcenter){
+uint16_t n=(ps.phead+1)&0x0FFF; if(n==ps.ptail) ps.ptail=(ps.ptail+1)&0x0FFF;
+ps.pulse_times[ps.phead]=tcenter; ps.phead=n;
+}
+static inline bool peek_pulse(const PreambleState& ps, uint16_t idx_from_tail, uint32_t& t){
+uint16_t cnt=(ps.phead-ps.ptail)&0x0FFF; if(idx_from_tail>=cnt) return false;
+uint16_t i=(ps.ptail+idx_from_tail)&0x0FFF; t=ps.pulse_times[i]; return true;
+}
+static inline void shift_in_bit(PreambleState &ps, bool b){
+ps.shift[0]=((ps.shift[0]<<1)|(ps.shift[1]>>31));
+ps.shift[1]=((ps.shift[1]<<1)|(ps.shift[2]>>31));
+ps.shift[2]=((ps.shift[2]<<1)|(ps.shift[3]>>31));
+ps.shift[3]=((ps.shift[3]<<1)|(b?1:0));
+}
+
+// ---------------- Digital filter ----------------
+static inline void feed_sample_and_filter(PreambleState& ps, bool s){
+ps.sample_pos++;
+if (s == ps.last) { if(ps.runlen<255) ps.runlen++; return; }
+if (ps.last){
+if (ps.runlen >= T04 && ps.runlen <= T07){
+uint32_t start=ps.sample_pos-ps.runlen;
+uint32_t center=start+ps.runlen/2;
+push_pulse(ps, center);
+}
+}
+ps.last = s; ps.runlen = 1;
+}
+
+// ---------------- Adaptive preamble corr ----------------
+static bool corr_preamble_and_get_t0(const PreambleState &ps, uint32_t cur_pos, uint32_t &t0){
+uint8_t bits[80]; for(int i=0;i<80;i++){ int idx=127-i; int w=idx>>5; int b=31-(idx&31); bits[79-i]=(ps.shift[w]>>b)&1; }
+int score=0, penalty=0, posHits=0, negHits=0;
+for(int i=0;i<80;i++){
+bool expect=((i>=2 && i<=7)||(i>=12 && i<=17)||(i>=37 && i<=42)||(i>=47 && i<=52));
+if(bits[i]){ if(expect){ score+=3; posHits++; } else { score+=-1; negHits++; penalty++; } }
+}
+int dynamic_thr = g_base_thr + (int)(g_k * g_neg_avg);
+bool ok = (score >= dynamic_thr) && (penalty <= PRE_PENALTY_THR) && (posHits >= PRE_MIN_POS_HITS);
+if(!ok){ g_neg_avg = (1.0f - g_neg_alpha)g_neg_avg + g_neg_alpha(float)negHits; return false; }
+t0 = cur_pos - 80; return true;
+}
+
+// ---------------- Demod ----------------
+static bool demod_bits(const PreambleState& ps, uint32_t t0, uint8_t* out, uint8_t& nbits){
+uint32_t data_start=t0+TPRE; memset(out,0,14); nbits=112;
+uint16_t cnt=(ps.phead-ps.ptail)&0x0FFF;
+for(uint8_t bit=0; bit<112; bit++){
+uint32_t w0=data_start+bitTBIT, w1=w0+5; bool first=false, second=false;
+for(uint16_t k=0;k<cnt;k++){
+uint32_t tp; if(!peek_pulse(ps,k,tp)) break;
+if(tp+2<w0) continue; if(tp>w0+TBIT+2) break;
+if(tp>=(int)w0-2 && tp<=(int)w1+2) first=true; else if(tp>(int)w1-2 && tp<=(int)(w0+TBIT)+2) second=true;
+}
+uint8_t val= first?1:(second?0:0); if(val) out[bit>>3] |= (1<<(7-(bit&7)));
+if(bit==55){
+bool any_after=false;
+for(uint8_t b2=56;b2<112 && !any_after;b2++){
+uint32_t w0b=data_start+b2TBIT, wE=w0b+TBIT;
+for(uint16_t k=0;k<cnt;k++){ uint32_t tp; if(!peek_pulse(ps,k,tp)) break;
+if(tp<w0b-2) continue; if(tp>wE+2) break; any_after=true; break;
+}
+}
+if(!any_after){ nbits=56; break; }
+}
+}
+return true;
+}
+
+// ---------------- CPR state for global decode ----------------
+typedef struct{ uint32_t icao; bool has_even,has_odd; uint8_t even_me[7], odd_me[7]; uint32_t even_time_ms, odd_time_ms; } IcaoCprState;
+#define ICAO_MAP_SIZE 256
+static IcaoCprState ICAO_CPR[ICAO_MAP_SIZE];
+static inline uint8_t hash_icao(uint32_t icao){ icao^=icao>>12; icao^=icao>>6; icao^=icao>>3; return (uint8_t)icao; }
+static CprRef CPR_REF = {55.0, 37.0};
+
+// ---------------- Output packet to ESP32S3 ----------------
+#pragma pack(push,1)
+struct FlightOut {
+uint8_t addr; // 24-bit ICAO младшие 8-бит (для простоты) или 0
+uint16_t Squawk; // из BDS (если есть), иначе 0
+char flight[8]; // callsign
+int32_t altitude_m; // м геоид (из ft)
+int32_t pressure_alt_m; // м (если есть), иначе как altitude_m
+int16_t speed_kmh; // км/ч (из узлов)
+uint16_t course_deg10; // курс*10
+int16_t vert_rate_mpm; // м/мин (из ft/min)
+float latitude; // градусы
+float longitude; // градусы
+uint32_t seen; // millis()
+uint32_t timestamp; // millis()
+uint8_t signal_source; // 1
+uint8_t aircraft_type; // 9
+uint16_t crc16; // CRC16-CCITT
+};
+#pragma pack(pop)
+
+static uint16_t crc16_ccitt(const uint8_t* data, size_t len){
+uint16_t crc=0xFFFF;
+for(size_t i=0;i<len;i++){
+crc ^= (uint16_t)data[i] << 8;
+for(int j=0;j<8;j++){
+if(crc & 0x8000) crc=(crc<<1) ^ 0x1021; else crc<<=1;
+}
+}
+return crc;
+}
+
+// ---------------- Tasks ----------------
+static TaskHandle_t hRxTask=nullptr, hProcTask=nullptr;
+
+static void send_raw_debug(const AdsbPacket& p){
+Serial.print("RAW CH"); Serial.print(p.ch+1);
+Serial.print(" LEN="); Serial.print(p.nbits);
+Serial.print(" DATA=");
+for (uint8_t i=0;i<(p.nbits+7)/8;i++){ if (p.data[i]<16) Serial.print('0'); Serial.print(p.data[i], HEX); }
+Serial.print("\r
+");
+}
+
+static void decode_and_output(AdsbPacket& p){
+// Отладка: RAW в Serial (USB) до CRC проверки
+send_raw_debug(p);
+
+const uint8_t nbytes = (p.nbits+7)/8;
+uint8_t msg[14]; memcpy(msg, p.data, nbytes);
+
+uint8_t df = (msg[0]>>3)&0x1F;
+uint32_t parity = (msg[nbytes-3]<<16)|(msg[nbytes-2]<<8)|msg[nbytes-1];
+uint32_t crc_wo = modes_crc24(msg, nbytes-3);
+uint32_t syndrome = (crc_wo ^ parity) & 0xFFFFFF;
+
+bool fixed=false;
+if (syndrome != 0) {
+int bitfix = modes_try_single_bit_fix(msg, p.nbits);
+if (bitfix >= 0) {
+fixed=true;
+AdsbPacket fp=p; memcpy(fp.data, msg, nbytes); xQueueSend(q_fixed_packets, &fp, 0);
+parity = (msg[nbytes-3]<<16)|(msg[nbytes-2]<<8)|msg[nbytes-1];
+crc_wo = modes_crc24(msg, nbytes-3);
+syndrome = (crc_wo ^ parity) & 0xFFFFFF;
+}
+}
+
+// DF17/18: ICAO = parity ^ CRC(data)
+uint32_t icao = (df==17 || df==18) ? (parity ^ modes_crc24(msg, nbytes-3)) : ((msg[1]<<16)|(msg[2]<<8)|msg[3]);
+
+const uint8_t* me = &msg[4];
+char callsign[9]={0};
+double lat=NAN, lon=NAN, gs=NAN, trk=NAN;
+int alt=-1, vs=INT32_MIN, bg=INT32_MIN;
+
+// Декод ME
+if ((df==17 || df==18) && p.nbits==112){
+uint8_t tc=(me[0]>>3)&0x1F;
+if(tc>=1 && tc<=4) decode_callsign(me, callsign);
+else if(tc>=9 && tc<=18){
+bool odd=(me[0]&0x04)!=0;
+uint8_t h=hash_icao(icao);
+if (ICAO_CPR[h].icao != icao) { memset(&ICAO_CPR[h],0,sizeof(IcaoCprState)); ICAO_CPR[h].icao=icao; }
+if (odd) { memcpy(ICAO_CPR[h].odd_me, me, 7); ICAO_CPR[h].odd_time_ms=millis(); ICAO_CPR[h].has_odd=true; }
+else { memcpy(ICAO_CPR[h].even_me, me, 7); ICAO_CPR[h].even_time_ms=millis(); ICAO_CPR[h].has_even=true; }
+if (ICAO_CPR[h].has_even && ICAO_CPR[h].has_odd &&
+(uint32_t)abs((int)(ICAO_CPR[h].even_time_ms - ICAO_CPR[h].odd_time_ms)) <= 10000) {
+cpr_global_decode(lat, lon, ICAO_CPR[h].even_me, ICAO_CPR[h].odd_me);
+} else {
+cpr_local_decode(lat, lon, me, CPR_REF);
+}
+alt = decode_altitude(me);
+} else if (tc==19) {
+decode_velocity_tc19(me, gs, trk, vs, bg);
+}
+} else if (df==20 || df==21) {
+int vs_b=INT32_MIN, vs_i=INT32_MIN;
+if (parse_bds60_vs(me, vs_b, vs_i)) { if (vs==INT32_MIN) vs = (vs_b!=INT32_MIN?vs_b:vs_i); }
+int bg_tmp=INT32_MIN; if (parse_bds61_baro_geo(me, bg_tmp)) { if (bg_tmp!=INT32_MIN) bg=bg_tmp; }
+}
+
+// Вывод в Serial2 (ESP32S3) — структура FlightOut с CRC16
+FlightOut fo{};
+fo.addr = (uint8_t)(icao & 0xFF);
+fo.Squawk = 0; // при желании — реально парсить (не у всех DF есть)
+memcpy(fo.flight, callsign, 8);
+// Переводы единиц:
+// alt (ft) -> m
+if (alt>=0) fo.altitude_m = (int32_t)round(alt * 0.3048);
+else fo.altitude_m = -1;
+fo.pressure_alt_m = fo.altitude_m;
+
+// gs (knots) -> km/h
+if (!isnan(gs)) fo.speed_kmh = (int16_t)round(gs * 1.852);
+else fo.speed_kmh = -1;
+
+// course deg -> *10 (uint16_t)
+if (!isnan(trk)) { if (trk<0) trk+=360.0; fo.course_deg10 = (uint16_t)round(fmod(trk,360.0)*10.0); }
+
+// vs ft/min -> m/min
+if (vs!=INT32_MIN) fo.vert_rate_mpm = (int16_t)round(vs * 0.3048);
+
+if (!isnan(lat)&&!isnan(lon)) { fo.latitude = (float)lat; fo.longitude=(float)lon; } else { fo.latitude=0; fo.longitude=0; }
+
+fo.seen = millis(); fo.timestamp=millis(); fo.signal_source=1; fo.aircraft_type=9;
+
+// CRC16 по payload без crc16
+fo.crc16 = 0;
+uint16_t crc = crc16_ccitt((const uint8_t*)&fo, sizeof(FlightOut)-2);
+fo.crc16 = crc;
+
+Serial2.write((const uint8_t*)&fo, sizeof(FlightOut));
+
+// Отладочный лог
+Serial.print("DF="); Serial.print(df);
+Serial.print(" ICAO="); for(int i=0;i<3;i++){ uint8_t b=(icao>>(16-8*i))&0xFF; if(b<16) Serial.print('0'); Serial.print(b,HEX); }
+if (callsign[0]) { Serial.print(" FLT="); Serial.print(callsign); }
+if (!isnan(lat) && !isnan(lon)) { Serial.print(" LAT="); Serial.print(lat,6); Serial.print(" LON="); Serial.print(lon,6); }
+if (!isnan(gs)) { Serial.print(" GS="); Serial.print(gs,1); Serial.print("kt"); Serial.print(" TRK="); Serial.print(trk,1); }
+if (alt>=0) { Serial.print(" ALT="); Serial.print(alt); Serial.print("ft"); }
+if (vs!=INT32_MIN) { Serial.print(" VS="); Serial.print(vs); Serial.print("fpm"); }
+if (bg!=INT32_MIN) { Serial.print(" BG="); Serial.print(bg); Serial.print("ft"); }
+Serial.print(" CRC_OK="); Serial.print(syndrome==0 ? "Y":"N");
+if (fixed) Serial.print(" FIXED=1");
+Serial.print(" RSSI="); Serial.print(p.rssi_u);
+Serial.print("\r
+");
+}
+
+// ---------------- RX Task (core1) ----------------
+static void rx_task(void* arg){
+// Инициализация PIO и DMA
+PIO pio = pio0;
+uint offset = pio_add_program(pio, &adsb_sampler_program);
+for (int c=0;c<3;c++){
+PS[c] = {};
+gpio_init(CH_LED[c]); gpio_set_dir(CH_LED[c], GPIO_OUT); fast_set(CH_LED[c], 0);
+
+pio_sm_config cfg = adsb_sampler_program_get_default_config(offset);
+sm_config_set_in_pins(&cfg, CH_IN[c]);
+sm_config_set_in_shift(&cfg, true, true, 32);
+float div=(float)clock_get_hz(clk_sys)/(float)SAMPLE_RATE_HZ;
+sm_config_set_clkdiv(&cfg, div);
+pio_gpio_init(pio, CH_IN[c]);
+pio_sm_set_consecutive_pindirs(pio, c, CH_IN[c], 1, false);
+pio_sm_init(pio, c, offset, &cfg); pio_sm_set_enabled(pio, c, true);
+
+dma_ring_init(RINGS[c], pio, c, 1024);
+}
+
+// Blink core1
+gpio_init(PIN_BLINK_CORE1); gpio_set_dir(PIN_BLINK_CORE1, GPIO_OUT); fast_set(PIN_BLINK_CORE1,0);
+TickType_t lastBlink = xTaskGetTickCount();
+
+// ADC RSSI
+adc_init(); adc_gpio_init(PIN_RSSI); adc_select_input(0);
+
+while(1){
+// чтение из DMA-кольца, трансляция в фильтр/детектор/демодулятор
+for (int c=0;c<3;c++){
+PreambleState &ps = PS[c];
+uint32_t w;
+while (dma_ring_get_word(RINGS[c], w)){
+for (int i=31;i>=0;i--){
+bool bit = (w>>i)&1;
+shift_in_bit(ps, bit);
+feed_sample_and_filter(ps, bit);
+uint32_t t0;
+if (corr_preamble_and_get_t0(ps, ps.sample_pos, t0)){
+fast_set(CH_LED[c], 1);
+uint8_t out[14]; uint8_t nbits=0;
+if (demod_bits(ps, t0, out, nbits)){
+AdsbPacket pkt{}; pkt.ch=c; pkt.nbits=nbits; memcpy(pkt.data,out,(nbits+7)/8);
+// RSSI среднее (16 выборок)
+uint32_t acc=0; for (int k=0;k<16;k++) acc += adc_read(); pkt.rssi_u = acc/16;
+xQueueSend(q_packets, &pkt, 0);
+}
+fast_set(CH_LED[c], 0);
+}
+}
+}
+}
+// Blink 500ms
+if (xTaskGetTickCount() - lastBlink >= pdMS_TO_TICKS(500)) {
+fast_toggle(PIN_BLINK_CORE1);
+lastBlink = xTaskGetTickCount();
+}
+taskYIELD();
+}
+}
+
+// ---------------- Processing Task (core0) ----------------
+static void proc_task(void* arg){
+// Serial2 для ESP32S3
+Serial2.setTX(PIN_UART2_TX); Serial2.setRX(PIN_UART2_RX); Serial2.begin(921600);
+
+// Blink core0
+gpio_init(PIN_BLINK_CORE0); gpio_set_dir(PIN_BLINK_CORE0, GPIO_OUT); fast_set(PIN_BLINK_CORE0,0);
+TickType_t lastBlink = xTaskGetTickCount();
+
+Settings s;
+if (storage_init() && storage_load(s)) {
+if (s.profile.length()) apply_profile(*profile_from_string(s.profile));
+CPR_REF.ref_lat = s.ref_lat; CPR_REF.ref_lon = s.ref_lon;
+}
+
+String line="";
+AdsbPacket pkt;
+while(1){
+// Команды по Serial USB (115200)
+while (Serial.available()>0){
+char ch= (char)Serial.read();
+if (ch=='\r') continue;
+if (ch=='
+'){ String sline=line; line=""; sline.trim(); String up=sline; up.toUpperCase();
+if (up.startsWith("PROFILE ")){ String p=up.substring(8); apply_profile(profile_from_string(p)); Serial.println("OK PROFILE"); }
+else if (up.startsWith("REF ")){ double la=CPR_REF.ref_lat, lo=CPR_REF.ref_lon; sscanf(sline.c_str()+4, "%lf %lf", &la, &lo); CPR_REF.ref_lat=la; CPR_REF.ref_lon=lo; Serial.println("OK REF"); }
+else if (up=="LOG ON"){ / резерв / Serial.println("OK LOG ON"); }
+else if (up=="LOG OFF"){ / резерв */ Serial.println("OK LOG OFF"); }
+else if (up=="HELP"){ Serial.println("PROFILE NORMAL|EMI|URBAN|REMOTE; REF ; LOG ON|OFF"); }
+else Serial.println("OK");
+} else { if (line.length()<128) line+=ch; }
+}
+
+if (xQueueReceive(q_packets, &pkt, pdMS_TO_TICKS(10)) == pdPASS) decode_and_output(pkt);
+while (xQueueReceive(q_fixed_packets, &pkt, 0) == pdPASS) {
+  Serial.print("FIXED_RAW="); for (uint8_t i=0;i<(pkt.nbits+7)/8;i++){ if(pkt.data[i]<16) Serial.print('0'); Serial.print(pkt.data[i],HEX);} Serial.print("\r
+");
+}
+
+if (xTaskGetTickCount() - lastBlink >= pdMS_TO_TICKS(1000)){
+  fast_toggle(PIN_BLINK_CORE0);
+  lastBlink = xTaskGetTickCount();
+}
+}
+}
+
+// ---------------- FreeRTOS setup ----------------
+extern "C" void vTaskCoreAffinitySet(TaskHandle_t xTask, UBaseType_t uxCoreAffinityMask);
+
+void setup(){
+// USB Serial
+Serial.begin(115200);
+while (!Serial && millis()<2000) { delay(10); }
+
+// Очереди
+q_packets = xQueueCreate(256, sizeof(AdsbPacket));
+q_fixed_packets = xQueueCreate(64, sizeof(AdsbPacket));
+
+// Задачи
+xTaskCreate(rx_task, "rx", 16384, NULL, configMAX_PRIORITIES-1, &hRxTask);
+xTaskCreate(proc_task, "proc",12288, NULL, configMAX_PRIORITIES-2, &hProcTask);
+
+// Аффинность: rx → core1, proc → core0
+if (hRxTask) vTaskCoreAffinitySet(hRxTask, (1<<1));
+if (hProcTask) vTaskCoreAffinitySet(hProcTask, (1<<0));
+}
+
+void loop(){ vTaskDelay(pdMS_TO_TICKS(1000)); }
+Файл: esp32s3_receiver/esp32s3_receiver.ino
+#include <Arduino.h>
+
+#pragma pack(push,1)
+struct FlightOut {
+uint8_t addr;
+uint16_t Squawk;
+char flight[8];
+int32_t altitude_m;
+int32_t pressure_alt_m;
+int16_t speed_kmh;
+uint16_t course_deg10;
+int16_t vert_rate_mpm;
+float latitude;
+float longitude;
+uint32_t seen;
+uint32_t timestamp;
+uint8_t signal_source;
+uint8_t aircraft_type;
+uint16_t crc16;
+};
+#pragma pack(pop)
+
+static uint16_t crc16_ccitt(const uint8_t* data, size_t len){
+uint16_t crc=0xFFFF;
+for(size_t i=0;i<len;i++){
+crc ^= (uint16_t)data[i] << 8;
+for(int j=0;j<8;j++){
+if(crc & 0x8000) crc=(crc<<1) ^ 0x1021; else crc<<=1;
+}
+}
+return crc;
+}
+
+void setup(){
+Serial.begin(115200);
+Serial1.begin(115200); // монитор
+// Для Arduino-ESP32 v2.x: Serial2.begin(baud, config, rxPin, txPin)
+Serial2.begin(921600, SERIAL_8N1, 42 /RX/, 41 /TX/);
+Serial1.println("ESP32S3: ready");
+}
+
+void loop(){
+static uint8_t buf[sizeof(FlightOut)];
+if (Serial2.available() >= (int)sizeof(FlightOut)) {
+size_t n = Serial2.readBytes(buf, sizeof(FlightOut));
+if (n == sizeof(FlightOut)) {
+FlightOut fo; memcpy(&fo, buf, sizeof(FlightOut));
+uint16_t calc = crc16_ccitt((const uint8_t*)&fo, sizeof(FlightOut)-2);
+if (calc == fo.crc16) {
+Serial1.print("OK:");
+Serial1.print(" FLT="); Serial1.write(fo.flight, 8);
+Serial1.print(" ICAO="); Serial1.print(fo.addr, HEX);
+Serial1.print(" ALTm="); Serial1.print(fo.altitude_m);
+Serial1.print(" SPD="); Serial1.print(fo.speed_kmh);
+Serial1.print(" CRS="); Serial1.print(fo.course_deg10/10.0,1);
+Serial1.print(" VS="); Serial1.print(fo.vert_rate_mpm);
+Serial1.print(" LAT="); Serial1.print(fo.latitude,6);
+Serial1.print(" LON="); Serial1.print(fo.longitude,6);
+Serial1.print("\r
+");
+} else {
+Serial1.print("CRC FAIL\r
+");
+}
+}
+}
+}
+Примечания
+
+Если у вас включены строгие предупреждения — убедитесь, что нет обратных слешей в adsb_decoder.cpp (в проекте уже исправлено).
+Для RP2040 core 4.7.x пути и вызовы соответствуют Pico SDK, FreeRTOS и LittleFS, входящие в ядро Earle Philhower.
+Если загрузка через UF2 автоинструмент ломается, используйте Picotool или вручную скопируйте UF2 (или смените USB кабель/порт).
+Если нужно — могу разбить и снова прислать файлы по отдельности (если платформа обрезала сообщение), либо собрать минимальный архив в Base64 (по запросу).
