@@ -1,0 +1,13 @@
+RP2040 ADS-B Receiver v2
+- Три канала PIO→DMA→коррелятор, 20 МГц, 0.5 мкс импульсы
+- Ядро1: прием/коррелятор/слайсер; Ядро0: CRC/декод/вывод
+- Preamble pins: 17,20,23; RX pins: 18,19,22; RSSI ADC26
+- Serial USB 115200; Serial2 921600 (TX=4 RX=5) → ESP32S3
+- CPR global/local: even/odd окно 10 с, surface/airborne; ref=(55.93574,37.34873) (можно изменить командой REF)
+- Gillham Q=0: реализован обобщенный декодер AC13 (проверяет допустимость)
+- TC=19: подтипы 1/2/3/4 + вертикальная скорость/баро‑гео разность (скелет)
+- DF18: маркировка источника (src_type)
+- Коррелятор: EMA/динамический порог, строгие интервалы, min energy per window, фильтр ширины 0.4–0.7 мкс (нормализация до 0.5)
+- Профили: PROFILE <NORMAL|HIGH-EMI|URBAN|REMOTE>
+- Вывод FORMAT: LOG/CSV/JSON/NMEA (UBX — каркас)
+- LittleFS /config.txt: SAVE/LOAD/SHOW
