@@ -1,0 +1,304 @@
+Отлично, я упростил программу приёма ADS‑B пакетов для Arduino IDE на базе вашего архива. 
+Суть изменений: максимально простой скетч, который выводит в 
+Serial Monitor сырые пакеты в HEX с временной меткой и уровнем сигнала, 
+без лишней логики и протоколов. Декодер работает на втором ядре RP2040, как и в исходнике.
+
+Что сделано
+
+Создан простой скетч для Arduino IDE, который:
+
+Инициализирует подсистемы из вашего проекта (ADSBee/PacketDecoder/Comms/Settings).
+Выводит в USB Serial строки RAW TS= RSSI=.
+Оставляет исходную систему демодуляции/декодирования и словарь бортов, но скрывает сложность.
+Второе ядро RP2040 крутит decoder.UpdateDecoderLoop().
+Никаких изменений в логике PIO/декодирования — только упрощённый вывод.
+
+Файлы, которые я создал
+
+ADSB_AITunnel_simple/ADSB_AITunnel_simple.ino
+ADSB_AITunnel_simple/README.txt
+[[adsb_aitunnel_simple.zip](/files/download/68a9c21948d527bf87fcb522)](/files/download/68a9c1b248d527bf87fcb505)
+Как пользоваться (Arduino IDE)
+
+Установите ядро Arduino-Pico (Earle Philhower) для Raspberry Pi Pico / Pico W.
+Создайте папку скетча ADSB_AITunnel_simple и поместите туда:
+файл ADSB_AITunnel_simple.ino (см. ниже),
+ВСЕ .h/.cpp из вашего проекта (кроме исходного .ino) — просто скопируйте их рядом со скетчем.
+Откройте ADSB_AITunnel_simple.ino в Arduino IDE.
+Выберите плату “Raspberry Pi Pico” и нужный порт.
+Загрузите прошивку и откройте Serial Monitor @ 115200 бод.
+Важно
+
+Пины приёма оставлены как в вашем bsp.h. При необходимости меняйте там (r1090_pulses_pins, r1090_demod_pins и т.д.).
+Вывод идёт только в USB Serial (Serial Monitor). Встроенные протоколы BEAST/CSBee оставлены «как есть» в коде, но для простоты в скетче они не используются.
+Если хотите видеть CSBee в USB, замените в comms_reporting.cpp вызов ReportCSBee(...kCommsUART) на ReportCSBee(...kConsole) — и строки CSBee пойдут в USB.
+Упрощённый скетч: ADSB_AITunnel_simple/ADSB_AITunnel_simple.ino
+Скопируйте этот текст в файл:
+
+#include <Arduino.h>
+
+// Core project headers
+#include "bsp.h"
+#include "comms.h"
+#include "adsbee.h"
+#include "packet_decoder.h"
+#include "object_dictionary.h"
+#include "settings.h"
+
+// Define globals here (они были в оригинальном .ino)
+BSP bsp = BSP({});
+ADSBee adsbee = ADSBee({});
+SettingsManager settings_manager;
+ObjectDictionary object_dictionary;
+PacketDecoder decoder = PacketDecoder({ .enable_1090_error_correction = true });
+extern CommsManager comms_manager;   // defined in comms.cpp
+
+// USB Serial для Arduino IDE
+static const uint32_t SERIAL_BAUD = 115200;
+
+// Печать пакета: HEX + временная метка + RSSI
+static void print_raw_packet(const Decoded1090Packet &p)
+{
+  char buf[2 * 4 * Raw1090Packet::kMaxPacketLenWords32 + 8];
+  Raw1090Packet raw = p.GetRaw();
+  uint16_t n = raw.PrintBuffer(buf, sizeof(buf));
+  if (n >= sizeof(buf)) n = sizeof(buf) - 1;
+  buf[n] = '\0';
+
+  Serial.print("RAW ");
+  Serial.print(buf);
+  Serial.print(" TS=");
+  Serial.print((unsigned long)raw.GetTimestampMs());
+  if (raw.sigs_dbm != INT16_MIN) {
+    Serial.print(" RSSI=");
+    Serial.print(raw.sigs_dbm);
+    Serial.print("dBm");
+  }
+  Serial.println();
+}
+
+void setup()
+{
+  Serial.begin(SERIAL_BAUD);
+  while (!Serial && millis() < 3000) { delay(10); }
+
+  comms_manager.Init();
+  delay(200);
+  adsbee.Init();
+  settings_manager.Load();
+
+  Serial.print("ADSB simple receiver ");
+  Serial.print(object_dictionary.kFirmwareVersionMajor);
+  Serial.print(".");
+  Serial.print(object_dictionary.kFirmwareVersionMinor);
+  Serial.print(".");
+  Serial.println(object_dictionary.kFirmwareVersionPatch);
+  Serial.println("Setup OK");
+}
+
+void loop()
+{
+  // Основные обновления
+  comms_manager.Update();
+  adsbee.Update();
+  decoder.UpdateLogLoop();
+
+  // Забираем подготовленные пакеты и печатаем
+  Decoded1090Packet pkt;
+  uint8_t printed = 0;
+  while (comms_manager.transponder_packet_reporting_queue.Pop(pkt)) {
+    print_raw_packet(pkt);
+    if (++printed >= 25) break; // лимит, чтобы не зависал UI
+  }
+}
+
+// Второе ядро RP2040: здесь выполняем декодер
+void setup1() { /* пусто */ }
+void loop1() {
+  decoder.UpdateDecoderLoop();
+}
+README (коротко): ADSB_AITunnel_simple/README.txt
+
+Что это:
+Упрощённый скетч, печатающий сырые ADS‑B пакеты в виде HEX с временной меткой и RSSI.
+Как использовать:
+Arduino-Pico ядро, скопировать .ino и все .h/.cpp рядом, выбрать RP2040, 115200 бод.
+Примечания:
+Пины смотрите/меняйте в bsp.h.
+Для простоты протоколы BEAST/CSBee в USB не включены.
+Логика демодуляции/декодирования остаётся исходной.
+Как выглядит вывод
+
+Пример строки:
+RAW 8D40621D58C382D690C8AC2863A7 TS=123456 RSSI=-32dBm
+Схема потока данных
+
+core1
+core0
+PIO demod
+Raw1090 queue
+PacketDecoder
+Decoded queue
+Aircraft dictionary
+Reporting queue
+Serial Monitor
+Дополнительные опции (по желанию)
+
+Хотите вывод CSBee в USB:
+Откройте comms_reporting.cpp и замените:
+ret = ReportCSBee(SettingsManager::SerialInterface::kCommsUART);
+на
+ret = ReportCSBee(SettingsManager::SerialInterface::kConsole);
+Хотите ограничить объём логов:
+В settings.h установите log_level = SettingsManager::LogLevel::kWarnings или kErrors.
+Если нужно, могу подготовить архив проекта (папка скетча + все необходимые .h/.cpp) под загрузку в Arduino IDE одним кликом. Сейчас у меня сформирован файл [[adsb_aitunnel_simple.zip](/files/download/68a9c21948d527bf87fcb522)](/files/download/68a9c1b248d527bf87fcb505) (содержит скетч и README).Отлично, я упростил программу приёма ADS‑B пакетов для Arduino IDE на базе вашего архива. Суть изменений: максимально простой скетч, который выводит в Serial Monitor сырые пакеты в HEX с временной меткой и уровнем сигнала, без лишней логики и протоколов. Декодер работает на втором ядре RP2040, как и в исходнике.
+
+Что сделано
+
+Создан простой скетч для Arduino IDE, который:
+
+Инициализирует подсистемы из вашего проекта (ADSBee/PacketDecoder/Comms/Settings).
+Выводит в USB Serial строки RAW TS= RSSI=.
+Оставляет исходную систему демодуляции/декодирования и словарь бортов, но скрывает сложность.
+Второе ядро RP2040 крутит decoder.UpdateDecoderLoop().
+Никаких изменений в логике PIO/декодирования — только упрощённый вывод.
+
+Файлы, которые я создал
+
+ADSB_AITunnel_simple/ADSB_AITunnel_simple.ino
+ADSB_AITunnel_simple/README.txt
+[[adsb_aitunnel_simple.zip](/files/download/68a9c21948d527bf87fcb522)](/files/download/68a9c1b248d527bf87fcb505)
+Как пользоваться (Arduino IDE)
+
+Установите ядро Arduino-Pico (Earle Philhower) для Raspberry Pi Pico / Pico W.
+Создайте папку скетча ADSB_AITunnel_simple и поместите туда:
+файл ADSB_AITunnel_simple.ino (см. ниже),
+ВСЕ .h/.cpp из вашего проекта (кроме исходного .ino) — просто скопируйте их рядом со скетчем.
+Откройте ADSB_AITunnel_simple.ino в Arduino IDE.
+Выберите плату “Raspberry Pi Pico” и нужный порт.
+Загрузите прошивку и откройте Serial Monitor @ 115200 бод.
+Важно
+
+Пины приёма оставлены как в вашем bsp.h. При необходимости меняйте там (r1090_pulses_pins, r1090_demod_pins и т.д.).
+Вывод идёт только в USB Serial (Serial Monitor). Встроенные протоколы BEAST/CSBee оставлены «как есть» в коде, но для простоты в скетче они не используются.
+Если хотите видеть CSBee в USB, замените в comms_reporting.cpp вызов ReportCSBee(...kCommsUART) на ReportCSBee(...kConsole) — и строки CSBee пойдут в USB.
+Упрощённый скетч: ADSB_AITunnel_simple/ADSB_AITunnel_simple.ino
+Скопируйте этот текст в файл:
+
+#include <Arduino.h>
+
+// Core project headers
+#include "bsp.h"
+#include "comms.h"
+#include "adsbee.h"
+#include "packet_decoder.h"
+#include "object_dictionary.h"
+#include "settings.h"
+
+// Define globals here (они были в оригинальном .ino)
+BSP bsp = BSP({});
+ADSBee adsbee = ADSBee({});
+SettingsManager settings_manager;
+ObjectDictionary object_dictionary;
+PacketDecoder decoder = PacketDecoder({ .enable_1090_error_correction = true });
+extern CommsManager comms_manager;   // defined in comms.cpp
+
+// USB Serial для Arduino IDE
+static const uint32_t SERIAL_BAUD = 115200;
+
+// Печать пакета: HEX + временная метка + RSSI
+static void print_raw_packet(const Decoded1090Packet &p)
+{
+  char buf[2 * 4 * Raw1090Packet::kMaxPacketLenWords32 + 8];
+  Raw1090Packet raw = p.GetRaw();
+  uint16_t n = raw.PrintBuffer(buf, sizeof(buf));
+  if (n >= sizeof(buf)) n = sizeof(buf) - 1;
+  buf[n] = '\0';
+
+  Serial.print("RAW ");
+  Serial.print(buf);
+  Serial.print(" TS=");
+  Serial.print((unsigned long)raw.GetTimestampMs());
+  if (raw.sigs_dbm != INT16_MIN) {
+    Serial.print(" RSSI=");
+    Serial.print(raw.sigs_dbm);
+    Serial.print("dBm");
+  }
+  Serial.println();
+}
+
+void setup()
+{
+  Serial.begin(SERIAL_BAUD);
+  while (!Serial && millis() < 3000) { delay(10); }
+
+  comms_manager.Init();
+  delay(200);
+  adsbee.Init();
+  settings_manager.Load();
+
+  Serial.print("ADSB simple receiver ");
+  Serial.print(object_dictionary.kFirmwareVersionMajor);
+  Serial.print(".");
+  Serial.print(object_dictionary.kFirmwareVersionMinor);
+  Serial.print(".");
+  Serial.println(object_dictionary.kFirmwareVersionPatch);
+  Serial.println("Setup OK");
+}
+
+void loop()
+{
+  // Основные обновления
+  comms_manager.Update();
+  adsbee.Update();
+  decoder.UpdateLogLoop();
+
+  // Забираем подготовленные пакеты и печатаем
+  Decoded1090Packet pkt;
+  uint8_t printed = 0;
+  while (comms_manager.transponder_packet_reporting_queue.Pop(pkt)) {
+    print_raw_packet(pkt);
+    if (++printed >= 25) break; // лимит, чтобы не зависал UI
+  }
+}
+
+// Второе ядро RP2040: здесь выполняем декодер
+void setup1() { /* пусто */ }
+void loop1() {
+  decoder.UpdateDecoderLoop();
+}
+README (коротко): ADSB_AITunnel_simple/README.txt
+
+Что это:
+Упрощённый скетч, печатающий сырые ADS‑B пакеты в виде HEX с временной меткой и RSSI.
+Как использовать:
+Arduino-Pico ядро, скопировать .ino и все .h/.cpp рядом, выбрать RP2040, 115200 бод.
+Примечания:
+Пины смотрите/меняйте в bsp.h.
+Для простоты протоколы BEAST/CSBee в USB не включены.
+Логика демодуляции/декодирования остаётся исходной.
+Как выглядит вывод
+
+Пример строки:
+RAW 8D40621D58C382D690C8AC2863A7 TS=123456 RSSI=-32dBm
+Схема потока данных
+
+core1
+core0
+PIO demod
+Raw1090 queue
+PacketDecoder
+Decoded queue
+Aircraft dictionary
+Reporting queue
+Serial Monitor
+Дополнительные опции (по желанию)
+
+Хотите вывод CSBee в USB:
+Откройте comms_reporting.cpp и замените:
+ret = ReportCSBee(SettingsManager::SerialInterface::kCommsUART);
+на
+ret = ReportCSBee(SettingsManager::SerialInterface::kConsole);
+Хотите ограничить объём логов:
+В settings.h установите log_level = SettingsManager::LogLevel::kWarnings или kErrors.
+Если нужно, могу подготовить архив проекта (папка скетча + все необходимые .h/.cpp) под загрузку в Arduino IDE одним кликом. Сейчас у меня сформирован файл [[adsb_aitunnel_simple.zip](/files/download/68a9c21948d527bf87fcb522)](/files/download/68a9c1b248d527bf87fcb505) (содержит скетч и README).

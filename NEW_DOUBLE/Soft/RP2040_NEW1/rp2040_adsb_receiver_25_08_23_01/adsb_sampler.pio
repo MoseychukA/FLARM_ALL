@@ -1,0 +1,8 @@
+;
+.program adsb_sampler
+; Sample input pin into ISR every cycle, autopush on 32 bits
+; Uses sideset or set pins? We'll configure pin in init.
+
+.wrap_target
+    in pins, 1        ; shift 1 sample into ISR
+.wrap
