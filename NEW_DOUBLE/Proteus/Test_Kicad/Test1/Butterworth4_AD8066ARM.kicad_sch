@@ -1,0 +1,46 @@
+(kicad_sch (version 20211014) 
+   (generator "manual by AI")
+  (title "Bandpass Filter 2MHz 4th Order")
+  (date "2025-08-27")
+  (components
+    (comp (ref "U1") (lib_id "Amplifier_Operational:AD8066") (value "AD8066ARM") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm") (at 0 0))
+    (comp (ref "R1") (lib_id "Device:R") (value "3.01k") (footprint "Resistors_SMD:R_0603") (at 0 10))
+    (comp (ref "R2") (lib_id "Device:R") (value "28.7k") (footprint "Resistors_SMD:R_0603") (at 0 20))
+    (comp (ref "R4") (lib_id "Device:R") (value "3.01k") (footprint "Resistors_SMD:R_0603") (at 10 10))
+    (comp (ref "R5") (lib_id "Device:R") (value "69.8k") (footprint "Resistors_SMD:R_0603") (at 10 20))
+    (comp (ref "R6") (lib_id "Device:R") (value "464") (footprint "Resistors_SMD:R_0603") (at 10 30))
+    (comp (ref "C1") (lib_id "Device:C") (value "15p") (footprint "Capacitors_SMD:C_0603") (at -10 10))
+    (comp (ref "C2") (lib_id "Device:C") (value "15p") (footprint "Capacitors_SMD:C_0603") (at -10 20))
+    (comp (ref "C3") (lib_id "Device:C") (value "15p") (footprint "Capacitors_SMD:C_0603") (at 20 10))
+    (comp (ref "C4") (lib_id "Device:C") (value "15p") (footprint "Capacitors_SMD:C_0603") (at 20 20))
+    (comp (ref "C_in") (lib_id "Device:C") (value "100n") (footprint "Capacitors_SMD:C_0603") (at -20 0))
+    (comp (ref "C_out") (lib_id "Device:C") (value "100n") (footprint "Capacitors_SMD:C_0603") (at 20 0))
+    (comp (ref "Vref") (lib_id "power:V") (value "2.5V") (footprint "") (at -20 -10))
+  )
+  (wires
+    ; Вход
+    (wire (start -20 0) (end -10 10))
+    ; C1
+    (wire (start -10 10) (end 0 10))
+    ; R1
+    (wire (start 0 10) (end 0 20))
+    ; C2 параллельно R2
+    (wire (start 0 20) (end 10 20))
+    ; R2 между U1A (pin 6) и инвертирующим входом
+    (wire (start 10 20) (end 10 10))
+    ; U1A (pin 6) — выход
+    (wire (start 0 20) (end 0 30))
+    ; Конденсатор C3
+    (wire (start 10 10) (end 20 10))
+    ; R4
+    (wire (start 10 10) (end 10 30))
+    ; R5 и C4
+    (wire (start 10 30) (end 20 30))
+    (wire (start 20 30) (end 20 20))
+    ; U1B (pin 6) — выход
+    (wire (start 20 30) (end 20 10))
+    ; R6
+    (wire (start 20 20) (end -20 -10))
+    ; Vref соединение к R3, R6
+  )
+)

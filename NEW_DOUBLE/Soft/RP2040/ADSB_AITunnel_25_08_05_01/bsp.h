@@ -30,7 +30,7 @@ class BSP
     uint16_t r1090_led_pin = 25;
     uint16_t r1090_num_demod_state_machines = 3;  //
     uint16_t r1090_high_power_demod_state_machine_index = 2;
-    uint16_t r1090_pulses_pins[kMaxNumDemodStateMachines] = {19, 22, 19 };
+    uint16_t r1090_pulses_pins[kMaxNumDemodStateMachines] = {19, 22, 18 };
     uint16_t r1090_demod_pins[kMaxNumDemodStateMachines] = {20, 23, 17 };
     uint16_t r1090_recovered_clk_pins[kMaxNumDemodStateMachines] = {21, 24, 26 }; // Установить RECOVERED_CLK на фальшивый вывод для детектора преамбулы высокой мощности. Будет переопределено
                                                                                  // higher priority (lower index) SM.

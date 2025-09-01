@@ -22,7 +22,7 @@
 #include <TinyGPS++.h>
 #include "ServiceMain.h"
 #include "Configuration_ESP32.h"
-#include "CoreCommandBuffer.h"    // ���������� �������� �� UART ������
+#include "CoreCommandBuffer.h"    /
 #include "Module1090.h"
 #include "Button.h"
 
@@ -94,7 +94,7 @@ void setup()
     val_srt = ver_soft.lastIndexOf('.');
     ver_soft.remove(val_srt);
     Serial.println(ver_soft);
-    service.saveVer(ver_soft);  // ��������� ������ � ������� �������.
+    service.saveVer(ver_soft);  //
 
   SERIAL_FLUSH();
 
@@ -205,8 +205,8 @@ void setup()
 
 void loop()
 {
-   RF_loop();                       // ������� ��������� ����� �������� � ��������������
-   moduleDump1090.update();         // ��������� ����� ������ �� DUMP1090
+   RF_loop();                       // 
+   moduleDump1090.update();         //
    esp_task_wdt_reset();
   switch (settings->mode)
   {

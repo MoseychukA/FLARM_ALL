@@ -1,0 +1,33 @@
+(kicad_sch (version 20211014) (generator "manual by AI")
+  (paper "A4")
+  (title_block (title "Bandpass Filter 2MHz 4th order Butterworth" ) )
+  (lib_symbols
+    (symbol "Device:R" (pin_names (hide)))
+    (symbol "Device:C" (pin_names (hide)))
+    (symbol "Amplifier_Operational:AD8066")
+    (symbol "power:+5V")
+    (symbol "power:GND")
+  )
+  (components
+    (comp (ref "U1") (val "AD8066ARM") (footprint "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"))
+    (comp (ref "R1") (val "3.01k")   (footprint "Resistor_SMD:R_0603"))
+    (comp (ref "R2") (val "28.7k")   (footprint "Resistor_SMD:R_0603"))
+    (comp (ref "R3") (val "1.43k")   (footprint "Resistor_SMD:R_0603"))
+    (comp (ref "R4") (val "3.01k")   (footprint "Resistor_SMD:R_0603"))
+    (comp (ref "R5") (val "69.8k")   (footprint "Resistor_SMD:R_0603"))
+    (comp (ref "R6") (val "464")     (footprint "Resistor_SMD:R_0603"))
+    (comp (ref "C1") (val "15p")     (footprint "Capacitor_SMD:C_0603"))
+    (comp (ref "C2") (val "15p")     (footprint "Capacitor_SMD:C_0603"))
+    (comp (ref "C3") (val "15p")     (footprint "Capacitor_SMD:C_0603"))
+    (comp (ref "C4") (val "15p")     (footprint "Capacitor_SMD:C_0603"))
+    (comp (ref "CIN") (val "100n")   (footprint "Capacitor_SMD:C_0603"))
+    (comp (ref "COUT") (val "100n")  (footprint "Capacitor_SMD:C_0603"))
+  )
+  ; Примеры ключевых соединений, остальные дорисуйте в редакторе!
+  (wires
+    (wire (start 10 10) (end 20 10)) ; VIN -> CIN
+    (wire (start 20 10) (end 30 10)) ; CIN -> R1
+    (wire (start 30 10) (end 40 10)) ; R1 -> секция 1 и т.д.
+    ; Добавьте все нужные связи по своей схеме!
+  )
+)
