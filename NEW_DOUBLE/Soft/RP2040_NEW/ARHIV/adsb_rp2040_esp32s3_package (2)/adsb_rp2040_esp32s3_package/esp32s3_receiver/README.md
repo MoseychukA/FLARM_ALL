@@ -1,1 +1,0 @@
-ESP32S3 Serial receiver project.

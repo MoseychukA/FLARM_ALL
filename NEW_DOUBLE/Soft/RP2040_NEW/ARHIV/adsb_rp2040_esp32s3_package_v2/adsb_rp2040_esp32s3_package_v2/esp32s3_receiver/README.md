@@ -1,1 +1,0 @@
-ESP32-S3 receiver v2: RX=GPIO42 TX=GPIO41 921600, принимает кадры с CRC32 и печатает в USB.

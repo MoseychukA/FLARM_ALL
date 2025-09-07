@@ -12,7 +12,6 @@
 #include "pico/stdlib.h"
 #include "pico/time.h"
 #include "stdio.h"  // for printing
-// #include "hardware/dma.h"
 #include "capture_pio.h"
 #include "hal.h"
 #include "hardware/irq.h"
@@ -215,18 +214,6 @@ bool ADSBee::Init() {
     }
     // Enable high power preamble detector.
     pio_sm_set_enabled(config_.preamble_detector_pio, preamble_detector_sm_[bsp.r1090_high_power_demod_state_machine_index], true);
-
-
-    //// Throw a fit if the watchdog caused a reboot.
-    //if (watchdog_caused_reboot()) {
-    //    CONSOLE_WARNING("ADSBee::Init", "Watchdog caused reboot.");
-    //    DisableWatchdog();
-    //    SetStatusLED(true);
-    //    sleep_ms(5000);
-    //    SetStatusLED(false);
-    //    EnableWatchdog();
-    //}
-
     return true;
 }
 

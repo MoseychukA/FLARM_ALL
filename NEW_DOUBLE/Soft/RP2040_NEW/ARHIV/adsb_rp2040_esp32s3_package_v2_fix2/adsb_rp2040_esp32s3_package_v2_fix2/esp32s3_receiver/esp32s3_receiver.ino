@@ -1,7 +1,0 @@
-#include <Arduino.h>
-static const int UART_TX=41, UART_RX=42;
-struct __attribute__((packed)) FlightOutput{ uint32_t addr; int32_t Squawk; char flight[8]; int32_t altitude; int32_t pressure_altitude; int32_t speed; int32_t course; int32_t vert_rate; float latitude; float longitude; uint32_t seen; uint32_t timestamp; uint8_t signal_source; uint8_t aircraft_type; };
-static uint32_t crc32_(const uint8_t* data, size_t len){ uint32_t crc=0xFFFFFFFF; for(size_t i=0;i<len;i++){ crc^=data[i]; for(int j=0;j<8;j++) crc=(crc>>1) ^ (0xEDB88320 & (-(int)(crc&1))); } return ~crc; }
-void setup(){ Serial.begin(115200); Serial1.begin(921600, SERIAL_8N1, UART_RX, UART_TX); Serial.println("ESP32S3 receiver v2 fix2 ready"); }
-void loop(){ static uint8_t buf[256]; static size_t got=0; while(Serial1.available()){ uint8_t b=Serial1.read(); buf[got++]=b; if(got>=2 && !(buf[0]==0x55 && buf[1]==0xAA)){ memmove(buf, buf+1, --got); continue;} if(got>=4){ uint16_t len = (buf[2] | (buf[3]<<8)); size_t need=2+2+len+4; if(got==need){ uint32_t rxcrc=*(uint32_t*)(buf+4+len); uint32_t cmp=crc32_(buf+4,len); if(rxcrc==cmp){ FlightOutput fo; memcpy(&fo, buf+4, sizeof(FlightOutput)); Serial.printf("OK ICAO=%06X flight=%.*s lat=%.5f lon=%.5f spd=%d alt=%d vs=%d trk=%d
-", fo.addr, 8, fo.flight, fo.latitude, fo.longitude, fo.speed, fo.altitude, fo.vert_rate, fo.course); } else { Serial.println("CRC mismatch"); } got=0; } else if (got>need || need>sizeof(buf)) { got=0; } } }

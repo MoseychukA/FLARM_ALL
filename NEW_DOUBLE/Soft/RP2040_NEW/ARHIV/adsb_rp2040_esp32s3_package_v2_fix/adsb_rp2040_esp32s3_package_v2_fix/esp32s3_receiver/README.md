@@ -1,1 +1,0 @@
-ESP32-S3 receiver v2 FIX: RX=GPIO42 TX=GPIO41 921600, кадры с CRC32.

@@ -236,8 +236,6 @@ uint32_t Decoded1090Packet::CalculateCRC24(uint16_t packet_len_bits) const
 
   
     // Передаем буфер байтов в табличный калькулятор CRC.
-
-
     return crc24(raw_buffer, packet_len_bytes - 3);  // Не включайте сам CRC.
 
 

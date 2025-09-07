@@ -1,1 +1,0 @@
-v2.4 full header-included: все фичи v2.4 и предсобранный adsb_sampler.pio.h.

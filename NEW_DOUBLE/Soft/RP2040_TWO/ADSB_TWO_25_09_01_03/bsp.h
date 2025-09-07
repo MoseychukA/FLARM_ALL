@@ -1,6 +1,5 @@
 #pragma once
 
-#include "hardware/i2c.h"
 #include "hardware/pio.h"
 #include "hardware/spi.h"
 #include "hardware/uart.h"
@@ -11,13 +10,6 @@ class BSP
 {
    public:
     static const uint16_t kMaxNumDemodStateMachines = 4;
-
-
-
-    //uint16_t gnss_uart_tx_pin = 0;
-    //uint16_t gnss_uart_rx_pin = 1;
-    //uint16_t gnss_pps_pin = 26;
-    //uint16_t gnss_enable_pin = UINT16_MAX;  // Set to UINT16_MAX to indicate not connected.
 
     uint16_t comms_uart_tx_pin = 4;
     uint16_t comms_uart_rx_pin = 5;
@@ -39,12 +31,6 @@ class BSP
     uint16_t r1090_tl_adc_input = 1;           // ADC input for reading filtered Trigger Level.
     uint16_t r1090_rssi_adc_pin = 28;          // Pin for reading RSSI.
     uint16_t r1090_rssi_adc_input = 2;         // ADC input for reading RSSI.
-    //uint16_t r1090_bias_tee_enable_pin = 18;
-    //i2c_inst_t* onboard_i2c = i2c1;            // I2C peripheral used to talk to EEPROM (if supported).
-    //uint16_t onboard_i2c_sda_pin = 2;          // SDA pin for I2C.
-    //uint16_t onboard_i2c_scl_pin = 3;          // SCL pin for I2C.
-    //uint32_t onboard_i2c_clk_freq_hz = 400e3;  // 400kHz
-    //bool onboard_i2c_requires_init = false;    // ¬ случае, если I2c используетс€ совместно с чем-то другим, что уже инициализирует его.
-};
+ };
 
 extern BSP bsp;
