@@ -12,16 +12,12 @@
 #include "pico/stdlib.h"
 #include "pico/time.h"
 #include "stdio.h"  // for printing
-// #include "hardware/dma.h"
 #include "capture_pio.h"
 #include "hal.h"
 #include "hardware/irq.h"
 #include "packet_decoder.h"
 #include "pico/binary_info.h"
-
-// #include <charconv>
 #include <string.h>  // for strcat
-
 #include "comms.h"  // For debug prints.
 
 #define MLAT_SYSTEM_CLOCK_RATIO 48 / 125
@@ -93,11 +89,6 @@ bool ADSBee::Init() {
     adc_init();
     adc_gpio_init(config_.tl_adc_pin);
     adc_gpio_init(config_.rssi_adc_pin);
-
-    // Initialize the bias tee.
-    gpio_init(config_.bias_tee_enable_pin);
-    gpio_put(config_.bias_tee_enable_pin, 1);  // Enable is active LO.
-    gpio_set_dir(config_.bias_tee_enable_pin, GPIO_OUT);
 
     // Enable the MLAT timer using the 24-bit SysTick timer connected to the 125MHz processor clock.
     // SysTick Control and Status Register
@@ -215,18 +206,6 @@ bool ADSBee::Init() {
     }
     // Enable high power preamble detector.
     pio_sm_set_enabled(config_.preamble_detector_pio, preamble_detector_sm_[bsp.r1090_high_power_demod_state_machine_index], true);
-
-
-    //// Throw a fit if the watchdog caused a reboot.
-    //if (watchdog_caused_reboot()) {
-    //    CONSOLE_WARNING("ADSBee::Init", "Watchdog caused reboot.");
-    //    DisableWatchdog();
-    //    SetStatusLED(true);
-    //    sleep_ms(5000);
-    //    SetStatusLED(false);
-    //    EnableWatchdog();
-    //}
-
     return true;
 }
 

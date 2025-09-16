@@ -1,6 +1,0 @@
-;
-.program adsb_sampler
-.side_set 0
-.wrap_target
-    in pins, 1
-.wrap

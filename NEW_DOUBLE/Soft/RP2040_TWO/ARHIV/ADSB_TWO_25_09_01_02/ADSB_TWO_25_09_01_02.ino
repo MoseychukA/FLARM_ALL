@@ -29,37 +29,6 @@ ADSBee adsbee = ADSBee({});
 SettingsManager settings_manager;
 PacketDecoder decoder = PacketDecoder({ .enable_1090_error_correction = true });
 
-/*Настройки только для теста*/
-const int ledPin = 15;                       // the number of the LED pin
-int ledState = LOW;                          // ledState used to set the LED
-unsigned long previousMillis = 0;            // will store last time LED was updated
-const long interval = 1000;                  // interval at which to blink (milliseconds)
-
-const int ledPin1 = 25;
-int ledState1 = LOW;
-unsigned long previousMillis1 = 0;
-const long interval1 = 300;
-
-//void dump_bytes_in_hex(const uint8_t* data, size_t len) {
-//    for (size_t i = 0; i < len; i++) {
-//        if (i > 0) Serial.print(" ");
-//        if (data[i] < 16) Serial.print("0");
-//        Serial.print(data[i], HEX);
-//    }
-//    Serial.println();
-//}
-
-void print_packet(const uint8_t* data, size_t len)
-{
-    for (size_t i = 0; i < len; i++)
-    {
-        Serial.print((char)data[i]);
-        delay(1);
-    }
-    //  Serial.println();
-}
-
-
 void setup() 
 {
     bi_decl(bi_program_description("ADSBee 1090 ADSB Receiver"));
@@ -81,8 +50,6 @@ void setup()
  
     settings_manager.Load();    // Загрузить настройки по умолчанию. Нужно еще поработать с этой функцией.
 
-    pinMode(ledPin, OUTPUT);
-
     for (uint16_t i = 0; i < 5; i++)
     {
         adsbee.SetStatusLED(true);
@@ -96,7 +63,7 @@ void setup()
 
 void setup1()
 {
-    pinMode(ledPin1, OUTPUT);
+   
 }
 
 
@@ -104,53 +71,13 @@ void setup1()
 void loop() 
 {
 
-   // decoder.UpdateLogLoop();   // Вывод сырых пакетов ().
+    decoder.UpdateLogLoop();   // Вывод сырых пакетов ().
     comms_manager.Update();    // Вывод расшифрованных пакетов.
     adsbee.Update();
-
-    //if (message_ready) 
-    //{
-    //    size_t len = message_len_bytes;
-    //    uint8_t* data = message_buffer;
-    //    print_packet(data, len);
-    //    message_ready = false; // сбрасываем флаг
-    //}
- 
-    unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= interval) 
-    {
-        previousMillis = currentMillis;
-        if (ledState == LOW) 
-        {
-            ledState = HIGH;
-        }
-        else 
-        {
-            ledState = LOW;
-        }
-        digitalWrite(ledPin, ledState);
-    }
 }
 
 
 void loop1()
 {
    decoder.UpdateDecoderLoop();   //PacketDecoder 
-
-    unsigned long currentMillis1 = millis();
-    if (currentMillis1 - previousMillis1 >= interval1)
-    { 
-        previousMillis1 = currentMillis1;
-        if (ledState1 == LOW)
-        {
-            ledState1 = HIGH;
-        }
-        else
-        {
-            ledState1 = LOW;
-        }
-       digitalWrite(ledPin1, ledState1);
-    }
-
-
 }

@@ -25,16 +25,7 @@ ADSBee adsbee = ADSBee({});
 SettingsManager settings_manager;
 PacketDecoder decoder = PacketDecoder({ .enable_1090_error_correction = true });
 
-/* Тест-индикаторы */
-const int ledPin = 15;
-int ledState = LOW;
-unsigned long previousMillis = 0;
-const long interval = 1000;
 
-const int ledPin1 = 25;
-int ledState1 = LOW;
-unsigned long previousMillis1 = 0;
-const long interval1 = 300;
 static constexpr uint8_t UART2_TX = 4;
 static constexpr uint8_t UART2_RX = 5;
 //============================================================================================================
@@ -57,7 +48,7 @@ void setup() {
    
     Serial2.setTX(UART2_TX);
     Serial2.setRX(UART2_RX);
-    Serial2.begin(921600);
+    Serial2.begin(115200);
 
     adsbee.Init();
 
@@ -70,16 +61,16 @@ void setup() {
         adsbee.SetStatusLED(false);
         delay(300);
     }
-    pinMode(ledPin, OUTPUT);
-
+ 
     Serial.println("Setup End");
 }
-void setup1() { pinMode(ledPin1, OUTPUT); }
+void setup1() {  }
 
 
 void loop() 
 {
-    // decoder.UpdateLogLoop();   // Вывод сырых пакетов ().
+     decoder.UpdateLogLoop();   // Вывод сырых пакетов ().
+     // comms_manager.Update();    // Вывод расшифрованных пакетов.
      adsbee.Update();
 
     if (decode_message_available && decode_debug_message_out_queue.Length() > 0) {
@@ -95,24 +86,10 @@ void loop()
         }
     }
 
-    unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= interval) 
-    {
-        previousMillis = currentMillis;
-        ledState = (ledState == LOW) ? HIGH : LOW;
-        digitalWrite(ledPin, ledState);
-    }
 }
 void loop1() 
 {
     decoder.UpdateDecoderLoop();   //PacketDecoder 
-    unsigned long currentMillis1 = millis();
-    if (currentMillis1 - previousMillis1 >= interval1) 
-    {
-        previousMillis1 = currentMillis1;
-        ledState1 = (ledState1 == LOW) ? HIGH : LOW;
-        digitalWrite(ledPin1, ledState1);
-    }
 }
 
 

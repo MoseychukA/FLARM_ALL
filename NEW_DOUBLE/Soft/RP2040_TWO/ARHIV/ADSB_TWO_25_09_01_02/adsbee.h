@@ -35,7 +35,7 @@ class ADSBee {
         PIO message_demodulator_pio = pio1;
         uint preamble_detector_demod_complete_irq = PIO0_IRQ_0;
 
-        uint16_t r1090_led_pin = 17;
+        uint16_t r1090_led_pin = 15;
         // Reading ADS-B on GPIO19. Will look for DEMOD signal on GPIO20.
         uint16_t* pulses_pins = bsp.r1090_pulses_pins;
         uint16_t* demod_pins = bsp.r1090_demod_pins;
@@ -51,16 +51,6 @@ class ADSBee {
         // GPIO 28 used as ADC input for the power level of the last decoded packet.
         uint16_t rssi_adc_pin = bsp.r1090_rssi_adc_pin;
         uint16_t rssi_adc_input = bsp.r1090_rssi_adc_input;
-        // GPIO 2-3 are used for the EEPROM and rx gain digipot I2C bus via I2C1.
-        //i2c_inst_t* onboard_i2c = bsp.onboard_i2c;
-        //uint16_t onboard_i2c_sda_pin = bsp.onboard_i2c_sda_pin;
-        //uint16_t onboard_i2c_scl_pin = bsp.onboard_i2c_scl_pin;
-        //uint32_t onboard_i2c_clk_freq_hz = bsp.onboard_i2c_clk_freq_hz;  // 400kHz
-        //bool onboard_i2c_requires_init =
-        //    bsp.onboard_i2c_requires_init;  // In case I2c is shared with something else that already initializes it.
-
-        uint16_t bias_tee_enable_pin = 18;
-
         uint32_t aircraft_dictionary_update_interval_ms = 1000;
     };
 

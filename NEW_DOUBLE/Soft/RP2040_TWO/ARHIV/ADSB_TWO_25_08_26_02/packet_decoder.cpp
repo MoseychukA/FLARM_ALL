@@ -1,5 +1,5 @@
 ﻿#include "packet_decoder.h"
-//#include "comms.h"
+#include "comms.h"
 #include "crc.h"
 #include "shared.h"
 
@@ -17,14 +17,14 @@ bool PacketDecoder::UpdateLogLoop()
             case SettingsManager::LogLevel::kInfo:
                 if (strlen(message.message) > 0)
                 {
-                   //!! comms_manager.console_printf("%s \r\n", message.message);
+                   comms_manager.console_printf("%s \r\n", message.message);
                 }
                 break;
             case SettingsManager::LogLevel::kWarnings:
-               //!! comms_manager.console_printf("PacketDecoder2..  %s \r\n", message.message);
+                   comms_manager.console_printf("PacketDecoder2..  %s \r\n", message.message);
                 break;
             case SettingsManager::LogLevel::kErrors:
-               //!! comms_manager.console_printf("PacketDecoderp3.. %s \r\n", message.message);
+                  comms_manager.console_printf("PacketDecoderp3.. %s \r\n", message.message);
                 break;
             default:
                 break;  // Don't do anything when logs are silent.
