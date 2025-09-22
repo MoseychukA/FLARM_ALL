@@ -11,15 +11,10 @@
 #define MAX_RETRIES 2  // Уменьшено количество повторов для скорости
 #define TRANSMISSION_TIMEOUT 1000  // Уменьшен таймаут
 
-//#define RS485Serial Serial2    // Порт обмена информации с внешним дисплеем
-
-
-//#define SERIAL_TRACKER              Serial2    // Порт обмена информации с модулем Iridium
 #define SERIAL_TRACKER_SPEED          19200    // скорость работы с SERIAL_TRACKER
 #define BUFFER_SIZE                    170// 110    // Размер буфера входящих сообщений
 
 #define SERIAL_RP2040_SPEED          115200 //921600    // скорость работы с приемником RP2040
-
 
 #define SERIAL_BLUETOOTH SoC->Bluetooth_ops    // Порт обмена информации с модулем Bluetooth
 
@@ -52,41 +47,9 @@
 #define BUTTON_OFF_DELAY            240000ul    // время выключения ручного диапазона просмотра через 4 минуты
  
 
-//========================================================================================================
-//
-//#define All_Count_Text_Message_ADDRESS    1 // адрес хранения счетчика общего количества записей
-//#define MESSAGE_CONFIRMED_flag            3 // адрес флага нового сообщения
-//#define Count_NotRead_Message_ADDRESS     5 // адрес хранения счетчика не прочитанного количества записей
-//#define Current_Counter_Message           7 // адрес хранения текущего счетчика количества записей
-//#define Flipping_Counter_Message          9 // адрес хранения счетчика листания записей
-//#define Flipping_AdressMessage            11 // адрес хранения адреса листания блоков записей
-//#define NEW_CONFIRMATION_MESSAGE          13 // Адрес хранения признака формирования нового сообщения
-//#define Current_Counter_confirmation      15 // адрес хранения текущего счетчика количества переданных подтверждений прочтения текстовых сообщений
-//#define CurrentAdressMessage              17 // Не нужен? адрес хранения текущего адреса.
-//#define Response_message_count_ADDRESS    19 // начальный адрес хранения счетчика блока ответных сообщений
-//#define Number_from_Message_ADDRESS       21 // адрес хранения номера сообщения 
-//========================================================================================================
-
-
-
-//#define Response_message_block_ADDRESS    30    // начальный адрес хранения блока ответных сообщений
-//
-//#define Start_Block_Text_ADDRESS         200    // начальный адрес хранения блока текстовых сообщений
-
-#define Max_Count_Block_Message              1    // Максимальное количество блоков записей сообщений
-#define Number_of_bytes_block             170// 114    // кличество байт одного блока текстовых сообщений
-#define Number_of_bytes_time                13    // кличество байт блока времени текстовых сообщений
-
-/*Сохраним в памяти переданные подтверждения о прочтении*/
-//#define Start_confirmation_ADDRESS       100     // начальный адрес хранения блока переданных подтверждений прочтения текстовых сообщений
-//#define Number_of_bytes_confirmation      40     // кличество байт одного блока переданных подтверждений прочтения текстовых сообщений
-
-/* Адреса данных внутри блока сообщения */
-//#define addr_flag_MESSAGE_CONFIRMED        1     // 1 байт - флаг наличия сообщения. "1" - есть новое сообщение, иначе нет      
-//#define addr_read_NOT_TRANSMITTED          3     // 1 байт - флаг передачи подтверждения "ОК". "MESSAGE_CONFIRMED" подтверждение  прочтения НЕ ПЕРЕДАНО 
-//#define addr_number_this_message           6     // Записать номер данного сообщения
-//#define addr_time_this_message            10     // Записать время данного сообщения
-//#define addr_current_message              30     // Записать соббщение в память по текущему адресу 
+#define Max_Count_Block_Message            1     // Максимальное количество блоков записей сообщений
+#define Number_of_bytes_block              170   // кличество байт одного блока текстовых сообщений
+#define Number_of_bytes_time               13    // кличество байт блока времени текстовых сообщений
 
 #define MESSAGE_CONFIRMED               0x55     // Флаг прихода нового сообщения установить
 #define MESSAGE_ACKNOWLEDGED            0xAA     // Флаг прихода нового сообщения сбросить

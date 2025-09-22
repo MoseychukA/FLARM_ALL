@@ -1,0 +1,503 @@
+C51 COMPILER V9.00   OSD_FACTORYUSERMENU                                                   10/15/2014 09:45:24 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_FACTORYUSERMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_FactoryUserMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_FactoryUserMenu.c BROWSE INC
+                    -DIR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..
+                    -\..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\
+                    -Key;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\.
+                    -.\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..
+                    -\Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_FactoryUserMenu.ls
+                    -t) OBJECT(..\Hex\Osd_FactoryUserMenu.obj)
+
+line level    source
+
+   1          #define _OSD_FACTORYUSER_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          
+  21          
+  22          #ifdef FactoryEn
+  23          
+  24          SWORD FactoryUserMenu_GetDataTypeVal(void);
+  25          SWORD FactoryUserMenu_GetConfirmVal(void);
+  26          
+  27          
+  28          /*****************************************************************
+  29                                      Text
+  30          *****************************************************************/
+  31          UCHAR* CODE FactoryUserMenu_AddressStr[]=
+  32          {
+  33              "ADDRESS                   ",  
+  34          };
+  35          
+  36          UCHAR* CODE FactoryUserMenu_SubAddressStr[]=
+  37          {
+  38              "SUBADDRESS                 ",  
+  39          };
+  40          
+  41          
+  42          UCHAR* CODE FactoryUserMenu_DataStr[]=
+  43          {
+  44              "DATA                       ",  
+  45          };
+  46          
+  47          UCHAR* CODE FactoryUserMenu_DataTypeStr[]=
+  48          {
+  49              "DATATYPE                        ",  
+C51 COMPILER V9.00   OSD_FACTORYUSERMENU                                                   10/15/2014 09:45:24 PAGE 2   
+
+  50          };
+  51          
+  52          
+  53          UCHAR* CODE FactoryUserMenu_ConfirmStr[]=
+  54          {
+  55              "CONFIRM                          ",  
+  56          };
+  57          
+  58          
+  59          UCHAR* CODE FactoryUserMenu_DataTypeSwitchStr[][5]=
+  60          {
+  61              "  STATIC",
+  62                  "  DIS4_3",
+  63                  " DIS16_9",
+  64                  " SYS_PAL",
+  65                  "SYS_NTSC",
+  66          };
+  67          
+  68          
+  69          UCHAR* CODE FactoryUserMenu_ConfirmSwitchStr[][2]=
+  70          {
+  71              "  ?",
+  72                  "YES",
+  73          };
+  74          
+  75          UCHAR* CODE FactoryUserMenu_0XStr[]=
+  76          {
+  77              "0X",  
+  78          };
+  79          
+  80          /*****************************************************************
+  81                                      String
+  82          *****************************************************************/
+  83          UCHAR * CODE FactoryUserMenu_AddressTitel(void)
+  84          {
+  85   1          return FactoryUserMenu_AddressStr[0];
+  86   1      }
+  87          
+  88          UCHAR * CODE FactoryUserMenu_SubAddressTitel(void)
+  89          {
+  90   1          return FactoryUserMenu_SubAddressStr[0];
+  91   1      }
+  92          
+  93          UCHAR * CODE FactoryUserMenu_DataTitel(void)
+  94          {
+  95   1          return FactoryUserMenu_DataStr[0];
+  96   1      }
+  97          
+  98          UCHAR * CODE FactoryUserMenu_DataTypeTitel(void)
+  99          {
+ 100   1          return FactoryUserMenu_DataTypeStr[0];
+ 101   1      }
+ 102          
+ 103          UCHAR * CODE FactoryUserMenu_ConfirmTitel(void)
+ 104          {
+ 105   1          return FactoryUserMenu_ConfirmStr[0];
+ 106   1      }
+ 107          
+ 108          UCHAR * CODE FactoryUserMenu_DataTypeSwitch(void)
+ 109          {
+ 110   1           return FactoryUserMenu_DataTypeSwitchStr[0][FactoryUserMenu_GetDataTypeVal()];
+ 111   1      }
+C51 COMPILER V9.00   OSD_FACTORYUSERMENU                                                   10/15/2014 09:45:24 PAGE 3   
+
+ 112          
+ 113          
+ 114          UCHAR * CODE FactoryUserMenu_ConfirmSwitch(void)
+ 115          {
+ 116   1           return FactoryUserMenu_ConfirmSwitchStr[0][FactoryUserMenu_GetConfirmVal()];
+ 117   1      }
+ 118          
+ 119          UCHAR * CODE FactoryUserMenu_0XTitel(void)
+ 120          {
+ 121   1          return FactoryUserMenu_0XStr[0];
+ 122   1      }
+ 123          
+ 124          
+ 125          /*****************************************************************
+ 126                                     Function
+ 127          *****************************************************************/
+ 128          AdjustType FactoryUserMenu_CheckCondition(void)
+ 129          {
+ 130   1              AdjustType XDATA adjust = {0,0,0};
+ 131   1              
+ 132   1          printfStr("FactoryUserMenu_CheckCondition");
+ 133   1              adjust.Flags |= osdVisible;
+ 134   1              return adjust;
+ 135   1      }
+ 136          
+ 137          
+ 138          BOOL UserAdjustBaseAddress(UCHAR opratComd)
+ 139          {       
+ 140   1      
+ 141   1          if(opratComd == COMD_IncValue)
+ 142   1          {
+ 143   2                      if(g_ucUserAdjustBaseAddr < 0XFF)
+ 144   2                      {
+ 145   3                         g_ucUserAdjustBaseAddr++;
+ 146   3                      }
+ 147   2          }
+ 148   1              if(opratComd == COMD_DecValue)
+ 149   1              {
+ 150   2                  if(g_ucUserAdjustBaseAddr > 0XFC)
+ 151   2                      {
+ 152   3                         g_ucUserAdjustBaseAddr--;
+ 153   3                      }
+ 154   2              }
+ 155   1              g_ucUserAdjustAddr = (((UINT)g_ucUserAdjustBaseAddr)<<8)|g_ucUserAdjustSubAddr;
+ 156   1              g_ucUserAdjustData = XBYTE[g_ucUserAdjustAddr];
+ 157   1              g_ucUserAdjustConfirm = Question;
+ 158   1              return 1;
+ 159   1      }
+ 160          
+ 161          
+ 162          BOOL UserAdjustSubAddress(UCHAR opratComd)
+ 163          {
+ 164   1              
+ 165   1          if(opratComd == COMD_IncValue)
+ 166   1          {
+ 167   2                      if(g_ucUserAdjustSubAddr < 0XFC)
+ 168   2                      {
+ 169   3                         g_ucUserAdjustSubAddr++;
+ 170   3                      }
+ 171   2          }
+ 172   1              if(opratComd == COMD_DecValue)
+ 173   1              {
+C51 COMPILER V9.00   OSD_FACTORYUSERMENU                                                   10/15/2014 09:45:24 PAGE 4   
+
+ 174   2                  if(g_ucUserAdjustSubAddr > 0X00)
+ 175   2                      {
+ 176   3                         g_ucUserAdjustSubAddr--;
+ 177   3                      }
+ 178   2              }
+ 179   1          g_ucUserAdjustAddr = (((UINT)g_ucUserAdjustBaseAddr)<<8)|g_ucUserAdjustSubAddr;
+ 180   1              g_ucUserAdjustData = XBYTE[g_ucUserAdjustAddr];
+ 181   1              g_ucUserAdjustConfirm = Question;
+ 182   1              return 1;
+ 183   1      }
+ 184          
+ 185          
+ 186          
+ 187          BOOL UserAdjustData(UCHAR opratComd)
+ 188          {
+ 189   1      
+ 190   1          if(opratComd == COMD_IncValue)
+ 191   1          {
+ 192   2                      if(g_ucUserAdjustData < 0XFF)
+ 193   2                      {
+ 194   3                         g_ucUserAdjustData++;
+ 195   3                      }
+ 196   2          }
+ 197   1              if(opratComd == COMD_DecValue)
+ 198   1              {
+ 199   2                      if(g_ucUserAdjustData > 0X00)
+ 200   2                      {
+ 201   3                         g_ucUserAdjustData--;
+ 202   3                      }
+ 203   2          }
+ 204   1              g_ucUserAdjustConfirm = Question;
+ 205   1              return 1;
+ 206   1      }
+ 207          
+ 208          
+ 209          BOOL UserAdjustDataType(UCHAR opratComd)
+ 210          {
+ 211   1      
+ 212   1          if(opratComd == COMD_IncValue)
+ 213   1          {
+ 214   2                      if(g_ucUserAdjustDataType < MAX_PARATYPE)
+ 215   2                      {
+ 216   3                         g_ucUserAdjustDataType++;
+ 217   3                      }
+ 218   2                      else
+ 219   2                      {
+ 220   3                        g_ucUserAdjustDataType = MIN_PARATYPE;
+ 221   3                      }
+ 222   2          }
+ 223   1              if(opratComd == COMD_DecValue)
+ 224   1              {
+ 225   2                      if(g_ucUserAdjustDataType > MIN_PARATYPE)
+ 226   2                      {
+ 227   3                         g_ucUserAdjustDataType--;
+ 228   3                      }
+ 229   2                      else
+ 230   2                      {
+ 231   3                        g_ucUserAdjustDataType = MAX_PARATYPE;
+ 232   3                      }
+ 233   2          }
+ 234   1              return 1;
+ 235   1      }
+C51 COMPILER V9.00   OSD_FACTORYUSERMENU                                                   10/15/2014 09:45:24 PAGE 5   
+
+ 236          
+ 237          
+ 238          BOOL UserAdjustConfirm(UCHAR opratComd)
+ 239          {
+ 240   1      
+ 241   1          if(opratComd == COMD_IncValue)
+ 242   1          {
+ 243   2                      if(g_ucUserAdjustConfirm < MAX_CONFIRMTYPE)
+ 244   2                      {
+ 245   3                         g_ucUserAdjustConfirm++;
+ 246   3                      }
+ 247   2                      else
+ 248   2                      {
+ 249   3                        g_ucUserAdjustConfirm = MIN_CONFIRMTYPE;
+ 250   3                      }
+ 251   2          }
+ 252   1              if(opratComd == COMD_DecValue)
+ 253   1              {
+ 254   2                      if(g_ucUserAdjustConfirm > MIN_CONFIRMTYPE)
+ 255   2                      {
+ 256   3                         g_ucUserAdjustConfirm--;
+ 257   3                      }
+ 258   2                      else
+ 259   2                      {
+ 260   3                        g_ucUserAdjustConfirm = MAX_CONFIRMTYPE;
+ 261   3                      }
+ 262   2          }
+ 263   1              return 1;
+ 264   1      }
+ 265          
+ 266          
+ 267          BOOL ExectUserAdjustData(void)
+ 268          {
+ 269   1         //printfStr("ExectUserAdjustData");
+ 270   1         XBYTE[g_ucUserAdjustAddr] = g_ucUserAdjustData;
+ 271   1         return 1;
+ 272   1      }
+ 273          
+ 274          
+ 275          BOOL ExectUserAdjustConfirm(void)
+ 276          {
+ 277   1         //printfStr("ExectUserAdjustConfirm");
+ 278   1         
+ 279   1         if(Yes == g_ucUserAdjustConfirm )
+ 280   1         {
+ 281   2            SaveSystemSoftwareMend();
+ 282   2         }
+ 283   1         return 1;
+ 284   1      }
+ 285          
+ 286          SWORD FactoryUserMenu_GetBaseAddressVal(void)
+ 287          {
+ 288   1           //printfStr("FactoryUserMenu_GetBaseAddressVal");
+ 289   1           return g_ucUserAdjustBaseAddr;
+ 290   1      }
+ 291          
+ 292          SWORD FactoryUserMenu_GetSubAddressVal(void)
+ 293          {
+ 294   1           //printfStr("FactoryUserMenu_GetSubAddressVal");
+ 295   1           return g_ucUserAdjustSubAddr;
+ 296   1      }
+ 297          
+C51 COMPILER V9.00   OSD_FACTORYUSERMENU                                                   10/15/2014 09:45:24 PAGE 6   
+
+ 298          
+ 299          SWORD FactoryUserMenu_GetDataVal(void)
+ 300          {
+ 301   1           //printfStr("FactoryUserMenu_GetDataVal");
+ 302   1           return g_ucUserAdjustData;
+ 303   1      }
+ 304          
+ 305          SWORD FactoryUserMenu_GetDataTypeVal(void)
+ 306          {
+ 307   1           //printfStr("FactoryUserMenu_GetDataTypeVal");
+ 308   1           return g_ucUserAdjustDataType;
+ 309   1      }
+ 310          
+ 311          
+ 312          SWORD FactoryUserMenu_GetConfirmVal(void)
+ 313          {
+ 314   1           //printfStr("FactoryUserMenu_GetConfirmVal");
+ 315   1           return g_ucUserAdjustConfirm;
+ 316   1      }
+ 317          
+ 318          /*****************************************************************
+ 319                                    Item value table
+ 320          *****************************************************************/
+ 321          
+ 322          DrawNumberType CODE Number_FactoryUserMenu_BaseAddressVal[]=
+ 323          {
+ 324              {2,29,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryUserMenu_GetBaseAddressVal,osdHexNum|osdEnd},
+ 325          };
+ 326          
+ 327          DrawNumberType CODE Number_FactoryUserMenu_SubAddressVal[]=
+ 328          {
+ 329              {3,29,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryUserMenu_GetSubAddressVal,osdHexNum|osdEnd},
+ 330          };
+ 331          
+ 332          DrawNumberType CODE Number_FactoryUserMenu_DataVal[]=
+ 333          {
+ 334              {4,29,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryUserMenu_GetDataVal,osdHexNum|osdEnd},
+ 335          };
+ 336          
+ 337          
+ 338          DrawOptionType CODE Option_FactoryUserMenu_BaseAddress[]=
+ 339          {
+ 340              {2,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactoryUserMenu_0XTitel,osdEnd},
+ 341          };
+ 342          
+ 343          DrawOptionType CODE Option_FactoryUserMenu_SubAddress[]=
+ 344          {
+ 345              {3,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactoryUserMenu_0XTitel,osdEnd},
+ 346          };
+ 347          
+ 348          DrawOptionType CODE Option_FactoryUserMenu_Data[]=
+ 349          {
+ 350              {4,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactoryUserMenu_0XTitel,osdEnd},
+ 351          };
+ 352          
+ 353          DrawOptionType CODE Option_FactoryUserMenu_DataTypeSwitch[]=
+ 354          {
+ 355              {5,23,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactoryUserMenu_DataTypeSwitch,osdEnd},
+ 356          };
+ 357          
+ 358          
+ 359          DrawOptionType CODE Option_FactoryUserMenu_ConfirmSwitch[]=
+C51 COMPILER V9.00   OSD_FACTORYUSERMENU                                                   10/15/2014 09:45:24 PAGE 7   
+
+ 360          {
+ 361              {6,28,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactoryUserMenu_ConfirmSwitch,osdEnd},
+ 362          };
+ 363          
+ 364          ItemValueType CODE FactoryUserMenu_BaseAddressVal[]=
+ 365          {
+ 366               {
+ 367                        Number_FactoryUserMenu_BaseAddressVal,
+ 368                        NULL,
+ 369                        Option_FactoryUserMenu_BaseAddress,   
+ 370                        osdEnd,
+ 371               },
+ 372          };
+ 373          
+ 374          ItemValueType CODE FactoryUserMenu_SubAddressVal[]=
+ 375          {
+ 376               {
+ 377                        Number_FactoryUserMenu_SubAddressVal,
+ 378                        NULL,
+ 379                        Option_FactoryUserMenu_SubAddress,   
+ 380                        osdEnd,
+ 381               },
+ 382          };
+ 383          
+ 384          
+ 385          ItemValueType CODE FactoryUserMenu_DataVal[]=
+ 386          {
+ 387               {
+ 388                        Number_FactoryUserMenu_DataVal,
+ 389                        NULL,
+ 390                        Option_FactoryUserMenu_Data,   
+ 391                        osdEnd,
+ 392               },
+ 393          };
+ 394          
+ 395          
+ 396          ItemValueType CODE FactoryUserMenu_DataType[]=
+ 397          {
+ 398               {
+ 399                        NULL,
+ 400                        NULL,
+ 401                        Option_FactoryUserMenu_DataTypeSwitch,   
+ 402                        osdEnd,
+ 403               },
+ 404          };
+ 405          
+ 406          
+ 407          ItemValueType CODE FactoryUserMenu_Confirm[]=
+ 408          {
+ 409               {
+ 410                        NULL,
+ 411                        NULL,
+ 412                        Option_FactoryUserMenu_ConfirmSwitch,   
+ 413                        osdEnd,
+ 414               },
+ 415          };
+ 416          
+ 417          /*****************************************************************
+ 418                                    Item Icon table
+ 419          *****************************************************************/
+ 420          
+ 421          
+C51 COMPILER V9.00   OSD_FACTORYUSERMENU                                                   10/15/2014 09:45:24 PAGE 8   
+
+ 422          
+ 423          /*****************************************************************
+ 424                                   Item  Titel table
+ 425          *****************************************************************/
+ 426          TitelType CODE FactoryUserMenuItem_BaseAddressTitelTab[]=
+ 427          {
+ 428             {2,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryUserMenu_AddressTitel,osdEnd},
+ 429          };
+ 430          
+ 431          TitelType CODE FactoryUserMenuItem_SubAddressTitelTab[]=
+ 432          {   
+ 433             {3,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryUserMenu_SubAddressTitel,osdEnd},
+ 434          };
+ 435          
+ 436          TitelType CODE FactoryUserMenuItem_DataTitelTab[]=
+ 437          {
+ 438             {4,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryUserMenu_DataTitel,osdEnd},
+ 439          };
+ 440          
+ 441          TitelType CODE FactoryUserMenuItem_DataTypeTitelTab[]=
+ 442          {   
+ 443             {5,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryUserMenu_DataTypeTitel,osdEnd},
+ 444          };
+ 445          
+ 446          TitelType CODE FactoryUserMenuItem_ConfirmTitelTab[]=
+ 447          {   
+ 448             {6,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryUserMenu_ConfirmTitel,osdEnd},
+ 449          };
+ 450          /*****************************************************************
+ 451                                    Menu Icon table
+ 452          *****************************************************************/
+ 453          
+ 454          
+ 455          
+ 456          /*****************************************************************
+ 457                                   Menu  Titel table
+ 458          *****************************************************************/
+ 459          
+ 460          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    535    ----
+   CONSTANT SIZE    =    497    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

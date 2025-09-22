@@ -219,7 +219,7 @@ static void sendAckLike(uint8_t type, uint8_t index, uint8_t seq, bool positive)
     {
         rs485SetTX(true);
         RS485_SERIAL.write((uint8_t*)&hdr, sizeof(hdr));
-        RS485_SERIAL.write(payload, sizeof(payload));
+        RS485_SERIAL.write(payload, sizeof(payload)); 
         RS485_SERIAL.write((uint8_t*)&crc, sizeof(crc));
         RS485_SERIAL.flush();
         delayMicroseconds(200);
@@ -579,9 +579,6 @@ void setup()
 
     SERIAL_FLUSH();
 
-
-
-
     EEPROM_setup();
 
     ThisAircraft.addr = SoC->getChipId() & 0x00FFFFFF;
@@ -708,6 +705,8 @@ void setup()
 
 
     SoC->WDT_setup();
+
+    Serial.println("** Setup END **");
 }
 
 void loop()

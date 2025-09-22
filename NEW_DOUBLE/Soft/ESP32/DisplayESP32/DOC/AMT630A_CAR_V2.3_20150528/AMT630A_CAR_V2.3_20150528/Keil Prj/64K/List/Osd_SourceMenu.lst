@@ -1,0 +1,247 @@
+C51 COMPILER V9.00   OSD_SOURCEMENU                                                        10/13/2014 09:20:55 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_SOURCEMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_SourceMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_SourceMenu.c BROWSE INCDIR(.
+                    -.\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..\L
+                    -CD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key;.
+                    -.\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\..\
+                    -Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\Devi
+                    -ce driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_SourceMenu.lst) OBJECT(
+                    -..\Hex\Osd_SourceMenu.obj)
+
+line level    source
+
+   1          #define _OSD_SOURCE_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          #include "Osd_BitMapFontDat.h"
+  21          
+  22          
+  23          
+  24          SWORD GetInputSource(void);
+  25          
+  26          
+  27          
+  28          /*****************************************************************
+  29                                      Text
+  30          *****************************************************************/
+  31          UCHAR* CODE SourceMenuStr[]=
+  32          {
+  33             "SOURCE",
+  34             "SOURCE",
+  35             "SOURCE",
+  36             "SOURCE",
+  37             "SOURCE",
+  38             "SOURCE",
+  39             "SOURCE",
+  40             "SOURCE",
+  41             "   #\x0AF#\x0B0", 
+  42             "SOURCE", 
+  43             "SOURCE",
+  44             "SOURCE",
+  45             "SOURCE"
+  46          };
+  47          
+  48          
+  49          UCHAR* CODE SourceStr[]=
+C51 COMPILER V9.00   OSD_SOURCEMENU                                                        10/13/2014 09:20:55 PAGE 2   
+
+  50          {
+  51            "AV1    ","AV2    ", "TV    ","S_VIDEO","ITU656"
+  52          };
+  53          
+  54          
+  55          
+  56          
+  57          /*****************************************************************
+  58                                      String
+  59          *****************************************************************/
+  60          UCHAR * CODE SourceMenu_TitelStr(void)
+  61          {
+  62   1          return SourceMenuStr[g_sysSetting.Osd.curlanguage];
+  63   1      }
+  64          
+  65          
+  66          UCHAR * CODE DispSourceStr(void)
+  67          {     
+  68   1            return SourceStr[GetInputSource()];  
+  69   1      }
+  70          
+  71          
+  72          /*****************************************************************
+  73                                     Function
+  74          *****************************************************************/
+  75          AdjustType SourceMenu_CheckCondition(void)
+  76          {
+  77   1              AdjustType XDATA adjust = {0,0,0};
+  78   1              if( ON == g_sysSetting.Factory.sourceswitch)
+  79   1              {
+  80   2                  adjust.Flags |= osdVisible; 
+  81   2                      //printfStr("Source Visibla");
+  82   2              }
+  83   1              else
+  84   1              {
+  85   2                  adjust.Flags |= osdInvisible; 
+  86   2                      //printfStr("Source Invisible");
+  87   2              }
+  88   1      
+  89   1              printfStr("SourceMenu_CheckCondition");
+  90   1              return adjust;
+  91   1      }
+  92          
+  93          
+  94          
+  95          
+  96          BOOL SourceMenuItem_DrawStyle(void)
+  97          {
+  98   1          printfStr("SourceMenuItem_DrawStyle");
+  99   1      
+ 100   1              OsdWndClear(0X01, 0X08, 0X01, 0X1E);
+ 101   1              OsdWndClear(0X02, 0X01, 0X02, 0X1E);
+ 102   1              OsdWndClear(0X03, 0X01, 0X03, 0X1D);
+ 103   1          return 0;
+ 104   1      }
+ 105          
+ 106          
+ 107          SWORD GetInputSource(void)
+ 108          {
+ 109   1           switch(g_sysSetting.Video.curSource)
+ 110   1           {
+ 111   2                                
+C51 COMPILER V9.00   OSD_SOURCEMENU                                                        10/13/2014 09:20:55 PAGE 3   
+
+ 112   2                       case INPUT_AV1:
+ 113   2                                return 0;
+ 114   2                                
+ 115   2                       case INPUT_AV2:
+ 116   2                       case INPUT_CAMERA_Car:
+ 117   2                       case INPUT_CAMERA_DoorBell:
+ 118   2                                return 1;
+ 119   2                                
+ 120   2                       case INPUT_TV:
+ 121   2                                return 2;
+ 122   2                                
+ 123   2                       case INPUT_SVIDEO:
+ 124   2                                return 3;
+ 125   2                                
+ 126   2                       case INPUT_ITU656:
+ 127   2                                return 4;
+ 128   2                                
+ 129   2                       default:
+ 130   2                                return 0;
+ 131   2           }
+ 132   1      }
+ 133          
+ 134          
+ 135          
+ 136          BOOL AdjustSource(UCHAR opratComd)
+ 137          {
+ 138   1              if((opratComd == COMD_IncValue)||(opratComd == COMD_DecValue))
+ 139   1          {     
+ 140   2             g_sysSetting.Video.curSource = SelNextVideoSource(g_sysSetting.Car.RemberSource);
+ 141   2                 g_sysSetting.Car.RemberSource = g_sysSetting.Video.curSource; //记忆倒车通道 
+ 142   2          }
+ 143   1              return 1;
+ 144   1      }
+ 145          
+ 146          
+ 147          BOOL ExectSource(void)
+ 148          {
+ 149   1          //printfStr("ExectSource");
+ 150   1      
+ 151   1          OsdWndClear(0X01, 0X08, 0X01, 0X1E);
+ 152   1          OsdWndClear(0X03, 0X03, 0X03, 0X1D);
+ 153   1          DrawOsdTitel(CurrentMenuItem.ItemTitels,osdDraw);
+ 154   1      
+ 155   1              #ifdef AudioCtrlEn
+                      SetAudioMute(); 
+                      SelAudioInputSource(g_sysSetting.Video.curSource);
+                  #endif
+ 159   1      
+ 160   1              TurnOffBackLight();
+ 161   1              DelayMs(200);
+ 162   1          SelVideoInputSource(g_sysSetting.Video.curSource);
+ 163   1              
+ 164   1              if(g_sysSetting.Video.curSource == INPUT_SVIDEO)
+ 165   1              {
+ 166   2                  DelayMs(500); 
+ 167   2              }
+ 168   1              else
+ 169   1              {
+ 170   2                      DelayMs(200);
+ 171   2              }
+ 172   1              
+ 173   1              /*BUG_003*/
+C51 COMPILER V9.00   OSD_SOURCEMENU                                                        10/13/2014 09:20:55 PAGE 4   
+
+ 174   1              TurnOnBackLight();
+ 175   1              
+ 176   1         return 1;
+ 177   1      }
+ 178          
+ 179          
+ 180          /*****************************************************************
+ 181                                    Item value table
+ 182          *****************************************************************/
+ 183          
+ 184          
+ 185          
+ 186          /*****************************************************************
+ 187                                    Item Icon table
+ 188          *****************************************************************/
+ 189          
+ 190          
+ 191          
+ 192          /*****************************************************************
+ 193                                   Item  Titel table
+ 194          *****************************************************************/
+ 195          TitelType CODE SourceMenuItem_SourceTitelTab[]=
+ 196          {
+ 197          
+ 198                  {1,9,WHITE,TRANSPARENCE,WHITE,TRANSPARENCE,DWT_Text,SourceMenu_TitelStr,0},
+ 199              {3,9,WHITE,TRANSPARENCE,WHITE,TRANSPARENCE,DWT_Text,DispSourceStr,osdEnd},
+ 200              
+ 201          };
+ 202          
+ 203          /*****************************************************************
+ 204                                    Menu Icon table
+ 205          *****************************************************************/
+ 206          
+ 207          
+ 208          
+ 209          /*****************************************************************
+ 210                                   Menu  Titel table
+ 211          *****************************************************************/
+ 212          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    367    ----
+   CONSTANT SIZE    =    185    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

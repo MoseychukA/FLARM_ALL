@@ -1,6 +1,0 @@
-ModbusSlaveLogic	KEYWORD1		
-configureCoils	KEYWORD2		
-configureDiscreteInputs	KEYWORD2		
-configureHoldingRegisters	KEYWORD2		
-configureInputRegisters	KEYWORD2		
-processPdu	KEYWORD2		

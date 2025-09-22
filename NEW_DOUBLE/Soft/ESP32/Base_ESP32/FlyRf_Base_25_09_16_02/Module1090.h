@@ -4,8 +4,8 @@
 
 #pragma pack(push,1)
 
-#pragma pack(push,1)
-struct ToDUMP1090
+#pragma pack(push,1)//struct __attribute__((packed)) 
+struct __attribute__((packed)) ToDUMP1090
 {
     uint32_t  addr;           // ICAO address
     char      squawk[5];      // Squawk

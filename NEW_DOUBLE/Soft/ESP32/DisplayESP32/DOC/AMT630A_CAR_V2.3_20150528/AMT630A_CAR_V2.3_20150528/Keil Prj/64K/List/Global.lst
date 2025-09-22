@@ -1,0 +1,291 @@
+C51 COMPILER V9.00   GLOBAL                                                                04/13/2015 11:40:40 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE GLOBAL
+OBJECT MODULE PLACED IN ..\Hex\Global.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\Kernel\Global.c BROWSE INCDIR(..\..\
+                    -..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..\LCD Pa
+                    -nnels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key;..\..\
+                    -..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\..\Devic
+                    -e driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\Device dr
+                    -iver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Global.lst) OBJECT(..\Hex\Global
+                    -.obj)
+
+line level    source
+
+   1          /***********************************************************************
+   2          *Copyright (C) 2005 深圳艾科创新有限公司产品应用一部
+   3          * All rights reserved.
+   4          
+   5          *File name: 　 Global.c
+   6          *Version:    　0.1
+   7          *Author:       cjinzong
+   8          *update:       2010-05-23
+   9          
+  10          *Description:
+  11                       主要包括一些系统初始化函数和一些全局又不好分类的函数。
+  12          *History:  
+  13          
+  14          ************************************************************************/
+  15          #define _GLOBAL_C_
+  16          
+  17          #include "DataType.h"
+  18          #include "systemConfig.h"
+  19          #include "global.h"
+  20          #include "mcu.h"
+  21          #include "videoProc.h"
+  22          #include "Debug.h"
+  23          #include "sysWorkPara.h"
+  24          #include "MsgMap.h"
+  25          #include "Osd_menu.h"
+  26          #include "Flash.h"
+  27          #include "E2prom.h"
+  28          #include "interrupt.h"
+  29          #include "Ir.h"
+  30          #include "sysPower.h"
+  31          #include "ConfigLcdPara.h"
+  32          #include "AMT_MCU.h"
+  33          #include "AMT_Drv.h"
+  34          #include "AMT_Reg.h"
+  35          #include "AdcKeyPad.h"
+  36          #include "WT5700.h"
+  37          #include "Kt0803l.h"
+  38          
+  39          /***********************************************************
+  40          *name:       ConfigMcuCtrl(void)
+  41          *input:      void
+  42                       
+  43          *output:     void
+  44          *update:     2011-11-27 
+  45          *state:      allright
+  46          
+  47          *description:   
+  48                    配置为MCU控制模块
+  49          *history:
+C51 COMPILER V9.00   GLOBAL                                                                04/13/2015 11:40:40 PAGE 2   
+
+  50                                          
+  51          ************************************************************/
+  52          void ConfigMcuCtrl(void)
+  53          {
+  54   1          ConfigCrtlMode(MCU);
+  55   1              ENH_PLL = 0X20;
+  56   1      }
+  57          
+  58          
+  59          /***********************************************************
+  60          *name:       InitGlobalVariables(void)
+  61          *input:      void
+  62          *output:     void 
+  63          *update:     2011-11-27 
+  64          *state:      allright
+  65          
+  66          *description:   
+  67                     初始化全局变量。
+  68          *history:
+  69                                          
+  70          ************************************************************/
+  71          void InitGlobalVariables(void)
+  72          {
+  73   1          printfStr("InitGlobalVariables\n");
+  74   1          
+  75   1          g_ucColorSys = 0XFF;
+  76   1          g_ucPreColorSys = 0XFF;
+  77   1          g_ucRemoteKeyVal = 0XFF;
+  78   1          g_ucContBufSecond = 0X00;
+  79   1          g_ucContNoSignalSecond = 0X00;
+  80   1          g_ucFactoryMenuItemIndex = 0X00;
+  81   1          g_ucBatteryAdcLev = BatterAdc_Lev0;
+  82   1          g_ucSelKeyDevice =ADC_KEY;
+  83   1              g_ucStableTime = 0X00;
+  84   1              g_ucContBLOn = 0X00;
+  85   1          g_bVideoChSelOk = FALSE;
+  86   1          g_bSignalFlg = FALSE;
+  87   1              g_bBLCtrlEnFlg = FALSE;
+  88   1          g_bReleaseAdcKeyFlg = FALSE;
+  89   1          g_bLogoFlg = FALSE;
+  90   1          PreKey.KeyVal = NULL_KEY;
+  91   1          PreKey.KeyMsg = MSG_NULL;
+  92   1          PreKey.Holdtime = NULL_TIME;
+  93   1          PreKey.Status = KEYRELEASE;
+  94   1          CurrentKey.KeyVal = NULL_KEY;
+  95   1          CurrentKey.KeyMsg = MSG_NULL;
+  96   1          CurrentKey.Holdtime = NULL_TIME;
+  97   1          CurrentKey.Status = KEYRELEASE;
+  98   1          g_ucOsdEixt = OsdMenu|OsdSource|OsdBrightness|OsdContrast|OsdSaturation|OsdVolume|OsdMode|OsdSys;
+  99   1          ClrCarReversingEn();
+ 100   1          ClrFactoryEn();
+ 101   1          SetMenuIndex(Osd_RootMenu); 
+ 102   1      }
+ 103          
+ 104          /***********************************************************
+ 105          *name:       PrjVersionMsg(void)
+ 106          *input:      void 
+ 107          *output:     void
+ 108          *update:     2011-11-27 
+ 109          *state:      allright
+ 110          
+ 111          *description:   
+C51 COMPILER V9.00   GLOBAL                                                                04/13/2015 11:40:40 PAGE 3   
+
+ 112                    打印工程信息，主要工程的编译时间和工程名和软件版本号。
+ 113          *history:
+ 114                                          
+ 115          ************************************************************/
+ 116          void PrjVersionMsg(void)
+ 117          {
+ 118   1          printfStr("\r\nLib Version :\n");
+ 119   1          printfStr(GeLibVersion());
+ 120   1          printfStr("\r\nLib create date :\n");
+ 121   1          printfStr(GetLibCreatDate());
+ 122   1          printfStr("\r\nLib create time :\n");
+ 123   1          printfStr(GetLibCreatTime());
+ 124   1          printfStr("Inital end.\n");
+ 125   1      }
+ 126          
+ 127          /***********************************************************
+ 128          *name:       InitExtDevices(void)
+ 129          *input:      void 
+ 130          *output:     void
+ 131          *update:     2011-11-27 
+ 132          *state:      allright
+ 133          
+ 134          *description:   
+ 135                  初始化外围设备，例如tuner,声音的控制，电源指示灯的状态。
+ 136          *history:
+ 137                                          
+ 138          ************************************************************/
+ 139          void InitExtDevices(void)
+ 140          {
+ 141   1          //Led
+ 142   1          
+ 143   1          //Tuner
+ 144   1          
+ 145   1          //Aduio
+ 146   1      
+ 147   1         //Spi Pannel
+ 148   1         #ifdef SpiInitPannelEn
+                 SPI_TM035KDH08_Pannel_Initial(_24BIT_RGB_DEN,0x75);//interface:24BIT_RGB_DEN(default),default VcomVal:0
+             -x75
+                 #endif
+ 151   1      
+ 152   1         #ifdef CpuInitPannelEn
+                 CPU_HX8357C_16Bit_Pannel_Initial();
+                 #endif
+ 155   1      
+ 156   1         //Key Device
+ 157   1         #ifdef KeyDetectEn
+ 158   1         
+ 159   1         /*
+ 160   1          note:此函数是为了兼容I2C KEY与ADC KEY按键接口，
+ 161   1          若两种类型按键不是统一接口，需屏蔽此函数
+ 162   1         */
+ 163   1         
+ 164   1         //POS_SelectKeyDevice();
+ 165   1         #endif
+ 166   1      
+ 167   1         #ifdef FmSendEn
+                 //Kt0803l
+                 #if(FM_CHIP == KT0803l)
+                 KT_TXPreInit();
+                 KT_TXInit();
+                 KT_TXInitTune(g_sysSetting.SendRf.SendRfVal);
+C51 COMPILER V9.00   GLOBAL                                                                04/13/2015 11:40:40 PAGE 4   
+
+                 #endif
+                 #endif
+ 175   1         
+ 176   1         #ifdef IrABCtrlEn
+                 SetIRABSwitch(g_sysSetting.IRAB.IRABVal);
+                 #endif
+ 179   1         
+ 180   1         printfStr("InitExtDevices\n");
+ 181   1      }
+ 182          
+ 183          
+ 184          
+ 185          
+ 186          /***********************************************************
+ 187          *name:       InitSysWorkVariable(void)
+ 188          *input:      void
+ 189          *output:     void 
+ 190          *update:     2011-11-27 
+ 191          *state:      allright
+ 192          
+ 193          *description:   
+ 194                     初始化系统工作变量。
+ 195          *history:
+ 196                                          
+ 197          ************************************************************/
+ 198          
+ 199          void InitSysWorkVariable(void)
+ 200          {  
+ 201   1           printfStr("**********InitSysWorkVariable*********\n");
+ 202   1      
+ 203   1               InitGlobalVariables();
+ 204   1                       
+ 205   1               #ifdef FlashEn
+ 206   1               AutoDetectFlashType();
+ 207   1               #endif
+ 208   1      
+ 209   1           if(ReadSetting())
+ 210   1           {
+ 211   2               g_sysSetting.Video.curSource = g_sysSetting.Car.RemberSource;
+ 212   2           }
+ 213   1               else
+ 214   1               {
+ 215   2                   g_sysSetting.Car.RemberSource =  g_sysSetting.Video.curSource;
+ 216   2               }
+ 217   1               g_sysSetting.Car.DetecMode = AV_CAR_NO_SIGANL;
+ 218   1               g_sysSetting.Car.status = CAR_PON_GO_AHEAD;
+ 219   1      }
+ 220          
+ 221          
+ 222          /***********************************************************
+ 223          *name:       InitSystem(void)
+ 224          *input:      void
+ 225          *output:     void 
+ 226          *update:     2011-11-27 
+ 227          *state:      allright
+ 228          
+ 229          *description:   
+ 230                     初始化系统。
+ 231          *history:
+ 232                                          
+ 233          ************************************************************/
+ 234          void InitSystem(void)
+C51 COMPILER V9.00   GLOBAL                                                                04/13/2015 11:40:40 PAGE 5   
+
+ 235          {       
+ 236   1              ConfigMcuCtrl();
+ 237   1              
+ 238   1              InitMcu();
+ 239   1      
+ 240   1              InitSysWorkVariable(); 
+ 241   1      
+ 242   1              InitExtDevices();
+ 243   1                      
+ 244   1              InitARKChip();
+ 245   1              
+ 246   1              PrjVersionMsg();
+ 247   1      
+ 248   1              GetProCompielTime();
+ 249   1              
+ 250   1          MainInterruptEn();
+ 251   1      }
+ 252          
+ 253          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    181    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     89    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      9    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

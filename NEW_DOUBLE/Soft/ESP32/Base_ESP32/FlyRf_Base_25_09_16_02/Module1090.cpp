@@ -33,11 +33,11 @@ void Module1090::ParsePacket(const byte* packet, int packetSize)
     if (packetSize < sizeof(ToDUMP1090))
     {
 
- /*       Serial.print("sizeof ToDUMP1090 ");
-        Serial.println(sizeof(ToDUMP1090));*/
+        Serial.print("sizeof ToDUMP1090 ");
+        Serial.println(sizeof(ToDUMP1090));
 
-        //SerialRP2040.print("PACKET TOO SMALL: ");
-        //SerialRP2040.println(packetSize);
+        Serial.print("PACKET TOO SMALL: ");
+        Serial.println(packetSize);
 
         return;
     }
@@ -46,14 +46,14 @@ void Module1090::ParsePacket(const byte* packet, int packetSize)
 
     memcpy(&receivedPacket, packet, packetSize);
 
-  /*  for (int i = 0; i < packetSize; i++)
+   for (int i = 0; i < packetSize; i++)
     {
-        SerialRP2040.print(packet[i]);
-        SerialRP2040.print("|");
+        Serial.print(packet[i]);
+        Serial.print("|");
     }
-    SerialRP2040.print(" ** ");
-    SerialRP2040.println(packetSize);
-    SerialRP2040.println();*/
+    Serial.print(" ** ");
+    Serial.println(packetSize);
+    Serial.println();
 
 
     fo = EmptyFO;
@@ -82,26 +82,26 @@ void Module1090::ParsePacket(const byte* packet, int packetSize)
     }
  
  
-    //Serial.println("Hex , Squawk, Flight, alt , pres alt, speed, course, vert_rate,   lat   ,    lon   , air_type, Ti");
-    //Serial.println("--------------------------------------------------------------------------------------------");
-    //snprintf_P(DUMP1090Buffer, sizeof(DUMP1090Buffer),
-    //    PSTR("%06X,%d, %8s,%d,   %d,   %d,    %d,   %d,      %8f, %9f, %d, %d"),
-    //    fo.addr,                   // Адрес устройства
-    //    fo.Squawk,                 // Номер, назначаемый диспетчером для обмена с локатором.
-    //    fo.flight,                 // Номер рейса
-    //    (int)fo.altitude,          // Высота геоид (GPS) метры
-    //    (int)fo.pressure_altitude, // Высота по датчику давления метры
-    //    (int)fo.speed,             // Скорость км/час
-    //    (int)fo.course,            // Курс в градусах
-    //    fo.vert_rate,              // Скорость подъема или снижения метров в минуту?
-    //    fo.latitude,               // Широта
-    //    fo.longitude,              // Долгота
-    //    fo.aircraft_type,          // Тип воздушного судна
-    //    fo.seen                    // Время последней отправки пакета 
-    //    );
-    //   Serial.println(DUMP1090Buffer);
-    //   Serial.println();
-    //   Serial.println();
+    Serial.println("Hex , Squawk, Flight, alt , pres alt, speed, course, vert_rate,   lat   ,    lon   , air_type, Ti");
+    Serial.println("--------------------------------------------------------------------------------------------");
+    snprintf_P(DUMP1090Buffer, sizeof(DUMP1090Buffer),
+        PSTR("%06X,%d, %8s,%d,   %d,   %d,    %d,   %d,      %8f, %9f, %d, %d"),
+        fo.addr,                   // Адрес устройства
+        fo.Squawk,                 // Номер, назначаемый диспетчером для обмена с локатором.
+        fo.flight,                 // Номер рейса
+        (int)fo.altitude,          // Высота геоид (GPS) метры
+        (int)fo.pressure_altitude, // Высота по датчику давления метры
+        (int)fo.speed,             // Скорость км/час
+        (int)fo.course,            // Курс в градусах
+        fo.vert_rate,              // Скорость подъема или снижения метров в минуту?
+        fo.latitude,               // Широта
+        fo.longitude,              // Долгота
+        fo.aircraft_type,          // Тип воздушного судна
+        fo.seen                    // Время последней отправки пакета 
+        );
+       Serial.println(DUMP1090Buffer);
+       Serial.println();
+       Serial.println();
   
     /* Расчет расстояния, курса и уровня опастности сближения нашего и стороннего самолета*/
     if (fo.latitude != 0 && fo.longitude != 0) // Расчет возможен если получены координаты нашего и стороннего самолета
@@ -144,48 +144,85 @@ void Module1090::setup()
     digitalWrite(SOC_GPIO_PIN_LED, HIGH);*/
 }
 
+
+ToDUMP1090 packet;
+const size_t PACKET_SIZE = sizeof(ToDUMP1090);
+
+
 void Module1090::update()
 {
     if (settings->d1090 == D1090_UART_MINI || settings->d1090 == D1090_UART_FULL)
     {
-        static byte buff[128] = { 0 };
+        static byte buff[256] = { 0 };
         static int bytesReceived = 0;
         static int writeIndex = 0;
         static byte endOfPacketCounter = 0;
         esp_task_wdt_reset();
-        while (SerialRP2040.available())
+ 
+        if (SerialRP2040.available()/* >= PACKET_SIZE*/)
         {
-            byte ch = (byte)SerialRP2040.read();
+            uint8_t buffer[PACKET_SIZE];
+            size_t read_bytes = SerialRP2040.readBytes(buffer, PACKET_SIZE);
 
-            buff[writeIndex++] = ch;
-            bytesReceived++;
+            if (read_bytes == PACKET_SIZE) 
+            {
+                // Копируем байты в структуру
+                memcpy(&packet, buffer, PACKET_SIZE);
 
-            if (writeIndex >= sizeof(buff))
-            {
-                writeIndex = 0;
-                bytesReceived = 0;
-                memset(buff, 0, sizeof(buff));
-            }
-            else
-            {
-                if (ch == 0xFF)
+                // Проверяем маркер конца пакета
+                if ((uint8_t)packet.endOfPacket[0] == 0xFF &&
+                    (uint8_t)packet.endOfPacket[1] == 0xFF &&
+                    (uint8_t)packet.endOfPacket[2] == 0xFF) 
                 {
-                    if (++endOfPacketCounter >= 3)
-                    {
-                        ParsePacket(buff, bytesReceived);
-                        memset(buff, 0, sizeof(buff));
-                        Serial.flush();
-                        writeIndex = 0;
-                        bytesReceived = 0;
-                    }
+                    ParsePacket(buff, bytesReceived);
+                    memset(buff, 0, sizeof(buff));
+                    SerialRP2040.flush();
+                    writeIndex = 0;
+                    bytesReceived = 0;
                 }
-                else
-                {
-                    endOfPacketCounter = 0;
+                else {
+                    // Ошибка: неверный конец пакета
                 }
             }
-            esp_task_wdt_reset();
         }
+
+
+
+
+        //while (SerialRP2040.available())
+        //{
+        //    byte ch = (byte)SerialRP2040.read();
+
+        //    buff[writeIndex++] = ch;
+        //    bytesReceived++;
+        //    if (writeIndex >= sizeof(buff))
+        //    {
+        //        writeIndex = 0;
+        //        bytesReceived = 0;
+        //        memset(buff, 0, sizeof(buff)); 
+        //    }
+        //    else
+        //    {
+        //        if (ch == 0xFF)
+        //        {
+        //            if (++endOfPacketCounter >= 3)
+        //            {
+        //                //Serial.print(ch, HEX);
+        //                //Serial.println(endOfPacketCounter);
+        //                ParsePacket(buff, bytesReceived);
+        //                memset(buff, 0, sizeof(buff));
+        //                SerialRP2040.flush();
+        //                writeIndex = 0;
+        //                bytesReceived = 0;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            endOfPacketCounter = 0;
+        //        }
+        //    }
+        //    esp_task_wdt_reset();
+        //}
     }
 }
 

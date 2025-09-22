@@ -1,0 +1,162 @@
+C51 COMPILER V9.00   OSD_BATTERYADCMENU                                                    04/13/2015 11:40:43 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_BATTERYADCMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_BatteryAdcMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_BatteryAdcMenu.c BROWSE INCD
+                    -IR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\
+                    -..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\K
+                    -ey;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..
+                    -\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\
+                    -Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_BatteryAdcMenu.lst)
+                    - OBJECT(..\Hex\Osd_BatteryAdcMenu.obj)
+
+line level    source
+
+   1          #include "DataType.h"
+   2          #include "SystemConfig.h"
+   3          #include "Global.h"
+   4          #include "MsgMap.h"
+   5          #include "sysWorkPara.h"
+   6          #include "sysPower.h" 
+   7          #include "videoProc.h"
+   8          #include "configLCDPara.h"
+   9          #include "Debug.h"
+  10          #include "Delay.h"
+  11          #include "AMT_Reg.h"
+  12          #include "AMT_Drv.h"
+  13          #include "AMT_Mcu.h"
+  14          #include "Osd_Menu.h"
+  15          #include "Osd_MenuPage.h"
+  16          
+  17          
+  18          
+  19          #ifdef LowBaterryDetecEn 
+              /*****************************************************************
+                                          Text
+              *****************************************************************/
+              UCHAR* CODE BatteryAdcStr[]=
+              {
+                "\x0F7\x0F8\x0FC",
+                "\x0F7\x0F9\x0FC",
+                "\x0F7\x0FA\x0FC",
+                "\x0F7\x0FB\x0FC",
+              };
+              
+              /*****************************************************************
+                                          String
+              *****************************************************************/
+              UCHAR * CODE BatteryAdcMenuStr(void)
+              {     
+                    return BatteryAdcStr[g_ucBatteryAdcLev];  
+              }
+              
+              /*****************************************************************
+                                         Function
+              *****************************************************************/
+              AdjustType BatteryAdcMenu_CheckCondition (void)
+              {
+                      AdjustType XDATA adjust={0,0,0};
+                      adjust.Flags |= osdVisible;
+                      return adjust;
+              }
+              
+              
+C51 COMPILER V9.00   OSD_BATTERYADCMENU                                                    04/13/2015 11:40:43 PAGE 2   
+
+              BOOL AdjustBatteryAdc(UCHAR opratComd)
+              {
+                  if(opratComd == COMD_BatteryAdc)
+                      {
+                          #ifdef LowBaterryDetecEn 
+                              if(g_ucBatteryAdcVal < BatterVolteAdcVal(BatterLowVolte))
+                              {
+                                      g_ucBatteryAdcLev = BatterAdc_Lev0;
+                              }
+                          else if(g_ucBatteryAdcVal < BatterVolteAdcVal(BatterMidVolte))
+                              {
+                                      g_ucBatteryAdcLev = BatterAdc_Lev1;
+                              }
+                          else if(g_ucBatteryAdcVal < BatterVolteAdcVal(BatterMaxVolte))
+                              {
+                                      g_ucBatteryAdcLev = BatterAdc_lev2;
+                          }
+                              else 
+                              {
+                                 g_ucBatteryAdcLev = BatterAdc_Lev3;
+                              }
+                      #endif //#ifdef LowBaterryDetecEn 
+                      }                 
+                      return 1;
+              }
+              
+              
+              /*****************************************************************
+                                        Item value table
+              *****************************************************************/
+              DrawOptionType CODE Option_BatteryAdc[]=
+              {
+                      {0,0,GREEN,TRANSPARENCE,GREEN,TRANSPARENCE, NULL,BatteryAdcMenuStr,osdEnd},
+              };
+              
+              ItemValueType CODE BatteryAdcMenuItemVal_BatteryAdc[]=
+              {
+                   {
+                            NULL,
+                            NULL,
+                            Option_BatteryAdc,   
+                            osdEnd,
+                   },
+              };
+              
+              
+              /*****************************************************************
+                                        Item Icon table
+              *****************************************************************/
+              
+              
+              
+              /*****************************************************************
+                                       Item  Titel table
+              *****************************************************************/
+              
+              
+              
+              /*****************************************************************
+                                        Menu Icon table
+              *****************************************************************/
+              
+C51 COMPILER V9.00   OSD_BATTERYADCMENU                                                    04/13/2015 11:40:43 PAGE 3   
+
+              
+              
+              /*****************************************************************
+                                       Menu  Titel table
+              *****************************************************************/
+              
+              
+              
+              /*****************************************************************
+                                         Item table
+              *****************************************************************/
+              
+              
+              /*****************************************************************
+                                         Menu 
+              *****************************************************************/
+              
+              #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

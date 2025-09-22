@@ -1,0 +1,160 @@
+C51 COMPILER V9.00   OSD_QUICKLYMUTEMENU                                                   04/13/2015 11:40:44 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_QUICKLYMUTEMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_QuicklyMuteMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_QuicklyMuteMenu.c BROWSE INC
+                    -DIR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..
+                    -\..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\
+                    -Key;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\.
+                    -.\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..
+                    -\Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_QuicklyMuteMenu.ls
+                    -t) OBJECT(..\Hex\Osd_QuicklyMuteMenu.obj)
+
+line level    source
+
+   1          #define _OSD_QUICKLY_MUTE_MENU_C_
+   2          
+   3          
+   4          #include "DataType.h"
+   5          #include "SystemConfig.h"
+   6          #include "Global.h"
+   7          #include "MsgMap.h"
+   8          #include "sysWorkPara.h"
+   9          #include "sysPower.h" 
+  10          #include "videoProc.h"
+  11          #include "configLCDPara.h"
+  12          #include "Debug.h"
+  13          #include "Delay.h"
+  14          #include "AMT_REG.H"
+  15          #include "AMT_Drv.h"
+  16          #include "AMT_MCU.h"
+  17          #include "Osd_Menu.h"
+  18          #include "Osd_MenuPage.h"
+  19          
+  20          
+  21          
+  22          SWORD GetQuicklyMuteVal(void);
+  23          
+  24          
+  25          
+  26          /*****************************************************************
+  27                                      Text
+  28          *****************************************************************/
+  29          UCHAR* CODE  QuicklyMuteStr[]=
+  30          {
+  31              "\x024", 
+  32                  "\x025"
+  33          };
+  34          
+  35          
+  36          /*****************************************************************
+  37                                      String
+  38          *****************************************************************/
+  39          UCHAR * CODE DispQuicklyMuteStr(void)
+  40          {
+  41   1            return QuicklyMuteStr[GetQuicklyMuteVal()];
+  42   1      }
+  43          
+  44          
+  45          /*****************************************************************
+  46                                     Function
+  47          *****************************************************************/
+  48          AdjustType QuicklyMuteMenu_CheckCondition (void)
+  49          {
+C51 COMPILER V9.00   OSD_QUICKLYMUTEMENU                                                   04/13/2015 11:40:44 PAGE 2   
+
+  50   1              AdjustType XDATA adjust = {0,0,0};
+  51   1              adjust.Flags |= osdVisible;
+  52   1              g_ucOsdEixt = OsdMenu|OsdSource;
+  53   1              //printfStr("QuicklyMuteMenu_CheckCondition");
+  54   1              return adjust;
+  55   1      }
+  56          
+  57          SWORD GetQuicklyMuteVal(void)
+  58          {
+  59   1               return g_sysSetting.Audio.status;
+  60   1      }
+  61          
+  62          
+  63          BOOL AdjustQuicklyMute(UCHAR opratComd)
+  64          {        
+  65   1           if(opratComd == COMD_SelMuteOnOff)
+  66   1           {
+  67   2               (g_sysSetting.Audio.status == MUTE_ON)?(g_sysSetting.Audio.status = MUTE_OFF):(g_sysSetting.Audio
+             -.status = MUTE_ON);
+  68   2                //printf("g_sysSetting.Audio.status = %d",g_sysSetting.Audio.status);
+  69   2               }
+  70   1               return 1;
+  71   1      }
+  72          
+  73          
+  74          BOOL ExectQuicklyMute(void)
+  75          {   
+  76   1          if (g_sysSetting.Audio.status == MUTE_ON)
+  77   1          {
+  78   2             #ifdef AudioCtrlEn
+                     SetAudioMute();
+                         #endif
+  81   2          }
+  82   1              else
+  83   1              {  
+  84   2                 #ifdef AudioCtrlEn
+                         OpenAudio(); 
+                         #endif
+  87   2              }
+  88   1              return 1;
+  89   1      }
+  90          
+  91          /*****************************************************************
+  92                                    Item value table
+  93          *****************************************************************/
+  94          DrawOptionType CODE Option_QuicklyMute[]=
+  95          {    
+  96              {0,1,GREEN,TRANSPARENCE,GREEN,TRANSPARENCE, GetQuicklyMuteVal,DispQuicklyMuteStr,osdEnd}, 
+  97          };
+  98          ItemValueType CODE QuicklyMuteMenuItemVal_QuicklyMute[]=
+  99          {
+ 100               {
+ 101                        NULL,
+ 102                        NULL,
+ 103                        Option_QuicklyMute,   
+ 104                        osdEnd,
+ 105               },
+ 106          };
+ 107          
+ 108          /*****************************************************************
+ 109                                    Item Icon table
+ 110          *****************************************************************/
+C51 COMPILER V9.00   OSD_QUICKLYMUTEMENU                                                   04/13/2015 11:40:44 PAGE 3   
+
+ 111          
+ 112          
+ 113          /*****************************************************************
+ 114                                   Item  Titel table
+ 115          *****************************************************************/
+ 116          
+ 117          
+ 118          /*****************************************************************
+ 119                                    Menu Icon table
+ 120          *****************************************************************/
+ 121          
+ 122          
+ 123          /*****************************************************************
+ 124                                   Menu  Titel table
+ 125          *****************************************************************/
+ 126          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    102    ----
+   CONSTANT SIZE    =     38    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

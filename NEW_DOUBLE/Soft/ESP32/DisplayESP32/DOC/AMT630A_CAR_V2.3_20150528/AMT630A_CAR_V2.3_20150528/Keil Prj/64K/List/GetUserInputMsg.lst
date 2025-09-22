@@ -1,0 +1,404 @@
+C51 COMPILER V9.00   GETUSERINPUTMSG                                                       04/13/2015 11:40:41 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE GETUSERINPUTMSG
+OBJECT MODULE PLACED IN ..\Hex\GetUserInputMsg.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\GetUserInput\GetUserInputMsg.c BROWS
+                    -E INCDIR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;
+                    -..\..\..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserI
+                    -nput\Key;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu
+                    -;..\..\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\
+                    -..\..\Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\GetUserInputMsg.l
+                    -st) OBJECT(..\Hex\GetUserInputMsg.obj)
+
+line level    source
+
+   1          /***********************************************************************
+   2          *Copyright (C) 2005 深圳艾科创新有限公司产品应用一部
+   3          * All rights reserved.
+   4          
+   5          *File name: 　 GetUserIputMsg.c
+   6          *Version:    　0.1
+   7          *Author:       cjinzong
+   8          *update:       2011-12-09
+   9          
+  10          *Description:
+  11                      此文件用来获取按键板和遥控信息。
+  12          *History:  
+  13          
+  14          ************************************************************************/
+  15          #define _GET_USER_MSG_C_
+  16          
+  17          
+  18          #include "DataType.h"
+  19          #include "systemConfig.h"
+  20          #include "global.h"
+  21          #include "MsgMap.h"
+  22          #include "debug.h"
+  23          #include "KeypadMap.h"
+  24          #include "AdcKeyPad.h"
+  25          #include "TouchKeyPad.h"
+  26          #include "Ir.h"
+  27          #include "GetUserInputMsg.h"
+  28          #include "AMT_Drv.h"
+  29          #include "Delay.h"
+  30          
+  31          
+  32          #ifdef KeyDetectEn
+  33          KeyCmdMap CODE SysAdcKeyCmdMap[] =
+  34          {
+  35             AdcKeyCmdMap
+  36          };
+  37          
+  38          
+  39          KeyCmdMap CODE SysI2cKeyCmdMap[] =
+  40          {
+  41             I2cKeyCmdMap
+  42          };
+  43          
+  44          
+  45          KeyMsgMap CODE SysKeyMsgMap[] =
+  46          {
+  47             GeneralKeyMsgMap
+  48          };
+  49          #endif
+C51 COMPILER V9.00   GETUSERINPUTMSG                                                       04/13/2015 11:40:41 PAGE 2   
+
+  50          
+  51          
+  52          /***********************************************************
+  53          *name:       GetIrMsg(void)
+  54          *input:      void
+  55          *output:     void 
+  56          *update:     2011-11-27 
+  57          *state:      allright
+  58          
+  59          *description:   
+  60                     获取IR 的按键值。
+  61          *history:
+  62                                          
+  63          ************************************************************/
+  64          #ifdef IrDetectEn
+  65          MSG POS_GetIrMsg(void)
+  66          {
+  67   1              MSG  XDATA curIrMsg = MSG_NULL; 
+  68   1              UINT XDATA curIrKeyVal = IR_NULL_KEY;
+  69   1      
+  70   1              curIrKeyVal = POS_GetRemoteKeyVal(g_ucRemoteKeyVal);
+  71   1      
+  72   1              if(IR_NULL_KEY !=curIrKeyVal)
+  73   1              {
+  74   2                      g_UserInputInfo.Type = IrType;
+  75   2                      
+  76   2                      curIrMsg = POS_TransferIrKeyMsg(curIrKeyVal);   
+  77   2                      
+  78   2                      #if TP1_RM
+                              printf("TP1_RM >> the ir Msg %x:\r\n",curIrMsg);
+                              #endif
+  81   2              }
+  82   1              
+  83   1              return curIrMsg;
+  84   1      }
+  85          #endif
+  86          
+  87          /***********************************************************
+  88          *name:       GetKeyPadMsg(void)
+  89          *input:      void
+  90          *output:     void 
+  91          *update:     2011-11-27 
+  92          *state:      allright
+  93          
+  94          *description:   
+  95                     获取按键板的按键值。
+  96          *history:
+  97                                          
+  98          ************************************************************/
+  99          #ifdef KeyDetectEn
+ 100          MSG POS_GetKeyPadMsg(void)
+ 101          {
+ 102   1              UCHAR curKeyCmd  = NULL_CMD;
+ 103   1              KeyInfor curKey = {NULL_KEY,MSG_NULL,NULL_TIME,KEYRELEASE}; 
+ 104   1              MSG curKeyMsg;
+ 105   1      
+ 106   1      
+ 107   1          switch(g_ucSelKeyDevice)
+ 108   1          {
+ 109   2              case ADC_KEY:
+ 110   2                               //ADC按键采集到的实际的按键值
+ 111   2                                curKey = POS_GetAdcKeyValue();
+C51 COMPILER V9.00   GETUSERINPUTMSG                                                       04/13/2015 11:40:41 PAGE 3   
+
+ 112   2                                      
+ 113   2                               //转出宏命令
+ 114   2                               if(KEYRELEASE != curKey.Status)
+ 115   2                               {
+ 116   3                                      g_bReleaseAdcKeyFlg = FALSE;
+ 117   3                                      curKeyCmd = POS_TransferAdcKeyCmd(curKey);
+ 118   3                               }
+ 119   2                               else
+ 120   2                               {
+ 121   3                                      g_bReleaseAdcKeyFlg = TRUE;
+ 122   3                               }
+ 123   2                               break;
+ 124   2      
+ 125   2                      case IIC_KEY:
+ 126   2                                
+ 127   2                               //I2C按键采集到的实际的按键值
+ 128   2                           curKey = POS_GetI2CKeyValue();
+ 129   2      
+ 130   2                               //转出宏命令
+ 131   2                               if(KEYRELEASE != curKey.Status)
+ 132   2                               {
+ 133   3                                 curKeyCmd = POS_TransferI2CKeyCmd(curKey);
+ 134   3                               }
+ 135   2                               break;
+ 136   2      
+ 137   2                      default:
+ 138   2                               break;
+ 139   2          }
+ 140   1              
+ 141   1              //转换为应用层的消息
+ 142   1              if(NULL_CMD != curKeyCmd)
+ 143   1              {   
+ 144   2                  g_UserInputInfo.Type = KeyType;
+ 145   2                      curKey  = POS_TransferKeyMsg(curKeyCmd); 
+ 146   2              }       
+ 147   1              
+ 148   1              curKeyMsg = curKey.KeyMsg;
+ 149   1              return curKeyMsg;
+ 150   1      }
+ 151          
+ 152          
+ 153          
+ 154          /***********************************************************
+ 155          *name:           TransferAdcKeyMsg(UINT AdcKeyVal)
+ 156          *input:      AdcKeyVal
+ 157          *output:     返回对应按键值的消息
+ 158          *update:     2011-12-22
+ 159          
+ 160          *description:   
+ 161                   这个函数是根据当前按键值在SysKeyMap映射表中查找相应的按键消息。
+ 162          *history:yshuizhou   2012/01/06    0.2    build  this  function 
+ 163          ************************************************************/
+ 164          KeyInfor POS_TransferKeyMsg(UCHAR KeyCmd)
+ 165          {    
+ 166   1           UCHAR XDATA i;
+ 167   1               KeyInfor XDATA Key ={NULL_KEY,MSG_NULL,NULL_TIME,KEYRELEASE};
+ 168   1               
+ 169   1              for(i = 0; i < sizeof(SysKeyMsgMap)/sizeof(SysKeyMsgMap[0]); i++)  
+ 170   1          {
+ 171   2              if(SysKeyMsgMap[i].KeyCmd == NULL_CMD)
+ 172   2              {
+ 173   3                  continue;
+C51 COMPILER V9.00   GETUSERINPUTMSG                                                       04/13/2015 11:40:41 PAGE 4   
+
+ 174   3              }
+ 175   2      
+ 176   2                  if(KeyCmd == SysKeyMsgMap[i].KeyCmd)
+ 177   2                  {    
+ 178   3                     Key.KeyMsg = SysKeyMsgMap[i].KeyMsg;
+ 179   3                      }
+ 180   2              }
+ 181   1              
+ 182   1              #if TP1_KEY
+                  printf("TP1_KEY >> the KeyMsg is %x:\r\n",Key.KeyMsg);                               
+                      #endif
+ 185   1              
+ 186   1              return Key;
+ 187   1      }
+ 188          
+ 189          
+ 190          
+ 191          /***********************************************************
+ 192          *name:           TransferAdcKeyCmd(UINT AdcKeyVal)
+ 193          *input:      AdcKeyVal
+ 194          *output:     返回对应按键值的宏命令。
+ 195          *update:     2011-12-22
+ 196          
+ 197          *description:   
+ 198                   这个函数是根据当前按键值在SysKeyCmdMap映射表中查找相应的按键命令。
+ 199          *history:yshuizhou   2012/01/06    0.2    build  this  function 
+ 200          ************************************************************/
+ 201          UCHAR POS_TransferAdcKeyCmd(KeyInfor Key)
+ 202          {
+ 203   1           UCHAR XDATA i,j;
+ 204   1               UCHAR XDATA KeyCmd  = NULL_CMD;
+ 205   1               
+ 206   1               for(i = 0; i < sizeof(SysAdcKeyCmdMap)/sizeof(SysAdcKeyCmdMap[0]); i++)
+ 207   1               {
+ 208   2                  if(NULL_KEY == SysAdcKeyCmdMap[i].KeyVal)
+ 209   2                  {
+ 210   3                      continue;
+ 211   3                  }
+ 212   2                              
+ 213   2                      if(readFlg(SysAdcKeyCmdMap[i].KeyVal,AdcChannelBit) == readFlg(Key.KeyVal,AdcChannelBit))
+ 214   2                      {                       
+ 215   3      
+ 216   3                              if(0X00 == Key.KeyVal)
+ 217   3                              {
+ 218   4                                  for(j = 0; j < sizeof(SysAdcKeyCmdMap)/sizeof(SysAdcKeyCmdMap[0]); j++)
+ 219   4                                      {
+ 220   5                                           if(NULL_KEY == SysAdcKeyCmdMap[j].KeyVal)
+ 221   5                                           {
+ 222   6                                              continue;
+ 223   6                                           }
+ 224   5                                              if(Key.KeyVal == SysAdcKeyCmdMap[j].KeyVal)
+ 225   5                                              {
+ 226   6                                              g_ucPreChannel = (UCHAR)(readFlg(Key.KeyVal,AdcChannelBit)>>12);
+ 227   6                                      KeyCmd =  SysAdcKeyCmdMap[j].KeyCmd;
+ 228   6      
+ 229   6                                                  if(Key.Status == KEYPRESS)
+ 230   6                                                      {                                        
+ 231   7                                                           if(Key.Holdtime < RepeatTime)
+ 232   7                                                               {    
+ 233   8                                                                  g_UserInputInfo.Status = inputPress;
+ 234   8                                                               }
+ 235   7                                                               g_UserInputInfo.Status &=(~inputSpHold);
+C51 COMPILER V9.00   GETUSERINPUTMSG                                                       04/13/2015 11:40:41 PAGE 5   
+
+ 236   7                                                               g_UserInputInfo.Status &= (~inputHold);
+ 237   7                                                      }
+ 238   6                                  else if(Key.Status == KEYHOLD)
+ 239   6                                      {                                       
+ 240   7                                              g_UserInputInfo.Status &= (~inputPress);
+ 241   7                                                              
+ 242   7                                                              if(Key.Holdtime == RepeatTime)
+ 243   7                                                              {
+ 244   8                                                                 g_UserInputInfo.Status = inputHold;
+ 245   8                                                             g_UserInputInfo.Status &= (~inputSpHold);
+ 246   8                                                              }
+ 247   7                                                              else if(Key.Holdtime == SpRepeatTime)
+ 248   7                                                              {
+ 249   8                                                                 g_UserInputInfo.Status =(inputSpHold |inputHold);                            
+ 250   8                                                              }
+ 251   7                                      }
+ 252   6                                               
+ 253   6                              #if TP3_ADC
+                                                              printf("Special Zero TP3_ADC >> Adc Key Macro val = %x", KeyCmd);
+                                      #endif
+ 256   6      
+ 257   6                                                      break;
+ 258   6                                              }
+ 259   5                                      }
+ 260   4                              }
+ 261   3                              else
+ 262   3                              {
+ 263   4                                  if(Abs(SysAdcKeyCmdMap[i].KeyVal,Key.KeyVal) < KEY_OFFSET)
+ 264   4                                      {                                
+ 265   5                                           g_ucPreChannel = (UCHAR)(readFlg(Key.KeyVal,AdcChannelBit)>>12);
+ 266   5                                   KeyCmd =  SysAdcKeyCmdMap[i].KeyCmd;
+ 267   5      
+ 268   5                                               if(Key.Status == KEYPRESS)
+ 269   5                                               {                                       
+ 270   6                                                   if(Key.Holdtime < RepeatTime)
+ 271   6                                                       {    
+ 272   7                                                          g_UserInputInfo.Status = inputPress;
+ 273   7                                                       }
+ 274   6                                                       g_UserInputInfo.Status &=(~inputSpHold);
+ 275   6                                                       g_UserInputInfo.Status &= (~inputHold);
+ 276   6                                               }
+ 277   5                               else if(Key.Status == KEYHOLD)
+ 278   5                               {                                      
+ 279   6                                      g_UserInputInfo.Status &= (~inputPress);
+ 280   6                                                      
+ 281   6                                                      if(Key.Holdtime == RepeatTime)
+ 282   6                                                      {
+ 283   7                                                         g_UserInputInfo.Status = inputHold;
+ 284   7                                                     g_UserInputInfo.Status &= (~inputSpHold);
+ 285   7                                                      }
+ 286   6                                                      else if(Key.Holdtime == SpRepeatTime)
+ 287   6                                                      {
+ 288   7                                                         g_UserInputInfo.Status =(inputSpHold |inputHold);                            
+ 289   7                                                      }
+ 290   6                               }                                
+ 291   5                                               
+ 292   5                                               #if TP3_ADC
+                                                       printf("TP3_ADC >> Adc Key Macro val = %x", KeyCmd);
+                                                       #endif
+ 295   5                                               break;
+ 296   5                                      }
+ 297   4                      }
+C51 COMPILER V9.00   GETUSERINPUTMSG                                                       04/13/2015 11:40:41 PAGE 6   
+
+ 298   3               }
+ 299   2         }
+ 300   1         return KeyCmd;
+ 301   1      }
+ 302          
+ 303          
+ 304          /***********************************************************
+ 305          *name:           TransferI2CKeyCmd(UINT KeyVal)
+ 306          *input:      KeyVal
+ 307          *output:     返回对应按键值的宏命令。
+ 308          *update:     2012-01-06
+ 309          
+ 310          *description:   
+ 311                   这个函数是根据当前按键值在SysKeyCmdMap映射表中查找相应的按键命令。
+ 312          *history:yshuizhou   2012/01/06    0.2    build  this  function 
+ 313          ************************************************************/
+ 314          UCHAR POS_TransferI2CKeyCmd(KeyInfor Key)
+ 315          {
+ 316   1           UCHAR XDATA i;
+ 317   1               UCHAR XDATA KeyCmd  = NULL_CMD;
+ 318   1      
+ 319   1               for(i = 0; i < sizeof(SysI2cKeyCmdMap)/sizeof(SysI2cKeyCmdMap[0]); i++)
+ 320   1               {
+ 321   2                  if(NULL_KEY == SysI2cKeyCmdMap[i].KeyVal)
+ 322   2                  {
+ 323   3                      continue;
+ 324   3                  }
+ 325   2      
+ 326   2                      if(Key.KeyVal == SysI2cKeyCmdMap[i].KeyVal)
+ 327   2                      {                       
+ 328   3                      KeyCmd =  SysI2cKeyCmdMap[i].KeyCmd;
+ 329   3                              if(Key.Status == KEYPRESS)
+ 330   3                              {                                                        
+ 331   4                                   if(Key.Holdtime < RepeatTime)
+ 332   4                                       {    
+ 333   5                                          g_UserInputInfo.Status = inputPress;
+ 334   5                                       }
+ 335   4                                       g_UserInputInfo.Status &=(~inputSpHold);
+ 336   4                                       g_UserInputInfo.Status &= (~inputHold);
+ 337   4                              }
+ 338   3                              else if(Key.Status == KEYHOLD)
+ 339   3                 {            
+ 340   4                              g_UserInputInfo.Status &= (~inputPress);
+ 341   4                                      if(Key.Holdtime == RepeatTime)
+ 342   4                                      {
+ 343   5                                         g_UserInputInfo.Status = inputHold;
+ 344   5                                         g_UserInputInfo.Status &= (~inputSpHold);
+ 345   5                                      }
+ 346   4                                      else if(Key.Holdtime == SpRepeatTime)
+ 347   4                                      {
+ 348   5                                         g_UserInputInfo.Status =(inputSpHold |inputHold);                            
+ 349   5                                      }
+ 350   4                  }
+ 351   3      
+ 352   3                  #if TP3_ADC
+                                      printf("TP3_ADC >> I2C Key Macro val = %x", KeyCmd);
+                          #endif
+ 355   3                          break;
+ 356   3                      }
+ 357   2               }
+ 358   1         return KeyCmd;
+ 359   1      }
+C51 COMPILER V9.00   GETUSERINPUTMSG                                                       04/13/2015 11:40:41 PAGE 7   
+
+ 360          
+ 361          
+ 362          #endif
+ 363          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    909    ----
+   CONSTANT SIZE    =     50    ----
+   XDATA SIZE       =   ----      14
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      17
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

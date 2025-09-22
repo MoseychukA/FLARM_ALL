@@ -1,0 +1,160 @@
+C51 COMPILER V9.00   WT5700                                                                04/13/2015 11:40:40 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE WT5700
+OBJECT MODULE PLACED IN ..\Hex\WT5700.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\Device driver\WT5700\WT5700.c BROWSE
+                    - INCDIR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;.
+                    -.\..\..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserIn
+                    -put\Key;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;
+                    -..\..\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\.
+                    -.\..\Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\WT5700.lst) OBJECT
+                    -(..\Hex\WT5700.obj)
+
+line level    source
+
+   1          /****************************************************************************************************
+   2          *Copyright (C) 2005 深圳艾科创新有限公司产品应用一部
+   3          * All rights reserved.
+   4          
+   5          *File name: 　 WT5700.c
+   6          *Version:    　0.01
+   7          *Author:       yshuizhou
+   8          *Update:       2012-05-22
+   9          
+  10          *Description:
+  11          *          这个文件是初始化WT5700。 
+  12          *History:
+  13          *
+  14          ***************************************************************************************************/
+  15          #define _WT5700_C_
+  16          
+  17          #include "DataType.h"
+  18          #include "systemConfig.h"
+  19          #include "global.h"
+  20          #include "WT5700.h"
+  21          #include "debug.h"
+  22          #include "AMT_Reg.h"
+  23          #include "AMT_Drv.h"
+  24          #include "AMT_Mcu.h"
+  25          
+  26          #define I2C_ACCESS_LOOP_TIME              20
+  27          #define I2C_NON_ACK                      1
+  28          
+  29          #ifdef KeyDetectEn 
+  30          
+  31          void WriteWT5700(UCHAR Address,UCHAR Data)
+  32          {
+  33   1          UCHAR XDATA ucLoop;
+  34   1              ucLoop = I2C_ACCESS_LOOP_TIME;
+  35   1              
+  36   1              while(ucLoop--)
+  37   1              {
+  38   2                  KeyI2CStart();    
+  39   2                  DelayKeyI2c(2);
+  40   2                  KeyI2CWrite(0XE0);
+  41   2                  DelayKeyI2c(1);
+  42   2                      if(KeyACKCheck()==I2C_NON_ACK)
+  43   2                      {
+  44   3                        continue;
+  45   3                      }
+  46   2                  KeyI2CWrite(0X00);
+  47   2                  DelayKeyI2c(1);
+  48   2                      if(KeyACKCheck()== I2C_NON_ACK)
+  49   2                      {
+C51 COMPILER V9.00   WT5700                                                                04/13/2015 11:40:40 PAGE 2   
+
+  50   3                         continue;
+  51   3                      }
+  52   2                  KeyI2CWrite(Address);
+  53   2                  DelayKeyI2c(1);
+  54   2                      if(KeyACKCheck()== I2C_NON_ACK)
+  55   2                      {
+  56   3                         continue;
+  57   3                      }
+  58   2                  KeyI2CWrite(Data);
+  59   2                  DelayKeyI2c(1);
+  60   2                      if(KeyACKCheck()== I2C_NON_ACK)
+  61   2                      {
+  62   3                         continue;
+  63   3                      }
+  64   2                      break;
+  65   2              }
+  66   1          KeyI2CStop();               
+  67   1      }
+  68          
+  69          
+  70          
+  71          UCHAR ReadWT5700(UCHAR subAddr)
+  72          {
+  73   1          UCHAR XDATA tmpRd;
+  74   1          UCHAR XDATA ucLoop;
+  75   1              ucLoop = I2C_ACCESS_LOOP_TIME;
+  76   1      
+  77   1              while(ucLoop--)
+  78   1              {
+  79   2                  KeyI2CStart();    
+  80   2                  DelayKeyI2c(2);
+  81   2                  KeyI2CWrite(0XE0);
+  82   2                  DelayKeyI2c(1);
+  83   2                      if(KeyACKCheck()== I2C_NON_ACK)
+  84   2                      {
+  85   3                         continue;
+  86   3                      }
+  87   2                  KeyI2CWrite(0X00);
+  88   2                  DelayKeyI2c(1);
+  89   2                      if(KeyACKCheck()== I2C_NON_ACK)
+  90   2                      {
+  91   3                         continue;
+  92   3                      }
+  93   2                  KeyI2CWrite(subAddr);
+  94   2                  DelayKeyI2c(1);
+  95   2                      if(KeyACKCheck()== I2C_NON_ACK)
+  96   2                      {
+  97   3                        continue;
+  98   3                      }
+  99   2                      DelayKeyI2c(1);
+ 100   2                      KeyI2CStop();
+ 101   2                      DelayKeyI2c(1);
+ 102   2                      KeyI2CStart();    
+ 103   2                  DelayKeyI2c(2);
+ 104   2                  KeyI2CWrite(0XE1);
+ 105   2                      DelayKeyI2c(1);
+ 106   2                      if(KeyACKCheck()== I2C_NON_ACK)
+ 107   2                      {
+ 108   3                        continue;
+ 109   3                      }
+ 110   2                      tmpRd = KeyI2CRead(); 
+ 111   2                  DelayKeyI2c(1);
+C51 COMPILER V9.00   WT5700                                                                04/13/2015 11:40:40 PAGE 3   
+
+ 112   2                  KeyNACKSend();
+ 113   2                      break;
+ 114   2              }
+ 115   1          KeyI2CStop();               
+ 116   1          return(tmpRd);
+ 117   1      }
+ 118          
+ 119          
+ 120          void Initial_WT5700(void)
+ 121          {
+ 122   1              WriteWT5700(0x00,0x72);//system control reg
+ 123   1              WriteWT5700(0x02,0x13); //SI[7,11}->0x13 20 Clock,0x14 32 Clock
+ 124   1              WriteWT5700(0x03,0x03); //SI[0,6}->0x03 20 Clock,0x04 32 Clock
+ 125   1      }
+ 126          #endif  //#ifdef KeyDetectEn 
+ 127          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    272    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,191 @@
+C51 COMPILER V9.00   OSD_RESETMENU                                                         04/13/2015 11:40:45 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_RESETMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_ResetMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_ResetMenu.c BROWSE INCDIR(..
+                    -\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..\LC
+                    -D Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key;..
+                    -\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\..\D
+                    -evice driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\Devic
+                    -e driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_ResetMenu.lst) OBJECT(..
+                    -\Hex\Osd_ResetMenu.obj)
+
+line level    source
+
+   1          #define _OSD_RESET_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          
+  21          
+  22          
+  23          
+  24          
+  25          /*****************************************************************
+  26                                      Text
+  27          *****************************************************************/
+  28          UCHAR* CODE ResetMenuStr[]=
+  29          {
+  30              "RESET",
+  31              "RESET",
+  32              "RESET",
+  33              "RESET",
+  34              "RESET",
+  35              "RESET",
+  36              "RESET",
+  37              "\x025\x008\x024\x0B7\x025\x00E\x0B8\x028",
+  38              " #\x01D#\x04D",
+  39              "#\x081#\x082#\x076#\x06D",
+  40              "\x014\x025\x024\x015\x018\x009\x007\x013\x00C",
+  41              "RESET",
+  42              "RESET"
+  43          };
+  44          
+  45          
+  46          UCHAR* CODE ResetStr[]=
+  47          {
+  48            "\x029\x02B", 
+  49          };
+C51 COMPILER V9.00   OSD_RESETMENU                                                         04/13/2015 11:40:45 PAGE 2   
+
+  50          
+  51          
+  52          /*****************************************************************
+  53                                      String
+  54          *****************************************************************/
+  55          UCHAR * CODE ResetMenu_TitelStr(void)
+  56          {
+  57   1          return ResetMenuStr[g_sysSetting.Osd.curlanguage];
+  58   1      }
+  59          
+  60          
+  61          UCHAR * CODE DispResetStr(void)
+  62          {
+  63   1            return ResetStr[0];  
+  64   1      }
+  65          
+  66          
+  67          /*****************************************************************
+  68                                     Function
+  69          *****************************************************************/
+  70          AdjustType ResetMenu_CheckCondition(void)
+  71          {
+  72   1          AdjustType XDATA adjust = {0,0,0};
+  73   1              
+  74   1          if(ON == g_sysSetting.Factory.resetswitch)
+  75   1              {
+  76   2                  adjust.Flags |= osdVisible; 
+  77   2                      //printfStr("Reset Visibla");
+  78   2              }
+  79   1              else
+  80   1              {
+  81   2                  adjust.Flags |= osdInvisible; 
+  82   2                      //printfStr("Reset Invisible");
+  83   2              }
+  84   1              //printfStr("ResetMenu_CheckCondition");
+  85   1              return adjust;
+  86   1      }
+  87          
+  88          
+  89          
+  90          BOOL ResetMenuItem_DrawStyle(void)
+  91          {
+  92   1          //printfStr("ResetMenuItem_DrawStyle");
+  93   1              OsdWndClear(0X00, 0X00, 0X00, 0X11);
+  94   1              OsdWndClear(0X01, 0X00, 0X01, 0X11);
+  95   1          return 0;
+  96   1      }
+  97          
+  98          
+  99          
+ 100          BOOL ExectReset(void)
+ 101          {
+ 102   1         //printfStr("ExectReset");
+ 103   1         g_sysSetting.Video.brigthness = MAX_VALUE/2;
+ 104   1         g_sysSetting.Video.saturation= MAX_VALUE/2;
+ 105   1         g_sysSetting.Video.contrast= MAX_VALUE/2;
+ 106   1         g_sysSetting.Video.tint= MAX_VALUE/2;
+ 107   1         g_sysSetting.Audio.volVal = MAX_VALUE/2;
+ 108   1         g_sysSetting.Disp.zoomMode = DISP_16_9;
+ 109   1         g_sysSetting.IRAB.IRABVal = IROFF;
+ 110   1         ConfigDispZoomDynPara(g_sysSetting.Disp.zoomMode);  
+ 111   1         UpdataPicPara(); 
+C51 COMPILER V9.00   OSD_RESETMENU                                                         04/13/2015 11:40:45 PAGE 3   
+
+ 112   1         return 1;
+ 113   1      }
+ 114          
+ 115          
+ 116          /*****************************************************************
+ 117                                    Item value table
+ 118          *****************************************************************/
+ 119          DrawOptionType CODE Option_Reset[]=
+ 120          {
+ 121              {1,8,RED,TRANSPARENCE,RED,TRANSPARENCE, NULL,DispResetStr,osdEnd},
+ 122          };
+ 123          
+ 124          
+ 125          ItemValueType CODE ResetMenuItemVal_Reset[]=
+ 126          {
+ 127               {
+ 128                        NULL,
+ 129                        NULL,
+ 130                        Option_Reset,   
+ 131                        osdEnd,
+ 132               },
+ 133          };
+ 134          
+ 135          
+ 136          /*****************************************************************
+ 137                                    Item Icon table
+ 138          *****************************************************************/
+ 139          
+ 140          
+ 141          /*****************************************************************
+ 142                                   Item  Titel table
+ 143          *****************************************************************/
+ 144          TitelType CODE ResetMenuItem_LanguageTitelTab[]=
+ 145          {
+ 146             {0,7,RED,TRANSPARENCE,RED,TRANSPARENCE,DWT_Text,ResetMenu_TitelStr,osdEnd},
+ 147          };
+ 148          
+ 149          /*****************************************************************
+ 150                                    Menu Icon table
+ 151          *****************************************************************/
+ 152          
+ 153          
+ 154          /*****************************************************************
+ 155                                   Menu  Titel table
+ 156          *****************************************************************/
+ 157          
+ 158          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    158    ----
+   CONSTANT SIZE    =    125    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

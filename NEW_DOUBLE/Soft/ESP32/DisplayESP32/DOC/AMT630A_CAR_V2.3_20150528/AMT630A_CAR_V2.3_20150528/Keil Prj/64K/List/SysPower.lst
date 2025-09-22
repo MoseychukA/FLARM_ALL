@@ -1,0 +1,219 @@
+C51 COMPILER V9.00   SYSPOWER                                                              04/13/2015 11:40:41 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE SYSPOWER
+OBJECT MODULE PLACED IN ..\Hex\SysPower.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\Modules\SysPower.c BROWSE INCDIR(..\
+                    -..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..\LCD
+                    - Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key;..\
+                    -..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\..\De
+                    -vice driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\Device
+                    - driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\SysPower.lst) OBJECT(..\Hex\S
+                    -ysPower.obj)
+
+line level    source
+
+   1          /***********************************************************************
+   2          *Copyright (C) 2005 深圳艾科创新有限公司产品应用一部
+   3          * All rights reserved.
+   4          
+   5          *File name: 　 SysPower.C
+   6          *Version:    　0.1
+   7          *Author:       Jordan.chen
+   8          *update:       2011-12-07
+   9          
+  10          *Description:
+  11                     此文件为系统电源管理模块。
+  12          *History:  
+  13          
+  14          ************************************************************************/
+  15          #define _POWER_C_
+  16          
+  17          #include "DataType.h"
+  18          #include "systemConfig.h"
+  19          #include "global.h"
+  20          #include "configlcdpara.h"
+  21          #include "Debug.h"
+  22          #include "sysWorkPara.h"
+  23          #include "Videoproc.h"
+  24          #include "Delay.h"
+  25          #include "interrupt.h"
+  26          #include "AMT_Drv.h"
+  27          #include "AMT_REG.h"
+  28          #include "MsgMap.h"
+  29          #include "Osd_Menu.h"
+  30          #include "Osd_MenuPage.h"
+  31          #include "sysPower.h"
+  32          #include "Ir.h"
+  33          
+  34          
+  35          
+  36          /****************************************************************************
+  37          *name:   PowerOnSystem(void)
+  38          *input:  void              
+  39          *output: void  
+  40          
+  41          *description:
+  42                系统开机函数，执行此函数后代表系统已经进入开机状态，并显示正常。
+  43          
+  44          *history: Jordan.chen   2011/12/16    1.0    transplant   this  function
+  45          *****************************************************************************/
+  46          BOOL PowerOnSystem(void)
+  47          {       
+  48   1          printfStr("PowerOnSystem\n");
+  49   1      
+C51 COMPILER V9.00   SYSPOWER                                                              04/13/2015 11:40:41 PAGE 2   
+
+  50   1              #ifdef PowerLedEn
+                      hw_setGreenLEDOn();
+                      hw_setRedLEDOff();
+                      #endif
+  54   1      
+  55   1              SetPowerOn();
+  56   1              
+  57   1              #ifdef AudioCtrlEn
+                      SetAudioMute();         
+                      SelAudioInputSource(g_sysSetting.Video.curSource);
+                      #endif
+  61   1      
+  62   1              ExitLowPowerMode();
+  63   1      
+  64   1              #ifdef CarBackEn
+  65   1              #ifdef CarReversingSignalDetectEn
+  66   1              SelVideoInputSource(INPUT_CAMERA_Car);
+  67   1              DelayMs(200);
+  68   1              if(IsSignalOk())
+  69   1              {
+  70   2                 g_sysSetting.Car.DetecMode = PON_CAR_SIGNAL_OK;
+  71   2              }
+  72   1              else
+  73   1              {  
+  74   2                 SelVideoInputSource(g_sysSetting.Video.curSource);
+  75   2             DelayMs(200);
+  76   2      
+  77   2                 if(IsSignalOk())
+  78   2             {
+  79   3               g_sysSetting.Car.DetecMode = AV_SIGNAL_OK; 
+  80   3             }
+  81   2                 
+  82   2                 #ifndef LogoEn 
+  83   2                 #ifdef NoSignalBLOffEn
+                         if(IsSignalOk())
+                         {
+                                TurnOnBackLight();
+                         }
+                         else
+                         {
+                            EnterLowPowerMode();
+                         }
+                         #else
+  93   2                 TurnOnBackLight();
+  94   2                 #endif       //         #ifdef NoSignalBLOffEn
+  95   2                 #endif  //      #ifndef LogoEn 
+  96   2              }
+  97   1              #endif  //      #ifdef CarReversingSignalDetectEn
+  98   1              
+  99   1              #ifdef CarReversingIODetectEn
+                      SelVideoInputSource(g_sysSetting.Video.curSource);
+                      if(hw_getCarBackPinStatus() == hw_setCarBackAheadStatus)
+                      { 
+                         DelayMs(200);
+                         #ifndef LogoEn 
+                         #ifdef NoSignalBLOffEn
+                         if(IsSignalOk())
+                         {
+                                TurnOnBackLight();
+                         }
+                         else
+                         {
+C51 COMPILER V9.00   SYSPOWER                                                              04/13/2015 11:40:41 PAGE 3   
+
+                            EnterLowPowerMode();
+                         }
+                         #else
+                         TurnOnBackLight();
+                         #endif       //#ifdef NoSignalBLOffEn
+                         #endif  //#ifndef LogoEn 
+                      }
+                      #endif  //      #ifdef CarReversingIODetectEn
+ 120   1              
+ 121   1              #else //#ifndef CarBackEn
+                      SelVideoInputSource(g_sysSetting.Video.curSource);
+                      DelayMs(200);
+                      
+                      #ifndef LogoEn 
+                      #ifdef NoSignalBLOffEn
+                      if(IsSignalOk())
+                      {
+                         TurnOnBackLight();
+                      }
+                  else
+                  {
+                    EnterLowPowerMode();
+                  }
+                      #else
+                      TurnOnBackLight();
+                      #endif  //#ifdef NoSignalBLOffEn
+                      #endif //       #ifndef LogoEn 
+                      #endif  //      #ifdef CarBackEn
+ 140   1              
+ 141   1              g_sysSetting.Car.status = CAR_PON_GO_AHEAD;
+ 142   1              g_bSignalFlg = IsSignalOk();
+ 143   1          g_bBLCtrlEnFlg = TRUE;
+ 144   1              g_ucRemoteKeyVal = IR_NULL_KEY; 
+ 145   1              
+ 146   1              return 1;
+ 147   1      }
+ 148          
+ 149          
+ 150          /****************************************************************************
+ 151          *name:   PowerOffSystem(void)
+ 152          *input:  void              
+ 153          *output: void  
+ 154          
+ 155          *description:
+ 156                系统关机函数，表示关机时需要执行动作。
+ 157          
+ 158          *history: Jordan.chen   2011/12/16    1.0    transplant   this  function
+ 159          *****************************************************************************/
+ 160          BOOL PowerOffSystem(void)
+ 161          {        
+ 162   1          printfStr("PowerOffSystem\n");
+ 163   1              
+ 164   1          #ifdef PowerLedEn
+                      hw_setRedLEDOn();
+                      hw_setGreenLEDOff();
+                      #endif
+ 168   1      
+ 169   1              SetPowerOff();
+ 170   1              
+ 171   1              #ifdef AudioCtrlEn
+                      SetAudioMute(); 
+                      #endif
+C51 COMPILER V9.00   SYSPOWER                                                              04/13/2015 11:40:41 PAGE 4   
+
+ 174   1                      
+ 175   1              TurnOffBackLight();     
+ 176   1              SaveSetting();
+ 177   1              TurnOffDevicePower(g_sysSetting.Video.curSource);   
+ 178   1              EnterLowPowerMode();
+ 179   1              
+ 180   1              HideMenu();
+ 181   1              DelayMs(500);   
+ 182   1              g_ucRemoteKeyVal = IR_NULL_KEY;
+ 183   1              return 1;
+ 184   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    145    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

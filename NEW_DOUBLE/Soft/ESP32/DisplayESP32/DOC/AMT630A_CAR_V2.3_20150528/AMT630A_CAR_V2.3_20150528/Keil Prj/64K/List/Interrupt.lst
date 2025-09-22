@@ -1,0 +1,288 @@
+C51 COMPILER V9.00   INTERRUPT                                                             04/13/2015 11:40:41 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE INTERRUPT
+OBJECT MODULE PLACED IN ..\Hex\Interrupt.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\Kernel\Interrupt.c BROWSE INCDIR(..\
+                    -..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..\LCD
+                    - Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key;..\
+                    -..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\..\De
+                    -vice driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\Device
+                    - driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Interrupt.lst) OBJECT(..\Hex\
+                    -Interrupt.obj)
+
+line level    source
+
+   1          /*******************************************************************************
+   2          *Copyright (C) 2005 深圳艾科创新有限公司产品应用一部
+   3          * All rights reserved.
+   4          
+   5          *File name: 　 Interrupt.c        
+   6          *Version:      1.0
+   7          *update:       2011-12-10
+   8          *Description:
+   9                             系统中断处理。
+  10                             
+  11          *History:  jordan.chen  2011/12/10    1.0    build  this  moudle
+  12          ******************************************************************************/
+  13          #define _INTERRUPT_C_
+  14          
+  15          #include "DataType.h"
+  16          #include "systemConfig.h"
+  17          #include "global.h"
+  18          #include "Debug.h"
+  19          #include "mcu.h"
+  20          #include "MsgMap.h"
+  21          #include "Ir.h"
+  22          #include "delay.h"
+  23          #include "AMT_MCU.h"
+  24          #include "AMT_Drv.h"
+  25          #include "AMT_REG.h"
+  26          #include "BT_UartRec.h"
+  27          #include "interrupt.h"
+  28          #include "Osd_Menu.h"
+  29          #include "Osd_MenuPage.h"
+  30          
+  31          
+  32          
+  33          void POS_IrqServerExt0(void) interrupt 0 //ext 0  IR  interrupt
+  34          {
+  35   1      #ifdef IrDetectEn
+  36   1          /*通讯协议选择*/
+  37   1          #if IR_DECODE_MODE == IR_HARDWARE
+  38   1          #if IR_TYPE == NEC
+  39   1              g_ucRemoteKeyVal = POS_GetIrKeyVal();
+  40   1              #endif
+  41   1              #endif
+  42   1      #endif
+  43   1      }
+  44          
+  45          
+  46          void POS_IrqServerRec(void) interrupt 4  //Uart Receive interrupt
+  47          {
+  48   1         #ifdef BTEn
+                 POS_BTUartRec();
+C51 COMPILER V9.00   INTERRUPT                                                             04/13/2015 11:40:41 PAGE 2   
+
+                 #endif
+  51   1      
+  52   1         #ifdef SpiInitPannelEn
+                 #ifdef SpiAdjRegEn
+                 POS_RecUartSpiInfor();
+                 #endif
+                 #endif
+  57   1      
+  58   1      }
+  59          
+  60          void POS_IrqServerExt2(void) interrupt 8//ext 2  ADC  interrupt
+  61          {   
+  62   1              /*外部中断2设置*/
+  63   1              EXIF = EXIF&0xEF;       //IE2 = 0
+  64   1      
+  65   1          //adc status
+  66   1              ADC_INT_STATUS_L =0X00;
+  67   1          ADC_INT_STATUS_H =0X00;
+  68   1      }
+  69          
+  70          
+  71          
+  72          void POS_IrqServerExt3(void) interrupt 9//ext 3
+  73          {   
+  74   1              /*外部中断3设置*/
+  75   1              EXIF = EXIF&0xDF; //IE3 = 0
+  76   1      }
+  77          
+  78          
+  79          void POS_IrqServerExt4(void) interrupt 10//ext 4
+  80          {   
+  81   1          /*外部中断4设置*/
+  82   1              EXIF = EXIF&0xBF;       //IE4 = 0
+  83   1      }
+  84          
+  85          
+  86          
+  87          void POS_IrqServerExt5(void) interrupt 11//ext 5  OSD VSYN interrupt
+  88          {   
+  89   1          /*外部中断5设置*/
+  90   1              EXIF = EXIF&0x7F; //IE5 = 0
+  91   1      }
+  92          
+  93          
+  94          void POS_IrqServerTimer0(void) interrupt 1  //timer 0
+  95          {   
+  96   1          TR0  = OFF;
+  97   1              SetTimer0(_us(560)); 
+  98   1              TR0  = ON;      
+  99   1      }
+ 100          
+ 101          
+ 102          /***********************************************************
+ 103          *name:       IrqServerTimer1(void)
+ 104          *input:      non
+ 105          *output:     对系统的实时事件进行检测.
+ 106          *update:     2011-12-23 
+ 107          *state:      try out
+ 108          
+ 109          *description:  
+ 110                   对系统的实时事件进行检测，并置事件标志。
+ 111          *NOTE:
+C51 COMPILER V9.00   INTERRUPT                                                             04/13/2015 11:40:41 PAGE 3   
+
+ 112                   这个计数器可以从0-255分频
+ 113          *history:
+ 114          ************************************************************/
+ 115          void POS_IrqServerTimer1(void) interrupt 3         //timer 1
+ 116          {  
+ 117   1          static UCHAR s_ucContsyncStable = 0; 
+ 118   1          static UCHAR s_ucSysTimer;
+ 119   1              
+ 120   1          TR1  = OFF;
+ 121   1              SetTimer1(_ms(5));
+ 122   1              TR1  = ON;
+ 123   1      
+ 124   1              s_ucSysTimer++; 
+ 125   1              
+ 126   1              /**********弱信号处理*********/
+ 127   1              POS_VideoProcess(VdLibCmd);
+ 128   1      
+ 129   1              if(Is5ms(s_ucSysTimer)) 
+ 130   1              {
+ 131   2                 HFZ_LR_BLANK_WR = 0X00;
+ 132   2              }
+ 133   1              
+ 134   1              if(Is10ms(s_ucSysTimer)) 
+ 135   1              {  
+ 136   2                  g_bGetUserInputFlg = 1;
+ 137   2                      g_bGetBatteryAdcFlg = 1;
+ 138   2                  g_bGetSignalFlg = 1;   
+ 139   2      
+ 140   2                      #ifdef CarBackEn
+ 141   2                      #ifdef CarReversingIODetectEn 
+                          g_bGetUserDefFlg = 1;
+                              #endif
+ 144   2                      #endif
+ 145   2              }
+ 146   1              
+ 147   1              if(Is20ms(s_ucSysTimer))
+ 148   1              {   
+ 149   2                  g_bGetColorSysFlg = 1;
+ 150   2                      g_bGetMiscFlg = 1;
+ 151   2                      g_bGetBTFlg = 1;
+ 152   2              }
+ 153   1              
+ 154   1              if(Is30ms(s_ucSysTimer))
+ 155   1              {
+ 156   2                  g_bGetTimeFlg = 1;
+ 157   2              }
+ 158   1      
+ 159   1              if(Is100ms(s_ucSysTimer))
+ 160   1              {   
+ 161   2                      #ifdef CarBackEn
+ 162   2                      #ifdef CarReversingSignalDetectEn
+ 163   2                      g_bGetUserDefFlg = 1;   
+ 164   2              #endif
+ 165   2                      #endif
+ 166   2              }
+ 167   1              
+ 168   1              /**********图像制式消息处理*********/
+ 169   1              if(g_bGetColorSysFlg)
+ 170   1              {
+ 171   2              #define StableTimes   20
+ 172   2      
+ 173   2                      static UCHAR  s_ucPreSys = PAL;
+C51 COMPILER V9.00   INTERRUPT                                                             04/13/2015 11:40:41 PAGE 4   
+
+ 174   2                      UCHAR  ucCurSys;
+ 175   2              
+ 176   2                  if(IsSignalOk()||(0XFF == g_ucColorSys))
+ 177   2                      {
+ 178   3                         ucCurSys = GetSignalSys();
+ 179   3                         if(ucCurSys != s_ucPreSys)
+ 180   3                     {
+ 181   4                        s_ucPreSys = ucCurSys;
+ 182   4                        g_ucStableTime = 0;
+ 183   4                     }
+ 184   3                         else
+ 185   3                         {
+ 186   4                             if(g_ucStableTime < StableTimes)
+ 187   4                                 {
+ 188   5                             if(++g_ucStableTime == StableTimes)
+ 189   5                             {
+ 190   6                                switch(ucCurSys)
+ 191   6                                {
+ 192   7                                    case 0X00:
+ 193   7                                                               ucCurSys = NTSC;
+ 194   7                                                               break;
+ 195   7      
+ 196   7                                                        case 0X01:
+ 197   7                                                               ucCurSys = PAL;
+ 198   7                                                               break;
+ 199   7      
+ 200   7                                                        default:
+ 201   7                                                               ucCurSys = PAL;
+ 202   7                                                               break;
+ 203   7                                }
+ 204   6                                               g_ucColorSys = ucCurSys;
+ 205   6                             }
+ 206   5                             }
+ 207   4                         }
+ 208   3                      }
+ 209   2                      else
+ 210   2                      {
+ 211   3                         g_ucStableTime = 0X00;
+ 212   3                      }
+ 213   2              }
+ 214   1      
+ 215   1              #ifdef ColorSysChangeBLOffEn
+                      #define ContBackLightOff                10
+                      #define ContSyncStableTimes       2
+              
+                      if(g_bBLCtrlEnFlg)
+                      {                       
+                          if(g_bSignalFlg != IsSignalOk())
+                          {           
+                               if(s_ucContsyncStable <ContSyncStableTimes)
+                               {
+                                   s_ucContsyncStable++;
+                                               if(s_ucContsyncStable == ContSyncStableTimes)
+                                               {      
+                                                    IrqPutstr("bl off\n");
+                                    #ifdef BacklightEn
+                                                        hw_clrBacklight(); 
+                                                        hw_clrBIASEn();
+                                                        g_bBackLightFlg = OFF;
+                                    #endif
+                                                        
+                                        OSD_1CON &= 0xe1;
+C51 COMPILER V9.00   INTERRUPT                                                             04/13/2015 11:40:41 PAGE 5   
+
+                                                        g_ucContBLOn = ContBackLightOff; 
+                                                        s_ucContsyncStable = 0;
+                                                        g_bSignalFlg = !g_bSignalFlg;
+                                               }
+                               }
+                              }
+                              else
+                              {
+                                   s_ucContsyncStable = 0;
+                              }
+                      }
+                      #endif
+ 248   1      }
+*** WARNING C280 IN LINE 117 OF ..\..\..\KERNEL\INTERRUPT.C: 's_ucContsyncStable': unreferenced local variable
+ 249          
+ 250          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    333    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      2    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      9    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,262 @@
+C51 COMPILER V9.00   OSD_HORIZONTALMENU                                                    10/11/2014 15:23:42 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_HORIZONTALMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_HorizontalMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_HorizontalMenu.c BROWSE INCD
+                    -IR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\
+                    -..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\K
+                    -ey;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..
+                    -\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\
+                    -Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_HorizontalMenu.lst)
+                    - OBJECT(..\Hex\Osd_HorizontalMenu.obj)
+
+line level    source
+
+   1          #define _OSD_HORIZONTAL_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          #include "Osd_BitMapFontDat.h"
+  21          
+  22          
+  23          
+  24          
+  25          SWORD GetHorizontalVal(void);
+  26          
+  27          /*****************************************************************
+  28                                      Text
+  29          *****************************************************************/
+  30          UCHAR* CODE HorizontalMenuStr[]=
+  31          {
+  32              "HORIZONTAL", 
+  33              "HORIZONTAL",
+  34              "ORIZZONTALE",
+  35              "HORIZONTAL",
+  36              "HORIZONTAL",
+  37              "HORIZONTAL",
+  38              "HORIZONTAL",
+  39              "\x009\x00C\x025\x027\x00E\x010\x007\x011\x029\x013\x024",
+  40              "   #\x04C#\x04D#\x075#\x076",
+  41              "   #\x058#\x059#\x088#\x0CD",
+  42              "\x016\x024\x025\x00E\x00D\x024\x012\x027\x007\x011\x00E\x007",
+  43              "HORIZONTAL",
+  44              "HORIZONTAL"
+  45          };
+  46          
+  47          
+  48          UCHAR* CODE  HorizontalStr[][2]=
+  49          {
+C51 COMPILER V9.00   OSD_HORIZONTALMENU                                                    10/11/2014 15:23:42 PAGE 2   
+
+  50             "*DL             DR     " ,
+  51             " DL            *DR     "
+  52          };
+  53          
+  54          
+  55          UINT CODE HorizontalMenuIcon[]=
+  56          {
+  57             RLIndexAddr
+  58          } ;
+  59          
+  60          /*****************************************************************
+  61                                      String
+  62          *****************************************************************/
+  63          UCHAR * CODE HorizontalMenu_TitelStr(void)
+  64          {
+  65   1          return HorizontalMenuStr[g_sysSetting.Osd.curlanguage];
+  66   1      }
+  67          
+  68          UCHAR * CODE DispHorizontalStr(void)
+  69          {
+  70   1            return HorizontalStr[0][GetHorizontalVal()];  
+  71   1      }
+  72          
+  73          
+  74          UINT * CODE HorizontalMenu_Icon(void)
+  75          {
+  76   1          return HorizontalMenuIcon;
+  77   1      }
+  78          
+  79          /*****************************************************************
+  80                                     Function
+  81          *****************************************************************/
+  82          AdjustType HorizontalMenu_CheckCondition(void)
+  83          {
+  84   1              AdjustType XDATA adjust = {0,0,0};
+  85   1              
+  86   1              if( ON == g_sysSetting.Factory.horizontalswitch)
+  87   1              {
+  88   2                  adjust.Flags |= osdVisible; 
+  89   2                      //printfStr("Horizontal Visibla");
+  90   2              }
+  91   1              else
+  92   1              {
+  93   2                  adjust.Flags |= osdInvisible; 
+  94   2                      //printfStr("Horizontal Invisible");
+  95   2              }
+  96   1      
+  97   1              printfStr("HorizontalMenu_CheckCondition");
+  98   1              return adjust;
+  99   1      }
+ 100          
+ 101          
+ 102          
+ 103          void InitHorizontalDat(void)
+ 104          {  
+ 105   1          OsdConfigDispMode(OSD_BITMAP_MODE,OSD_DISP_NORMAL);
+ 106   1              OsdConfigBitmapStarIndex(ICONBITMAP_SATRT_INDEX);       
+ 107   1              OsdConfigBitmapPalette(RLBitMapPattle);
+ 108   1              LoadBitMapToFontRam(ICONBITMAP_SATRT_INDEX,RLNumFontram,RLDatBuf);
+ 109   1      }
+ 110          
+ 111          
+C51 COMPILER V9.00   OSD_HORIZONTALMENU                                                    10/11/2014 15:23:42 PAGE 3   
+
+ 112          BOOL HorizontalMenuItem_DrawStyle(void)
+ 113          {    
+ 114   1          printfStr("HorizontalMenuItem_DrawStyle");
+ 115   1              OsdWndClear(0X01, 0X08, 0X01, 0X1E);
+ 116   1              OsdWndClear(0X03, 0X03, 0X03, 0X1D);
+ 117   1              InitHorizontalDat();
+ 118   1          return 0;
+ 119   1      }
+ 120          
+ 121          
+ 122          SWORD GetHorizontalVal(void)
+ 123          {
+ 124   1           //printfStr("GetHorizontalVal");
+ 125   1           return g_sysSetting.Disp.horizontal;
+ 126   1      }
+ 127          
+ 128          
+ 129          BOOL AdjustHorizontal(UCHAR opratComd)
+ 130          {
+ 131   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 132   1          {     
+ 133   2             (g_sysSetting.Disp.horizontal == LEFT)?(g_sysSetting.Disp.horizontal = RIGHT):(g_sysSetting.Disp.ho
+             -rizontal = LEFT);
+ 134   2                 //printf("AdjustHorizontal Value = %d",g_sysSetting.Video.horizontal);
+ 135   2          }
+ 136   1              return 1;
+ 137   1      }
+ 138          
+ 139          
+ 140          BOOL ExectHorizontal(void)
+ 141          {
+ 142   1         //printfStr("ExectHorizontal");
+ 143   1         #ifdef PannelSfrDispEn
+                 if(g_sysSetting.Disp.horizontal == LEFT)
+                 {
+                    #ifdef PannelSfrDispBLOffEn
+                        TurnOffBackLight();
+                        hw_turnToLeft();
+                        DelayMs(100);
+                        
+                        /*BUG_003*/
+                        TurnOnBackLight();
+                        #else
+                        hw_turnToLeft();
+                        #endif
+                 }
+                 else if(g_sysSetting.Disp.horizontal == RIGHT)
+                 {
+                    #ifdef PannelSfrDispBLOffEn
+                        TurnOffBackLight();
+                        hw_turnToRight();
+                        DelayMs(100);
+                        
+                        /*BUG_003*/
+                        TurnOnBackLight();
+                        #else
+                        hw_turnToRight();
+                        #endif
+                 }
+                 #endif
+ 171   1         
+ 172   1         return 1;
+C51 COMPILER V9.00   OSD_HORIZONTALMENU                                                    10/11/2014 15:23:42 PAGE 4   
+
+ 173   1      }
+ 174          
+ 175          
+ 176          /*****************************************************************
+ 177                                    Item value table
+ 178          *****************************************************************/
+ 179          DrawOptionType CODE Option_Horizontal[]=
+ 180          {
+ 181              {3,4,WHITE,TRANSPARENCE,WHITE,TRANSPARENCE, GetHorizontalVal,DispHorizontalStr,osdEnd},
+ 182          };
+ 183          
+ 184          
+ 185          ItemValueType CODE HorizontalMenuItemVal_Horizontal[]=
+ 186          {
+ 187               {
+ 188                        NULL,
+ 189                        NULL,
+ 190                        Option_Horizontal,   
+ 191                        osdEnd,
+ 192               },
+ 193          };
+ 194          
+ 195          
+ 196          /*****************************************************************
+ 197                                    Item Icon table
+ 198          *****************************************************************/
+ 199          IconType CODE HorizontalMenuItem_HorizontalIconTab[]=
+ 200          {
+ 201             {2,1,RLWidth,RLHeighth,TRANSPARENCE,TRANSPARENCE,HorizontalMenu_Icon,osdEnd},
+ 202          };
+ 203          
+ 204          
+ 205          
+ 206          /*****************************************************************
+ 207                                   Item  Titel table
+ 208          *****************************************************************/
+ 209          TitelType CODE HorizontalMenuItem_HorizontalTitelTab[]=
+ 210          {
+ 211             {1,8,WHITE,TRANSPARENCE,WHITE,TRANSPARENCE,DWT_Text,HorizontalMenu_TitelStr,osdEnd},
+ 212          };
+ 213          
+ 214          
+ 215          
+ 216          /*****************************************************************
+ 217                                    Menu Icon table
+ 218          *****************************************************************/
+ 219          
+ 220          
+ 221          
+ 222          /*****************************************************************
+ 223                                   Menu  Titel table
+ 224          *****************************************************************/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    232    ----
+   CONSTANT SIZE    =    283    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+C51 COMPILER V9.00   OSD_HORIZONTALMENU                                                    10/11/2014 15:23:42 PAGE 5   
+
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

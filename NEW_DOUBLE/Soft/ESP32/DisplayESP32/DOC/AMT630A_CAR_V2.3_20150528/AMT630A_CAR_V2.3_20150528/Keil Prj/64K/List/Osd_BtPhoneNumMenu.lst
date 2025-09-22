@@ -1,0 +1,190 @@
+C51 COMPILER V9.00   OSD_BTPHONENUMMENU                                                    10/15/2014 11:22:33 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_BTPHONENUMMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_BtPhoneNumMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_BtPhoneNumMenu.c BROWSE INCD
+                    -IR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\
+                    -..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\K
+                    -ey;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..
+                    -\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\
+                    -Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_BtPhoneNumMenu.lst)
+                    - OBJECT(..\Hex\Osd_BtPhoneNumMenu.obj)
+
+line level    source
+
+   1          #define _OSD_BTPHONENUM_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "BT_UartRec.h"
+  19          #include "Osd_Menu.h"
+  20          #include "Osd_MenuPage.h"
+  21          #include "Osd_BitMapFontDat.h"
+  22          
+  23          #ifdef BTEn
+              
+              
+              /*****************************************************************
+                                          Text
+              *****************************************************************/
+              UCHAR* CODE BtPhoneNumMenuStr[]=
+              {
+                "BLUE TOOTH", 
+              };
+              
+              
+              UINT CODE BtPhoneNumMenuIcon[]=
+              {
+                 TelephoneIndexAddr
+              };
+              
+              /*****************************************************************
+                                          String
+              *****************************************************************/
+              UCHAR * CODE BtPhoneNumMenu_TitelStr(void)
+              {   
+                  return BtPhoneNumMenuStr[0];
+              }
+              
+              UINT * CODE BtPhoneNumMenu_Icon(void)
+              {
+C51 COMPILER V9.00   OSD_BTPHONENUMMENU                                                    10/15/2014 11:22:33 PAGE 2   
+
+                  return BtPhoneNumMenuIcon;
+              }
+              
+              UCHAR * CODE BtPhoneNumMenu_NumTitelStr(void)
+              {
+                  return g_ucUartRecBuf;
+              }
+              
+              
+              
+              /*****************************************************************
+                                         Function
+              *****************************************************************/
+              AdjustType BtPhoneNumMenu_CheckCondition (void)
+              {
+                      AdjustType XDATA adjust = {0,0,0};
+                      adjust.Flags |= osdVisible;
+                      
+                      //printfStr("BtPhoneNumMenu_CheckCondition");
+                      return adjust;
+              }
+              
+              
+              void InitBtPhoneDat(void)
+              {  
+                  //printfStr("InitBtPhoneDat");
+              
+                  OsdConfigDispMode(OSD_BITMAP_MODE,OSD_DISP_NORMAL);
+                      OsdConfigBitmapStarIndex(ICONBITMAP_SATRT_INDEX);       
+                      OsdConfigBitmapPalette(TelephoneBitMapPattle);
+                      LoadBitMapToFontRam(ICONBITMAP_SATRT_INDEX,TelephoneNumFontram,TelephoneDatBuf);
+              }
+              
+              
+              void SwitchAsciiBuf(UCHAR AsciiBuflen,UCHAR *pAsciiBufData)
+              {
+                 UCHAR CODE DatBuf[] = {'0','1','2','3','4','5','6','7','8','9'};
+                 UCHAR XDATA i;
+              
+                 for(i= 0;i<AsciiBuflen;i++)
+                 {   
+                     if((*(pAsciiBufData+i) >= 0x30)&&(*(pAsciiBufData+i) <= 0x39))
+                     {
+                        g_ucUartRecBuf[i] = DatBuf[*(pAsciiBufData+i)-0x30];
+                     }
+                         else
+                         {
+                           g_ucUartRecBuf[i]=' ';
+                         }
+                         //printf("g_ucUartRecBuf[i] is %x",g_ucUartRecBuf[i]);
+                 }
+                 g_ucUartRecBuf[i]='\0';
+              }
+              
+              
+              BOOL BtPhoneNumMenuItem_DrawStyle(void)
+              {
+              
+                      //printfStr("BtPhoneNumMenuItem_DrawStyle");
+                      InitBtPhoneDat();
+                      SwitchAsciiBuf(PhoneNum_Lenth,g_ucUartRecAsciiBuf);
+                      return 0;
+C51 COMPILER V9.00   OSD_BTPHONENUMMENU                                                    10/15/2014 11:22:33 PAGE 3   
+
+              }
+              
+              /*****************************************************************
+                                        Item value table
+              *****************************************************************/
+              
+              
+              
+              /*****************************************************************
+                                        Item Icon table
+              *****************************************************************/
+              IconType CODE BtPhoneNumMenuItem_BtPhoneNumIconTab[]=
+              {
+                 {0,0,TelephoneWidth,TelephoneHeighth,TRANSPARENCE,TRANSPARENCE,BtPhoneNumMenu_Icon,osdEnd},
+              };
+              
+              
+              /*****************************************************************
+                                       Item  Titel table
+              *****************************************************************/
+              TitelType CODE BtPhoneNumMenuItem_BtPhoneNumTitelTab[]=
+              {
+                 {0,2,GREEN,TRANSPARENCE,GREEN,TRANSPARENCE,DWT_Text,BtPhoneNumMenu_TitelStr,0},
+                 {1,2,GREEN,TRANSPARENCE,GREEN,TRANSPARENCE,DWT_Text,BtPhoneNumMenu_NumTitelStr,osdEnd},
+              };
+              
+              
+              
+              /*****************************************************************
+                                        Menu Icon table
+              *****************************************************************/
+              
+              
+              
+              /*****************************************************************
+                                       Menu  Titel table
+              *****************************************************************/
+              
+              
+              
+              /*****************************************************************
+                                         Item table
+              *****************************************************************/
+              #endif
+ 156          
+ 157          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

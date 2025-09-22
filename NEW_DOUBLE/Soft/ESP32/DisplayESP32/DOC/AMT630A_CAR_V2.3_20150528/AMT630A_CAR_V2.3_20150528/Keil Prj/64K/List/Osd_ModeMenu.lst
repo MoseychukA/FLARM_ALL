@@ -1,0 +1,213 @@
+C51 COMPILER V9.00   OSD_MODEMENU                                                          04/13/2015 11:40:45 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_MODEMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_ModeMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_ModeMenu.c BROWSE INCDIR(..\
+                    -..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..\LCD
+                    - Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key;..\
+                    -..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\..\De
+                    -vice driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\Device
+                    - driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_ModeMenu.lst) OBJECT(..\H
+                    -ex\Osd_ModeMenu.obj)
+
+line level    source
+
+   1          #define _OSD_MODE_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          
+  21          
+  22          
+  23          SWORD GetModeVal(void);
+  24          
+  25          
+  26          
+  27          /*****************************************************************
+  28                                      Text
+  29          *****************************************************************/
+  30          UCHAR* CODE ModeMenuStr[]=
+  31          {
+  32              "ZOOM",
+  33              "ZOOM",
+  34              "ZOOM",
+  35              "ZOOM",
+  36              "ZOOM",
+  37              "ZOOM",
+  38              "ZOOM",
+  39              "\x015\x009\x00C\x011\x00E\x018\x00C\x013\x00E\x00C",
+  40              "#\x02E#\x02F", 
+  41              "#\x082#\x069#\x06D",
+  42              "ZOOM",
+  43              "ZOOM",
+  44              "ZOOM",
+  45          };
+  46          
+  47          
+  48          UCHAR* CODE  ModeStr[]=
+  49          {
+C51 COMPILER V9.00   OSD_MODEMENU                                                          04/13/2015 11:40:45 PAGE 2   
+
+  50              "16:9", 
+  51                  " 4:3"
+  52          };
+  53          
+  54          
+  55          
+  56          /*****************************************************************
+  57                                      String
+  58          *****************************************************************/
+  59          UCHAR * ModeMenu_TitelStr(void)
+  60          {
+  61   1          return ModeMenuStr[g_sysSetting.Osd.curlanguage];
+  62   1      }
+  63          
+  64          
+  65          UCHAR * CODE DispModeStr(void)
+  66          {
+  67   1            return ModeStr[GetModeVal()];  
+  68   1      }
+  69          
+  70          
+  71          /*****************************************************************
+  72                                     Function
+  73          *****************************************************************/
+  74          AdjustType ModeMenu_CheckCondition(void)
+  75          {
+  76   1              AdjustType XDATA adjust = {0,0,0};
+  77   1              
+  78   1              if(ON == g_sysSetting.Factory.scalerswitch)
+  79   1              {
+  80   2                      adjust.Flags |= osdVisible;
+  81   2                      //printfStr("Mode Visibla");
+  82   2              }
+  83   1              else
+  84   1              {
+  85   2                  adjust.Flags |= osdInvisible; 
+  86   2                      //printfStr("Mode Invisible");
+  87   2              }
+  88   1          adjust.XPos= g_sysSetting.Osd.xOffset;
+  89   1              adjust.YPos= g_sysSetting.Osd.yOffset;
+  90   1              //printfStr("ModeMenu_CheckCondition");
+  91   1              return adjust;
+  92   1      }
+  93          
+  94          
+  95          
+  96          
+  97          
+  98          BOOL ModeMenuItem_DrawStyle(void)
+  99          {
+ 100   1          //printfStr("ModeMenuItem_DrawStyle");
+ 101   1              OsdWndClear(0X00, 0X00, 0X00, 0X11);
+ 102   1              OsdWndClear(0X01, 0X00, 0X01, 0X11);
+ 103   1          return 0;
+ 104   1      }
+ 105          
+ 106          
+ 107          SWORD GetModeVal(void)
+ 108          {
+ 109   1           //printf("GetModeVal= %x",g_sysSetting.Disp.zoomMode);
+ 110   1               return g_sysSetting.Disp.zoomMode;
+ 111   1      }
+C51 COMPILER V9.00   OSD_MODEMENU                                                          04/13/2015 11:40:45 PAGE 3   
+
+ 112          
+ 113          
+ 114          BOOL AdjustMode(UCHAR opratComd)
+ 115          {
+ 116   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue)||(opratComd == COMD_SelMode))  
+ 117   1          {     
+ 118   2             (g_sysSetting.Disp.zoomMode == DISP_16_9)?(g_sysSetting.Disp.zoomMode = DISP_4_3):(g_sysSetting.Dis
+             -p.zoomMode = DISP_16_9);
+ 119   2                 //printf("AdjustMode Value = %d",g_sysSetting.Disp.zoomMode);
+ 120   2          }
+ 121   1              return 1;
+ 122   1      }
+ 123          
+ 124          
+ 125          BOOL ExectMode(void)
+ 126          {
+ 127   1         ConfigDispZoomDynPara(g_sysSetting.Disp.zoomMode); 
+ 128   1         return 1;
+ 129   1      }
+ 130          
+ 131          
+ 132          /*****************************************************************
+ 133                                    Item value table
+ 134          *****************************************************************/
+ 135          DrawOptionType CODE Option_Mode[]=
+ 136          {
+ 137              {1,7,RED,TRANSPARENCE,RED,TRANSPARENCE, GetModeVal,DispModeStr,osdEnd},
+ 138          };
+ 139          
+ 140          
+ 141          ItemValueType CODE ModeMenuItemVal_Mode[]=
+ 142          {
+ 143               {
+ 144                        NULL,
+ 145                        NULL,
+ 146                        Option_Mode,   
+ 147                        osdEnd,
+ 148               },
+ 149          };
+ 150          
+ 151          
+ 152          
+ 153          /*****************************************************************
+ 154                                    Item Icon table
+ 155          *****************************************************************/
+ 156          
+ 157          
+ 158          
+ 159          
+ 160          /*****************************************************************
+ 161                                   Item  Titel table
+ 162          *****************************************************************/
+ 163          TitelType CODE ModeMenuItem_ModeTitelTab[]=
+ 164          {
+ 165             {0,7,RED,TRANSPARENCE,RED,TRANSPARENCE,DWT_Text,ModeMenu_TitelStr,osdEnd},
+ 166          };
+ 167          
+ 168          
+ 169          /*****************************************************************
+ 170                                    Menu Icon table
+ 171          *****************************************************************/
+ 172          
+C51 COMPILER V9.00   OSD_MODEMENU                                                          04/13/2015 11:40:45 PAGE 4   
+
+ 173          
+ 174          
+ 175          /*****************************************************************
+ 176                                   Menu  Titel table
+ 177          *****************************************************************/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    197    ----
+   CONSTANT SIZE    =    123    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,538 @@
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_FACTORYPICMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_FactoryPicMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_FactoryPicMenu.c BROWSE INCD
+                    -IR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\
+                    -..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\K
+                    -ey;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..
+                    -\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\
+                    -Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_FactoryPicMenu.lst)
+                    - OBJECT(..\Hex\Osd_FactoryPicMenu.obj)
+
+line level    source
+
+   1          #define _OSD_FACTORYPIC_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          
+  21          
+  22          #ifdef FactoryEn
+  23          
+  24          /*****************************************************************
+  25                                      Text
+  26          *****************************************************************/
+  27          UCHAR* CODE FactoryPicMenu_VcomDcStr[]=
+  28          {
+  29              "VCOMDC                   ",
+  30          };
+  31          
+  32          UCHAR* CODE FactoryPicMenu_BrightnessStr[]=
+  33          {
+  34              "BRIGHTNESS               ",  
+  35          };
+  36          
+  37          UCHAR* CODE FactoryPicMenu_ContrastStr[]=
+  38          {
+  39              "CONTRAST                ",  
+  40          };
+  41          
+  42          
+  43          UCHAR* CODE FactoryPicMenu_SaturationStr[]=
+  44          {
+  45              "SATURATION              ",  
+  46          };
+  47          
+  48          
+  49          UCHAR* CODE FactoryPicMenu_OsdPosXOffsetStr[]=
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 2   
+
+  50          {
+  51              "OSDPOSXOFFSET              ",  
+  52          };
+  53          
+  54          
+  55          UCHAR* CODE FactoryPicMenu_OsdPosYOffsetStr[]=
+  56          {
+  57              "OSDPOSYOFFSET              ",  
+  58          };
+  59          
+  60          UCHAR* CODE FactoryPicMenu_0XStr[]=
+  61          {
+  62              "0X",  
+  63          };
+  64          
+  65          /*****************************************************************
+  66                                      String
+  67          *****************************************************************/
+  68          UCHAR * CODE FactoryPicMenu_VcomDcTitel(void)
+  69          {
+  70   1          return FactoryPicMenu_VcomDcStr[0];
+  71   1      }
+  72          
+  73          UCHAR * CODE FactoryPicMenu_BrightnessTitel(void)
+  74          {
+  75   1          return FactoryPicMenu_BrightnessStr[0];
+  76   1      }
+  77          
+  78          UCHAR * CODE FactoryPicMenu_ContrastTitel(void)
+  79          {
+  80   1          return FactoryPicMenu_ContrastStr[0];
+  81   1      }
+  82          
+  83          UCHAR * CODE FactoryPicMenu_SaturationTitel(void)
+  84          {
+  85   1          return FactoryPicMenu_SaturationStr[0];
+  86   1      }
+  87          
+  88          UCHAR * CODE FactoryPicMenu_OsdPosXOffsetTitel(void)
+  89          {
+  90   1          return FactoryPicMenu_OsdPosXOffsetStr[0];
+  91   1      }
+  92          
+  93          
+  94          UCHAR * CODE FactoryPicMenu_OsdPosYOffsetTitel(void)
+  95          {
+  96   1          return FactoryPicMenu_OsdPosYOffsetStr[0];
+  97   1      }
+  98          
+  99          UCHAR * CODE FactoryPicMenu_0XTitel(void)
+ 100          {
+ 101   1          return FactoryPicMenu_0XStr[0];
+ 102   1      }
+ 103          
+ 104          /*****************************************************************
+ 105                                     Function
+ 106          *****************************************************************/
+ 107          AdjustType FactoryPicMenu_CheckCondition(void)
+ 108          {
+ 109   1              AdjustType XDATA adjust = {0,0,0};
+ 110   1          printfStr("FactoryPicMenu_CheckCondition");
+ 111   1              adjust.Flags |= osdVisible;
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 3   
+
+ 112   1              return adjust;
+ 113   1      }
+ 114          
+ 115          
+ 116          BOOL AdjustVideoVcomDc(UCHAR opratComd)
+ 117          {
+ 118   1               if(opratComd == COMD_IncValue)
+ 119   1           {
+ 120   2                        if(g_sysSetting.Video.vcomDC<100) 
+ 121   2                        {
+ 122   3                            g_sysSetting.Video.vcomDC++;
+ 123   3                        } 
+ 124   2           }
+ 125   1           if(opratComd == COMD_DecValue)
+ 126   1           {
+ 127   2                        if(g_sysSetting.Video.vcomDC>0) 
+ 128   2                        {
+ 129   3                            g_sysSetting.Video.vcomDC--;
+ 130   3                        } 
+ 131   2           }
+ 132   1               return 1;
+ 133   1      }
+ 134          
+ 135          
+ 136          BOOL AdjustVideoBrightness(UCHAR opratComd)
+ 137          {
+ 138   1          if(opratComd == COMD_IncValue)
+ 139   1          {
+ 140   2                      if(g_sysSetting.Video.brightnessOffset < (MAX_VALUE/2+0X14))
+ 141   2                      {
+ 142   3                         g_sysSetting.Video.brightnessOffset++;
+ 143   3                      }
+ 144   2          }
+ 145   1              if(opratComd == COMD_DecValue)
+ 146   1              {
+ 147   2                  if(g_sysSetting.Video.brightnessOffset > (MAX_VALUE/2-0X14))
+ 148   2                      {
+ 149   3                         g_sysSetting.Video.brightnessOffset--;
+ 150   3                      }
+ 151   2              }
+ 152   1              return 1;
+ 153   1      }
+ 154          
+ 155          
+ 156          BOOL AdjustVideoContrast(UCHAR opratComd)
+ 157          {
+ 158   1          if(opratComd == COMD_IncValue)
+ 159   1          {
+ 160   2                      if(g_sysSetting.Video.contrastOffset < (MAX_VALUE/2+0X14))
+ 161   2                      {
+ 162   3                         g_sysSetting.Video.contrastOffset++;
+ 163   3                      }
+ 164   2          }
+ 165   1              if(opratComd == COMD_DecValue)
+ 166   1              {
+ 167   2                  if(g_sysSetting.Video.contrastOffset > (MAX_VALUE/2-0X14))
+ 168   2                      {
+ 169   3                         g_sysSetting.Video.contrastOffset--;
+ 170   3                      }
+ 171   2              }
+ 172   1              return 1;
+ 173   1      }
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 4   
+
+ 174          
+ 175          
+ 176          BOOL AdjustVideoSaturation(UCHAR opratComd)
+ 177          {
+ 178   1      
+ 179   1          if(opratComd == COMD_IncValue)
+ 180   1          {
+ 181   2                      if(g_sysSetting.Video.saturationOffset < (MAX_VALUE/2+0X14))
+ 182   2                      {
+ 183   3                         g_sysSetting.Video.saturationOffset++;
+ 184   3                      }
+ 185   2          }
+ 186   1              if(opratComd == COMD_DecValue)
+ 187   1              {
+ 188   2                      if(g_sysSetting.Video.saturationOffset > (MAX_VALUE/2-0X14))
+ 189   2                      {
+ 190   3                         g_sysSetting.Video.saturationOffset--;
+ 191   3                      }
+ 192   2          }
+ 193   1              return 1;
+ 194   1      }
+ 195          
+ 196          
+ 197          BOOL AdjustVideoOsdXOffSet(UCHAR opratComd)
+ 198          {
+ 199   1          if(opratComd == COMD_IncValue)
+ 200   1          {
+ 201   2                      if(g_sysSetting.Osd.xOffset < MAX_OFFSETVALUE)
+ 202   2                      {
+ 203   3                         g_sysSetting.Osd.xOffset++;
+ 204   3                      }
+ 205   2          }
+ 206   1              if(opratComd == COMD_DecValue)
+ 207   1              {
+ 208   2                  if(g_sysSetting.Osd.xOffset > -MAX_OFFSETVALUE)
+ 209   2                      {
+ 210   3                         g_sysSetting.Osd.xOffset--;
+ 211   3                      }
+ 212   2              }
+ 213   1              return 1;
+ 214   1      }
+ 215          
+ 216          
+ 217          BOOL AdjustVideoOsdYOffSet(UCHAR opratComd)
+ 218          {
+ 219   1          if(opratComd == COMD_IncValue)
+ 220   1          {
+ 221   2                      if(g_sysSetting.Osd.yOffset < MAX_OFFSETVALUE)
+ 222   2                      {
+ 223   3                         g_sysSetting.Osd.yOffset++;
+ 224   3                      }
+ 225   2          }
+ 226   1              if(opratComd == COMD_DecValue)
+ 227   1              {
+ 228   2                  if(g_sysSetting.Osd.yOffset > -MAX_OFFSETVALUE)
+ 229   2                      {
+ 230   3                         g_sysSetting.Osd.yOffset--;
+ 231   3                      }
+ 232   2              }
+ 233   1              return 1;
+ 234   1      }
+ 235          
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 5   
+
+ 236          
+ 237          BOOL ExectVideoVcomDc(void)
+ 238          {
+ 239   1         //printfStr("ExectVideoVcomDc");
+ 240   1          switch(VCOMDC_TYPE)
+ 241   1              {
+ 242   2                 case PWM0:
+ 243   2                          SetPWM0(DEFAULT_VCOMDCFREQ,g_sysSetting.Video.vcomDC);
+ 244   2                              break;
+ 245   2                              
+ 246   2                 case PWM1:
+ 247   2                  SetPWM1(DEFAULT_VCOMDCFREQ,g_sysSetting.Video.vcomDC);
+ 248   2                              break;
+ 249   2      
+ 250   2                 case PWM2:
+ 251   2                  SetPWM2(DEFAULT_VCOMDCFREQ,g_sysSetting.Video.vcomDC);
+ 252   2                              break;
+ 253   2      
+ 254   2                 case PWM3:
+ 255   2                  SetPWM3(DEFAULT_VCOMDCFREQ,g_sysSetting.Video.vcomDC);
+ 256   2                              break;
+ 257   2                              
+ 258   2                default:
+ 259   2                              break;
+ 260   2              }
+ 261   1         return 1;
+ 262   1      }
+ 263          
+ 264          
+ 265          BOOL ExectVideoBrightness(void)
+ 266          {
+ 267   1         //printfStr("ExectVideoBrightness");
+ 268   1         return 1;
+ 269   1      }
+ 270          
+ 271          
+ 272          BOOL ExectVideoContrast(void)
+ 273          {
+ 274   1         //printfStr("ExectVideoContrast");
+ 275   1         return 1;
+ 276   1      }
+ 277          
+ 278          
+ 279          BOOL ExectVideoSaturation(void)
+ 280          {
+ 281   1         //printfStr("ExectVideoSaturation");
+ 282   1         return 1;
+ 283   1      }
+ 284          
+ 285          
+ 286          BOOL ExectVideoOsdXOffSet(void)
+ 287          {
+ 288   1         //printfStr("ExectVideoOsdXOffSet");
+ 289   1         return 1;
+ 290   1      }
+ 291          
+ 292          
+ 293          BOOL ExectVideoOsdYOffSet(void)
+ 294          {
+ 295   1         //printfStr("ExectVideoOsdYOffSet");
+ 296   1         return 1;
+ 297   1      }
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 6   
+
+ 298          
+ 299          
+ 300          SWORD FactoryPicMenu_GetVcomDcVal(void)
+ 301          {
+ 302   1           //printfStr("FactoryPicMenu_GetVcomDcVal");
+ 303   1           return g_sysSetting.Video.vcomDC;
+ 304   1      }
+ 305          
+ 306          
+ 307          SWORD FactoryPicMenu_GetBrightnessVal(void)
+ 308          {
+ 309   1           //printfStr("FactoryPicMenu_GetBrightnessVal");
+ 310   1           return g_sysSetting.Video.brightnessOffset;
+ 311   1      }
+ 312          
+ 313          
+ 314          SWORD FactoryPicMenu_GetContrastVal(void)
+ 315          {
+ 316   1           //printfStr("FactoryPicMenu_GetContrastVal");
+ 317   1           return g_sysSetting.Video.contrastOffset;
+ 318   1      }
+ 319          
+ 320          
+ 321          SWORD FactoryPicMenu_GetSaturationVal(void)
+ 322          {
+ 323   1           //printfStr("FactoryPicMenu_GetSaturationVal");
+ 324   1           return g_sysSetting.Video.saturationOffset;
+ 325   1      }
+ 326          
+ 327          
+ 328          SWORD FactoryPicMenu_GetOsdPosXOffsetVal(void)
+ 329          {
+ 330   1           //printfStr("FactoryPicMenu_GetOsdPosXOffsetVal");
+ 331   1           return g_sysSetting.Osd.xOffset;
+ 332   1      }
+ 333          
+ 334          
+ 335          SWORD FactoryPicMenu_GetOsdPosYOffsetVal(void)
+ 336          {
+ 337   1           //printfStr("FactoryPicMenu_GetOsdPosYOffsetVal");
+ 338   1           return g_sysSetting.Osd.yOffset;
+ 339   1      }
+ 340          
+ 341          /*****************************************************************
+ 342                                    Item value table
+ 343          *****************************************************************/
+ 344          DrawNumberType CODE Number_FactoryPicMenu_VcomDcVal[]=
+ 345          {
+ 346              {2,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryPicMenu_GetVcomDcVal,osdHexNum|osdEnd},
+ 347          };
+ 348          
+ 349          DrawOptionType CODE Option_FactoryPicMenu_VcomDc[]=
+ 350          {
+ 351              {2,25,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactoryPicMenu_0XTitel,osdEnd},
+ 352          };
+ 353          
+ 354          DrawNumberType CODE Number_FactoryPicMenu_BrightnessVal[]=
+ 355          {
+ 356              {3,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryPicMenu_GetBrightnessVal,osdDecNum|osdEnd},
+ 357          };
+ 358          
+ 359          DrawNumberType CODE Number_FactoryPicMenu_ContrastVal[]=
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 7   
+
+ 360          {
+ 361              {4,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryPicMenu_GetContrastVal,osdDecNum|osdEnd},
+ 362          };
+ 363          
+ 364          DrawNumberType CODE Number_FactoryPicMenu_SaturationVal[]=
+ 365          {
+ 366              {5,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryPicMenu_GetSaturationVal,osdDecNum|osdEnd},
+ 367          };
+ 368          
+ 369          DrawNumberType CODE Number_FactoryPicMenu_OsdPosXOffsetVal[]=
+ 370          {
+ 371              {6,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryPicMenu_GetOsdPosXOffsetVal,osdDecNum|osdEnd},
+ 372          };
+ 373          
+ 374          DrawNumberType CODE Number_FactoryPicMenu_OsdPosYOffsetVal[]=
+ 375          {
+ 376              {7,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, FactoryPicMenu_GetOsdPosYOffsetVal,osdDecNum|osdEnd},
+ 377          };
+ 378          
+ 379          
+ 380          ItemValueType CODE FactoryPicMenu_VcomDcVal[]=
+ 381          {
+ 382               {
+ 383                        Number_FactoryPicMenu_VcomDcVal,
+ 384                        NULL,
+ 385                        Option_FactoryPicMenu_VcomDc,   
+ 386                        osdEnd,
+ 387               },
+ 388          };
+ 389          
+ 390          ItemValueType CODE FactoryPicMenu_BrightnessVal[]=
+ 391          {
+ 392               {
+ 393                        Number_FactoryPicMenu_BrightnessVal,
+ 394                        NULL,
+ 395                        NULL,   
+ 396                        osdEnd,
+ 397               },
+ 398          };
+ 399          
+ 400          ItemValueType CODE FactoryPicMenu_ContrastVal[]=
+ 401          {
+ 402               {
+ 403                        Number_FactoryPicMenu_ContrastVal,
+ 404                        NULL,
+ 405                        NULL,   
+ 406                        osdEnd,
+ 407               },
+ 408          };
+ 409          
+ 410          
+ 411          ItemValueType CODE FactoryPicMenu_SaturationVal[]=
+ 412          {
+ 413               {
+ 414                        Number_FactoryPicMenu_SaturationVal,
+ 415                        NULL,
+ 416                        NULL,   
+ 417                        osdEnd,
+ 418               },
+ 419          };
+ 420          
+ 421          
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 8   
+
+ 422          ItemValueType CODE FactoryPicMenu_OsdPosXOffsetVal[]=
+ 423          {
+ 424               {
+ 425                        Number_FactoryPicMenu_OsdPosXOffsetVal,
+ 426                        NULL,
+ 427                        NULL,   
+ 428                        osdEnd,
+ 429               },
+ 430          };
+ 431          
+ 432          
+ 433          ItemValueType CODE FactoryPicMenu_OsdPosYOffsetVal[]=
+ 434          {
+ 435               {
+ 436                        Number_FactoryPicMenu_OsdPosYOffsetVal,
+ 437                        NULL,
+ 438                        NULL,   
+ 439                        osdEnd,
+ 440               },
+ 441          };
+ 442          
+ 443          /*****************************************************************
+ 444                                    Item Icon table
+ 445          *****************************************************************/
+ 446          
+ 447          
+ 448          
+ 449          /*****************************************************************
+ 450                                   Item  Titel table
+ 451          *****************************************************************/
+ 452          TitelType CODE FactoryPicMenuItem_VcomDcTitelTab[]=
+ 453          {   
+ 454             {2,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryPicMenu_VcomDcTitel,osdEnd},
+ 455          };
+ 456          
+ 457          TitelType CODE FactoryPicMenuItem_BrightnessTitelTab[]=
+ 458          {
+ 459             {3,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryPicMenu_BrightnessTitel,osdEnd},
+ 460          };
+ 461          
+ 462          TitelType CODE FactoryPicMenuItem_ContrastTitelTab[]=
+ 463          {   
+ 464             {4,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryPicMenu_ContrastTitel,osdEnd},
+ 465          };
+ 466          
+ 467          TitelType CODE FactoryPicMenuItem_SaturationTitelTab[]=
+ 468          {
+ 469             {5,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryPicMenu_SaturationTitel,osdEnd},
+ 470          };
+ 471          
+ 472          
+ 473          TitelType CODE FactoryPicMenuItem_OsdPosXOffsetTab[]=
+ 474          {
+ 475             {6,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryPicMenu_OsdPosXOffsetTitel,osdEnd},
+ 476          };
+ 477          
+ 478          
+ 479          TitelType CODE FactoryPicMenuItem_OsdPosYOffsetTab[]=
+ 480          {
+ 481             {7,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactoryPicMenu_OsdPosYOffsetTitel,osdEnd},
+ 482          };
+ 483          /*****************************************************************
+C51 COMPILER V9.00   OSD_FACTORYPICMENU                                                    04/13/2015 11:40:46 PAGE 9   
+
+ 484                                    Menu Icon table
+ 485          *****************************************************************/
+ 486          
+ 487          
+ 488          
+ 489          /*****************************************************************
+ 490                                   Menu  Titel table
+ 491          *****************************************************************/
+ 492          #endif
+ 493          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    530    ----
+   CONSTANT SIZE    =    403    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

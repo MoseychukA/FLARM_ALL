@@ -1,0 +1,389 @@
+C51 COMPILER V9.00   SYSWORKPARA                                                           04/13/2015 11:40:42 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE SYSWORKPARA
+OBJECT MODULE PLACED IN ..\Hex\SysWorkPara.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\Modules\SysWorkPara.c BROWSE INCDIR(
+                    -..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..\
+                    -LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key;
+                    -..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\..
+                    -\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\Dev
+                    -ice driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\SysWorkPara.lst) OBJECT(..
+                    -\Hex\SysWorkPara.obj)
+
+line level    source
+
+   1          /***********************************************************************
+   2          *Copyright (C) 2005 深圳艾科创新有限公司产品应用一部
+   3          * All rights reserved.
+   4          
+   5          *File name: 　 SysWorkPara.c
+   6          *Version:    　0.1
+   7          *Author:       Jordan.chen
+   8          *update:       2011-12-19
+   9          
+  10          *Description:
+  11                      主要是系统配置参数的管理。
+  12          *History:  
+  13          
+  14          ************************************************************************/
+  15          #define _SYS_WORK_PARA_C_
+  16          #include "DataType.h"
+  17          #include "systemConfig.h"
+  18          #include "global.h"
+  19          #include "Debug.h"
+  20          #include "Delay.h"
+  21          #include "Flash.h"
+  22          #include "E2prom.h"
+  23          #include "MsgMap.h"
+  24          #include "Osd_Menu.h"
+  25          #include "Osd_MenuPage.h"
+  26          #include "sysWorkPara.h"
+  27          #include "ConfigLcdPara.h"
+  28          #include "AMT_Reg.h"
+  29          
+  30          
+  31          UCHAR ContSysCheckSum(UCHAR *pSysPara, UINT numOper)
+  32          {
+  33   1          UINT XDATA i;
+  34   1              UCHAR  XDATA tmpCheckSum = 0x00;
+  35   1               
+  36   1              for(i = 0; i < numOper; i++)
+  37   1              {
+  38   2                  tmpCheckSum ^= pSysPara[i];
+  39   2              }
+  40   1              return(tmpCheckSum);  
+  41   1      }
+  42          
+  43          /************************************************************************
+  44          *name:    CheckSetting(void)
+  45          *input:   non   
+  46          *output:  non  
+  47          
+  48          *description:   
+  49                   这个函数用来检测系统参数的临界值,如果一旦发现有出错的数据，就会
+C51 COMPILER V9.00   SYSWORKPARA                                                           04/13/2015 11:40:42 PAGE 2   
+
+  50                           把这个错误的数据恢复为默认值。 
+  51          *history:  
+  52          *************************************************************************/
+  53          void CheckSetting(void)
+  54          {
+  55   1              //printfStr("CheckSetting");
+  56   1              if(g_sysSetting.Video.curSource >= MAX_VIDEO_CHANNEL)
+  57   1              {
+  58   2                   g_sysSetting.Video.curSource  = DefaultSource; 
+  59   2              }
+  60   1              if( g_sysSetting.Car.RemberSource >= MAX_VIDEO_CHANNEL)
+  61   1              {
+  62   2                   g_sysSetting.Car.RemberSource  = DefaultSource; 
+  63   2              }
+  64   1              if(g_sysSetting.Video.brigthness>MAX_VALUE)
+  65   1              {
+  66   2                   g_sysSetting.Video.brigthness = MAX_VALUE/2;
+  67   2              }
+  68   1              if(g_sysSetting.Video.saturation>MAX_VALUE)
+  69   1              {
+  70   2                   g_sysSetting.Video.saturation = MAX_VALUE/2;
+  71   2              }
+  72   1              if(g_sysSetting.Video.contrast>MAX_VALUE)
+  73   1              {
+  74   2                   g_sysSetting.Video.contrast = MAX_VALUE/2;
+  75   2              }
+  76   1          if(g_sysSetting.Video.tint>MAX_VALUE)
+  77   1              {
+  78   2                   g_sysSetting.Video.tint = MAX_VALUE/2;
+  79   2              }
+  80   1              if(g_sysSetting.Audio.volVal>MAX_VALUE)
+  81   1              {
+  82   2                   g_sysSetting.Audio.volVal = MAX_VALUE/2;
+  83   2              }       
+  84   1              if(g_sysSetting.Disp.zoomMode>DISP_4_3)
+  85   1              {
+  86   2                   g_sysSetting.Disp.zoomMode = DISP_16_9;
+  87   2              }
+  88   1              if(g_sysSetting.Disp.flipMode>FilpDown)
+  89   1              {
+  90   2                  g_sysSetting.Disp.flipMode = FilpLeft;
+  91   2              }
+  92   1              if(g_sysSetting.Osd.curlanguage>MAX_LANG)
+  93   1              {
+  94   2                 g_sysSetting.Osd.curlanguage = DEFAULT_LANGUAGE;
+  95   2              }
+  96   1              if(g_sysSetting.Osd.xOffset>MAX_OFFSETVALUE)
+  97   1              {
+  98   2                 g_sysSetting.Osd.xOffset = 0;
+  99   2              }
+ 100   1              if(g_sysSetting.Osd.yOffset>MAX_OFFSETVALUE)
+ 101   1              {
+ 102   2                 g_sysSetting.Osd.yOffset = 0;
+ 103   2              }       
+ 104   1              if(g_sysSetting.IRAB.IRABVal>IRB)
+ 105   1              {
+ 106   2                 g_sysSetting.IRAB.IRABVal = IROFF;
+ 107   2              }
+ 108   1          if(g_sysSetting.IRAB.IRABVal>IRB)
+ 109   1              {
+ 110   2                 g_sysSetting.IRAB.IRABVal = IROFF;
+ 111   2              }
+C51 COMPILER V9.00   SYSWORKPARA                                                           04/13/2015 11:40:42 PAGE 3   
+
+ 112   1              if(g_sysSetting.RadioFreq.RadioFreqVal>MHZ_891)
+ 113   1              {
+ 114   2                 g_sysSetting.RadioFreq.RadioFreqVal = RFOFF;
+ 115   2              }
+ 116   1              if(g_sysSetting.Audio.status>MUTE_ON)
+ 117   1              {
+ 118   2                 g_sysSetting.Audio.status = MUTE_OFF;        
+ 119   2              }
+ 120   1              if(g_sysSetting.Factory.volumeswitch>ON)
+ 121   1              {
+ 122   2                      g_sysSetting.Factory.volumeswitch = ON; 
+ 123   2              }
+ 124   1              if(g_sysSetting.Factory.scalerswitch>ON)
+ 125   1              {
+ 126   2                      g_sysSetting.Factory.scalerswitch = ON; 
+ 127   2              }
+ 128   1              if(g_sysSetting.Factory.flipswitch>ON)
+ 129   1              {
+ 130   2                      g_sysSetting.Factory.flipswitch = ON;   
+ 131   2              }
+ 132   1          if(g_sysSetting.Factory.resetswitch>ON)
+ 133   1              {
+ 134   2                  g_sysSetting.Factory.resetswitch = ON;      
+ 135   2              }
+ 136   1              if(g_sysSetting.Factory.irabswitch>ON)
+ 137   1              {
+ 138   2                  g_sysSetting.Factory.irabswitch = ON;       
+ 139   2              }
+ 140   1              if(g_sysSetting.Power.status>POWER_ON)
+ 141   1              {
+ 142   2                 g_sysSetting.Power.status = POWER_ON;
+ 143   2              }
+ 144   1              if(g_sysSetting.Factory.powerswitch>SAVE)
+ 145   1              {
+ 146   2                 g_sysSetting.Factory.powerswitch = SAVE;
+ 147   2              }
+ 148   1              if(g_sysSetting.Factory.radiofreqswitch>ON)
+ 149   1              {
+ 150   2                 g_sysSetting.Factory.radiofreqswitch = ON;
+ 151   2              }
+ 152   1              if(g_sysSetting.Logo.logoID>LogoIDMax)
+ 153   1              {
+ 154   2                 g_sysSetting.Logo.logoID = LogoIDMax;
+ 155   2              }
+ 156   1              if(g_sysSetting.Video.ScreeSw > MAX_VDECOLOR)
+ 157   1              {
+ 158   2                      g_sysSetting.Video.ScreeSw = MAX_VDECOLOR;
+ 159   2              }
+ 160   1      }
+ 161          /***********************************************************
+ 162          *name:       VerifySetting(void)
+ 163          *input:      void
+ 164          *output:     void 
+ 165          *update:     2011-11-27 
+ 166          *state:      allright
+ 167          
+ 168          *description:   
+ 169                     校验系统配置。
+ 170          *history:
+ 171                                          
+ 172          ************************************************************/
+ 173          BOOL VerifySetting(UCHAR *pSysPara, UINT numOper, UCHAR sysCheckSum)
+C51 COMPILER V9.00   SYSWORKPARA                                                           04/13/2015 11:40:42 PAGE 4   
+
+ 174          {
+ 175   1          
+ 176   1          UINT XDATA i;
+ 177   1              UCHAR XDATA tmpCheckSum = 0x00;
+ 178   1              
+ 179   1           //printfStr("VerifySetting");
+ 180   1               
+ 181   1          if((g_sysSetting.OX55 == 0x55) && (g_sysSetting.OXAA == 0xaa))
+ 182   1          {
+ 183   2                      for(i = 0; i < numOper; i++)
+ 184   2                      {
+ 185   3                              tmpCheckSum ^= pSysPara[i];
+ 186   3                      }
+ 187   2      
+ 188   2                      if(sysCheckSum == tmpCheckSum)
+ 189   2                      {
+ 190   3                              return(1);
+ 191   3                      }
+ 192   2                      else
+ 193   2                      {
+ 194   3                              return(0);
+ 195   3                      }
+ 196   2          }
+ 197   1              else
+ 198   1              {
+ 199   2                  return(0);
+ 200   2              }
+ 201   1              
+ 202   1              
+ 203   1      }
+ 204          
+ 205          
+ 206          /***********************************************************
+ 207          *name:       SaveSetting(void)
+ 208          *input:      void
+ 209          *output:     void 
+ 210          *update:     2011-11-27 
+ 211          *state:      allright
+ 212          
+ 213          *description:   
+ 214                     保寸系统设置参数
+ 215          *history:
+ 216                                          
+ 217          ************************************************************/
+ 218          void SaveSetting(void)
+ 219          {
+ 220   1      
+ 221   1          printfStr("SaveSetting");
+ 222   1              
+ 223   1              /*注意：只是需要对系统工作参数进行校验*/
+ 224   1              CheckSetting();
+ 225   1      
+ 226   1              /*数据标志*/
+ 227   1              g_sysSetting.OX55 = 0x55;
+ 228   1              g_sysSetting.OXAA = 0xaa;
+ 229   1              g_sysSetting.xorSum = ContSysCheckSum((UCHAR *)&g_sysSetting, (sizeof(SysWorkParaType) - sizeof(UCHAR)));
+             - 
+ 230   1      
+ 231   1          #ifdef FlashEn
+ 232   1              if(ReadSaveFlagEn())
+ 233   1              {   
+ 234   2                  printfStr("Come to into Saving");
+C51 COMPILER V9.00   SYSWORKPARA                                                           04/13/2015 11:40:42 PAGE 5   
+
+ 235   2                      ClrSaveFlagEn();
+ 236   2                      WriteFlashSysPara(FLASH_DAT_ADDR, (UCHAR *)&g_sysSetting, sizeof(SysWorkParaType));
+ 237   2                      DelayMs(100);
+ 238   2                      WriteFlashSysPara(FLASH_COPY_ADDR,(UCHAR *)&g_sysSetting, sizeof(SysWorkParaType));   
+ 239   2              }
+ 240   1          #endif      
+ 241   1      }
+ 242          
+ 243          
+ 244          
+ 245          /***********************************************************
+ 246          *name:       ResetSetting(void)
+ 247          *input:      void
+ 248          *output:     void 
+ 249          *update:     2011-11-27 
+ 250          *state:      allright
+ 251          
+ 252          *description:   
+ 253                     设置默认设置参数。
+ 254          *history:
+ 255                                          
+ 256          ************************************************************/
+ 257          void ResetSetting(void)
+ 258          {   
+ 259   1          printfStr("ResetSetting\n");
+ 260   1          g_sysSetting.Video.curSource = DefaultSource;
+ 261   1              g_sysSetting.Car.RemberSource = DefaultSource;
+ 262   1              g_sysSetting.Video.brigthness = MAX_VALUE/2;
+ 263   1              g_sysSetting.Video.saturation= MAX_VALUE/2;
+ 264   1              g_sysSetting.Video.contrast= MAX_VALUE/2;
+ 265   1              g_sysSetting.Video.tint= MAX_VALUE/2;
+ 266   1              g_sysSetting.Video.ScreeSw = VDE_CLOSE;
+ 267   1              g_sysSetting.Video.colorSys= PAL;
+ 268   1              g_sysSetting.Video.vcomDC=DEFAULT_VCOMDCVAL;
+ 269   1              g_sysSetting.Audio.volVal = MAX_VALUE/2;
+ 270   1              g_sysSetting.Audio.status = MUTE_OFF;
+ 271   1              g_sysSetting.Disp.zoomMode = DISP_16_9;
+ 272   1              g_sysSetting.Disp.flipMode =FilpLeft;
+ 273   1              g_sysSetting.Osd.curlanguage = DEFAULT_LANGUAGE;
+ 274   1              g_sysSetting.Osd.dispTime  = 0;
+ 275   1              g_sysSetting.Power.status = POWER_ON;   
+ 276   1              g_sysSetting.Logo.logoID  = LOGO1;
+ 277   1              g_sysSetting.IRAB.IRABVal = IROFF;
+ 278   1              g_sysSetting.RadioFreq.RadioFreqVal = RFOFF;
+ 279   1              g_sysSetting.Factory.volumeswitch = OFF;
+ 280   1              g_sysSetting.Factory.scalerswitch = ON;
+ 281   1              g_sysSetting.Factory.flipswitch = ON;
+ 282   1              g_sysSetting.Factory.resetswitch = ON;
+ 283   1              g_sysSetting.Factory.irabswitch = OFF;
+ 284   1              g_sysSetting.Factory.radiofreqswitch = OFF;
+ 285   1              g_sysSetting.Factory.powerswitch = SAVE; 
+ 286   1          g_sysSetting.Video.brightnessOffset= g_sysSetting.Video.brigthness;
+ 287   1              g_sysSetting.Video.contrastOffset= g_sysSetting.Video.contrast;
+ 288   1              g_sysSetting.Video.saturationOffset= g_sysSetting.Video.saturation;
+ 289   1              g_sysSetting.Osd.xOffset = 0;
+ 290   1              g_sysSetting.Osd.yOffset =0;    
+ 291   1      }
+ 292          
+ 293          
+ 294          /***********************************************************
+ 295          *name:       ReadSetting(void)
+ 296          *input:      void
+C51 COMPILER V9.00   SYSWORKPARA                                                           04/13/2015 11:40:42 PAGE 6   
+
+ 297          *output:     BOOL 
+ 298          *update:     2011-11-27 
+ 299          *state:      allright
+ 300          
+ 301          *description:   
+ 302                     读取系统设置参数
+ 303          *history:
+ 304                                          
+ 305          ************************************************************/
+ 306          BOOL ReadSetting(void)
+ 307          {
+ 308   1              
+ 309   1          #ifdef FlashEn
+ 310   1              VerifyFlashDate(FLASH_DAT_ADDR);
+ 311   1          #endif
+ 312   1              
+ 313   1          if(VerifySetting((UCHAR *)&g_sysSetting, (sizeof(SysWorkParaType) - sizeof(UCHAR)), g_sysSetting.xorSu
+             -m)) 
+ 314   1          {
+ 315   2              CheckSetting();
+ 316   2                      return 1;
+ 317   2          }
+ 318   1              else
+ 319   1              {
+ 320   2                      #ifdef FlashEn
+ 321   2                      VerifyFlashDate(FLASH_COPY_ADDR);
+ 322   2                  #endif
+ 323   2                      
+ 324   2                      if(VerifySetting((UCHAR *)&g_sysSetting, (sizeof(SysWorkParaType) - sizeof(UCHAR)), g_sysSetting.xorSum)
+             -) 
+ 325   2                      {
+ 326   3                              CheckSetting();
+ 327   3                              return 1;
+ 328   3                      }
+ 329   2                      else
+ 330   2                      {       
+ 331   3                          ResetSetting();
+ 332   3                              
+ 333   3                              #ifdef FlashEn
+ 334   3                              g_sysSetting.Flash.erase4kComd = Flash_comd[g_ucFlashTpye].FLASH_ERASE_4K;
+ 335   3                  g_sysSetting.Flash.unprotectedComd = Flash_comd[g_ucFlashTpye].FLASH_UNPROTECTED_EN;
+ 336   3                              #endif
+ 337   3      
+ 338   3                              SetSaveFlagEn();
+ 339   3                          SaveSetting();
+ 340   3      
+ 341   3                              return 0;
+ 342   3                      }
+ 343   2              }
+ 344   1      }
+ 345          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    835    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       6
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.00   SYSWORKPARA                                                           04/13/2015 11:40:42 PAGE 7   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

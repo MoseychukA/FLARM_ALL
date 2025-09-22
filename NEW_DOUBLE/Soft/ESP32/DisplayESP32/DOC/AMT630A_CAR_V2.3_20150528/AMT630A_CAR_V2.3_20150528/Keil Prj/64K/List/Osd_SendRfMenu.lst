@@ -1,0 +1,285 @@
+C51 COMPILER V9.00   OSD_SENDRFMENU                                                        10/15/2014 11:35:51 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_SENDRFMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_SendRfMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_SendRfMenu.c BROWSE INCDIR(.
+                    -.\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..\L
+                    -CD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key;.
+                    -.\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\..\
+                    -Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\Devi
+                    -ce driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_SendRfMenu.lst) OBJECT(
+                    -..\Hex\Osd_SendRfMenu.obj)
+
+line level    source
+
+   1          #define _OSD_SENDRF_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          #include "Kt0803l.h"
+  21          
+  22          
+  23          SWORD GetSendRfVal(void);
+  24          
+  25          /*****************************************************************
+  26                                      Text
+  27          *****************************************************************/
+  28          UCHAR* CODE SendRfMenuStr[]=
+  29          {
+  30              "FM",
+  31              "FM",
+  32              "FM",
+  33              "FM",
+  34              "FM",
+  35              "FM",
+  36              "FM",
+  37              "FM",
+  38              "FM",
+  39              "FM",
+  40              "FM",
+  41              "FM",
+  42              "FM",
+  43          };
+  44          
+  45          
+  46          UCHAR* CODE SendRfStr[]=
+  47          {
+  48            "  OFF  ",
+  49            "87.7MHZ",
+C51 COMPILER V9.00   OSD_SENDRFMENU                                                        10/15/2014 11:35:51 PAGE 2   
+
+  50            "87.9MHZ",
+  51            "88.1MHZ",
+  52            "88.3MHZ",
+  53            "88.5MHZ",
+  54            "88.7MHZ",
+  55            "88.9MHZ",
+  56            "89.1MHZ"
+  57          };
+  58          
+  59          
+  60          
+  61          
+  62          /*****************************************************************
+  63                                      String
+  64          *****************************************************************/
+  65          UCHAR * SendRfMenu_TitelStr(void)
+  66          {
+  67   1          return SendRfMenuStr[g_sysSetting.Osd.curlanguage];
+  68   1      }
+  69          
+  70          
+  71          UCHAR * CODE DispSendRfStr(void)
+  72          {
+  73   1            return SendRfStr[GetSendRfVal()];  
+  74   1      }
+  75          
+  76          
+  77          
+  78          /*****************************************************************
+  79                                     Function
+  80          *****************************************************************/
+  81          AdjustType SendRfMenu_CheckCondition(void)
+  82          {
+  83   1              AdjustType XDATA adjust = {0,0,0};
+  84   1      
+  85   1              if( ON == g_sysSetting.Factory.sendrfswitch)
+  86   1              {
+  87   2                  adjust.Flags |= osdVisible; 
+  88   2                      //printfStr("SendRf Visibla");
+  89   2              }
+  90   1              else
+  91   1              {
+  92   2                  adjust.Flags |= osdInvisible; 
+  93   2                      //printfStr("SendRf Invisible");
+  94   2              }
+  95   1              
+  96   1              //printfStr("SendRfMenu_CheckCondition");
+  97   1              return adjust;
+  98   1      }
+  99          
+ 100          
+ 101          
+ 102          SWORD GetSendRfVal(void)
+ 103          {
+ 104   1           //printfStr("GetSendRfVal");
+ 105   1           return g_sysSetting.SendRf.SendRfVal;
+ 106   1      }
+ 107          
+ 108          
+ 109          
+ 110          
+ 111          
+C51 COMPILER V9.00   OSD_SENDRFMENU                                                        10/15/2014 11:35:51 PAGE 3   
+
+ 112          BOOL SendRfMenuItem_DrawStyle(void)
+ 113          {
+ 114   1          //printfStr("SendRfMenuItem_DrawStyle");
+ 115   1              OsdWndClear(0X00, 0X00, 0X00, 0X11);
+ 116   1              OsdWndClear(0X01, 0X00, 0X01, 0X11);
+ 117   1          return 0;
+ 118   1      }
+ 119          
+ 120          
+ 121          BOOL AdjustSendRf(UCHAR opratComd)
+ 122          {    
+ 123   1      
+ 124   1              if(opratComd == COMD_IncValue)
+ 125   1          {
+ 126   2                        if(g_sysSetting.SendRf.SendRfVal<MHZ_891)
+ 127   2                        {
+ 128   3                            g_sysSetting.SendRf.SendRfVal++;
+ 129   3                        } 
+ 130   2                else   
+ 131   2                    {
+ 132   3                           g_sysSetting.SendRf.SendRfVal = RFOFF;
+ 133   3                        }
+ 134   2          }
+ 135   1              if(opratComd == COMD_DecValue)
+ 136   1              {
+ 137   2                  
+ 138   2                        if(g_sysSetting.SendRf.SendRfVal>RFOFF)
+ 139   2                        {
+ 140   3                            g_sysSetting.SendRf.SendRfVal--;
+ 141   3                        } 
+ 142   2                        else
+ 143   2                        {
+ 144   3                          g_sysSetting.SendRf.SendRfVal = MHZ_891;
+ 145   3                        }
+ 146   2              }
+ 147   1              //printf("the AdjustRF Val is %x",g_sysSetting.SendRf.SendRfVal);
+ 148   1              return 1;
+ 149   1      }
+ 150          
+ 151          
+ 152          BOOL ExectSendRf(void)
+ 153          {
+ 154   1         //printfStr("ExectSendRf");
+ 155   1         
+ 156   1         #ifdef FmSendEn
+                 #if(FM_CHIP == KT0803l)
+                 switch(g_sysSetting.SendRf.SendRfVal)
+                      {
+                         case MHZ_877:
+                              KT_TXTune(8770);
+                                      break;
+                                      
+                         case MHZ_879:
+                              KT_TXTune(8790);
+                                      break;
+                                      
+                     case MHZ_881:
+                              KT_TXTune(8810);
+                                      break;
+              
+                         case MHZ_883:
+                              KT_TXTune(8830);
+C51 COMPILER V9.00   OSD_SENDRFMENU                                                        10/15/2014 11:35:51 PAGE 4   
+
+                                      break;
+              
+                         case MHZ_885:
+                              KT_TXTune(8850);
+                                      break;
+              
+                         case MHZ_887:
+                              KT_TXTune(8870);
+                                      break;
+                                      
+                         case MHZ_889:
+                              KT_TXTune(8890);
+                                      break;
+              
+                         case MHZ_891:
+                              KT_TXTune(8910); 
+                                      break;
+                                      
+                        default:
+                              KT_TXTune(8660);
+                                      break;
+                      }
+                      #endif
+                      #endif
+ 198   1              
+ 199   1         return 1;
+ 200   1      }
+ 201          
+ 202          
+ 203          /*****************************************************************
+ 204                                    Item value table
+ 205          *****************************************************************/
+ 206          DrawOptionType CODE Option_SendRf[]=
+ 207          {
+ 208              {1,6,RED,GRAY,RED,GRAY, GetSendRfVal,DispSendRfStr,osdEnd},
+ 209          };
+ 210          ItemValueType CODE SendRfMenuItemVal_SendRf[]=
+ 211          {
+ 212               {
+ 213                        NULL,
+ 214                        NULL,
+ 215                        Option_SendRf,   
+ 216                        osdEnd,
+ 217               },
+ 218          };
+ 219          
+ 220          
+ 221          /*****************************************************************
+ 222                                    Item Icon table
+ 223          *****************************************************************/
+ 224          
+ 225          
+ 226          
+ 227          
+ 228          /*****************************************************************
+ 229                                   Item  Titel table
+ 230          *****************************************************************/
+ 231          TitelType CODE SendRfMenuItem_SendRfTitelTab[]=
+ 232          {
+ 233             {0,8,RED,GRAY,RED,GRAY,DWT_Text,SendRfMenu_TitelStr,osdEnd},
+ 234          };
+ 235          
+C51 COMPILER V9.00   OSD_SENDRFMENU                                                        10/15/2014 11:35:51 PAGE 5   
+
+ 236          
+ 237          
+ 238          /*****************************************************************
+ 239                                    Menu Icon table
+ 240          *****************************************************************/
+ 241          
+ 242          
+ 243          
+ 244          /*****************************************************************
+ 245                                   Menu  Titel table
+ 246          *****************************************************************/
+ 247          
+ 248          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    190    ----
+   CONSTANT SIZE    =    181    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

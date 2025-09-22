@@ -1,0 +1,267 @@
+C51 COMPILER V9.00   OSD_VERTICALMENU                                                      10/11/2014 15:23:42 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_VERTICALMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_VerticalMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_VerticalMenu.c BROWSE INCDIR
+                    -(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\..\..
+                    -\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInput\Key
+                    -;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..\..\.
+                    -.\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\..\De
+                    -vice driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_VerticalMenu.lst) OBJ
+                    -ECT(..\Hex\Osd_VerticalMenu.obj)
+
+line level    source
+
+   1          #define _OSD_VERTICAL_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          #include "Osd_BitMapFontDat.h"
+  21          
+  22          
+  23          
+  24          SWORD GetVerticalVal(void);
+  25          
+  26          
+  27          /*****************************************************************
+  28                                      Text
+  29          *****************************************************************/
+  30          UCHAR* CODE VerticalMenuStr[]=
+  31          {
+  32              "VERTICAL",
+  33              "VERTICAL",
+  34              "VERTICALE",
+  35              "VERTICAL",
+  36              "VERTIKAL",
+  37              "VERTICAL",
+  38              "VERTICAL",
+  39              "\x014\x00C\x025\x014\x00C\x013\x00B\x00E\x010\x014\x011\x01F\x025\x013\x024",
+  40              "  #\x04A#\x04B#\x075#\x076", 
+  41              "  #\x05A#\x05B#\x088#\x0CD",
+  42              "\x009\x00C\x025\x027\x00E\x009\x007\x011\x00E\x007",
+  43              "VERTICAL",
+  44              "VERTICAL"
+  45          };
+  46          
+  47          
+  48          UCHAR* CODE  VerticalStr[][2]=
+  49          {
+C51 COMPILER V9.00   OSD_VERTICALMENU                                                      10/11/2014 15:23:42 PAGE 2   
+
+  50            "*UL           UR       " , 
+  51            " UL          *UR       "
+  52          };
+  53          
+  54          
+  55          UINT CODE VerticalMenuIcon[]=
+  56          {
+  57             UDIndexAddr
+  58          } ;
+  59          
+  60          
+  61          /*****************************************************************
+  62                                      String
+  63          *****************************************************************/
+  64          UCHAR * VerticalMenu_TitelStr(void)
+  65          {
+  66   1          return VerticalMenuStr[g_sysSetting.Osd.curlanguage];
+  67   1      }
+  68          
+  69          UCHAR * CODE DispVerticalStr(void)
+  70          {     
+  71   1            return VerticalStr[0][GetVerticalVal()]; 
+  72   1      }
+  73          
+  74          
+  75          
+  76          UINT * CODE VerticalMenu_Icon(void)
+  77          {
+  78   1          return VerticalMenuIcon;
+  79   1      }
+  80          
+  81          /*****************************************************************
+  82                                     Function
+  83          *****************************************************************/
+  84          AdjustType VerticalMenu_CheckCondition(void)
+  85          {
+  86   1              AdjustType XDATA adjust ={0,0,0};
+  87   1              if( ON == g_sysSetting.Factory.verticalswitch)
+  88   1              {
+  89   2                  adjust.Flags |= osdVisible; 
+  90   2                      //printfStr("Vertical Visibla");
+  91   2              }
+  92   1              else
+  93   1              {
+  94   2                  adjust.Flags |= osdInvisible; 
+  95   2                      //printfStr("Vertical Invisible");
+  96   2              }
+  97   1      
+  98   1              printfStr("VerticalMenu_CheckCondition");
+  99   1              return adjust;
+ 100   1      }
+ 101          
+ 102          
+ 103          
+ 104          
+ 105          void InitVerticalDat(void)
+ 106          {  
+ 107   1          OsdConfigDispMode(OSD_BITMAP_MODE,OSD_DISP_NORMAL);
+ 108   1              OsdConfigBitmapStarIndex(ICONBITMAP_SATRT_INDEX);       
+ 109   1              OsdConfigBitmapPalette(UDBitMapPattle);
+ 110   1              LoadBitMapToFontRam(ICONBITMAP_SATRT_INDEX,UDNumFontram,UDDatBuf);
+ 111   1      }
+C51 COMPILER V9.00   OSD_VERTICALMENU                                                      10/11/2014 15:23:42 PAGE 3   
+
+ 112          
+ 113          
+ 114          BOOL VerticalMenuItem_DrawStyle(void)
+ 115          {
+ 116   1          printfStr("VerticalMenu_DrawStyle");;
+ 117   1              OsdWndClear(0X01, 0X0A, 0X01, 0X1E);
+ 118   1              OsdWndClear(0X03, 0X03, 0X03, 0X1D);
+ 119   1              InitVerticalDat();
+ 120   1          return 0;
+ 121   1      }
+ 122          
+ 123          
+ 124          SWORD GetVerticalVal(void)
+ 125          {
+ 126   1           //printfStr("GetVerticalVal");
+ 127   1           return g_sysSetting.Disp.vertical;
+ 128   1      }
+ 129          
+ 130          
+ 131          BOOL AdjustVertical(UCHAR opratComd)
+ 132          {
+ 133   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 134   1          {     
+ 135   2             (g_sysSetting.Disp.vertical == UP)?(g_sysSetting.Disp.vertical = DOWN):(g_sysSetting.Disp.vertical 
+             -= UP);
+ 136   2                 //printf("AdjustVertical Value = %d",g_sysSetting.Video.vertical);
+ 137   2          }
+ 138   1              return 1;
+ 139   1      }
+ 140          
+ 141          
+ 142          BOOL ExectVertical(void)
+ 143          {
+ 144   1         //printfStr("ExectVertical");
+ 145   1         
+ 146   1         #ifdef PannelSfrDispEn
+                 if(g_sysSetting.Disp.vertical == UP)
+                 {
+                    #ifdef PannelSfrDispBLOffEn
+                        TurnOffBackLight();
+                        hw_turnToUp();
+                        DelayMs(100);
+                        
+                        /*BUG_003*/
+                        TurnOnBackLight();
+                        #else
+                        hw_turnToUp();
+                        #endif
+                 }
+                 else if(g_sysSetting.Disp.vertical == DOWN)
+                 {
+                   #ifdef PannelSfrDispBLOffEn
+                       TurnOffBackLight();
+                       hw_turnToDown();
+                       DelayMs(100);
+                       
+                       /*BUG_003*/
+                       TurnOnBackLight();
+                       #else
+                       hw_turnToDown();
+                       #endif
+                 }
+C51 COMPILER V9.00   OSD_VERTICALMENU                                                      10/11/2014 15:23:42 PAGE 4   
+
+                 #endif
+ 174   1         
+ 175   1         return 1;
+ 176   1      }
+ 177          
+ 178          
+ 179          /*****************************************************************
+ 180                                    Item value table
+ 181          *****************************************************************/
+ 182          DrawOptionType CODE Option_Vertical[]=
+ 183          {
+ 184              {3,4,WHITE,TRANSPARENCE,WHITE,TRANSPARENCE, GetVerticalVal,DispVerticalStr,osdEnd},
+ 185          };
+ 186          
+ 187          
+ 188          ItemValueType CODE VerticalMenuItemVal_Vertical[]=
+ 189          {
+ 190               {
+ 191                        NULL,
+ 192                        NULL,
+ 193                        Option_Vertical,   
+ 194                        osdEnd,
+ 195               },
+ 196          };
+ 197          
+ 198          
+ 199          /*****************************************************************
+ 200                                    Item Icon table
+ 201          *****************************************************************/
+ 202          IconType CODE VerticalMenuItem_VerticalIconTab[]=
+ 203          {
+ 204             {2,1,UDWidth,UDHeighth,TRANSPARENCE,TRANSPARENCE,VerticalMenu_Icon,osdEnd},
+ 205          };
+ 206          
+ 207          
+ 208          
+ 209          /*****************************************************************
+ 210                                   Item  Titel table
+ 211          *****************************************************************/
+ 212          TitelType CODE VerticalMenuItem_VerticalTitelTab[]=
+ 213          {
+ 214             {1,8,WHITE,TRANSPARENCE,WHITE,TRANSPARENCE,DWT_Text,VerticalMenu_TitelStr,osdEnd},
+ 215          };
+ 216          
+ 217          
+ 218          
+ 219          /*****************************************************************
+ 220                                    Menu Icon table
+ 221          *****************************************************************/
+ 222          
+ 223          
+ 224          
+ 225          /*****************************************************************
+ 226                                   Menu  Titel table
+ 227          *****************************************************************/
+ 228          
+ 229          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    234    ----
+   CONSTANT SIZE    =    280    ----
+C51 COMPILER V9.00   OSD_VERTICALMENU                                                      10/11/2014 15:23:42 PAGE 5   
+
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

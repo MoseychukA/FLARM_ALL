@@ -372,7 +372,8 @@ static void ESP32_setup()
   Serial.begin(SERIAL_SPEED, SERIAL_IN_BITS);
   SerialRP2040.begin(SERIAL_RP2040_SPEED, SERIAL_IN_BITS, SOC_GPIO_PIN_RP2040_RX, SOC_GPIO_PIN_RP2040_TX);
   SerialRP2040.setRxBufferSize(512);
-
+  Serial.print("\r\n\r\n ** Serial receiver 1090 configured:  ");
+  Serial.println(SERIAL_RP2040_SPEED);
 }
 
 static void ESP32_post_init()

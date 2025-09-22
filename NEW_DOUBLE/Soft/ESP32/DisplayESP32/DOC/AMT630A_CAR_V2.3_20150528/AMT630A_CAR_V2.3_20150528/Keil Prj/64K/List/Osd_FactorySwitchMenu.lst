@@ -1,0 +1,634 @@
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE OSD_FACTORYSWITCHMENU
+OBJECT MODULE PLACED IN ..\Hex\Osd_FactorySwitchMenu.obj
+COMPILER INVOKED BY: C:\Program Files\App Software\Keil V4\C51\BIN\C51.EXE ..\..\..\OSD\Osd_FactorySwitchMenu.c BROWSE I
+                    -NCDIR(..\..\..\OSD;..\..\..\OSD\Logo;../../../Inc;../../../UserConfig;../../../ARKLib;../../../UserConfig/Prj config;..\
+                    -..\..\LCD Pannels;..\..\..\LCD Pannels\LCD parameter;..\..\..\GetUserInput;..\..\..\GetUserInput\Ir;..\..\..\GetUserInpu
+                    -t\Key;..\..\..\GetUserInput\GPIO;..\..\..\Device driver\AMT;..\..\..\Device driver\ArkChip;..\..\..\Device driver\Mcu;..
+                    -\..\..\Device driver\Flash;..\..\..\Device driver\I2C;..\..\..\Device driver\E2prom;..\..\..\Device driver\WT5700;..\..\
+                    -..\Device driver\Kt0803l;..\..\..\Device driver\BT;..\..\..\Debug) DEBUG OBJECTEXTEND PRINT(..\List\Osd_FactorySwitchMen
+                    -u.lst) OBJECT(..\Hex\Osd_FactorySwitchMenu.obj)
+
+line level    source
+
+   1          #define _OSD_FACTORYSWITCH_MENU_C_
+   2          
+   3          
+   4          
+   5          #include "DataType.h"
+   6          #include "SystemConfig.h"
+   7          #include "Global.h"
+   8          #include "MsgMap.h"
+   9          #include "sysWorkPara.h"
+  10          #include "sysPower.h" 
+  11          #include "videoProc.h"
+  12          #include "configLCDPara.h"
+  13          #include "Debug.h"
+  14          #include "Delay.h"
+  15          #include "AMT_REG.H"
+  16          #include "AMT_Drv.h"
+  17          #include "AMT_MCU.h"
+  18          #include "Osd_Menu.h"
+  19          #include "Osd_MenuPage.h"
+  20          #include "Osd_LogoName.h"
+  21          #include "Osd_LogoFontDat.h"
+  22          
+  23          
+  24          #ifdef FactoryEn
+  25          
+  26          SWORD GetVolumeSwitchVal(void);
+  27          SWORD GetScalerSwitchVal(void);
+  28          SWORD GetFlipSwitchVal(void);
+  29          SWORD GetResetSwitchVal(void);
+  30          SWORD GetIRABSwitchVal(void);
+  31          SWORD GetRadioFreqSwitchVal(void);
+  32          SWORD GetPowerSwitchVal(void);
+  33          SWORD GetLogoIdSwitchVal(void);
+  34          
+  35          
+  36          /*****************************************************************
+  37                                      Text
+  38          *****************************************************************/
+  39          
+  40          UCHAR* CODE FactorySwitchMenu_VolumeStr[]=
+  41          {
+  42              "VOLUME                    ",
+  43          };
+  44          
+  45          
+  46          UCHAR* CODE FactorySwitchMenu_ScalerStr[]=
+  47          {
+  48              "SCALER                     ",
+  49          };
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 2   
+
+  50          
+  51          UCHAR* CODE FactorySwitchMenu_FlipStr[]=
+  52          {
+  53              "FLIP                       ",
+  54          };
+  55          
+  56          
+  57          UCHAR* CODE FactorySwitchMenu_ResetStr[]=
+  58          {
+  59              "RESET                      ",
+  60          };
+  61          
+  62          
+  63          UCHAR* CODE FactorySwitchMenu_IRABStr[]=
+  64          {
+  65              "IRAB                       ",
+  66          };
+  67          
+  68          
+  69          UCHAR* CODE FactorySwitchMenu_RadioFreqStr[]=
+  70          {
+  71              "RADIOFREQ                   ",
+  72          };
+  73          
+  74          
+  75          UCHAR* CODE FactorySwitchMenu_PowerStr[]=
+  76          {
+  77              "POWER                      ",
+  78          };
+  79          
+  80          
+  81          UCHAR* CODE FactorySwitchMenu_LogoIdStr[]=
+  82          {
+  83              "LOGOID                     ",
+  84          };
+  85          
+  86          
+  87          UCHAR* CODE FactorySwitchMenu_SwitchStr[]=
+  88          {
+  89              " OFF",
+  90                  "  ON",
+  91                  "SAVE"
+  92          };
+  93          
+  94          
+  95          /*****************************************************************
+  96                                      String
+  97          *****************************************************************/
+  98          
+  99          UCHAR * CODE FactorySwitchMenu_VolumeTitel(void)
+ 100          {
+ 101   1          return FactorySwitchMenu_VolumeStr[0];
+ 102   1      }
+ 103          
+ 104          UCHAR * CODE FactorySwitchMenu_ScalerTitel(void)
+ 105          {
+ 106   1          return FactorySwitchMenu_ScalerStr[0];
+ 107   1      }
+ 108          
+ 109          UCHAR * CODE FactorySwitchMenu_FlipTitel(void)
+ 110          {
+ 111   1          return FactorySwitchMenu_FlipStr[0];
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 3   
+
+ 112   1      }
+ 113          
+ 114          UCHAR * CODE FactorySwitchMenu_ResetTitel(void)
+ 115          {
+ 116   1          return FactorySwitchMenu_ResetStr[0];
+ 117   1      }
+ 118          
+ 119          UCHAR * CODE FactorySwitchMenu_IRABTitel(void)
+ 120          {
+ 121   1          return FactorySwitchMenu_IRABStr[0];
+ 122   1      }
+ 123          
+ 124          UCHAR * CODE FactorySwitchMenu_RadioFreqTitel(void)
+ 125          {
+ 126   1          return FactorySwitchMenu_RadioFreqStr[0];
+ 127   1      }
+ 128          
+ 129          UCHAR * CODE FactorySwitchMenu_PowerTitel(void)
+ 130          {
+ 131   1          return FactorySwitchMenu_PowerStr[0];
+ 132   1      }
+ 133          
+ 134          UCHAR * CODE FactorySwitchMenu_LogoIdTitel(void)
+ 135          {
+ 136   1          return FactorySwitchMenu_LogoIdStr[0];
+ 137   1      }
+ 138          
+ 139          UCHAR * CODE FactorySwitchMenu_VolumeSwitchStr(void)
+ 140          {
+ 141   1           return FactorySwitchMenu_SwitchStr[GetVolumeSwitchVal()];
+ 142   1      }
+ 143          
+ 144          UCHAR * CODE FactorySwitchMenu_ScalerSwitchStr(void)
+ 145          {
+ 146   1           return FactorySwitchMenu_SwitchStr[GetScalerSwitchVal()];
+ 147   1      }
+ 148          
+ 149          UCHAR * CODE FactorySwitchMenu_FlipSwitchStr(void)
+ 150          {
+ 151   1           return FactorySwitchMenu_SwitchStr[GetFlipSwitchVal()];
+ 152   1      }
+ 153          
+ 154          UCHAR * CODE FactorySwitchMenu_ResetSwitchStr(void)
+ 155          {
+ 156   1           return FactorySwitchMenu_SwitchStr[GetResetSwitchVal()];
+ 157   1      }
+ 158          
+ 159          UCHAR * CODE FactorySwitchMenu_IRABSwitchStr(void)
+ 160          {
+ 161   1           return FactorySwitchMenu_SwitchStr[GetIRABSwitchVal()];
+ 162   1      }
+ 163          
+ 164          UCHAR * CODE FactorySwitchMenu_RadioFreqSwitchStr(void)
+ 165          {
+ 166   1           return FactorySwitchMenu_SwitchStr[GetRadioFreqSwitchVal()];
+ 167   1      }
+ 168          
+ 169          UCHAR * CODE FactorySwitchMenu_PowerSwitchStr(void)
+ 170          {
+ 171   1           return FactorySwitchMenu_SwitchStr[GetPowerSwitchVal()];
+ 172   1      }
+ 173          
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 4   
+
+ 174          
+ 175          UCHAR * CODE FactorySwitchMenu_LogoIdSwitchStr(void)
+ 176          {
+ 177   1           return FactorySwitchMenu_SwitchLogoIdStr[GetLogoIdSwitchVal()];
+ 178   1      }
+ 179          
+ 180          /*****************************************************************
+ 181                                     Function
+ 182          *****************************************************************/
+ 183          AdjustType FactorySwitchMenu_CheckCondition(void)
+ 184          {
+ 185   1              AdjustType XDATA adjust = {0,0,0};
+ 186   1          printfStr("FactorySwitchMenu_CheckCondition");
+ 187   1              adjust.Flags |= osdVisible;
+ 188   1              return adjust;
+ 189   1      }
+ 190          
+ 191          
+ 192          BOOL AdjustVideoVolumeSwitch(UCHAR opratComd)
+ 193          {
+ 194   1              if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 195   1          {     
+ 196   2             (g_sysSetting.Factory.volumeswitch == ON)?(g_sysSetting.Factory.volumeswitch  = OFF):(g_sysSetting.
+             -Factory.volumeswitch  = ON);
+ 197   2                 //printf("AdjustVolumeSwitch Value = %d",g_sysSetting.Factory.volumeswitch );
+ 198   2          }
+ 199   1              return 1;
+ 200   1      }
+ 201          
+ 202          
+ 203          BOOL AdjustVideoScalerSwitch(UCHAR opratComd)
+ 204          {
+ 205   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 206   1          {     
+ 207   2             (g_sysSetting.Factory.scalerswitch == ON)?(g_sysSetting.Factory.scalerswitch = OFF):(g_sysSetting.F
+             -actory.scalerswitch = ON);
+ 208   2                 //printf("AdjustScalerSwitch Value = %d",g_sysSetting.Factory.scalerswitch);
+ 209   2          }
+ 210   1              return 1;
+ 211   1      }
+ 212          
+ 213          
+ 214          BOOL AdjustVideoFlipSwitch(UCHAR opratComd)
+ 215          {
+ 216   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 217   1          {     
+ 218   2             (g_sysSetting.Factory.flipswitch == ON)?(g_sysSetting.Factory.flipswitch = OFF):(g_sysSetting.Facto
+             -ry.flipswitch = ON);
+ 219   2                 //printf("AdjustVideoFlipSwitch Value = %d",g_sysSetting.Factory.flipswitch);
+ 220   2          }
+ 221   1              return 1;
+ 222   1      }
+ 223          
+ 224          
+ 225          BOOL AdjustVideoResetSwitch(UCHAR opratComd)
+ 226          {
+ 227   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 228   1          {     
+ 229   2             (g_sysSetting.Factory.resetswitch == ON)?(g_sysSetting.Factory.resetswitch = OFF):(g_sysSetting.Fac
+             -tory.resetswitch = ON);
+ 230   2                 //printf("AdjustResetswitch Value = %d",g_sysSetting.Factory.resetswitch);
+ 231   2          }
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 5   
+
+ 232   1              return 1;
+ 233   1      }
+ 234          
+ 235          
+ 236          BOOL AdjustVideoIRABSwitch(UCHAR opratComd)
+ 237          {
+ 238   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 239   1          {     
+ 240   2             (g_sysSetting.Factory.irabswitch == ON)?(g_sysSetting.Factory.irabswitch = OFF):(g_sysSetting.Facto
+             -ry.irabswitch = ON);
+ 241   2                 //printf("Adjustirabswitch Value = %d",g_sysSetting.Factory.irabswitch);
+ 242   2          }
+ 243   1              return 1;
+ 244   1      }
+ 245          
+ 246          
+ 247          BOOL AdjustVideoRadioFreqSwitch(UCHAR opratComd)
+ 248          {
+ 249   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 250   1          {     
+ 251   2             (g_sysSetting.Factory.radiofreqswitch == ON)?(g_sysSetting.Factory.radiofreqswitch = OFF):(g_sysSet
+             -ting.Factory.radiofreqswitch = ON);
+ 252   2                 //printf("Adjustradiofreqswitch Value = %d",g_sysSetting.Factory.radiofreqswitch);
+ 253   2          }
+ 254   1              return 1;
+ 255   1      }
+ 256          
+ 257          
+ 258          BOOL AdjustSystemPowerSwitch(UCHAR opratComd)
+ 259          {
+ 260   1          if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 261   1          {   
+ 262   2             switch(g_sysSetting.Factory.powerswitch)
+ 263   2             {
+ 264   3                          case OFF:
+ 265   3                                       g_sysSetting.Factory.powerswitch = ON;
+ 266   3                                   break;
+ 267   3                              
+ 268   3                              case ON:
+ 269   3                                       g_sysSetting.Factory.powerswitch = SAVE;
+ 270   3                                   break;
+ 271   3                              
+ 272   3                              case SAVE:
+ 273   3                                       g_sysSetting.Factory.powerswitch = OFF;
+ 274   3                                   break;
+ 275   3                                       
+ 276   3                              default:
+ 277   3                                      g_sysSetting.Factory.powerswitch = ON;
+ 278   3                                      break;
+ 279   3             }           
+ 280   2                //printf("AdjustPowerSwitch Value = %d",g_sysSetting.Factory.powerswitch);
+ 281   2          }
+ 282   1              return 1;
+ 283   1      }
+ 284          
+ 285          
+ 286          BOOL AdjustSystemLogoIdSwitch(UCHAR opratComd)
+ 287          {
+ 288   1           if((opratComd == COMD_IncValue) ||(opratComd == COMD_DecValue))
+ 289   1           {
+ 290   2                  switch(g_sysSetting.Logo.logoID)
+ 291   2                              {
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 6   
+
+ 292   3                                      case LOGO1:
+ 293   3                                           g_sysSetting.Logo.logoID = LOGO2;
+ 294   3                                           break;
+ 295   3      
+ 296   3                                      case LOGO2:
+ 297   3                                           g_sysSetting.Logo.logoID = LOGO3;
+ 298   3                                           break;
+ 299   3                                               
+ 300   3                                      case LOGO3:
+ 301   3                                           g_sysSetting.Logo.logoID = LOGO4;
+ 302   3                                           break;
+ 303   3                                               
+ 304   3                                      case LOGO4:
+ 305   3                                           g_sysSetting.Logo.logoID = LOGO5;
+ 306   3                                           break;
+ 307   3                                               
+ 308   3                                      case LOGO5:
+ 309   3                                           g_sysSetting.Logo.logoID = LOGO1;
+ 310   3                                           break;
+ 311   3                                               
+ 312   3                                      default:
+ 313   3                                           g_sysSetting.Logo.logoID = LOGO1;
+ 314   3                                           break;
+ 315   3                              }
+ 316   2      
+ 317   2                          if(g_sysSetting.Logo.logoID >(LOGOMAX-1))
+ 318   2                              {
+ 319   3                                 g_sysSetting.Logo.logoID = LOGO1;
+ 320   3                              }
+ 321   2           }
+ 322   1               return 1;
+ 323   1      }
+ 324          
+ 325          
+ 326          SWORD GetVolumeSwitchVal(void)
+ 327          {
+ 328   1           //printfStr("GetVolumeSwitchVal");
+ 329   1           return g_sysSetting.Factory.volumeswitch;
+ 330   1      }
+ 331          
+ 332          
+ 333          SWORD GetScalerSwitchVal(void)
+ 334          {
+ 335   1           //printfStr("GetScalerSwitchVal");
+ 336   1           return g_sysSetting.Factory.scalerswitch;
+ 337   1      }
+ 338          
+ 339          
+ 340          SWORD GetFlipSwitchVal(void)
+ 341          {
+ 342   1           //printfStr("GetHorizontalSwitchVal");
+ 343   1           return g_sysSetting.Factory.flipswitch;
+ 344   1      }
+ 345          
+ 346          
+ 347          SWORD GetResetSwitchVal(void)
+ 348          {
+ 349   1           //printfStr("GetResetSwitchVal");
+ 350   1           return g_sysSetting.Factory.resetswitch; 
+ 351   1      }
+ 352          
+ 353          SWORD GetIRABSwitchVal(void)
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 7   
+
+ 354          {
+ 355   1           //printfStr("GetResetSwitchVal");
+ 356   1           return g_sysSetting.Factory.irabswitch; 
+ 357   1      }
+ 358          
+ 359          
+ 360          SWORD GetRadioFreqSwitchVal(void)
+ 361          {
+ 362   1           //printfStr("GetSendRfSwitchVal");
+ 363   1           return g_sysSetting.Factory.radiofreqswitch; 
+ 364   1      }
+ 365          
+ 366          
+ 367          SWORD GetPowerSwitchVal(void)
+ 368          {
+ 369   1           //printfStr("GetPowerSwitchVal");
+ 370   1           return g_sysSetting.Factory.powerswitch;
+ 371   1      }
+ 372          
+ 373          
+ 374          SWORD GetLogoIdSwitchVal(void)
+ 375          {
+ 376   1           //printfStr("GetPowerSwitchVal");
+ 377   1           return g_sysSetting.Logo.logoID;
+ 378   1      }
+ 379          
+ 380          
+ 381          /*****************************************************************
+ 382                                    Item value table
+ 383          *****************************************************************/
+ 384          
+ 385          DrawOptionType CODE Option_VolumeSwitch[]=
+ 386          {
+ 387              {2,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactorySwitchMenu_VolumeSwitchStr,osdEnd},
+ 388          };
+ 389          
+ 390          
+ 391          DrawOptionType CODE Option_ScalerSwitch[]=
+ 392          {
+ 393              {3,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactorySwitchMenu_ScalerSwitchStr,osdEnd},
+ 394          };
+ 395          
+ 396          
+ 397          DrawOptionType CODE Option_FlipSwitch[]=
+ 398          {
+ 399              {4,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactorySwitchMenu_FlipSwitchStr,osdEnd},
+ 400          };
+ 401          
+ 402          
+ 403          DrawOptionType CODE Option_ResetSwitch[]=
+ 404          {
+ 405              {5,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactorySwitchMenu_ResetSwitchStr,osdEnd},
+ 406          };
+ 407          
+ 408          
+ 409          DrawOptionType CODE Option_IRABSwitch[]=
+ 410          {
+ 411              {6,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactorySwitchMenu_IRABSwitchStr,osdEnd},
+ 412          };
+ 413          
+ 414          
+ 415          DrawOptionType CODE Option_RadioFreqSwitch[]=
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 8   
+
+ 416          {
+ 417              {7,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactorySwitchMenu_RadioFreqSwitchStr,osdEnd},
+ 418          };
+ 419          
+ 420          
+ 421          DrawOptionType CODE Option_PowerSwitch[]=
+ 422          {
+ 423              {8,27,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactorySwitchMenu_PowerSwitchStr,osdEnd},
+ 424          };
+ 425          
+ 426          DrawOptionType CODE Option_LogoIdSwitch[]=
+ 427          {
+ 428              {9,23,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE, NULL,FactorySwitchMenu_LogoIdSwitchStr,osdEnd},
+ 429          };
+ 430          
+ 431          
+ 432          ItemValueType CODE VolumeSwitchVal[]=
+ 433          {
+ 434               {
+ 435                        NULL,
+ 436                        NULL,
+ 437                        Option_VolumeSwitch,   
+ 438                        osdEnd,
+ 439               },
+ 440          };
+ 441          
+ 442          
+ 443          ItemValueType CODE ScalerSwitchVal[]=
+ 444          {
+ 445               {
+ 446                        NULL,
+ 447                        NULL,
+ 448                        Option_ScalerSwitch,   
+ 449                        osdEnd,
+ 450               },
+ 451          };
+ 452          
+ 453          
+ 454          ItemValueType CODE FlipSwitchVal[]=
+ 455          {
+ 456               {
+ 457                        NULL,
+ 458                        NULL,
+ 459                        Option_FlipSwitch,   
+ 460                        osdEnd,
+ 461               },
+ 462          };
+ 463          
+ 464          
+ 465          ItemValueType CODE ResetSwitchVal[]=
+ 466          {
+ 467               {
+ 468                        NULL,
+ 469                        NULL,
+ 470                        Option_ResetSwitch,   
+ 471                        osdEnd,
+ 472               },
+ 473          };
+ 474          
+ 475          
+ 476          ItemValueType CODE IRABSwitchVal[]=
+ 477          {
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 9   
+
+ 478               {
+ 479                        NULL,
+ 480                        NULL,
+ 481                        Option_IRABSwitch,   
+ 482                        osdEnd,
+ 483               },
+ 484          };
+ 485          
+ 486          
+ 487          ItemValueType CODE RadioFreqSwitchVal[]=
+ 488          {
+ 489               {
+ 490                        NULL,
+ 491                        NULL,
+ 492                        Option_RadioFreqSwitch,   
+ 493                        osdEnd,
+ 494               },
+ 495          };
+ 496          
+ 497          
+ 498          ItemValueType CODE PowerSwitchVal[]=
+ 499          {
+ 500               {
+ 501                        NULL,
+ 502                        NULL,
+ 503                        Option_PowerSwitch,   
+ 504                        osdEnd,
+ 505               },
+ 506          };
+ 507          
+ 508          
+ 509          ItemValueType CODE LogoIdSwitchVal[]=
+ 510          {
+ 511               {
+ 512                        NULL,
+ 513                        NULL,
+ 514                        Option_LogoIdSwitch,   
+ 515                        osdEnd,
+ 516               },
+ 517          };
+ 518          
+ 519          /*****************************************************************
+ 520                                    Item Icon table
+ 521          *****************************************************************/
+ 522          
+ 523          
+ 524          
+ 525          /*****************************************************************
+ 526                                   Item  Titel table
+ 527          *****************************************************************/
+ 528          TitelType CODE FactorySwitchMenuItem_VolumeTitelTab[]=
+ 529          {
+ 530             {2,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactorySwitchMenu_VolumeTitel,osdEnd},
+ 531          };
+ 532          
+ 533          TitelType CODE FactorySwitchMenuItem_ScalerTitelTab[]=
+ 534          {   
+ 535             {3,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactorySwitchMenu_ScalerTitel,osdEnd},
+ 536          };
+ 537          
+ 538          TitelType CODE FactorySwitchMenuItem_FlipTitelTab[]=
+ 539          {
+C51 COMPILER V9.00   OSD_FACTORYSWITCHMENU                                                 04/13/2015 11:40:46 PAGE 10  
+
+ 540             {4,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactorySwitchMenu_FlipTitel,osdEnd},
+ 541          };
+ 542          
+ 543          TitelType CODE FactorySwitchMenuItem_ResetTitelTab[]=
+ 544          {
+ 545             {5,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactorySwitchMenu_ResetTitel,osdEnd},
+ 546          };
+ 547          
+ 548          TitelType CODE FactorySwitchMenuItem_IRABTitelTab[]=
+ 549          {
+ 550             {6,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactorySwitchMenu_IRABTitel,osdEnd},
+ 551          };
+ 552          
+ 553          
+ 554          TitelType CODE FactorySwitchMenuItem_RadioFreqTitelTab[]=
+ 555          {
+ 556             {7,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactorySwitchMenu_RadioFreqTitel,osdEnd},
+ 557          };
+ 558          
+ 559          
+ 560          TitelType CODE FactorySwitchMenuItem_PowerTitelTab[]=
+ 561          {   
+ 562             {8,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactorySwitchMenu_PowerTitel,osdEnd},
+ 563          };
+ 564          
+ 565          
+ 566          TitelType CODE FactorySwitchMenuItem_LogoIdTitelTab[]=
+ 567          {   
+ 568             {9,0,GREEN,TRANSPARENCE,YELLOW,TRANSPARENCE,DWT_Text,FactorySwitchMenu_LogoIdTitel,osdEnd},
+ 569          };
+ 570          
+ 571          /*****************************************************************
+ 572                                    Menu Icon table
+ 573          *****************************************************************/
+ 574          
+ 575          
+ 576          
+ 577          /*****************************************************************
+ 578                                   Menu  Titel table
+ 579          *****************************************************************/
+ 580          
+ 581          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    776    ----
+   CONSTANT SIZE    =    595    ----
+   XDATA SIZE       =   ----       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
