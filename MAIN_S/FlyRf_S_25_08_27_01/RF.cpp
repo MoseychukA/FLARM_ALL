@@ -172,7 +172,7 @@ byte RF_setup(void)
     return RF_IC_NONE;
   }
 }
-
+ 
 void RF_SetChannel(void)
 {
   tmElements_t  tm;
