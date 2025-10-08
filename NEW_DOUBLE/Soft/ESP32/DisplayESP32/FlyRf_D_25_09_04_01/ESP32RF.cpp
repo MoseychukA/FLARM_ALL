@@ -674,8 +674,8 @@ static byte ESP32_Display_setup()
 
   //  tft = new TFT_eSPI();
     tft.init();
-    tft.setRotation(3);
-    tft.fillScreen(TFT_NAVY);
+    tft.setRotation(1);
+    tft.fillScreen(TFT_NAVY); 
 
     uint16_t tbw1;
     uint16_t x_tft, y_tft;
