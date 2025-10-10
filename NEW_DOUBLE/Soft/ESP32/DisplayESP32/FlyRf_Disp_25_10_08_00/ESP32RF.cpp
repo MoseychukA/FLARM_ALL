@@ -17,6 +17,7 @@
 #include <flashchips.h>
 #include <esp_task_wdt.h>
 #include <driver/adc.h>
+#include <Adafruit_FT6206.h> // Сенсор FT6336U
 
 
 #include "SoC.h"
@@ -45,9 +46,10 @@
 
 WebServer server ( 80 );
 
-#define WIDTH  320
-#define HEIGHT 320
-
+#define WIDTH  480
+#define HEIGHT 480
+//#define WIDTH  320
+//#define HEIGHT 320
 
 #if defined(USE_TFT)
 
@@ -116,9 +118,14 @@ bool isTeam_all[MAX_TRACKING_OBJECTS] = { false };                 // Удалить да
 #define backColor  0x0026
 
 //===================================================================================
-int cx = 160;
-int cy = 160;
-int rx = 158;
+
+int cx = 240;
+int cy = 240;
+int rx = 238;
+
+//int cx = 160;
+//int cy = 160;
+//int rx = 158;
 int nc = 0;
 
 float fx[360]; //outer points of Speed gaouges
@@ -157,7 +164,8 @@ uint16_t x_cont;
 uint16_t y_cont;
 uint16_t radar_x = 0;
 uint16_t radar_y = 0;                    //(tft_radar->width() - tft_radar->height()) / 2;
-uint16_t radar_w = 320;                  //tft->width();
+uint16_t radar_w = 480;                  //tft->width();
+//uint16_t radar_w = 320;                  //tft->width();
 
 uint16_t radar_center_x = radar_w / 2;
 uint16_t radar_center_y = radar_y + radar_w / 2;
@@ -672,9 +680,8 @@ static byte ESP32_Display_setup()
  
 #if defined(USE_TFT)
 
-  //  tft = new TFT_eSPI();
     tft.init();
-    tft.setRotation(3);
+    tft.setRotation(1);
     tft.fillScreen(TFT_NAVY);
 
     uint16_t tbw1;
@@ -692,12 +699,14 @@ static byte ESP32_Display_setup()
 
     tft.setFreeFont(&FreeMonoBold24pt7b);
 
-    x_tft = 90;
+    x_tft = 170;
+    //x_tft = 90;
     y_tft = 80;
     tft.setCursor(x_tft, y_tft);
     tft.print(EPD_SoftRF_text1);
 
-    x_tft = 80;
+    x_tft =160;
+    //x_tft = 80;
     y_tft = 150;
     tft.setCursor(x_tft, y_tft);
     tft.print(EPD_SoftRF_text3);
@@ -705,7 +714,7 @@ static byte ESP32_Display_setup()
     tft.setFreeFont(&FreeSerif9pt7b);
 
     x_tft = 10;
-    y_tft = 205;
+    y_tft = 285;
     tft.setCursor(x_tft, y_tft);
     tft.print(EPD_SoftRF_text2);
 
@@ -721,7 +730,8 @@ static byte ESP32_Display_setup()
     tft.setCursor(x_tft, y_tft);
     tft.print(Current_version);
    
-    back.createSprite(320, 320);
+    back.createSprite(480, 480);
+   // back.createSprite(320, 320);
     back.setColorDepth(8);
 
 
@@ -764,12 +774,14 @@ static byte ESP32_Display_setup()
 
     time_info.createSprite(60, 25);
 
-    backsprite.createSprite(320, 320);
+    backsprite.createSprite(480, 480);
+   // backsprite.createSprite(320, 320);
     backsprite.loadFont(NotoSansMonoSCB20);          // Загружаем шрифты символов направления света
     backsprite.setSwapBytes(true);
     backsprite.setTextColor(TFT_WHITE, TFT_BLACK);
     backsprite.setTextDatum(4);
-    backsprite.setPivot(160, 160);                   // Назначаем центр вращения спрайта воздушной обстановки
+    backsprite.setPivot(240, 240);                   // Назначаем центр вращения спрайта воздушной обстановки
+   // backsprite.setPivot(160, 160);                   // Назначаем центр вращения спрайта воздушной обстановки
 
     int a = 270;
     for (int i = 0; i < 360; i++)
@@ -841,7 +853,7 @@ static void Draw_circular_scale()
     esp_task_wdt_reset();
 
     /*Рисуем малый серый круг*/
-    backsprite.drawCircle(cx, 160, 80, TFT_DARKGREY);
+    backsprite.drawCircle(cx, 240, 120, TFT_DARKGREY);
 
 }
 
@@ -855,7 +867,7 @@ static void waiting_txt() // Вывод текста ожидания определения координат
     location_Message.drawString("LOCATION", 101, 10);
     location_Message.drawString("DETERMINATION", 101, 44);
     location_Message.drawString("WAIT...", 101, 74);
-    location_Message.pushToSprite(&back, 70, 70, TFT_BLACK);
+    location_Message.pushToSprite(&back, 142, 70, TFT_BLACK);
 }
 
 
@@ -1353,7 +1365,8 @@ static void ESP32_Display_loop()
           
             back.fillSprite(backColor);                   // Закрасим поле 
             backsprite.fillSprite(TFT_BLACK);             // 
-            backsprite.setPivot(160, 160);                // Назначаем центр вращения спрайта воздушной обстановки
+            backsprite.setPivot(240, 240);                // Назначаем центр вращения спрайта воздушной обстановки
+           // backsprite.setPivot(160, 160);                // Назначаем центр вращения спрайта воздушной обстановки
 
             fix_tmp = service.get_GNSS_on_off();
             if (fix_tmp) // 
@@ -2156,8 +2169,11 @@ static void ESP32_Display_loop()
                 back.loadFont(NotoSansBold15);
                 back.setTextColor(TFT_DARKGREY, TFT_BLACK);
                 back.setTextDatum(TC_DATUM);
-                int data_KM_x = 166;  // Расположение строки по X
-                int data_KM_y = 223;  // Расположение строки по Y
+
+                int data_KM_x = 246;  // Расположение строки по X
+                int data_KM_y = 303;  // Расположение строки по Y
+                //int data_KM_x = 166;  // Расположение строки по X
+                //int data_KM_y = 223;  // Расположение строки по Y
 
                 switch (divider_num)
                 {
@@ -2206,15 +2222,17 @@ static void ESP32_Display_loop()
             {
                 back.setTextDatum(0);
                 back.setTextColor(TFT_DARKGREY, TFT_BLACK);
-                back.drawString("Free: " + String(ESP.getFreeHeap()), 1, 194);
+                back.drawString("Free: " + String(ESP.getFreeHeap()), 1, 274);
             }
 
             if ((settings->view_test_coord == VIEW_COORD_ON)) // 
             {
                 back.setTextDatum(0);
                 back.setTextColor(TFT_DARKGREY, TFT_BLACK);
-                back.drawString("Lat: " + String(ThisAircraft.latitude,5), 1, 210);
-                back.drawString("Lon: " + String(ThisAircraft.longitude,5), 1, 226);
+                back.drawString("Lat: " + String(ThisAircraft.latitude, 5), 1, 290);
+                back.drawString("Lon: " + String(ThisAircraft.longitude, 5), 1, 306);
+                //back.drawString("Lat: " + String(ThisAircraft.latitude,5), 1, 210);
+                //back.drawString("Lon: " + String(ThisAircraft.longitude,5), 1, 226);
             }
                
             if (settings->akk_view == VIEW_AKK_ON)
@@ -2229,7 +2247,7 @@ static void ESP32_Display_loop()
 
                 power1.setTextDatum(CL_DATUM);
                 power1.setFreeFont(&FreeSerif9pt7b);
-
+                int power_x = 398;
                 /*Рисуем заряд аккумулятора*/
                 if (akk > 40.0)
                 {
@@ -2240,7 +2258,7 @@ static void ESP32_Display_loop()
                     power1.fillRect(30, 4, 3, 8, TFT_WHITE);
                     power1.setTextColor(TFT_GREEN, TFT_BLACK);
                     power1.drawString(str_Vcc + str_pr, 33, 7);
-                    power1.pushToSprite(&back, 244, 4, TFT_BLACK);
+                    power1.pushToSprite(&back, power_x, 4, TFT_BLACK);
                 }
                 else if (akk <= 40.0 && akk >= 15.1)
                 {
@@ -2251,7 +2269,7 @@ static void ESP32_Display_loop()
                     power1.fillRect(30, 4, 3, 8, TFT_ORANGE);
                     power1.setTextColor(TFT_ORANGE, TFT_BLACK);
                     power1.drawString(str_Vcc + str_pr, 33, 7);
-                    power1.pushToSprite(&back, 244, 4, TFT_BLACK);
+                    power1.pushToSprite(&back, power_x, 4, TFT_BLACK);
                 }
                 else
                 {
@@ -2262,9 +2280,9 @@ static void ESP32_Display_loop()
                     power1.fillRect(30, 4, 3, 8, TFT_RED);
                     power1.setTextColor(TFT_RED, TFT_BLACK);
                     power1.drawString(str_Vcc + str_pr, 33, 7);
-                    power1.pushToSprite(&back, 244, 4, TFT_BLACK);
+                    power1.pushToSprite(&back, power_x, 4, TFT_BLACK);
                 }
-            }
+            } 
 
 
             esp_task_wdt_reset();
@@ -2272,8 +2290,11 @@ static void ESP32_Display_loop()
 
             /*Формируем картинку нашего самолета*/
                 /* Рисуем фюзеляж*/
-            int width_air = 148;
-            int height_air = 150;
+
+            int width_air = 228;
+            int height_air = 230;
+            //int width_air = 148;
+            //int height_air = 150;
             back.drawLine(12 + width_air, 0 + height_air, 12 + width_air, 18 + height_air, TFT_DARKGREY);
 
             /*Рисуем передние крылья*/

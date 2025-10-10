@@ -21,7 +21,20 @@
 #include <ModbusRTU.h>
 #include <HardwareSerial.h>
 #include "SoftRF.h"
+#include <Wire.h>
 
+#if defined(USE_TFT)
+#include <Adafruit_FT6206.h> // Сенсор FT6336U
+
+#define TFT_WIDTH 320
+#define TFT_HEIGHT 480
+#define TOTAL_PAGES 8
+int page = 0;
+int startX, startY, endX, endY;
+bool touchActive = false;
+Adafruit_FT6206 ts = Adafruit_FT6206();         // Объект тача
+
+#endif /* USE_TFT */
 
 #if !defined(SERIAL_FLUSH)
 #define SERIAL_FLUSH() Serial.flush()
@@ -240,12 +253,12 @@ void RxTask(void* arg)
                 if (hdr.index < MAX_TRACKING_OBJECTS && hdr.length == sizeof(ufo_t)) 
                 {
                     memcpy(&Container[hdr.index], payload, sizeof(ufo_t));
-                    Serial.printf("[RX] Container[%u]: lat=%.6f lon=%.6f alt=%.1f flight=%s\r\n",
-                        hdr.index,
-                        Container[hdr.index].latitude,
-                        Container[hdr.index].longitude,
-                        Container[hdr.index].altitude,
-                        Container[hdr.index].flight);
+                    //Serial.printf("[RX] Container[%u]: lat=%.6f lon=%.6f alt=%.1f flight=%s\r\n",
+                    //    hdr.index,
+                    //    Container[hdr.index].latitude,
+                    //    Container[hdr.index].longitude,
+                    //    Container[hdr.index].altitude,
+                    //    Container[hdr.index].flight);
                     sendAckLike(hdr.type, hdr.index, hdr.seq, true);
                 }
                 else 
@@ -277,8 +290,8 @@ void RxTask(void* arg)
                 if (hdr.length == sizeof(uint16_t)) 
                 {
                     memcpy(&analog_code_M, payload, sizeof(uint16_t));
-                    Serial.printf("[RX] Analog code: %u\r\n", (unsigned)analog_code_M);
-                    service.set_analog_value((unsigned)analog_code_M);
+                    //Serial.printf("[RX] Analog code: %u\r\n", (unsigned)analog_code_M);
+                    //service.set_analog_value((unsigned)analog_code_M);
                     sendAckLike(hdr.type, hdr.index, hdr.seq, true);
                 }
                 else 
@@ -291,13 +304,13 @@ void RxTask(void* arg)
             {
                 if (hdr.length == sizeof(aux_t)) {
                     memcpy(&AuxFlags, payload, sizeof(aux_t));
-                    Serial.printf("[RX] AUX: new_flag=%d btn=%u MSG='%s' GNSS=%d MODE=%u\r\n",
-                        (int)AuxFlags.new_flag_M,
-                        AuxFlags.new_buttton_M,
-                        AuxFlags.msg_resp_M,
-                        (int)AuxFlags.isValidGNSS_M,
-                        AuxFlags.FLYRF_MODE_TEST_M);
-                        service.set_GNSS_on_off((bool)AuxFlags.isValidGNSS_M);
+                    //Serial.printf("[RX] AUX: new_flag=%d btn=%u MSG='%s' GNSS=%d MODE=%u\r\n",
+                    //    (int)AuxFlags.new_flag_M,
+                    //    AuxFlags.new_buttton_M,
+                    //    AuxFlags.msg_resp_M,
+                    //    (int)AuxFlags.isValidGNSS_M,
+                    //    AuxFlags.FLYRF_MODE_TEST_M);
+                    //    service.set_GNSS_on_off((bool)AuxFlags.isValidGNSS_M);
                     sendAckLike(hdr.type, hdr.index, hdr.seq, true);
                 }
                 else 
@@ -339,6 +352,43 @@ static void onButtonDoubleClickEventCb(void* button_handle, void* usr_data)
 static void onButtonLongPressStartEventCb(void* button_handle, void* usr_data)
 {
     service.set_num_buttton(3);
+}
+
+void read_tach()
+{
+    if (ts.touched()) 
+    {
+        TS_Point p = ts.getPoint();
+        int x = map(p.x, 0, 240, 0, TFT_WIDTH);   // 240 - т.к. на тач-контроллере
+        int y = map(p.y, 0, 320, 0, TFT_HEIGHT);  // 320 - т.к. на тач-контроллере
+
+        if (!touchActive) {
+            // Новое касание
+            startX = x; startY = y;
+            touchActive = true;
+        }
+        endX = x; endY = y;
+    }
+    else if (touchActive) 
+    {
+        // Таcк отпускан: определяем свайп
+        int dx = endX - startX;
+        if (abs(dx) > 50 && abs(endY - startY) < 80) 
+        {
+            if (dx > 0) 
+            {
+                // Свайп вправо (следующая страница)
+                page = (page + 1) % TOTAL_PAGES;
+            }
+            else 
+            {
+                // Свайп влево (предыдущая страница)
+                page = (page - 1 + TOTAL_PAGES) % TOTAL_PAGES;
+            }
+            Serial.printf("Page %d", page+1);
+        }
+        touchActive = false;
+    }
 }
 
 
@@ -419,6 +469,12 @@ void setup()
   xTaskCreatePinnedToCore(RxTask, "RxTask", 8192, nullptr, 3, nullptr, 0);
   //============================================================================
 
+  if (!ts.begin(40)) 
+  { // Указать частоту I2C, если нужно
+      Serial.println("Touchscreen not found!");
+     // while (1);
+  }
+
   SoC->WDT_setup();
 
   Serial.println("======== Setup END!========");
@@ -448,11 +504,13 @@ void loop()
     if (AuxFlags.isValidGNSS_M != isValidGNSS_M_tmp)
     {
         isValidGNSS_M_tmp = AuxFlags.isValidGNSS_M;
-        Serial.print("AuxFlags.isValidGNSS_M - ");
-        Serial.println(AuxFlags.isValidGNSS_M);
+        //Serial.print("AuxFlags.isValidGNSS_M - ");
+        //Serial.println(AuxFlags.isValidGNSS_M);
     }
 
     service.set_GNSS_on_off(AuxFlags.isValidGNSS_M);
+
+    read_tach();
 
     Time_loop();
 

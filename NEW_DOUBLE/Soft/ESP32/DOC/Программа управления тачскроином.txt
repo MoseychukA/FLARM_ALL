@@ -1,0 +1,99 @@
+Создать программу управления тачскроином.
+Микроконтроллер ESP32S3 Arduino IDE.
+Контроллер тачсрина FT6336U
+Программа должна выполнять листание страниц при проведении по тачскрину слева направо и справа на лево.
+Библиотека дисплея TFT_eSPI
+Контроллер дисплея ST7796
+TFT_WIDTH  320
+TFT_HEIGHT 480
+
+
+Вот пример программы для Arduino IDE, реализующей листание страниц на 
+TFT-дисплее 320×480 с контроллером ST7796 (библиотека TFT_eSPI)
+ и тач-контроллером FT6336U на ESP32S3. Для FT6336U рекомендуется библиотека
+Adafruit_FT6206
+
+
+Порядок действий:
+
+Установите библиотеки:
+
+TFT_eSPI
+Adafruit_FT6206
+Настройте файл User_Setup.h в библиотеке TFT_eSPI под вашу схему подключения дисплея ST7796.
+
+Подключите FT6336U к I2C-пинам ESP32S3 (SDA, SCL).
+
+Пример кода
+#include <TFT_eSPI.h>       // TFT-дисплей ST7796
+#include <Wire.h>
+#include <Adafruit_FT6206.h> // Сенсор FT6336U
+
+#define TFT_WIDTH 320
+#define TFT_HEIGHT 480
+#define TOTAL_PAGES 3
+
+TFT_eSPI tft = TFT_eSPI(TFT_WIDTH, TFT_HEIGHT); // Создание объекта дисплея
+Adafruit_FT6206 ts = Adafruit_FT6206();         // Объект тача
+
+int page = 0;
+int startX, startY, endX, endY;
+bool touchActive = false;
+
+// Демонстрационные страницы
+void drawPage(int num) {
+  tft.fillScreen(TFT_BLACK);
+  tft.setTextDatum(MC_DATUM);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setTextSize(3);
+  tft.drawString("PAGE " + String(num+1), TFT_WIDTH/2, TFT_HEIGHT/2);
+}
+
+void setup() {
+  Serial.begin(115200); delay(100);
+  tft.init();
+  tft.setRotation(1); // Портрет или альбом (0 - портрет, 1 - альбом)
+  drawPage(page);
+
+  if (!ts.begin(40)) { // Указать частоту I2C, если нужно
+    Serial.println("Touchscreen not found!");
+    while (1);
+  }
+}
+
+void loop() {
+  if (ts.touched()) {
+    TS_Point p = ts.getPoint();
+    int x = map(p.x, 0, 240, 0, TFT_WIDTH);   // 240 - т.к. на тач-контроллере
+    int y = map(p.y, 0, 320, 0, TFT_HEIGHT);  // 320 - т.к. на тач-контроллере
+
+    if (!touchActive) {
+      // Новое касание
+      startX = x; startY = y;
+      touchActive = true;
+    }
+    endX = x; endY = y;
+  } else if (touchActive) {
+    // Таcк отпускан: определяем свайп
+    int dx = endX - startX;
+    if (abs(dx) > 50 && abs(endY - startY) < 80) {
+      if (dx > 0) {
+        // Свайп вправо (следующая страница)
+        page = (page + 1) % TOTAL_PAGES;
+      } else {
+        // Свайп влево (предыдущая страница)
+        page = (page - 1 + TOTAL_PAGES) % TOTAL_PAGES;
+      }
+      drawPage(page);
+      Serial.printf("Page %d
+", page+1);
+    }
+    touchActive = false;
+  }
+}
+Основное:
+Реагирует на горизонтальные свайпы (dx > 50 пикселей).
+Всего 3 "страницы", но число можно менять.
+Подстройте map() для вашего тач-контроллера, если надо.
+Проверьте пины подключения в User_Setup.h и корректность I2C адреса FT6336U.
+Если потребуется улучшенный отклик или обработку нескольких касаний — пишите, помогу доработать!
