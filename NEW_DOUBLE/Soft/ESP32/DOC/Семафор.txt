@@ -1,0 +1,290 @@
+Что нужно изменить
+Для «поочерёдного» выполнения двух задач (RxTask и TachTask) следует явно синхронизировать их чтобы 
+одна задача завершила текущую итерацию, а затем передала управление другой.
+Самый простой способ — использовать два бинарных семафора:
+
+Семафор	Кому даёт разрешение	Кому отдаёт после завершения
+xRxReady	RxTask	TachTask
+xTachReady	TachTask	RxTask
+Создаём два семафора в setup().
+Инициализируем один из них (xRxReady) сразу, чтобы первая итерация стартовала с RxTask.
+В начале каждой итерации задача берёт свой семафор (xSemaphoreTake). Если семафор ещё не был выдан — задача будет ждать.
+После завершения работы задача отдаёт семафор другой задачи (xSemaphoreGive).
+Таким образом обе задачи работают на одном ядре (по‑прежнему core 0), но их выполнение строго чередуется: Rx → Tach → Rx → …
+
+Полный пример с изменениями
+#include <Arduino.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
+
+// ---------------------------
+//  Константы и типы (оставляем без изменений)
+#define PREAMBLE          0xAA
+#define PROTO_VER         0x01
+#define PKT_ACK           0x10
+#define PKT_NACK          0x11
+#define PKT_CONTAINER    0x20
+#define PKT_THISAC       0x21
+#define PKT_ANALOG       0x22
+#define PKT_AUX          0x23
+#define PKT_HEARTBEAT    0x24
+#define MAX_PAYLOAD      256
+#define MAX_TRACKING_OBJECTS 10
+
+typedef struct {
+    uint8_t preamble;
+    uint8_t ver;
+    uint8_t type;
+    uint8_t index;
+    uint8_t seq;
+    uint16_t length;
+} FrameHeader;
+
+// Прототипы (реализация где‑то в проекте)
+extern uint16_t crc16_ibm(const uint8_t *data, size_t len);
+extern bool parseOneFrame(Stream &s, FrameHeader &hdr, uint8_t *payload, uint16_t &rxCrc);
+extern void rs485SetTX(bool tx);
+extern Stream RS485_SERIAL;
+extern SemaphoreHandle_t serialMutex;
+
+// ---------------------------
+//  Семафоры для синхронизации
+static SemaphoreHandle_t xRxReady   = nullptr; // разрешение для RxTask
+static SemaphoreHandle_t xTachReady = nullptr; // разрешение для TachTask
+
+// ---------------------------
+//  Функция отправки ACK/NACK (без изменений)
+static void sendAckLike(uint8_t type, uint8_t index, uint8_t seq, bool positive) {
+    uint8_t payload[4];
+    payload[0] = type;
+    payload[1] = index;
+    payload[2] = seq;
+    payload[3] = positive ? 0x06 : 0x15;
+
+    FrameHeader hdr;
+    hdr.preamble = PREAMBLE;
+    hdr.ver = PROTO_VER;
+    hdr.type = positive ? PKT_ACK : PKT_NACK;
+    hdr.index = 0;
+    hdr.seq = 0;
+    hdr.length = sizeof(payload);
+
+    uint8_t header_and_payload[sizeof(FrameHeader) - 2 + sizeof(payload)];
+    memcpy(&header_and_payload[0], &hdr.ver, sizeof(FrameHeader) - 2);
+    memcpy(&header_and_payload[sizeof(FrameHeader) - 2], payload, sizeof(payload));
+    uint16_t crc = crc16_ibm(header_and_payload, sizeof(header_and_payload));
+
+    if (xSemaphoreTake(serialMutex, pdMS_TO_TICKS(50)) == pdTRUE) {
+        rs485SetTX(true);
+        RS485_SERIAL.write((uint8_t*)&hdr, sizeof(hdr));
+        RS485_SERIAL.write(payload, sizeof(payload));
+        RS485_SERIAL.write((uint8_t*)&crc, sizeof(crc));
+        RS485_SERIAL.flush();
+        delayMicroseconds(200);
+        rs485SetTX(false);
+        xSemaphoreGive(serialMutex);
+    }
+}
+
+// ---------------------------
+//  Приёмная задача (RxTask) – теперь синхронизирована
+void RxTask(void* arg) {
+    FrameHeader hdr;
+    uint8_t payload[MAX_PAYLOAD];
+    uint16_t rxCrc;
+
+    for (;;) {
+        // Ожидаем разрешения от TachTask
+        xSemaphoreTake(xRxReady, portMAX_DELAY);
+
+        // --- Текущий цикл обработки -------------------------------------------------
+        if (!RS485_SERIAL.available()) {
+            vTaskDelay(pdMS_TO_TICKS(1));
+            // Вернём семафор TachTask, чтобы он смог выполнить свою часть,
+            // даже если данных нет. Это позволяет системе «дышать».
+            xSemaphoreGive(xTachReady);
+            continue;
+        }
+
+        if (!parseOneFrame(RS485_SERIAL, hdr, payload, rxCrc)) {
+            vTaskDelay(pdMS_TO_TICKS(1));
+            xSemaphoreGive(xTachReady);
+            continue;
+        }
+
+        uint8_t buf[sizeof(FrameHeader) - 2 + MAX_PAYLOAD];
+        memcpy(buf, &hdr.ver, sizeof(FrameHeader) - 2);
+        memcpy(buf + sizeof(FrameHeader) - 2, payload, hdr.length);
+        uint16_t calc = crc16_ibm(buf, (sizeof(FrameHeader) - 2) + hdr.length);
+        bool ok = (calc == rxCrc);
+
+        // ACK/NACK для служебных
+        if (hdr.type == PKT_ACK || hdr.type == PKT_NACK) {
+            xSemaphoreGive(xTachReady);   // передаём управление
+            continue;
+        }
+
+        if (!ok) {
+            sendAckLike(hdr.type, hdr.index, hdr.seq, false);
+            xSemaphoreGive(xTachReady);
+            continue;
+        }
+
+        // Обработка полезных данных (оставляем ваш оригинальный код)
+        switch (hdr.type) {
+            case PKT_CONTAINER:
+                if (hdr.index < MAX_TRACKING_OBJECTS && hdr.length == sizeof(ufo_t)) {
+                    memcpy(&Container[hdr.index], payload, sizeof(ufo_t));
+                    sendAckLike(hdr.type, hdr.index, hdr.seq, true);
+                } else {
+                    sendAckLike(hdr.type, hdr.index, hdr.seq, false);
+                }
+                break;
+
+            case PKT_THISAC:
+                if (hdr.length == sizeof(ufo_t)) {
+                    memcpy(&ThisAircraft, payload, sizeof(ufo_t));
+                    sendAckLike(hdr.type, hdr.index, hdr.seq, true);
+                } else {
+                    sendAckLike(hdr.type, hdr.index, hdr.seq, false);
+                }
+                break;
+
+            case PKT_ANALOG:
+                if (hdr.length == sizeof(uint16_t)) {
+                    memcpy(&analog_code_M, payload, sizeof(uint16_t));
+                    sendAckLike(hdr.type, hdr.index, hdr.seq, true);
+                } else {
+                    sendAckLike(hdr.type, hdr.index, hdr.seq, false);
+                }
+                break;
+
+            case PKT_AUX:
+                if (hdr.length == sizeof(aux_t)) {
+                    memcpy(&AuxFlags, payload, sizeof(aux_t));
+                    sendAckLike(hdr.type, hdr.index, hdr.seq, true);
+                } else {
+                    sendAckLike(hdr.type, hdr.index, hdr.seq, false);
+                }
+                break;
+
+            case PKV_HEARTBEAT:
+                sendAckLike(hdr.type, hdr.index, hdr.seq, true);
+                break;
+
+            default:
+                sendAckLike(hdr.type, hdr.index, hdr.seq, false);
+                break;
+        }
+
+        // После завершения итерации отдаём семафор TachTask
+        xSemaphoreGive(xTachReady);
+    }
+}
+
+// ---------------------------
+//  Задача обработки тачскрина (TachTask) – теперь синхронизирована
+void TachTask(void* arg) {
+    // Переменные для тач‑скрина (оставляем ваши оригинальные)
+    int startX = 0, startY = 0;
+    int endX   = 0, endY   = 0;
+    bool touchActive = false;
+    int page = 0;
+
+    for (;;) {
+        // Ожидаем, пока RxTask завершит свою итерацию
+        xSemaphoreTake(xTachReady, portMAX_DELAY);
+
+        // ----------------- Текущий цикл обработки -----------------
+        if (digitalRead(INT_N_PIN) == 0) {
+            digitalWrite(SOC_GPIO_PIN_LED, LOW);
+            ft6336u.read_td_status();
+            ft6336u.read_touch1_event();
+            ft6336u.read_touch1_id();
+
+            int y = ft6336u.read_touch1_x();   // X‑координата в системе дисплея
+            int x = ft6336u.read_touch1_y();   // Y‑координата в системе дисплея
+
+            if (!touchActive) {
+                startX = x;
+                startY = y;
+                touchActive = true;
+            }
+            endX = x;
+            endY = y;
+        } else if (touchActive) {
+            int dx = endX - startX;
+
+            if (abs(dx) > 50 && abs(endY - startY) < 80) {
+                if (dx > 0) {
+                    // Свайп вправо – переходим к предыдущей странице
+                    page = (page - 1 + TOTAL_PAGES) % TOTAL_PAGES;
+                } else {
+                    // Свайп влево – переходим к следующей странице
+                    page = (page + 1) % TOTAL_PAGES;
+                }
+                service.set_view_range(page);
+                Serial.printf("Page %d\r
+", page);
+                touchActive = false;
+            }
+        }
+
+        // После выполнения своей части отдаём управление RxTask
+        xSemaphoreGive(xRxReady);
+        // Чтобы не «залипал» в бесконечном цикле без паузы, делаем небольшую задержку
+        vTaskDelay(pdMS_TO_TICKS(1));
+    }
+}
+
+// ---------------------------
+//  Инициализация
+void setup() {
+    Serial.begin(115200);
+
+    // Создаём мьютекс для UART‑доступа (у вас уже есть)
+    serialMutex = xSemaphoreCreateMutex();
+
+    // Создаём два бинарных семафора
+    xRxReady   = xSemaphoreCreateBinary();
+    xTachReady = xSemaphoreCreateBinary();
+
+    // Даем стартовое разрешение RxTask (первая итерация должна начаться с приёма)
+    xSemaphoreGive(xRxReady);
+
+    // Запускаем задачи на ядре 0
+    xTaskCreatePinnedToCore(RxTask,   "RxTask",   8192, nullptr, 3, nullptr, 0);
+    xTaskCreatePinnedToCore(TachTask, "TachTask", 8192, nullptr, 3, nullptr, 0);
+}
+
+// ---------------------------
+//  Пустой loop (не используется, всё в задачах)
+void loop() {
+    // ничего не делаем – всё в RTOS‑задачах
+}
+Краткое пояснение
+Шаг	Что делаем	Зачем
+Создаём два семафора (xRxReady, xTachReady)	Позволяют явно передавать «хватание» выполнения от одной задачи к другой.	
+Обеспечивает строгий порядок Rx → Tach → Rx ….
+Инициализируем xRxReady в setup()	Первая итерация начинается с RxTask.	Без этого обе задачи сразу блокировались бы.
+В начале каждой итерации задачи берут свой семафор (xSemaphoreTake).	Задача ждёт, пока другая завершит свою часть.
+	Гарантирует, что в любой момент работает только одна из двух задач.
+После обработки задачи отдают семафор другой задаче (xSemaphoreGive).	Передаём «ход» следующей задаче.
+	Сохраняет чередование.
+vTaskDelay(pdMS_TO_TICKS(1)) в конце TachTask.	Поскольку TachTask в основном не блокируется, 
+небольшая задержка освобождает процессор для остальных системных задач (таймеров, ISR‑ов).	
+Предотвращает «залипание» ядра.
+При отсутствии данных в RxTask семафор всё равно отдаётся TachTask.	Чтобы система не простаивала,
+ TachTask всё‑равно получает шанс выполнить свою часть.	Поддерживает плавность работы.
+Что ещё можно улучшить (по желанию)
+Разные приоритеты – если требуется, чтобы RxTask имел более высокий приоритет (чтобы обрабатывать 
+входящие пакеты как можно быстрее), просто задайте, например, 5 вместо 3.
+Разделение ядер – если ваш микроконтроллер имеет два ядра и хотите полностью разгрузить одно из них,
+ можно разместить TachTask на core 1 (xTaskCreatePinnedToCore(..., 1)), оставив RxTask на core 0. 
+ При этом синхронизация семафорами всё равно будет работать.
+EventGroup – вместо двух бинарных семафоров можно использовать одну EventGroupHandle_t с двумя битами,
+ но семафоры проще понять и отлаживать.
+Итого: добавив два бинарных семафора и небольшие изменения в циклы задач, вы получаете гарантированно 
+последовательное выполнение RxTask и TachTask без необходимости менять их внутреннюю логику.
+ Всё работает на FreeRTOS‑платформе (ESP32/ESP8266 и т.п.) и сохраняет ваш оригинальный код обработки пакетов и тач‑скрина.

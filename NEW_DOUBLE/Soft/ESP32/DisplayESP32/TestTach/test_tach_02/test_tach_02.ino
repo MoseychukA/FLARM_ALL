@@ -1,5 +1,5 @@
 #include "FT6336U.h"
-#include <TFT_eSPI.h>       // TFT-дисплей ST7796
+#include "TFT_eSPI.h"      // 
 #include <Wire.h>
 
 #define I2C_SDA 8
@@ -11,14 +11,14 @@
 #define TFT_HEIGHT 480
 #define TOTAL_PAGES 8
 
-TFT_eSPI tft = TFT_eSPI(TFT_WIDTH, TFT_HEIGHT); // Создание объекта дисплея
+TFT_eSPI tft = TFT_eSPI(TFT_WIDTH, TFT_HEIGHT); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 FT6336U ft6336u(I2C_SDA, I2C_SCL, RST_N_PIN, INT_N_PIN);
 
 int page = 0;
 int startX, startY, endX, endY;
 bool touchActive = false;
 
-// Демонстрационные страницы
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void drawPage(int num) {
     tft.fillScreen(TFT_BLACK);
     tft.setTextDatum(MC_DATUM);
@@ -33,7 +33,7 @@ void setup()
 {
     Serial.begin(115200);
     tft.init();
-    tft.setRotation(1); // Портрет или альбом (0 - портрет, 1 - альбом)
+    tft.setRotation(1); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (0 - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, 1 - пїЅпїЅпїЅпїЅпїЅпїЅ)
     drawPage(page);
 
     ft6336u.begin();
@@ -50,11 +50,11 @@ void loop()
         ft6336u.read_touch1_id();
 
         int y = ft6336u.read_touch1_x();   // 
-        int x = ft6336u.read_touch1_y();  // 320 - т.к. на тач-контроллере
+        int x = ft6336u.read_touch1_y();  // 320 - пїЅ.пїЅ. пїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
         if (!touchActive) 
         {
-            // Новое касание
+            // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             startX = x; startY = y;
             touchActive = true;
         }
@@ -62,20 +62,20 @@ void loop()
     }
     else if (touchActive/* && digitalRead(INT_N_PIN) != 0*/)
     {
-        // Таcк отпускан: определяем свайп
+        // пїЅпїЅcпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         int dx = endX - startX;
 
         if (abs(dx) > 50 && abs(endY - startY) < 80) 
         {
             if (dx > 0) 
             {
-                // Свайп вправо (следующая страница)
+                // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
              /*   page = (page + 1) % TOTAL_PAGES;*/
                 page = (page - 1 + TOTAL_PAGES) % TOTAL_PAGES;
             }
             else 
             {
-                // Свайп влево (предыдущая страница)
+                // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
                // page = (page - 1 + TOTAL_PAGES) % TOTAL_PAGES;
                 page = (page + 1) % TOTAL_PAGES;
             }
