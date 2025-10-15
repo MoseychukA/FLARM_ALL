@@ -61,7 +61,7 @@ class CommandHandlerClass // класс-обработчик команд из �
     void send_ThisAircraft();
     void send_base();
     void GPS_send_base();
-    char msg_tmp_all[150] = "";
+    char msg_tmp_all[170] = "";
   
  private:
 
