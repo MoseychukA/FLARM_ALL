@@ -1,0 +1,62 @@
+Вот готовая программу для ESP32S3 (Arduino IDE), которая:
+
+Измеряет напряжение и ток с помощью INA219.
+Преобразует диапазон напряжений 3,5 В – 4,6 В в шкалу 0–100%.
+Выводит напряжение, ток и процент напряжения в Serial Monitor.
+Скетч Arduino
+#include <Wire.h>
+#include <Adafruit_INA219.h>
+
+Adafruit_INA219 ina219;
+
+// Функция преобразования напряжения к процентам (от 3,5В до 4,6В)
+int voltageToPercent(float voltage) {
+  const float minV = 3.5;
+  const float maxV = 4.6;
+  if (voltage <= minV) return 0;
+  if (voltage >= maxV) return 100;
+  return round((voltage - minV) * 100.0 / (maxV - minV));
+}
+
+void setup() {
+  Serial.begin(115200);
+  ina219.begin();
+}
+
+void loop() {
+  float busVoltage = ina219.getBusVoltage_V();           // Напряжение шины
+  float shuntVoltage = ina219.getShuntVoltage_mV() / 1000.0;   // Напряжение на шунте, В
+  float loadVoltage = busVoltage + shuntVoltage;         // Полное напряжение на нагрузке (если нужно)
+  float current_mA = ina219.getCurrent_mA();             // Текущий ток, мА
+ 
+  int voltage_percent = voltageToPercent(busVoltage);
+
+  Serial.print("Напряжение: ");
+  Serial.print(busVoltage, 3);
+  Serial.print(" В (");
+  Serial.print(voltage_percent);
+  Serial.println("% диапазона 3.5-4.6В)");
+  
+  Serial.print("Ток: ");
+  Serial.print(current_mA, 2);
+  Serial.println(" мА");
+
+  Serial.println("-----");
+  delay(2000);  // Пауза 2 секунды
+}
+Как это работает
+Если напряжение ниже 3,5 В — процент будет 0.
+Если выше 4,6 В — 100.
+Всё между 3,5 и 4,6 В — линейная шкала процентов.
+Ток отображается в миллиамперах.
+Подключение INA219 к ESP32S3
+ESP32S3	INA219
+3.3V или 5V	VCC
+GND	GND
+SDA	SDA
+SCL	SCL
+Пины SDA/SCL могут различаться для разных плат ESP32, проверьте схематику вашей платы (часто это GPIO 21 и 22, но не всегда!).
+
+Если потребуется вывод напряжения на нагрузке (после шунта) в процентах — просто подмените в коде переменную busVoltage на loadVoltage.
+
+Готов к дальнейшей кастомизации — пишите, если нужно что-то изменить!

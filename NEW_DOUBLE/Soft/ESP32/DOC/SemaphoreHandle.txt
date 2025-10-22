@@ -1,0 +1,169 @@
+Вот как адаптировать вашу программу для потокобезопасной работы с базой данных Container[], если
+
+запись осуществляется командами Traffic_Update(&fo); и Traffic_Add(&fo);
+чтение ― командой enqueueFrame(PKT_CONTAINER, (uint8_t)i, &Container[i], sizeof(ufo_t));
+многозадачность присутствует (FreeRTOS).
+1. Объявление глобального мьютекса на Container
+В самом начале вашего основного файла (или модуля, где определяется контейнер):
+
+SemaphoreHandle_t containerMutex = nullptr;  // Мьютекс для защиты базы
+Если Container[] определён где-то ещё ― обьявите мьютекс глобально, 
+либо через extern, либо через TrafficHelper.h (см. ниже).
+
+2. Инициализация мьютекса
+В начале setup()
+(только однократно!):
+
+void setup() {
+    ...
+    containerMutex = xSemaphoreCreateMutex();
+    ...
+}
+3. Использование мьютекса во всех функциях ДОСТУПА к Container
+Запись: Traffic_Update и Traffic_Add (модифицируйте их — например, в TrafficHelper.cpp)
+bool Traffic_Add(ufo_t* fop)
+{
+    int i, oldest = 0;
+    uint32_t ts_min;
+    bool result = false;
+
+    if (!fop->addr) return false;
+
+    if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
+        // 1. Обновление
+        for (i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+            if (Container[i].addr == fop->addr) {
+                Container[i] = *fop;
+                result = true;
+                goto AddFinish;
+            }
+        }
+        // 2. Пустой слот
+        for (i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+            if (Container[i].addr == 0) {
+                Container[i] = *fop;
+                result = true;
+                goto AddFinish;
+            }
+        }
+        // 3. Перезапись самого старого/просроченного
+        oldest = 0; ts_min = Container[0].timestamp;
+        for (i = 1; i < MAX_TRACKING_OBJECTS; i++) {
+            if (Container[i].timestamp < ts_min) {
+                oldest = i;
+                ts_min = Container[i].timestamp;
+            }
+            if ((now() > Container[i].timestamp) && ((now() - Container[i].timestamp) > ENTRY_EXPIRATION_TIME)) {
+                oldest = i;
+                break;
+            }
+        }
+        Container[oldest] = *fop;
+        result = true;
+    AddFinish:
+        xSemaphoreGive(containerMutex);
+    }
+    return result;
+}
+
+void Traffic_Update(ufo_t* fop)
+{
+    if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(10)) == pdTRUE) 
+	{
+        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+            if (Container[i].addr == fop->addr) {
+                // Обновляем только координаты и время, если нужно...
+                Container[i].lat = fop->lat;
+                Container[i].lon = fop->lon;
+                Container[i].altitude = fop->altitude;
+                Container[i].speed = fop->speed;
+                Container[i].course = fop->course;
+                Container[i].vert_rate = fop->vert_rate;
+                Container[i].timestamp = fop->timestamp;
+                break;
+            }
+        }
+        xSemaphoreGive(containerMutex);
+    }
+}
+Чтение: любая выборка из базы
+В задаче DeltaCheckTask, ПЕРЕД ЧТЕНИЕМ Container[i]
+ОБЯЗАТЕЛЬНО оградить мьютексом:
+
+void DeltaCheckTask(void* arg) 
+{
+    const TickType_t period = pdMS_TO_TICKS(TX_PERIOD_MS);
+    TickType_t last = xTaskGetTickCount();
+
+    for (;;) 
+    {
+        // --- Критическая секция чтения базы ----
+        if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(15)) == pdTRUE) {
+            for (int i = 0; i < MAX_TRACKING_OBJECTS; ++i) {
+                enqueueFrame(PKT_CONTAINER, (uint8_t)i, &Container[i], sizeof(ufo_t));
+            }
+            xSemaphoreGive(containerMutex);
+        }
+        // ---------------------------------------
+
+        // ... (отправка ThisAircraft, analog_code_M, AuxFlags без мьютекса если надо)
+        enqueueFrame(PKT_THISAC, 0xFF, &ThisAircraft, sizeof(ufo_t));
+        enqueueFrame(PKT_ANALOG, 0x00, &analog_code_M, sizeof(analog_code_M));
+        enqueueFrame(PKT_AUX, 0x00, &AuxFlags, sizeof(aux_t));
+        uint8_t hb = 0xA5;
+        enqueueFrame(PKT_HEARTBEAT, 0x00, &hb, 1);
+
+        vTaskDelayUntil(&last, period);
+    }
+}
+Пример доступа из других задач
+Также где бы ни был доступ к контейнеру (например, ClearExpired, Traffic_loop) ―
+Только под мьютексом!
+
+void ClearExpired() {
+    if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(10)) == pdTRUE) 
+	{
+        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+            // ...
+        }
+        xSemaphoreGive(containerMutex);
+    }
+}
+4. Если Container используется в нескольких CPP-файлах
+В .h-файле (например, TrafficHelper.h):
+
+extern SemaphoreHandle_t containerMutex;
+5. Итоговая схема
+mute
+mute
+mute
+mute
+Traffic_Add
+Container
+Traffic_Update
+DeltaCheckTask
+ЛюбаяЧитающаяФункция
+6. Резюме по синхронизации
+Все операции чтения и записи в массив Container[] (во всех задачах и функциях!) 
+обрамлены проверкой/захватом мьютекса containerMutex.
+После окончания работы: xSemaphoreGive(containerMutex);
+Это защищает от ошибок одновременного доступа с нескольких ядер или task’ов, 
+предотвращает повреждение данных.
+7. Быстрая вставка для ваших функций
+Для записи или обновления:
+
+if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(15)) == pdTRUE) {
+    // Модификация Container[...] (добавление, обновление, очистка и проч.)
+    xSemaphoreGive(containerMutex);
+}
+Для чтения / копирования / передачи по Serial:
+
+if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(15)) == pdTRUE) {
+    // Использовать данные Container[...] (например, enqueueFrame и т.п.)
+    xSemaphoreGive(containerMutex);
+}
+8. Важно!
+Внутри критических секций не делайте долгих операций (например, delay, длинные Serial.print, обработка дисплея).
+Не держите мьютекс дольше, чем реально нужно на доступ к данным.
+Если добавить такие вызовы вокруг всех обращений к Container ― ваша база данных самолётов станет
+ действительно потокобезопасной в многозадачной системе!

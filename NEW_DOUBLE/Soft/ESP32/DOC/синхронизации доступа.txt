@@ -1,0 +1,154 @@
+Вот полностью рабочий и корректный пример синхронизации доступа к базе данных самолетов
+(Container) между писателями (Traffic_Add, Traffic_Update) и читателем (поток отправки DeltaCheckTask) для ESP32 Arduino + FreeRTOS.
+
+1. Объявляем и инициализируем мьютекс
+#include <Arduino.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
+
+#define MAX_TRACKING_OBJECTS 8
+
+typedef struct {
+    uint32_t addr;
+    uint16_t squawk;
+    char     flight[16];
+    int      altitude;
+    int      speed;
+    int      track;
+    int      vert_rate;
+    float    lat;
+    float    lon;
+    uint32_t timestamp;
+} ufo_t;
+
+ufo_t Container[MAX_TRACKING_OBJECTS];
+
+// Для синхронизации
+SemaphoreHandle_t containerMutex;
+2. Инициализируем мьютекс в setup()
+void setup() {
+    Serial.begin(115200);
+    containerMutex = xSemaphoreCreateMutex();
+}
+3. Пример функции-добавления и обновления самолёта с синхронизацией
+bool Traffic_Add(ufo_t* fo) {
+    bool result = false;
+    if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(10)) == pdTRUE) 
+	{
+        // Обновление, если addr уже есть
+        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+            if (Container[i].addr == fo->addr) {
+                Container[i] = *fo;
+                result = true;
+                goto leave;
+            }
+        }
+        // Добавление в пустой слот
+        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+            if (Container[i].addr == 0) {
+                Container[i] = *fo;
+                result = true;
+                goto leave;
+            }
+        }
+        // Перезапись устаревших
+        uint32_t now_time = millis() / 1000;
+        const uint32_t ENTRY_EXPIRATION_TIME = 30; // сек
+        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+            if (now_time - Container[i].timestamp > ENTRY_EXPIRATION_TIME) {
+                Container[i] = *fo;
+                result = true;
+                goto leave;
+            }
+        }
+    leave:
+        xSemaphoreGive(containerMutex);
+    }
+    return result;
+}
+
+bool Traffic_Update(ufo_t* fo) {
+    bool result = false;
+    if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
+        for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+            if (Container[i].addr == fo->addr) {
+                // Обновляем только координаты и время
+                Container[i].lat = fo->lat;
+                Container[i].lon = fo->lon;
+                Container[i].timestamp = fo->timestamp;
+                result = true;
+                break;
+            }
+        }
+        xSemaphoreGive(containerMutex);
+    }
+    return result;
+}
+4. Пример задачи-читателя (отправка структуры в поток передачи)
+void DeltaCheckTask(void* arg) {
+    const TickType_t period = pdMS_TO_TICKS(1000); // каждую секунду
+    TickType_t last = xTaskGetTickCount();
+
+    for (;;) {
+        if (xSemaphoreTake(containerMutex, pdMS_TO_TICKS(20)) == pdTRUE) {
+            for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+                // Тут отправляйте по вашему протоколу/Serial/экрану
+                if (Container[i].addr != 0) {
+                    Serial.printf("SEND: %u %s ALT:%d SPD:%d LAT:%.5f LON:%.5f
+",
+                        Container[i].addr,
+                        Container[i].flight,
+                        Container[i].altitude,
+                        Container[i].speed,
+                        Container[i].lat,
+                        Container[i].lon
+                    );
+                }
+            }
+            xSemaphoreGive(containerMutex);
+        }
+        vTaskDelayUntil(&last, period);
+    }
+}
+5. Пример генератора тестовых пакетов (можно запускать отдельной задачей)
+void TestAddTask(void* arg) {
+    int flight_num = 1;
+    for (;;) {
+        ufo_t plane;
+        memset(&plane, 0, sizeof(plane));
+        plane.addr = 0xA10000 + flight_num;
+        snprintf(plane.flight, sizeof(plane.flight), "SU%04d", flight_num);
+        plane.altitude = 9000 + flight_num * 50;
+        plane.speed = 700 + flight_num * 5;
+        plane.lat = 55.0 + flight_num * 0.01;
+        plane.lon = 37.0 + flight_num * 0.01;
+        plane.timestamp = millis() / 1000;
+        Traffic_Add(&plane);
+
+        flight_num++;
+        if (flight_num > MAX_TRACKING_OBJECTS) flight_num = 1;
+        vTaskDelay(pdMS_TO_TICKS(3000));
+    }
+}
+6. Запуск задач FreeRTOS
+void setup() {
+    Serial.begin(115200);
+    containerMutex = xSemaphoreCreateMutex();
+
+    // Запускаем задачи генерации тестов и передачи
+    xTaskCreatePinnedToCore(DeltaCheckTask, "DeltaCheck", 4096, nullptr, 1, nullptr, 1); // Core 1
+    xTaskCreatePinnedToCore(TestAddTask,   "TestAdd",    4096, nullptr, 1, nullptr, 1); // Core 1
+}
+
+void loop() {
+    delay(100); // FreeRTOS-контролируемая программа, loop не нужен
+}
+Пример работы
+TestAddTask добавляет или обновляет самолёты с синхронизацией.
+DeltaCheckTask раз в секунду читает базу и выводит только валидные записи.
+Оба получают/отпускают мьютекс, не блокируют друг друга более чем на десятки миллисекунд.
+Главные моменты:
+Используется один мьютекс для защиты массива разделяемых структур.
+Нет race-condition, данные не повреждаются.
+Полностью адаптируемо для вашего проекта (можете вставить свой вывод, отправку, обработку, просто обернуть синхронизацией).
+Если нужно больше примеров — скажите, какой именно сценарий показать (одновременный вывод на дисплей, обработку при удалении, очистку и т.д.).

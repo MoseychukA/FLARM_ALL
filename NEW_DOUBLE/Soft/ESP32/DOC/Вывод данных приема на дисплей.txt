@@ -1,0 +1,600 @@
+Вот пример архитектуры и кода для реализации задачи на ESP32S3 с использованием Arduino IDE и библиотеки TFT_eSPI (контроллер ST7796, дисплей 480x480):
+
+Основные принципы
+Каждому самолёту сопоставляется отдельный TFT_eSprite, который содержит отрисованную информацию.
+Массив спрайтов:
+TFT_eSprite* airplane_info[MAX_TRACKING_OBJECTS];
+Расположение: Спрайты располагаются вертикально с равномерным шагом по Y и фиксированной X (например, X=0).
+Добавление/удаление:
+При добавлении — запись в массив, создание спрайта, отрисовка информации.
+При удалении — удаление спрайта, сдвиг вверх следующих спрайтов, обновление их координат и перерисовка.
+Пример кода
+#include <TFT_eSPI.h>
+
+#define WIDTH  480
+#define HEIGHT 480
+#define MAX_TRACKING_OBJECTS 8
+#define INFO_HEIGHT 56 // Высота одного спрайта, например: 480/8 = 60
+
+TFT_eSPI tft = TFT_eSPI(WIDTH, HEIGHT); // Инициализация дисплея
+
+struct ToDUMP1090 {
+  uint32_t addr;
+  uint16_t squawk;
+  char flight[16];
+  int altitude;
+  int speed;
+  int track;
+  int vert_rate;
+  float lat;
+  float lon;
+};
+
+// Массив данных и флагов занятости для контейнера
+ToDUMP1090 Container[MAX_TRACKING_OBJECTS];
+bool used[MAX_TRACKING_OBJECTS] = { false };
+
+// Массив указателей на спрайты
+TFT_eSprite* airplane_info[MAX_TRACKING_OBJECTS];
+
+void setup() {
+  tft.init();
+  tft.setRotation(0);
+  tft.fillScreen(TFT_BLACK);
+}
+
+// Создание/перерисовка спрайта самолёта
+void drawAirplaneInfo(int idx) {
+  if (airplane_info[idx]) delete airplane_info[idx];
+  airplane_info[idx] = new TFT_eSprite(&tft);
+  airplane_info[idx]->createSprite(WIDTH, INFO_HEIGHT);
+  airplane_info[idx]->fillSprite(TFT_NAVY);
+
+  // Вывод информации
+  airplane_info[idx]->setTextColor(TFT_WHITE, TFT_NAVY);
+  airplane_info[idx]->setTextDatum(TL_DATUM);
+  ToDUMP1090 &p = Container[idx];
+  airplane_info[idx]->drawString(String("Flight: ") + p.flight, 4, 2, 2);
+  airplane_info[idx]->drawString(String("Altitude: ") + String(p.altitude), 4, 22, 2);
+  airplane_info[idx]->drawString(String("Speed: ") + String(p.speed), 160, 22, 2);
+  // И т.д. для остальных полей
+
+  // Рисуем спрайт на экране
+  airplane_info[idx]->pushSprite(0, idx * INFO_HEIGHT);
+}
+
+// Сдвиг спрайтов вверх после удаления
+void shiftSpritesUp() {
+  int newIdx = 0;
+  for (int i = 0; i < MAX_TRACKING_OBJECTS; ++i) {
+    if (used[i]) {
+      if (newIdx != i) {
+        // Копируем данные структуры и флага
+        Container[newIdx] = Container[i];
+        used[newIdx]      = true;
+        used[i]           = false;
+        // Перемещаем спрайт
+        if (airplane_info[newIdx]) delete airplane_info[newIdx];
+        airplane_info[newIdx] = airplane_info[i]; // указатель спрайта
+        airplane_info[i] = nullptr;
+      }
+      if (airplane_info[newIdx])
+        airplane_info[newIdx]->pushSprite(0, newIdx * INFO_HEIGHT);
+      newIdx++;
+    }
+  }
+  // Очищаем пустые места
+  for (int i = newIdx; i < MAX_TRACKING_OBJECTS; ++i) {
+    if (airplane_info[i]) {
+      delete airplane_info[i];
+      airplane_info[i] = nullptr;
+    }
+    tft.fillRect(0, i * INFO_HEIGHT, WIDTH, INFO_HEIGHT, TFT_BLACK);
+    used[i] = false;
+  }
+}
+
+// Добавление информации о самолёте
+void addAirplane(const ToDUMP1090& info) 
+{
+  for (int i = 0; i < MAX_TRACKING_OBJECTS; ++i) {
+    if (!used[i]) {
+      Container[i] = info;
+      used[i]      = true;
+      drawAirplaneInfo(i);
+      break;
+    }
+  }
+}
+
+// Удаление информации
+void removeAirplaneByAddr(uint32_t addr) 
+{
+  for (int i = 0; i < MAX_TRACKING_OBJECTS; ++i) {
+    if (used[i] && Container[i].addr == addr) {
+      used[i] = false;
+      if (airplane_info[i]) {
+        delete airplane_info[i];
+        airplane_info[i] = nullptr;
+      }
+      tft.fillRect(0, i * INFO_HEIGHT, WIDTH, INFO_HEIGHT, TFT_BLACK);
+      shiftSpritesUp();
+      break;
+    }
+  }
+}
+
+void loop() 
+{
+  // Пример добавления/удаления тестовых самолётов
+  // addAirplane(...);
+  // removeAirplaneByAddr(...);
+}
+Визуальная схема работы
+Кратко
+Каждый спрайт = одна строка, привязка к индексу контейнера.
+При удалении: удаляем спрайт, сдвигаем остальные вверх, очищаем экран в последней строке.
+Спрайт создаётся заново при изменении данных.
+Такой подход наиболее прост для реализации на Arduino с ESP32S3 и экономит ресурсы, т.к. на экране одновременно не более 8 небольших спрайтов.
+ Если нужен динамический размер информации, высоту строки можно уменьшить, если информации меньше.
+ 
+ //=============================================================
+ 
+ Вот пример теста добавления и удаления самолёта для описанной выше программы.
+ Допустим, мы хотим добавить самолёт, подождать 3 секунды, затем удалить его по адресу ICAO. 
+ Можно реализовать это так — поместить все в функцию loop() для Arduino:
+
+void loop() {
+  static bool added = false;
+  static bool removed = false;
+  static uint32_t timer = 0;
+
+  if (!added) 
+  {
+    // Добавляем тестовый самолет
+    ToDUMP1090 testPlane;
+    testPlane.addr = 0x123456;
+    strcpy(testPlane.flight, "SU1234");
+    testPlane.squawk = 7500;
+    testPlane.altitude = 9500;
+    testPlane.speed = 750;
+    testPlane.track = 60;
+    testPlane.vert_rate = 400;
+    testPlane.lat = 55.75;
+    testPlane.lon = 37.62;
+
+    addAirplane(testPlane);
+
+    Serial.println("Самолёт добавлен!");
+    added = true;
+    timer = millis();
+  }
+
+  // Ждём примерно 3 секунды, затем удаляем самолёт
+  if (added && !removed && millis() - timer > 3000) 
+  {
+    removeAirplaneByAddr(0x123456);
+    Serial.println("Самолёт удалён!");
+    removed = true;
+  }
+}
+Что делает код:
+
+При первом запуске добавляет тестовый самолёт с ICAO адресом 0x123456.
+Через 3 секунды удаляет его из базы.
+В оба момента пишет сообщение в Serial.
+Примечания:
+
+Если нужно добавить несколько самолетов — скопируйте и измените поля у дополнительных переменных типа ToDUMP1090 и вызовите addAirplane() с ними.
+Если нужно повторять тест — можно сбрасывать флаги added и removed после определённого времени.
+Итог
+Код для добавления и удаления самолета из базы готов для проверки работы вашей системы отображения на дисплее!
+
+
+//==========================================================================================
+
+Для вашей задачи необходимо автоматически отображать на дисплее появление, обновление и удаление объектов из массива Container.
+В потоке приёма (RxTask) информация появляется всегда в определённом индексе (Container[hdr.index]),
+ но вы не всегда знаете — это новое воздушное судно, обновление информации, или слот должен быть очищен.
+
+Общие шаги:
+Добавили/обновили объект — обновить/перерисовать спрайт в ленте.
+Удалили объект (например получили пустой слот — зависит от спецификации, 
+обычно передают специальный payload для удаления) — убрать спрайт, сдвинуть остальные вверх.
+Автоматически сверять содержимое контейнера и синхронизировать спрайты:
+Обновлять спрайты там, где есть актуальные данные.
+Удалять спрайты, где данных больше нет.
+Пример интеграции спрайтов с вашим RxTask
+Ниже приведены модификации, которые позволяют автоматически создавать и удалять спрайты при изменениях в Container.
+
+1. Определить признак наличия валидных данных
+В структуре должно быть поле, по которому понятно — информация валидна (например, addr != 0).
+Если у вас нет такого поля, добавьте, например:
+
+struct ToDUMP1090 {
+  uint32_t addr;
+  ...
+};
+Пустой объект: addr == 0
+
+2. Глобальные массивы
+// Предполагается, что Container объявлен глобально
+TFT_eSprite* airplane_info[MAX_TRACKING_OBJECTS] = {nullptr};
+3. Функция проверки и отображения
+// Проверяет все Container, создаёт/удаляет спрайты по факту наличия информации
+
+
+void syncContainerDisplay() 
+{
+  for (int i = 0, curLine = 0; i < MAX_TRACKING_OBJECTS; i++) 
+  {
+    if (Container[i].addr != 0) 
+	{ // Есть информация о самолёте
+      if (!airplane_info[i]) 
+	  {
+        // Новый объект - создаём и перерисовываем спрайт
+        airplane_info[i] = new TFT_eSprite(&tft);
+        airplane_info[i]->createSprite(WIDTH, INFO_HEIGHT);
+      }
+      airplane_info[i]->fillSprite(TFT_NAVY);
+      // Вывести всё, что хотите
+      airplane_info[i]->setTextColor(TFT_WHITE, TFT_NAVY);
+      airplane_info[i]->drawString(String("Flight: ") + Container[i].flight, 4, 2, 2);
+      // ... другие поля по необходимости
+      airplane_info[i]->pushSprite(0, curLine * INFO_HEIGHT);
+      curLine++;
+    }
+	else 
+	{
+      // Нет информации — убрать спрайт, очистить участок экрана
+      if (airplane_info[i]) 
+	  {
+        delete airplane_info[i];
+        airplane_info[i] = nullptr;
+      }
+      // Можно не чистить, так как всё нормализуется при перерисовке всей ленты
+    }
+  }
+  // Очистить неиспользуемое пространство снизу
+  int usedLines = 0;
+  for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+    if (Container[i].addr != 0) usedLines++;
+  for (int k = usedLines; k < MAX_TRACKING_OBJECTS; k++)
+    tft.fillRect(0, k * INFO_HEIGHT, WIDTH, INFO_HEIGHT, TFT_BLACK);
+}
+4. В RxTask после успешного извлечения и обработки информации
+Внутри каждого успешного случая с PKT_CONTAINER вставьте сразу после memcpy(&Container[hdr.index], payload, sizeof(ufo_t)); вот такой вызов:
+
+syncContainerDisplay();
+Если вам возможен случай, когда через PKT_CONTAINER нужно аннулировать (очистить) 
+запись — например, прислать обнулённый ToDUMP1090, после очистки также сразу вызывайте syncContainerDisplay().
+
+Структурная схема
+parse
+обработка
+memcopy & удаление
+sync
+RS485
+RxTask
+hdr.index
+Display
+Итоговый цикл
+Любое изменение в Container триггерит вызов syncContainerDisplay()
+Эта функция гарантирует синхронность графики и массива контейнера
+Появление/исчезновение данных в любом индексе Container автоматически создаёт/удаляет спрайты и отображает их без пустых строк (спрайты идут подряд без дыр)
+Готовые вставки
+1. После обработки PKT_CONTAINER (УСПЕШНАЯ ЗАПИСЬ ИЛИ ОЧИСТКА):
+memcpy(&Container[hdr.index], payload, sizeof(ufo_t));
+// ...
+syncContainerDisplay();
+2. Пример функции проверки и отрисовки (подключить к вашему основному коду):
+void syncContainerDisplay() {
+  int shown = 0;
+  for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+    if (Container[i].addr) {
+      if (!airplane_info[i]) {
+        airplane_info[i] = new TFT_eSprite(&tft);
+        airplane_info[i]->createSprite(WIDTH, INFO_HEIGHT);
+      }
+      // Нарисовать инфу
+      airplane_info[i]->fillSprite(TFT_NAVY);
+      airplane_info[i]->setTextColor(TFT_WHITE, TFT_NAVY);
+      airplane_info[i]->drawString(String("Flight: ") + Container[i].flight, 4, 2, 2);
+      // ... и так далее
+      airplane_info[i]->pushSprite(0, shown * INFO_HEIGHT);
+      shown++;
+    } else {
+      if (airplane_info[i]) {
+        delete airplane_info[i];
+        airplane_info[i] = nullptr;
+      }
+    }
+  }
+  // Очистить нижние строки если самолётов стало меньше
+  for (int k = shown; k < MAX_TRACKING_OBJECTS; k++)
+    tft.fillRect(0, k * INFO_HEIGHT, WIDTH, INFO_HEIGHT, TFT_BLACK);
+}
+Вам не нужно вручную создавать, перемещать и удалять спрайты — вызывайте syncContainerDisplay() 
+после любых изменений Container, и отображение будет автоматически актуальным и без дыр.
+
+
+//==============================================================================
+
+Да, для такой задачи (когда информация по конкретному самолету может изменяться и требуется её перезапись) 
+всё можно реализовать очень просто, если вы будете всегда вызывать функцию отрисовки/перерисовки 
+спрайта сразу после записи (или обновления) информации по самолету.
+
+Принцип
+Если пришли новые данные для уже существующего объекта (например, изменились скорость, высота, 
+номер рейса) — функция syncContainerDisplay() или аналогичная отобразит новые значения, перерисовав спрайт.
+Не нужно вручную отслеживать "старость" информации: при любом изменении 
+(в любой структуре Container) вызывается та же синхронизирующая функция.
+Как это сделать (логика и фрагмент кода):
+После записи информации по самолету:
+memcpy(&Container[hdr.index], payload, sizeof(ufo_t)); // обновить структуру
+syncContainerDisplay();                                // обновить спрайт (перерисовать)
+Внутри функции syncContainerDisplay() для каждого spрайта всегда используйте актуальные данные:
+
+
+void syncContainerDisplay() 
+{
+  int shown = 0;
+  for (int i = 0; i < MAX_TRACKING_OBJECTS; i++) 
+  {
+    if (Container[i].addr) 
+	{
+      if (!airplane_info[i]) 
+	  {
+        airplane_info[i] = new TFT_eSprite(&tft);
+        airplane_info[i]->createSprite(WIDTH, INFO_HEIGHT);
+      }
+      // Всегда используем ТЕКУЩИЕ поля структуры!
+      airplane_info[i]->fillSprite(TFT_NAVY);
+      airplane_info[i]->setTextColor(TFT_WHITE, TFT_NAVY);
+      airplane_info[i]->drawString(String("Flight: ") + Container[i].flight, 4, 2, 2);
+      airplane_info[i]->drawString(String("Altitude: ") + String(Container[i].altitude), 4, 22, 2);
+      // ... и другие поля
+      
+      airplane_info[i]->pushSprite(0, shown * INFO_HEIGHT);
+      shown++;
+    } 
+	else 
+	{
+      if (airplane_info[i]) 
+	  {
+        delete airplane_info[i];
+        airplane_info[i] = nullptr;
+      }
+    }
+  }
+  // Очистить "лишние" строки
+  for (int k = shown; k < MAX_TRACKING_OBJECTS; k++)
+    tft.fillRect(0, k * INFO_HEIGHT, WIDTH, INFO_HEIGHT, TFT_BLACK);
+}
+Таким образом:
+
+При обновлении информации в Container по конкретному индексу спрайт рисует новые значения, не имеет значения, были ли это новые данные или обновление старых.
+“Старые” значения не сохраняются в спрайте, всегда перерисовка по данным текущей структуры.
+Резюме
+Перезапись информации по самолетам поддерживается автоматически: вы всегда выводите самые свежие данные.
+Достаточно вызывать функцию синхронизации после любых изменений Container.
+В этом подходе любые изменения и перезаписи по самолётам корректно и сразу отображаются на вашем экране.
+
+
+
+//==========================================================
+
+Ваш исходный код функции Traffic_Add ошибочен:
+
+У неё нет отдельной ветки для добавления нового объекта,
+Каждый проход в else некорректно ведёт к перезаписи первого же свободного слота (может затереть данные при первом несовпадении).
+Отсутствует явная проверка на пустой слот.
+Возможны дубли или ложные перезаписи.
+Пример корректной функции Traffic_Add
+Логика:
+Если объект уже есть (по addr) — обновить его.
+Если есть пустое место (addr == 0) — добавить его.
+Если есть устаревшие записи — затереть их.
+Если нет места — игнорировать.
+#define ENTRY_EXPIRATION_TIME 30 // секунд (пример)
+extern "C" uint32_t now();      // функция получения текущего времени (секунды)
+
+bool Traffic_Add(ufo_t *fo) 
+{
+    int i;
+    // 1. Проверка на наличие уже существующего объекта — обновление
+    for (i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+        if (Container[i].addr == fo->addr) {
+            Container[i] = *fo;
+            Serial.printf("[RX] Update Container[%u]: %06X %d %8s %.1f %.1f %.1f %d %.6f %.6f %d\r
+",
+                i, Container[i].addr, Container[i].squawk, Container[i].flight,
+                Container[i].altitude, Container[i].speed, Container[i].track,
+                Container[i].vert_rate, Container[i].lat, Container[i].lon,
+                Container[i].timestamp);
+            Serial.flush();
+            syncContainerDisplay(); // <--- обновить отображение!
+            return true;
+        }
+    }
+    // 2. Проверка на пустой слот
+    for (i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+        if (Container[i].addr == 0) {
+            Container[i] = *fo;
+            Serial.printf("[RX] Add Container[%u]: %06X %d %8s %.1f %.1f %.1f %d %.6f %.6f %d\r
+",
+                i, Container[i].addr, Container[i].squawk, Container[i].flight,
+                Container[i].altitude, Container[i].speed, Container[i].track,
+                Container[i].vert_rate, Container[i].lat, Container[i].lon,
+                Container[i].timestamp);
+            Serial.flush();
+            syncContainerDisplay();
+            return true;
+        }
+    }
+    // 3. Поиск и перезапись самой устаревшей записи
+    for (i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+        if (now() - Container[i].timestamp > ENTRY_EXPIRATION_TIME) {
+            Container[i] = *fo;
+            Serial.printf("[RX] Expired->New Container[%u]: %06X %d %8s %.1f %.1f %.1f %d %.6f %.6f %d\r
+",
+                i, Container[i].addr, Container[i].squawk, Container[i].flight,
+                Container[i].altitude, Container[i].speed, Container[i].track,
+                Container[i].vert_rate, Container[i].lat, Container[i].lon,
+                Container[i].timestamp);
+            Serial.flush();
+            syncContainerDisplay();
+            return true;
+        }
+    }
+    // 4. Места нет — проигнорировать
+    Serial.println("[RX] All slots busy, skip adding");
+    return false;
+}
+Отличия от вашего варианта:
+Нет перезаписи при первом же несоответствии (else убран!).
+Сперва поиск для обновления, затем для вставки в пустой слот, затем — для вытеснения устаревшего объекта.
+Строгое соответствие структуре ваших данных (при необходимости поправьте имя поля, например, timestamp, addr, squawk, flight, latitude, longitude, и т.д.).
+После любого обновления/добавления вызывается syncContainerDisplay(), чтобы сразу актуализировать вывод.
+Чёткие и информативные сообщения в Serial.
+Совет:
+Для контроля освобождать слот при устаревании данных:
+
+if (now() - Container[i].timestamp > ENTRY_EXPIRATION_TIME) {
+    memset(&Container[i], 0, sizeof(ufo_t)); // если нужно освободить слот
+}
+или по протоколу обнуляйте addr вручную.
+
+Структурная иллюстрация
+addr совпал
+slot пуст
+устарел запись
+нет слота
+НовыйПакет
+Обновить
+Вставить
+Перезаписать
+Игнорировать
+Применяйте этот вариант, и ошибки с дублированием и потерей актуальных данных исчезнут!
+Вызовы syncContainerDisplay обязательны для актуальности отображения.
+
+//=============================================================
+
+Проблема, которую вы наблюдаете:
+
+В Container[2] постоянно записываются данные с вызовом Update Container[2]: 000000 0 SDM6032 ...,
+Причём в этих записях addr == 0, то есть это неверная очистка или ошибка копирования.
+Причина
+Ваш изначальный (или модифицированный) алгоритм добавления объекта выглядит так, что:
+
+Даже если объект уже есть в другом индексе, функция после первого несовпавшего addr 
+пишет значения в следующий свободный слот (или просто затирает), не проверяя, что найденный слот пустой или просроченный.
+Возможно, код где-то копирует структуру из Container[0] (или 1) в 2, но одновременно addr остаётся нулём.
+Правильный алгоритм Traffic_Add
+// Структура для одного самолёта
+typedef struct {
+    uint32_t addr;
+    uint16_t squawk;
+    char flight[16];
+    int altitude;
+    int speed;
+    int track;
+    int vert_rate;
+    float lat;
+    float lon;
+    uint32_t timestamp;
+} ufo_t;
+
+#define MAX_TRACKING_OBJECTS 8
+#define ENTRY_EXPIRATION_TIME 30 // секунд
+
+ufo_t Container[MAX_TRACKING_OBJECTS];
+
+uint32_t now() {
+    // Ваш источник текущего времени в секундах
+    return millis() / 1000;
+}
+
+// Настоящий, безопасный вариант:
+bool Traffic_Add(const ufo_t *fo) 
+{
+    int i;
+    // 0. Не добавляем "пустые" данные (addr == 0)
+    if (!fo->addr) return false;
+
+    // 1. Проверка на существование такого addr — обновление
+    for (i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+        if (Container[i].addr == fo->addr) {
+            Container[i] = *fo; // обновление
+            Serial.printf("[RX] Update Container[%u]: %06X %d %8s %.1f %.1f %.1f %d %.6f %.6f %u\r
+",
+                i, Container[i].addr, Container[i].squawk, Container[i].flight,
+                Container[i].altitude, Container[i].speed, Container[i].track,
+                Container[i].vert_rate, Container[i].lat, Container[i].lon,
+                Container[i].timestamp);
+            Serial.flush();
+            syncContainerDisplay(); // Обновление! (или сигнал на GUI)
+            return true;
+        }
+    }
+    // 2. Поиск пустого слота
+    for (i = 0; i < MAX_TRACKING_OBJECTS; i++) {
+        if (Container[i].addr == 0) {
+            Container[i] = *fo;
+            Serial.printf("[RX] Add  Container[%u]: %06X %d %8s %.1f %.1f %.1f %d %.6f %.6f %u\r
+",
+                i, Container[i].addr, Container[i].squawk, Container[i].flight,
+                Container[i].altitude, Container[i].speed, Container[i].track,
+                Container[i].vert_rate, Container[i].lat, Container[i].lon,
+                Container[i].timestamp);
+            Serial.flush();
+            syncContainerDisplay();
+            return true;
+        }
+    }
+    // 3. Поиск самого старого, если все заняты (или просроченного)
+    int oldest = 0;
+    uint32_t ts_min = Container[0].timestamp;
+    for (i = 1; i < MAX_TRACKING_OBJECTS; i++) {
+        if (Container[i].timestamp < ts_min) {
+            oldest = i;
+            ts_min = Container[i].timestamp;
+        }
+        // Если требуется, вариант с "устаревшим"
+        if ((now() > Container[i].timestamp) &&
+            ((now() - Container[i].timestamp) > ENTRY_EXPIRATION_TIME)) {
+            oldest = i;
+            break;
+        }
+    }
+    Container[oldest] = *fo;
+    Serial.printf("[RX] Repl Container[%u]: %06X %d %8s %.1f %.1f %.1f %d %.6f %.6f %u\r
+",
+        oldest, Container[oldest].addr, Container[oldest].squawk, Container[oldest].flight,
+        Container[oldest].altitude, Container[oldest].speed, Container[oldest].track,
+        Container[oldest].vert_rate, Container[oldest].lat, Container[oldest].lon,
+        Container[oldest].timestamp);
+    Serial.flush();
+    syncContainerDisplay();
+    return true;
+}
+Краткие рекомендации
+Никогда не копируйте структуру с addr == 0!
+Это признак пустого объекта, его нельзя ни “обновлять”, ни “добавлять”.
+Всегда сначала ищите совпадение по addr (уникальный ключ), только потом добавляйте.
+Пустые (addr==0) и устаревшие записи (timestamp) можно затирать.
+Возможные причины вашего баг-трека
+Вы используете одну и ту же структуру fo/packet по всей программе, и кто-то где-то после передачи “очищает” addr или flight, но вы по указателю уже пишете в массив.
+После добавления вы делаете обнуление исходной структуры fo/packet, а в контейнере храните именно указатель на неё, а не копию.
+Внимание!
+В массиве Container должны лежать только копии структур, не указатели на временные буферы, которые меняются где-то ещё!
+
+Сводка
+Используйте вышеприведённый вариант Traffic_Add().
+Проверяйте, что перед добавлением addr не ноль.
+Копируйте структуры только по значению (не указателями!).
+Не сбрасывайте данные packet/fo сразу после Traffic_Add, если где-то Container ссылается на них.
+
+Если нужна схема процесса — напишите, нарисую!
+
+Если потребуется анализ утечки/“переливания” данных — покажите кусок кода формирования и обнуления исходной структуры fo, и вызова Traffic_Add.
