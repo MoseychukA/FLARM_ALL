@@ -1,0 +1,87 @@
+Добавь функцию для вывода в Serial
+void printThisAircraft(const ufo_net_t* ac) {
+    Serial.println("=== ThisAircraft ===");
+    Serial.print("Addr: "); Serial.println(ac->addr);
+    Serial.print("Squawk: "); Serial.println(ac->squawk);
+    Serial.print("Callsign: ");
+    for (int i = 0; i < 8; ++i) Serial.print((char)ac->callsign[i]);
+    Serial.println();
+    Serial.print("Altitude: "); Serial.println(ac->altitude);
+    Serial.print("Pressure Altitude: "); Serial.println(ac->pressure_altitude);
+    Serial.print("Course: "); Serial.println(ac->course);
+    Serial.print("Speed: "); Serial.println(ac->speed);
+    Serial.print("Vert_rate: "); Serial.println(ac->vert_rate);
+    Serial.print("Lat: "); Serial.println(ac->latitude, 7);
+    Serial.print("Lon: "); Serial.println(ac->longitude, 7);
+    Serial.print("RSSI: "); Serial.println(ac->rssi);
+    Serial.print("Signal dBm: "); Serial.println(ac->last_message_signal_strength_dbm);
+    Serial.print("Quality dB: "); Serial.println(ac->last_message_signal_quality_db);
+}
+void printAux(const aux_t* aux) {
+    Serial.println("=== AuxData ===");
+    Serial.print("new_flag_M: "); Serial.println(aux->new_flag_M);
+    Serial.print("new_buttton_M: "); Serial.println(aux->new_buttton_M);
+    Serial.print("setMessageRead_M: "); Serial.println(aux->setMessageRead_M);
+    Serial.print("MessageRead_M: "); Serial.println(aux->MessageRead_M);
+    Serial.print("Time_Hour_M: "); Serial.println(aux->Time_Hour_M);
+    Serial.print("Time_Minute_M: "); Serial.println(aux->Time_Minute_M);
+    Serial.print("new_SOS_flag_M: "); Serial.println(aux->new_SOS_flag_M);
+    Serial.print("msg_resp_M: "); Serial.println(aux->msg_resp_M);
+    Serial.print("isValidGNSS_M: "); Serial.println(aux->isValidGNSS_M);
+}
+void printContainer(const ufo_net_t* arr, int n) {
+    for (int i = 0; i < n; ++i) {
+        Serial.print("Container["); Serial.print(i); Serial.println("]:");
+        printThisAircraft(&arr[i]);
+    }
+}
+2. Вызов из места приёма (rxTask) — показывать полученные данные сразу после получения пакета:
+void rxTask(void* param)
+{
+    full_packet_net_t recpkt;
+    uint8_t btn1, btn2;
+    for (;;) {
+        if (receivePacket_RS485(&recpkt, &btn1, &btn2)) {
+            Serial.print("Button1: "); Serial.print(btn1);
+            Serial.print(" Button2: "); Serial.println(btn2);
+
+            printThisAircraft(&recpkt.ThisAircraft);
+            printAux(&recpkt.AuxData);
+            printContainer(recpkt.Container, MAX_TRACKING_OBJECTS);
+
+            Serial.println("==============");
+        }
+        vTaskDelay(pdMS_TO_TICKS(20));
+    }
+}
+3. Пример вывода только в loop (раз в 2 сек):
+В начало файла:
+
+full_packet_net_t lastPacket;
+volatile bool packetUpdated = false;
+В rxTask ДО vTaskDelay:
+
+memcpy(&lastPacket, &recpkt, sizeof(full_packet_net_t));
+packetUpdated = true;
+В loop:
+
+void loop() {
+    static uint32_t tmr = 0;
+    if (packetUpdated && millis() - tmr > 2000) {
+        tmr = millis();
+        packetUpdated = false;
+        Serial.println("==== Последний принятый пакет ====");
+        printThisAircraft(&lastPacket.ThisAircraft);
+        printAux(&lastPacket.AuxData);
+        printContainer(lastPacket.Container, MAX_TRACKING_OBJECTS);
+        Serial.print("Button1: "); Serial.println(lastPacket.BUTTON1);
+        Serial.print("Button2: "); Serial.println(lastPacket.BUTTON2);
+        Serial.println("==============");
+    }
+}
+Итог
+Просто вставь эти функции.
+Вызывай printThisAircraft, printContainer, printAux из своего rxTask или loop, как нравится.
+Ты увидишь все новые данные, полученные пакетом, в Serial Monitor!
+
+Если надо фильтровать вывод (только активные объекты в Container) — добавь условия перед печатью.
