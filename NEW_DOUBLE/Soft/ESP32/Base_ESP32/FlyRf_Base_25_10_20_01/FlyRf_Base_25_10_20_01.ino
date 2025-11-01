@@ -203,11 +203,6 @@ typedef struct {
     uint8_t  payload[MAX_PAYLOAD];
 } TxItem;
 
-//QueueHandle_t txQueue;          // очередь на отправку
-//QueueHandle_t ackQueue;         // очередь подтверждений
-//SemaphoreHandle_t serialMutex;  // для атомарного доступа к UART
-//SemaphoreHandle_t containerMutex = nullptr;  // Мьютекс для защиты базы
-
 volatile uint8_t seqCounter = 0;
 
 static uint8_t nextSeq() 

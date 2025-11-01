@@ -47,6 +47,19 @@ void normal();
 #define isTimeToExport()  (millis() - ExportTimeMarker  > 1000)
 
 
+#define MAX_TRACKING_OBJECTS 12
+#define RS485_SERIAL   Serial2
+#define RS485_TX_PIN   18
+#define RS485_RX_PIN   17
+#define RS485_DE_PIN   21
+#define RS485_BAUD     115200
+#define RS485_CONFIG   SERIAL_8N1
+#define LED            4
+
+const uint32_t PACKET_HEADER = 0xAABBCCDD;
+const uint32_t PACKET_FOOTER = 0xDDCCBBAA;
+
+
 typedef struct __attribute__((packed)) {
     uint32_t addr;
     int      squawk;
@@ -85,10 +98,6 @@ typedef struct __attribute__((packed)) {
     uint8_t BUTTON2;
 } full_packet_net_t;
 
-
-
-/* ---------- ОПРЕДЕЛЕНИЕ FrameHeader ---------- */
-#pragma pack(push,1)
 struct FrameHeader {
     uint16_t preamble; // 0xAA55
     uint8_t  ver;      // 0x01
@@ -97,9 +106,36 @@ struct FrameHeader {
     uint8_t  seq;      // счётчик кадров
     uint16_t length;   // длина payload
 };
-#pragma pack(pop)
 
-/* -------------------------------------------- */
+ufo_t ThisAircraft;
+extern ufo_t fo, Container[MAX_TRACKING_OBJECTS];
+const size_t PACKET_SIZE = sizeof(ToDUMP1090_RAW);
+
+aux_t AuxData;
+
+SemaphoreHandle_t serialMutex;
+SemaphoreHandle_t containerMutex;
+
+ToDUMP1090 packet;
+ToDUMP1090_RAW inRaw; // Объявляем переменную глобально или в начале функции
+
+#define MAX_BUFFER_SIZE 512
+uint8_t rxBuffer[MAX_BUFFER_SIZE];
+uint16_t rxIndex = 0;
+
+// Прототипы
+uint16_t crc16_ccitt(const uint8_t* data, size_t len);
+void sendPacket_RS485(const full_packet_net_t* pkt);
+bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2);
+void ufo_to_net(const ufo_t* src, ufo_net_t* dst);
+uint32_t swap32(uint32_t val);
+float swapFloat(float val);
+uint16_t toBigEndian16(uint16_t val);
+void unpack_ToDUMP1090(const ToDUMP1090_RAW* in, ToDUMP1090* out);
+void txTask(void* param);
+void rxTask(void* param);
+void receiveRP2040();
+
 
 uint32_t swap32(uint32_t val)
 {
@@ -129,15 +165,6 @@ uint16_t toBigEndian16(uint16_t val)
 }
 
 
-const size_t PACKET_SIZE = sizeof(ToDUMP1090_RAW);
-
-ToDUMP1090 packet;
-ToDUMP1090_RAW inRaw; // Объявляем переменную глобально или в начале функции
-
-#define MAX_BUFFER_SIZE 512
-uint8_t rxBuffer[MAX_BUFFER_SIZE];
-uint16_t rxIndex = 0;
-
 // Функция распаковки
 void unpack_ToDUMP1090(const ToDUMP1090_RAW* in, ToDUMP1090* out)
 {
@@ -152,25 +179,12 @@ void unpack_ToDUMP1090(const ToDUMP1090_RAW* in, ToDUMP1090* out)
     out->lon_msg = swapFloat(in->lon_msg);
     out->last_message_signal_strength_dbm = toBigEndian16(in->last_message_signal_strength_dbm);
     out->last_message_signal_quality_db = toBigEndian16(in->last_message_signal_quality_db);
+    vTaskDelay(5);
 }
 
-ufo_t ThisAircraft;
-extern ufo_t fo, Container[MAX_TRACKING_OBJECTS];
 
 //===================================================================================================================
 
-
-#define MAX_TRACKING_OBJECTS 12
-#define RS485_SERIAL   Serial2
-#define RS485_TX_PIN   18
-#define RS485_RX_PIN   17
-#define RS485_DE_PIN   21
-#define RS485_BAUD     115200
-#define RS485_CONFIG   SERIAL_8N1
-#define LED            4
-
-const uint32_t PACKET_HEADER = 0xAABBCCDD;
-const uint32_t PACKET_FOOTER = 0xDDCCBBAA;
 
 //// Полная структура
 //typedef struct {
@@ -189,39 +203,7 @@ const uint32_t PACKET_FOOTER = 0xDDCCBBAA;
 //    uint16_t last_message_signal_quality_db;
 //} ufo_t;
 
-//
-//// Доп служебная структура
-//typedef struct __attribute__((packed)) {
-//    bool     new_flag_M;
-//    uint8_t  new_buttton_M;
-//    bool     setMessageRead_M;
-//    bool     MessageRead_M;
-//    uint8_t  Time_Hour_M;
-//    uint8_t  Time_Minute_M;
-//    bool     new_SOS_flag_M;
-//    char     msg_resp_M[170];
-//    bool     isValidGNSS_M;
-//} aux_t;
-//
-//typedef struct __attribute__((packed)) {
-//    ufo_net_t ThisAircraft;
-//    ufo_net_t Container[MAX_TRACKING_OBJECTS];
-//    aux_t AuxData;
-//    uint8_t BUTTON1;
-//    uint8_t BUTTON2;
-//} full_packet_net_t;
 
-// Данные для передачи
-
-aux_t AuxData;
-
-SemaphoreHandle_t serialMutex;
-SemaphoreHandle_t containerMutex;
-
-// Прототипы
-uint16_t crc16_ccitt(const uint8_t* data, size_t len);
-void sendPacket_RS485(const full_packet_net_t* pkt);
-bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2);
 
 void ufo_to_net(const ufo_t* src, ufo_net_t* dst) 
 {
@@ -238,9 +220,11 @@ void ufo_to_net(const ufo_t* src, ufo_net_t* dst)
     dst->rssi = src->rssi;
     dst->last_message_signal_strength_dbm = src->last_message_signal_strength_dbm;
     dst->last_message_signal_quality_db = src->last_message_signal_quality_db;
+    vTaskDelay(5);
 }
 
-void setupRS485() {
+void setupRS485() 
+{
     RS485_SERIAL.setTxBufferSize(1024);
     RS485_SERIAL.begin(RS485_BAUD, RS485_CONFIG, RS485_RX_PIN, RS485_TX_PIN);
     pinMode(RS485_DE_PIN, OUTPUT);
@@ -270,17 +254,20 @@ void sendPacket_RS485(const full_packet_net_t* pkt)
     xSemaphoreTake(serialMutex, portMAX_DELAY);
     digitalWrite(RS485_DE_PIN, HIGH);
     digitalWrite(LED, LOW);
-    delay(15);
+    vTaskDelay(15);
+    //delay(15);
     RS485_SERIAL.write((uint8_t*)&PACKET_HEADER, sizeof(PACKET_HEADER));
     RS485_SERIAL.write(buf, plen);
     RS485_SERIAL.write((uint8_t*)&crc, sizeof(crc));
     RS485_SERIAL.write((uint8_t*)&PACKET_FOOTER, sizeof(PACKET_FOOTER));
     RS485_SERIAL.flush();
-    delay(15);
+    vTaskDelay(15);
+   // delay(15);
     digitalWrite(RS485_DE_PIN, LOW);
     digitalWrite(LED, HIGH);
     esp_task_wdt_reset();
     xSemaphoreGive(serialMutex);
+    vTaskDelay(5);
   //  Serial.println("Пакет отправлен!");
 }
 
@@ -294,21 +281,25 @@ bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2)
         if (bytes + idx > sizeof(buffer)) bytes = sizeof(buffer) - idx;
         int n = RS485_SERIAL.readBytes(&buffer[idx], bytes);
         idx += n;
+        /*vTaskDelay(5);*/
     }
+    vTaskDelay(5);
     esp_task_wdt_reset();
     while (idx >= sizeof(full_packet_net_t) + 8)
     {
         bool header_ok = (buffer[0] == 0xDD && buffer[1] == 0xCC &&
-            buffer[2] == 0xBB && buffer[3] == 0xAA);
+             buffer[2] == 0xBB && buffer[3] == 0xAA);
         size_t footer_off = sizeof(full_packet_net_t) + 4 + 2;
         bool footer_ok = (buffer[footer_off] == 0xAA && buffer[footer_off + 1] == 0xBB &&
-            buffer[footer_off + 2] == 0xCC && buffer[footer_off + 3] == 0xDD);
+             buffer[footer_off + 2] == 0xCC && buffer[footer_off + 3] == 0xDD);
 
-        if (header_ok && footer_ok) {
+        if (header_ok && footer_ok) 
+        {
             uint8_t* data = &buffer[4];
             uint16_t crc_rx = *(uint16_t*)&buffer[4 + sizeof(full_packet_net_t)];
             uint16_t crc_calc = crc16_ccitt(data, sizeof(full_packet_net_t));
-            if (crc_rx == crc_calc) {
+            if (crc_rx == crc_calc) 
+            {
                 memcpy(pkt, data, sizeof(full_packet_net_t));
                 if (btn1) *btn1 = pkt->BUTTON1;
                 if (btn2) *btn2 = pkt->BUTTON2;
@@ -320,6 +311,7 @@ bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2)
                     idx = 0;
                 return true;
             }
+            vTaskDelay(5);
         }
         memmove(buffer, buffer + 1, --idx);
     }
@@ -338,14 +330,16 @@ void txTask(void* param)
 
         ufo_to_net(&ThisAircraft, &packet.ThisAircraft);
         for (int i = 0; i < MAX_TRACKING_OBJECTS; ++i)
+        {
             ufo_to_net(&Container[i], &packet.Container[i]);
+            vTaskDelay(2);
+        }
+        xSemaphoreGive(containerMutex);
         memcpy(&packet.AuxData, &AuxData, sizeof(aux_t));
         packet.BUTTON1 = count;
         packet.BUTTON2 = 0x02;
         count++;
-
-        xSemaphoreGive(containerMutex);
-
+  
         sendPacket_RS485(&packet);
         esp_task_wdt_reset();
         vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(500));
@@ -354,7 +348,8 @@ void txTask(void* param)
     }
 }
 
-void rxTask(void* param) {
+void rxTask(void* param) 
+{
     full_packet_net_t recpkt;
     uint8_t btn1, btn2;
     for (;;) 
@@ -443,6 +438,7 @@ void receiveRP2040()
                 memset(&packet, 0, sizeof(packet)); // Очистить массив
                 memset(&rxBuffer, 0, sizeof(rxBuffer)); // Очистить массив
                 rxIndex = 0;  // Готов к приему нового пакета.
+                vTaskDelay(5);
             }
 
         }
@@ -752,7 +748,7 @@ void loop()
   }
 
   Time_loop();
-
+  vTaskDelay(5);
   yield();
 }
 
