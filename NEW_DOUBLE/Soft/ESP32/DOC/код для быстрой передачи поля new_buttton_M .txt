@@ -197,7 +197,8 @@ void rxTask(void* param) {
     full_packet_net_t recpkt;
     uint8_t btn1, btn2;
     for (;;) {
-        if (receivePacket_RS485(&recpkt, &btn1, &btn2)) {
+        if (receivePacket_RS485(&recpkt, &btn1, &btn2)) 
+		{
             // Сразу ответ по новым событиям new_buttton_M!
             if (recpkt.AuxData.new_buttton_M != 0) {
                 Serial.print("MASTER: получено new_buttton_M="); Serial.println(recpkt.AuxData.new_buttton_M);
@@ -240,6 +241,9 @@ void setup() {
 void loop() {
     delay(500);
 }
+
+
+
 SLAVE (receiver_fast.ino)
 #include <Arduino.h>
 #include "freertos/FreeRTOS.h"
@@ -321,10 +325,12 @@ void setupRS485() {
     digitalWrite(LED, HIGH);
 }
 
-bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2) {
+bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2) 
+{
     static uint8_t buffer[sizeof(full_packet_net_t) + 32];
     static size_t idx = 0;
-    while (RS485_SERIAL.available()) {
+    while (RS485_SERIAL.available()) 
+	{
         int bytes = RS485_SERIAL.available();
         if (bytes + idx > sizeof(buffer)) bytes = sizeof(buffer) - idx;
         int n = RS485_SERIAL.readBytes(&buffer[idx], bytes);
@@ -358,7 +364,8 @@ bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2) {
     return false;
 }
 
-void sendImmediateNewButtonM(uint8_t value) {
+void sendImmediateNewButtonM(uint8_t value) 
+{
     full_packet_net_t replyPacket = {};
     replyPacket.AuxData.new_buttton_M = value;
     replyPacket.BUTTON1 = BUTTON1;

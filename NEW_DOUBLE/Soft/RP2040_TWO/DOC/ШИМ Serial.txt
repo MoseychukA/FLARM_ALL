@@ -1,0 +1,59 @@
+Ниже модифицированный код. Теперь уровень напряжения ШИМ задаётся через Serial:отправляете значение в миллиВольтах (300–1600). 
+Программа мапит диапазон 300–1600 мВ на минимальное и максимальное значения ШИМ (для 3,3 В питания — уже рассчитано ранее как 23…124) 
+и устанавливает PWM.
+
+Код (Arduino IDE,RP2040,пин 9,20 kHz,8-битное разрешение):
+
+cpp Копировать
+// PWM на RP2040 (Arduino-IDE)
+// Пин 9 -> через резистор 10 кОм -> узел -> конденсатор 100 нФ к земле (low-pass filter)
+
+const int pwmPin = 9;
+const int minDuty = 23; // ~0.3 V на выходе после фильтра при 3.3 V питании
+const int maxDuty = 124; // ~1.6 V на выходе после фильтра
+
+void setup() {
+ Serial.begin(115200);
+ while (!Serial) { delay(10); } // ждем последовательный порт (при необходимости)
+
+ pinMode(pwmPin,OUTPUT);
+ analogWriteResolution(8); // 8-битное разрешение PWM
+ analogWriteFrequency(pwmPin,20000); // частота PWM ~20 kHz
+
+ analogWrite(pwmPin,minDuty); // стартовый уровень
+ Serial.println("PWM control ready. Send voltage in mV (300-1600). Example:850");
+}
+
+void loop() 
+{
+ // Читаем целое число в миллиВольтах из Serial
+ if (Serial.available() > 0) {
+ long mv = Serial.parseInt(); // читает следующую цифру последовательности
+
+ // Защита:ограничиваем диапазон
+ if (mv < 300) mv = 300;
+ if (mv > 1600) mv = 1600;
+
+ // Преобразуем mv (300..1600) -> duty (minDuty..maxDuty)
+ int duty = map((int)mv,300,1600,minDuty,maxDuty);
+ analogWrite(pwmPin,duty);
+
+ // Обратная связь
+ float vout = (float)duty / 255.0f * 3.3f;
+ Serial.print("Input:"); Serial.print(mv);
+ Serial.print(" mV -> PWM duty:"); Serial.print(duty);
+ Serial.print(" (approx Vout:"); Serial.print(vout,3);
+ Serial.println(" V)");
+ }
+}
+Как использовать
+
+Откройте Serial Monitor в Arduino IDE.
+Установите скорость 115200 бод.
+Введите целое число в диапазоне 300–1600 и отправьте (Enter не обязательно,но можно).
+Например,850 → примерно 0,85 V на выходе после RC-фильтра.
+В реальном измерении учтите,что выход после фильтра примерно Vcc * duty/255 (для 3,3 V питания).
+Примечания
+
+Диапазон и формула учитывают,что Vout после фильтра приближённо линейно пропорционаленDuty. Реальная волна зависит от RC-фильтра и частоты PWM.
+При необходимости можно адаптировать диапазон или частоту PWM под другие характеристики питания или фильтра.
