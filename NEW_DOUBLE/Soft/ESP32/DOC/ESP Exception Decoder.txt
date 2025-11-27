@@ -1,0 +1,137 @@
+Сейчас по логу видно,что по сути ничего принципиально не изменилось – просто «сломалась» уже idle‑задача на ядре 0 вместо ядра 1:
+
+Interrupt wdt timeout on CPU0
+Unhandled debug exception. Stack canary watchpoint triggered (IDLE)
+Backtrace:... |<-CORRUPTED
+Это всё равно означает порчу стека idle‑задачи → т.е. кто‑то где‑то пишет за пределы массива / структуры или использует битый указатель. Watchdog здесь лишь фиксирует,что ядро ушло «в астрал» после порчи памяти.
+
+Дальше диагностировать по голым адресам 0x420b6947 и т.п. уже нельзя – нужно увидеть,какая именно ВАША функция им соответствует.
+
+1. Нужен расшифрованный backtrace
+Вы используете Arduino IDE,поэтому сделайте так:
+
+Вариант A:ESP Exception Decoder (Arduino IDE)
+Установите плагин ESP Exception Decoder:
+Arduino IDE → Sketch → Include Library → Manage Libraries.
+Найдите ESP Exception Decoder и установите.
+После очередного краша:
+Скопируйте ВЕСЬ вывод из Serial Monitor (от Guru Meditation Error до Rebooting...).
+Откройте Tools → ESP Exception Decoder.
+Вставьте туда лог.
+Плагин покажет список строк вида:
+text Копировать
+0x420b6947:txTask(void*) at src/....cpp:123
+0x420b6f59:sendPacket_RS485(...) at src/....cpp:456
+...
+Скопируйте сюда этот результат (имена функций + файлы + номера строк). Тогда можно будет уже сказать:«портите память тут и тут».
+Вариант B:addr2line (если есть ESP-IDF toolchain)
+В каталоге сборки (где лежит .elf с SHA256 bd5c2ea4c1a21317) выполните:
+
+bash Копировать
+xtensa-esp32s3-elf-addr2line -pfiaC -e your_firmware.elf \
+ 0x40389bd0 0x420b6947 0x420b6f59 0x42032d2d 0x4203305e 0x403783f9 0x4037d311
+(подставьте реальное имя ELF). Результат тоже пришлите.
+
+Без этого дальше мы только гадаем.
+
+2. Обязательно проверьте,что вы реально внесли критичные правки
+По предыдущему коду у вас были две очень рискованные вещи:
+
+2.1. Переполнение AuxData.msg_resp_M
+До:
+
+cpp Копировать
+if (service.getNewMessageFlag()) // Отправить сообщение
+{
+ memset(AuxData.msg_resp_M,0,sizeof(AuxData.msg_resp_M));
+ strncpy(AuxData.msg_resp_M,CommandHandler.msg_tmp_all,strlen(CommandHandler.msg_tmp_all));
+ memset(CommandHandler.msg_tmp_all,0,sizeof(CommandHandler.msg_tmp_all));
+ service.setNewMessageFlag(false); // Сбросить флаг нового сообщения
+}
+Если вы ещё не исправили это,то вы почти гарантированно периодически лезете за пределы msg_resp_M,если сообщение длиннее буфера. Это идеально объясняет Stack canary triggered (IDLE).
+
+Сделайте ИМЕННО ТАК (пример):
+
+cpp Копировать
+if (service.getNewMessageFlag())
+{
+ memset(AuxData.msg_resp_M,0,sizeof(AuxData.msg_resp_M));
+
+ size_t max_len = sizeof(AuxData.msg_resp_M) - 1; // оставляем место под '\0'
+ size_t src_len = strnlen(CommandHandler.msg_tmp_all,max_len);
+ memcpy(AuxData.msg_resp_M,CommandHandler.msg_tmp_all,src_len);
+ AuxData.msg_resp_M[src_len] = '\0';
+
+ memset(CommandHandler.msg_tmp_all,0,sizeof(CommandHandler.msg_tmp_all));
+ service.setNewMessageFlag(false);
+}
+или с strlcpy,если доступна:
+
+cpp Копировать
+strlcpy(AuxData.msg_resp_M,CommandHandler.msg_tmp_all,sizeof(AuxData.msg_resp_M));
+И убедитесь,что CommandHandler.msg_tmp_all – это массив нужного размера,а не указатель в никуда.
+
+2.2. Заполнение ThisAircraft.callsign
+До:
+
+cpp Копировать
+String ThisAircraft_callsign = String(SoC->getChipId() & 0x00FFFFFFU,HEX);
+memcpy(ThisAircraft.callsign,&ThisAircraft_callsign,8);
+Так вы копируете кусок внутренней структуры String,а не строку.
+
+Используйте:
+
+cpp Копировать
+String ThisAircraft_callsign = String(SoC->getChipId() & 0x00FFFFFFU,HEX);
+ThisAircraft_callsign.toUpperCase();
+
+memset(ThisAircraft.callsign,0,sizeof(ThisAircraft.callsign));
+strncpy(ThisAircraft.callsign,
+ ThisAircraft_callsign.c_str(),
+ sizeof(ThisAircraft.callsign) - 1);
+3. WDT в Arduino:не мешать фреймворку
+У вас в setup():
+
+cpp Копировать
+esp_task_wdt_init(10,false); // таймаут 10 сек
+И в задачах/loop:
+
+cpp Копировать
+esp_task_wdt_add(NULL);
+esp_task_wdt_reset();
+В Arduino‑core ESP32 task‑WDT уже конфигурируется внутри core’а. Дополнительный esp_task_wdt_init()/*_add() может давать странное поведение (задачи регистрируются не так,как ожидается).
+
+Для поиска порчи памяти лучше сейчас:
+
+Временно закомментировать:
+cpp Копировать
+// esp_task_wdt_init(10,false);
+И по возможности убрать все явные esp_task_wdt_add()/esp_task_wdt_reset() из пользовательского кода (оставить только yield()/delay в loop()).
+Это не устранит переполнение стека,но уберёт лишний шум от WDT и сделает поведение предсказуемее.
+
+4. Что ещё можно быстро проверить в вашем коде
+Пока вы не пришлёте расшифрованный backtrace:
+
+Все места с memcpy,strncpy,sprintf/printf по строкам – убедиться,что:
+размер копируемых данных никогда не больше размера приёмника;
+всегда есть '\0' в строках,которые потом печатаются через %s.
+Особенно внимательно:
+все обращения к CommandHandler.*,
+все буферы для сообщений/строк,
+структуры,которые уходят «в сеть» (RS485,WiFi,UDP и пр).
+Если хотите локализовать быстрее – можно временно:
+закомментировать RS485‑задачи (xTaskCreatePinnedToCore(txTask.. / rxTask..),
+прошить,посмотреть,пропадает ли краш;
+если пропадает – проблема точно в коде RS485 / AuxData / Container в этих задачах;
+если нет – закомментировать (по очереди) другие крупные блоки в loop() (WiFi_loop,Web_loop,OTA_loop,CommandHandler.* и т.п.) и смотреть,на каком шаге перестаёт падать.
+5. Что нужно от вас дальше
+Чтобы можно было указать точное место:
+
+Подтвердите,что вы:
+исправили блок с AuxData.msg_resp_M по безопасному образцу,
+исправили заполнение ThisAircraft.callsign,
+убрали esp_task_wdt_init() (хотя бы временно).
+Пришлите:
+результат работы ESP Exception Decoder по последнему дампу;
+определение CommandHandler.msg_tmp_all (тип,размер) из соответствующего .h/.cpp.
+После этого можно будет сказать:«ошибка именно в функции X,строка Y:там буфер на N байт,а вы пишете M байт».
