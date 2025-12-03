@@ -36,7 +36,7 @@ float Baro_temperature()  {return 0;}
 #include <Adafruit_BMP280.h>
 #endif /* EXCLUDE_BMP280 */
 
-#include <TinyGPS++.h>
+#include <TinyGPS_PP.h>
 
 barochip_ops_t *baro_chip = NULL;
 
@@ -232,7 +232,7 @@ void Baro_loop()
 
   if (isTimeToBaroAltitude()) {
 
-      /* Проект расчета барометрической высоты и вертикальной скорости */
+      /* пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
     Baro_altitude_cache = baro_chip->altitude(1013.25);
 
     ThisAircraft.pressure_altitude = Baro_altitude_cache;

@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.36107.64
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FlyRf_Base_25_11_30_04", "FlyRf_Base_25_11_30_04.vcxproj", "{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Debug|ARM.ActiveCfg = Debug|ARM
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Debug|ARM.Build.0 = Debug|ARM
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Debug|ARM.Deploy.0 = Debug|ARM
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Debug|ARM64.Build.0 = Debug|ARM64
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Release|ARM.ActiveCfg = Release|ARM
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Release|ARM.Build.0 = Release|ARM
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Release|ARM.Deploy.0 = Release|ARM
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Release|ARM64.ActiveCfg = Release|ARM64
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Release|ARM64.Build.0 = Release|ARM64
+		{5C4065D7-F2BC-4D7E-A4ED-69D214598A86}.Release|ARM64.Deploy.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1C7D3E7-FE60-4B90-A13D-0A1EA743C8E6}
+	EndGlobalSection
+EndGlobal

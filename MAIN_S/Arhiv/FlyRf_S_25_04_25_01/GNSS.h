@@ -19,7 +19,7 @@
 #ifndef GNSSHELPER_H
 #define GNSSHELPER_H
 
-#include <TinyGPS++.h>
+#include <TinyGPS_PP.h>
 
 typedef enum
 {

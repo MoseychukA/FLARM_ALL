@@ -1,0 +1,8 @@
+"C:\Users\Alex\AppData\Local\Arduino15\packages\esp32\tools\xtensa-esp-elf-gdb\11.2_20220823\bin\xtensa-esp32s3-elf-addr2line.exe" ^
+ -pfiaC -e "C:\Users\Alex\AppData\Local\Temp\arduino_build_... \FlyRf_Base_25_11_27_04.ino.elf" ^
+  0x40056f5d 0x3fcf48f0
+  
+  
+  "C:\Users\Alex\AppData\Local\Arduino15\packages\esp32\tools\xtensa-esp-elf-gdb\11.2_20220823\bin\xtensa-esp32s3-elf-addr2line.exe" 
+ -pfiaC -e "C:\Users\Alex\AppData\Local\Temp\arduino_build_... \FlyRf_Base_25_11_27_04.ino.elf" 
+  0x40056f5d 0x3fcf48f0

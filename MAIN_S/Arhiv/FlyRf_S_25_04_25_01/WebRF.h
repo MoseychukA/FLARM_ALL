@@ -25,7 +25,7 @@
 #include <WiFiClient.h>
 #endif /* ARDUINO */
 
-#include <TinyGPS++.h>
+#include <TinyGPS_PP.h>
 
 #include "EEPROMRF.h"
 #include "RF.h"

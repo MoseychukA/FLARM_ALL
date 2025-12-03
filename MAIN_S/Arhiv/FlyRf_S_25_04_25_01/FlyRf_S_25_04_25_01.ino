@@ -19,7 +19,7 @@
 #include "TrafficHelper.h"
 #include "ESP32RF.h"
 #include <TimeLib.h>
-#include <TinyGPS++.h>
+#include <TinyGPS_PP.h>
 #include "ServiceMain.h"
 #include "Configuration_ESP32.h"
 #include "CoreCommandBuffer.h"    // обработчик входящих по UART команд
