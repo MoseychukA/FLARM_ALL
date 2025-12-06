@@ -1028,7 +1028,7 @@ void normal()
   {
       if (ThisAircraft.old_latitude != 0 || ThisAircraft.old_longitude != 0)
       {
-          ThisAircraft.altitude = 25000.0;
+        //  ThisAircraft.altitude = 25000.0;
 
           RF_Transmit(RF_Encode(&ThisAircraft), true);  // Передать параметры посредством LoRa в случае если нет сигналов GPS
       }
