@@ -1,3 +1,0 @@
-"..\Hex\Osd_LogoFontDat.obj" 
-TO "..\Hex\Logo" 
-PRINT("..\List\Logo.m51") RAMSIZE(256) 

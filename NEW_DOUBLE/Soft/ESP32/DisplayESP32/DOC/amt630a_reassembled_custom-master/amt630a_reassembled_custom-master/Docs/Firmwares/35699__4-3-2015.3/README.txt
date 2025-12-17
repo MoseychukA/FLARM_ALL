@@ -1,5 +1,0 @@
-CPU - AMT630A
-FLASH - MK25Q40ATIG
-Quarz - 27mHz
-
-Board - NONAME
