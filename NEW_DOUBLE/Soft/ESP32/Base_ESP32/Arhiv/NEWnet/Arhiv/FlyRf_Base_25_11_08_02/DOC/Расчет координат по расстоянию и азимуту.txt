@@ -1,0 +1,18 @@
+//$lat - текущая широта, $lng - текущая долгота
+//$dist - расстояние между искомыми точками
+//$ang - азимут на искомую точку
+
+$newlat=sin($lat * PI / 180)*cos($dist * PI / 180)+cos($lat * PI / 180)*sin($dist * PI / 180)*cos($ang * PI / 180);
+$newlat=$lat+(asin($newlat));
+
+$newlng=sin($dist * PI / 180)*sin($ang * PI / 180)/(cos($lat * PI / 180)*cos($dist * PI / 180)-sin($lat * PI / 180)*sin($dist * PI / 180)*cos($ang * PI / 180));
+$newlng=$lng+(atan($newlng));
+
+
+
+LAT1 = LAT + L * COS(AZIMUT * PI / 180) / (6371000 * PI / 180)
+LON1 = LON + L * SIN(AZIMUT * PI / 180) / COS(LAT * PI / 180) / (6371000 * PI / 180)
+
+
+LAT1 = LAT + 0.718*COS(AZIMUT*PI/180)*L
+LON1 = SIN(AZIMUT*PI/180)*L
