@@ -1,0 +1,812 @@
+## ⚙️ Обзор проекта  
+
+| Компонент | Что делает | Технология |
+|----------|------------|------------|
+| **Приём данных** | Читает пакеты `$FLYRF,…` из COM‑порта, TCP‑/UDP‑сокета | `System.IO.Ports.SerialPort`, `System.Net.Sockets` |
+| **Парсинг** | Разбирает строку, заполняет объект `AircraftInfo` | `Regex` / `String.Split` |
+| **Модель** | Хранит состояние всех самолетов (позиция, скорость, высота…) | `ObservableCollection<AircraftInfo>` |
+| **Отображение** | Радиолокационный круг, отметки каждые 10°/30°, символ самолёта в центре | **WPF** + `Canvas` (GDI+ в WinForms тоже подходит) |
+| **Настройки** | Локальные координаты, IP/порт, COM‑порт, время | `SettingsWindow` (dialog) + `ApplicationSettings` |
+| **Главный цикл** | Обновляет позицию самолётов каждую секунду (или по входному пакету) | `DispatcherTimer` |
+
+---
+
+## 📁 Структура проекта (Visual Studio 2019, .NET 6)
+
+```
+FlyRadar/
+│
+├─ FlyRadar.sln
+├─ FlyRadar/
+│   ├─ App.xaml                // WPF‑приложение
+│   ├─ MainWindow.xaml
+│   ├─ MainWindow.xaml.cs
+│   ├─ SettingsWindow.xaml
+│   ├─ SettingsWindow.xaml.cs
+│   ├─ Models/
+│   │   └─ AircraftInfo.cs
+│   ├─ Services/
+│   │   ├─ SerialService.cs
+│   │   ├─ TcpService.cs
+│   │   └─ UdpService.cs
+│   └─ Utils/
+│       └─ NmeaParser.cs
+└─ FlyRadar.Tests/            // (по желанию)
+```
+
+---
+
+## 📦 Модель данных  
+
+```csharp
+// Models/AircraftInfo.cs
+using System;
+using System.ComponentModel;
+
+namespace FlyRadar.Models
+{
+    public class AircraftInfo : INotifyPropertyChanged
+    {
+        public uint Addr { get; set; }                     // $FLYRF,%06X
+        public int Squawk { get; set; }                   // %d
+        public string Callsign { get; set; } = string.Empty;
+        public int Altitude { get; set; }                 // геоид, м
+        public int PressureAltitude { get; set; }        // датчик, м
+        public int Speed { get; set; }                    // km/h
+        public int Course { get; set; }                   // градусы
+        public int VertRate { get; set; }                 // ft/min
+        public double Latitude { get; set; }              // °
+        public double Longitude { get; set; }             // °
+        public int AircraftType { get; set; }
+        public int SignalSource { get; set; }
+        public int HourMsg { get; set; }
+        public int MinMsg { get; set; }
+
+        // Позиционные свойства для UI (вычисляемые)
+        private double _screenX, _screenY;
+        public double ScreenX { get => _screenX; set { _screenX = value; OnPropertyChanged(nameof(ScreenX)); } }
+        public double ScreenY { get => _screenY; set { _screenY = value; OnPropertyChanged(nameof(ScreenY)); } }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+}
+```
+
+---
+
+## 🔧 Парсер пакета  
+
+```csharp
+// Utils/NmeaParser.cs
+using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using FlyRadar.Models;
+
+namespace FlyRadar.Utils
+{
+    public static class NmeaParser
+    {
+        // Регекс соответствует строке $FLYRF,addr,squawk,callsign,alt,pressAlt,speed,course,vertRate,lat,lon,atype,src,hour,minute*
+        private static readonly Regex FlyRfxRegex =
+            new Regex(@"\$FLYRF,([0-9A-F]{6}),(\d+),([^,]*),(\d+),(\d+),(\d+),(\d+),(-?\d+),(-?\d+\.?\d*),(-?\d+\.?\d*),(\d+),(\d+),(\d+),(\d+)\*",
+                      RegexOptions.Compiled);
+
+        public static bool TryParse(string line, out AircraftInfo? info)
+        {
+            info = null;
+            var m = FlyRfxRegex.Match(line.Trim());
+            if (!m.Success) return false;
+
+            try
+            {
+                info = new AircraftInfo
+                {
+                    Addr = Convert.ToUInt32(m.Groups[1].Value, 16),
+                    Squawk = int.Parse(m.Groups[2].Value),
+                    Callsign = m.Groups[3].Value.Trim(),
+                    Altitude = int.Parse(m.Groups[4].Value),
+                    PressureAltitude = int.Parse(m.Groups[5].Value),
+                    Speed = int.Parse(m.Groups[6].Value),
+                    Course = int.Parse(m.Groups[7].Value),
+                    VertRate = int.Parse(m.Groups[8].Value),
+                    Latitude = double.Parse(m.Groups[9].Value, CultureInfo.InvariantCulture),
+                    Longitude = double.Parse(m.Groups[10].Value, CultureInfo.InvariantCulture),
+                    AircraftType = int.Parse(m.Groups[11].Value),
+                    SignalSource = int.Parse(m.Groups[12].Value),
+                    HourMsg = int.Parse(m.Groups[13].Value),
+                    MinMsg = int.Parse(m.Groups[14].Value)
+                };
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
+}
+```
+
+---
+
+## 📡 Службы приёма  
+
+### 1️⃣ Serial (COM)  
+
+```csharp
+// Services/SerialService.cs
+using System;
+using System.IO.Ports;
+using System.Threading.Tasks;
+using FlyRadar.Utils;
+
+namespace FlyRadar.Services
+{
+    public class SerialService : IDisposable
+    {
+        private readonly SerialPort _port;
+
+        public event Action<string> LineReceived = null!;
+
+        public SerialService(string portName, int baudRate = 115200)
+        {
+            _port = new SerialPort(portName, baudRate) { NewLine = "\n" };
+            _port.DataReceived += (_, __) => ReadAvailable();
+        }
+
+        public void Start()
+        {
+            if (!_port.IsOpen) _port.Open();
+        }
+
+        private void ReadAvailable()
+        {
+            try
+            {
+                string line = _port.ReadLine();
+                LineReceived?.Invoke(line);
+            }
+            catch { /* игнорировать ошибки чтения */ }
+        }
+
+        public void Dispose()
+        {
+            if (_port.IsOpen) _port.Close();
+            _port.Dispose();
+        }
+    }
+}
+```
+
+### 2️⃣ TCP  
+
+```csharp
+// Services/TcpService.cs
+using System;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace FlyRadar.Services
+{
+    public class TcpService : IDisposable
+    {
+        private readonly TcpClient _client;
+        private readonly CancellationTokenSource _cts = new();
+
+        public event Action<string> LineReceived = null!;
+
+        public TcpService(string ip, int port)
+        {
+            _client = new TcpClient();
+            _client.Connect(ip, port);
+        }
+
+        public void Start()
+        {
+            Task.Run(() => ReceiveLoop(_cts.Token));
+        }
+
+        private async Task ReceiveLoop(CancellationToken token)
+        {
+            var stream = _client.GetStream();
+            var sb = new StringBuilder();
+            var buffer = new byte[1024];
+
+            while (!token.IsCancellationRequested)
+            {
+                int read = await stream.ReadAsync(buffer, 0, buffer.Length, token);
+                if (read <= 0) break;
+
+                sb.Append(Encoding.ASCII.GetString(buffer, 0, read));
+                string all = sb.ToString();
+
+                // разбиваем по символу перевода строки
+                var lines = all.Split('\n');
+                for (int i = 0; i < lines.Length - 1; i++)
+                    LineReceived?.Invoke(lines[i].Trim());
+
+                sb.Clear();
+                sb.Append(lines[^1]); // оставляем неполную строку
+            }
+        }
+
+        public void Dispose()
+        {
+            _cts.Cancel();
+            _client.Close();
+            _client.Dispose();
+        }
+    }
+}
+```
+
+### 3️⃣ UDP  
+
+```csharp
+// Services/UdpService.cs
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace FlyRadar.Services
+{
+    public class UdpService : IDisposable
+    {
+        private readonly UdpClient _udp;
+        private readonly CancellationTokenSource _cts = new();
+
+        public event Action<string> LineReceived = null!;
+
+        public UdpService(int listenPort)
+        {
+            _udp = new UdpClient(listenPort);
+        }
+
+        public void Start()
+        {
+            Task.Run(() => ReceiveLoop(_cts.Token));
+        }
+
+        private async Task ReceiveLoop(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                var result = await _udp.ReceiveAsync(token);
+                string line = Encoding.ASCII.GetString(result.Buffer);
+                LineReceived?.Invoke(line.Trim());
+            }
+        }
+
+        public void Dispose()
+        {
+            _cts.Cancel();
+            _udp.Close();
+            _udp.Dispose();
+        }
+    }
+}
+```
+
+---
+
+## 🖥 UI – главное окно  
+
+**XAML (WPF)** – `MainWindow.xaml`
+
+```xml
+<Window x:Class="FlyRadar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FlyRadar" Height="720" Width="720">
+    <Grid>
+        <!-- Радиолокационный канвас -->
+        <Canvas x:Name="RadarCanvas"
+                Width="640" Height="640"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Background="Black"/>
+        <!-- Кнопка настроек -->
+        <Button Content="⚙ Настройки"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                Margin="10"
+                Click="OpenSettings_Click"/>
+    </Grid>
+</Window>
+```
+
+### 1️⃣ Рисуем круг и деления  
+
+```csharp
+// MainWindow.xaml.cs (часть)
+using System;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using FlyRadar.Models;
+using FlyRadar.Services;
+using FlyRadar.Utils;
+using System.Windows.Threading;
+
+namespace FlyRadar
+{
+    public partial class MainWindow : Window
+    {
+        private readonly ObservableCollection<AircraftInfo> _aircrafts = new();
+        private readonly DispatcherTimer _refreshTimer = new();
+
+        // Выбор службы (можно переключать по настройкам)
+        private SerialService? _serial;
+        private TcpService? _tcp;
+        private UdpService? _udp;
+
+        // Параметры карты (центр)
+        private double _centerLat = 55.7558;   // Поменяйте в настройках
+        private double _centerLon = 37.6173;
+
+        private const double RadarRadius = 300;   // пикселей
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            DrawRadarBackground();
+
+            // Таймер обновления UI (30 FPS достаточно)
+            _refreshTimer.Interval = TimeSpan.FromMilliseconds(33);
+            _refreshTimer.Tick += (_, __) => RefreshAircrafts();
+            _refreshTimer.Start();
+
+            // Пример инициализации (COM‑порт)
+            // InitSerial("COM3", 115200);
+        }
+
+        #region === Рисование фона ===
+        private void DrawRadarBackground()
+        {
+            RadarCanvas.Children.Clear();
+
+            // Большой круг
+            var outer = new Ellipse
+            {
+                Width = RadarRadius * 2,
+                Height = RadarRadius * 2,
+                Stroke = Brushes.Green,
+                StrokeThickness = 2
+            };
+            Canvas.SetLeft(outer, RadarCanvas.Width / 2 - RadarRadius);
+            Canvas.SetTop(outer, RadarCanvas.Height / 2 - RadarRadius);
+            RadarCanvas.Children.Add(outer);
+
+            // Деления каждые 10° и 30°
+            for (int deg = 0; deg < 360; deg += 10)
+            {
+                double rad = deg * Math.PI / 180.0;
+                double inner = (deg % 30 == 0) ? RadarRadius - 20 : RadarRadius - 10;
+                double x1 = RadarCanvas.Width / 2 + inner * Math.Sin(rad);
+                double y1 = RadarCanvas.Height / 2 - inner * Math.Cos(rad);
+                double x2 = RadarCanvas.Width / 2 + RadarRadius * Math.Sin(rad);
+                double y2 = RadarCanvas.Height / 2 - RadarRadius * Math.Cos(rad);
+
+                var line = new Line
+                {
+                    X1 = x1, Y1 = y1,
+                    X2 = x2, Y2 = y2,
+                    Stroke = Brushes.Green,
+                    StrokeThickness = (deg % 30 == 0) ? 2 : 1
+                };
+                RadarCanvas.Children.Add(line);
+            }
+
+            // Стороны света
+            AddLabel("N", 0);
+            AddLabel("E", 90);
+            AddLabel("S", 180);
+            AddLabel("W", 270);
+        }
+
+        private void AddLabel(string txt, double bearingDeg)
+        {
+            var tb = new System.Windows.Controls.TextBlock
+            {
+                Text = txt,
+                Foreground = Brushes.Lime,
+                FontWeight = FontWeights.Bold
+            };
+            double rad = bearingDeg * Math.PI / 180.0;
+            double x = RadarCanvas.Width / 2 + (RadarRadius - 30) * Math.Sin(rad);
+            double y = RadarCanvas.Height / 2 - (RadarRadius - 30) * Math.Cos(rad);
+            Canvas.SetLeft(tb, x - 8);
+            Canvas.SetTop(tb, y - 8);
+            RadarCanvas.Children.Add(tb);
+        }
+        #endregion
+
+        #region === Приём данных ===
+        private void InitSerial(string port, int baud = 115200)
+        {
+            _serial = new SerialService(port, baud);
+            _serial.LineReceived += OnLineReceived;
+            _serial.Start();
+        }
+
+        private void InitTcp(string ip, int port)
+        {
+            _tcp = new TcpService(ip, port);
+            _tcp.LineReceived += OnLineReceived;
+            _tcp.Start();
+        }
+
+        private void InitUdp(int listenPort)
+        {
+            _udp = new UdpService(listenPort);
+            _udp.LineReceived += OnLineReceived;
+            _udp.Start();
+        }
+
+        private void OnLineReceived(string line)
+        {
+            if (NmeaParser.TryParse(line, out var ac) && ac != null)
+            {
+                // Обновляем или добавляем в коллекцию в UI‑потоке
+                Dispatcher.Invoke(() => UpdateOrAddAircraft(ac));
+            }
+        }
+
+        private void UpdateOrAddAircraft(AircraftInfo incoming)
+        {
+            var existing = FindAircraft(incoming.Addr);
+            if (existing == null)
+                _aircrafts.Add(incoming);
+            else
+                CopyValues(incoming, existing);
+        }
+
+        private AircraftInfo? FindAircraft(uint addr) =>
+            System.Linq.Enumerable.FirstOrDefault(_aircrafts, a => a.Addr == addr);
+
+        private void CopyValues(AircraftInfo src, AircraftInfo dst)
+        {
+            dst.Squawk = src.Squawk;
+            dst.Callsign = src.Callsign;
+            dst.Altitude = src.Altitude;
+            dst.PressureAltitude = src.PressureAltitude;
+            dst.Speed = src.Speed;
+            dst.Course = src.Course;
+            dst.VertRate = src.VertRate;
+            dst.Latitude = src.Latitude;
+            dst.Longitude = src.Longitude;
+            dst.AircraftType = src.AircraftType;
+            dst.SignalSource = src.SignalSource;
+            dst.HourMsg = src.HourMsg;
+            dst.MinMsg = src.MinMsg;
+        }
+        #endregion
+
+        #region === Обновление отображения ===
+        private void RefreshAircrafts()
+        {
+            // Очистим старые графики (исключая фон)
+            RadarCanvas.Children.RemoveRange(1, RadarCanvas.Children.Count - 1);
+
+            // Перерисуем фон (если нужно) – можно вынести в отдельный слой
+            DrawRadarBackground();
+
+            foreach (var ac in _aircrafts)
+            {
+                // Преобразуем GPS → локальные координаты в полярную систему
+                (double x, double y) = GeoToCanvas(ac.Latitude, ac.Longitude);
+                ac.ScreenX = x;
+                ac.ScreenY = y;
+
+                // Символ самолёта (можно заменить на Image)
+                var plane = new Polygon
+                {
+                    Points = new PointCollection
+                    {
+                        new Point(0, -8), new Point(4, 8), new Point(-4, 8)
+                    },
+                    Fill = Brushes.Yellow,
+                    RenderTransform = new RotateTransform(ac.Course, 0, 0)
+                };
+                Canvas.SetLeft(plane, x);
+                Canvas.SetTop(plane, y);
+                RadarCanvas.Children.Add(plane);
+
+                // Текстовый индикатор (полётный номер / высота)
+                var txt = new System.Windows.Controls.TextBlock
+                {
+                    Text = $"{ac.Callsign}\n{ac.Altitude} м",
+                    Foreground = Brushes.White,
+                    FontSize = 10
+                };
+                Canvas.SetLeft(txt, x + 6);
+                Canvas.SetTop(txt, y - 6);
+                RadarCanvas.Children.Add(txt);
+            }
+        }
+
+        /// <summary>
+        /// Перевод географических координат в экранные координаты относительно центра.
+        /// </summary>
+        /// <remarks>
+        /// Для простоты используем проекцию «эциентрическую» (маленькие углы).  
+        /// $$\Delta\phi = (\text{lat} - \text{centerLat})\times \frac{\pi}{180}$$  
+        /// $$\Delta\lambda = (\text{lon} - \text{centerLon})\times \frac{\pi}{180}$$  
+        /// $$x = R \cdot \Delta\lambda \cdot \cos(\text{centerLat})$$  
+        /// $$y = R \cdot \Delta\phi$$  
+        /// где $R$ – масштаб в пикселях/радиан (подбирается опытным путём).
+        /// </remarks>
+        private (double X, double Y) GeoToCanvas(double lat, double lon)
+        {
+            const double scale = 3000; // пикселей на радиан (настраивается)
+            double dLat = (lat - _centerLat) * Math.PI / 180.0;
+            double dLon = (lon - _centerLon) * Math.PI / 180.0;
+
+            double x = RadarCanvas.Width / 2  + scale * dLon * Math.Cos(_centerLat * Math.PI / 180.0);
+            double y = RadarCanvas.Height / 2 - scale * dLat;
+            return (x, y);
+        }
+        #endregion
+
+        #region === Меню настроек ===
+        private void OpenSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SettingsWindow
+            {
+                Owner = this,
+                CenterLatitude = _centerLat,
+                CenterLongitude = _centerLon
+            };
+            if (dlg.ShowDialog() == true)
+            {
+                // Сохраняем новые параметры
+                _centerLat = dlg.CenterLatitude;
+                _centerLon = dlg.CenterLongitude;
+
+                // Перезапускаем выбранный канал при необходимости
+                // (реализация в SettingsWindow)
+                DrawRadarBackground(); // перерисовать фон с новым центром
+            }
+        }
+        #endregion
+    }
+}
+```
+
+---
+
+## ⚙️ Окно настроек  
+
+**XAML** `SettingsWindow.xaml`
+
+```xml
+<Window x:Class="FlyRadar.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Title="Настройки" Height="380" Width="300"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Локальные координаты -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,5">
+            <Label Content="Широта:" Width="80"/>
+            <TextBox x:Name="TxtLat" Width="150"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,5">
+            <Label Content="Долгота:" Width="80"/>
+            <TextBox x:Name="TxtLon" Width="150"/>
+        </StackPanel>
+
+        <!-- Источник (COM/TCP/UDP) -->
+        <GroupBox Header="Источник" Grid.Row="2" Margin="0,10">
+            <StackPanel Margin="5">
+                <RadioButton x:Name="RbSerial" Content="COM‑порт" IsChecked="True"/>
+                <StackPanel Orientation="Horizontal" Margin="20,2">
+                    <Label Content="Имя:" Width="70"/>
+                    <TextBox x:Name="TxtComPort" Width="120" Text="COM3"/>
+                </StackPanel>
+
+                <RadioButton x:Name="RbTcp" Content="TCP"/>
+                <StackPanel Orientation="Horizontal" Margin="20,2">
+                    <Label Content="IP:" Width="70"/>
+                    <TextBox x:Name="TxtTcpIp" Width="120" Text="127.0.0.1"/>
+                    <Label Content="Порт:" Width="40"/>
+                    <TextBox x:Name="TxtTcpPort" Width="60" Text="5000"/>
+                </StackPanel>
+
+                <RadioButton x:Name="RbUdp" Content="UDP"/>
+                <StackPanel Orientation="Horizontal" Margin="20,2">
+                    <Label Content="Порт:" Width="70"/>
+                    <TextBox x:Name="TxtUdpPort" Width="120" Text="5001"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Текущее время -->
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0,5">
+            <Label Content="Время:" Width="80"/>
+            <TextBlock x:Name="TxtNow" FontWeight="Bold"/>
+        </StackPanel>
+
+        <Button Content="OK" Grid.Row="5" Width="80"
+                HorizontalAlignment="Right"
+                Click="Ok_Click"/>
+    </Grid>
+</Window>
+```
+
+**Code‑behind** `SettingsWindow.xaml.cs`
+
+```csharp
+using System;
+using System.Windows;
+
+namespace FlyRadar
+{
+    public partial class SettingsWindow : Window
+    {
+        public double CenterLatitude { get; set; }
+        public double CenterLongitude { get; set; }
+
+        public SettingsWindow()
+        {
+            InitializeComponent();
+            Loaded += SettingsWindow_Loaded;
+        }
+
+        private void SettingsWindow_Loaded(object? sender, RoutedEventArgs e)
+        {
+            TxtLat.Text = CenterLatitude.ToString("F6");
+            TxtLon.Text = CenterLongitude.ToString("F6");
+            TxtNow.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        private void Ok_Click(object sender, RoutedEventArgs e)
+        {
+            // Проверка вводимых данных (можно расширить)
+            if (!double.TryParse(TxtLat.Text, out var lat) ||
+                !double.TryParse(TxtLon.Text, out var lon))
+            {
+                MessageBox.Show("Неверный формат координат", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            CenterLatitude = lat;
+            CenterLongitude = lon;
+
+            // Здесь можно сохранить выбранный канал (COM/TCP/UDP) в свойствах окна
+            // и передать их в MainWindow при закрытии.
+
+            DialogResult = true;
+            Close();
+        }
+    }
+}
+```
+
+---
+
+## 🚀 Как собрать и запустить  
+
+1. Откройте **Visual Studio 2019** → *File → New → Project* → **WPF App (.NET 6)**.  
+2. Добавьте файлы, указанные в структуре выше (пути не важны, главное – в нужных папках).  
+3. В `MainWindow.xaml.cs` в конструкторе раскомментируйте нужный источник, например  
+
+```csharp
+InitSerial("COM3", 115200);
+```
+
+   или  
+
+```csharp
+InitTcp("192.168.0.10", 6000);
+```
+
+4. Сборка **Build → Build Solution**.  
+5. Запустите (F5). Окно покажет радиолокационный круг, а при поступлении строк `$FLYRF,…` появятся символы самолётов.  
+
+---
+
+## 📚 Пояснения & дополнительные детали  
+
+<details>
+<summary>🔎 Как устроена проекция GPS → экран (математика)</summary>
+
+Для небольших областей (по радиусу до ~200 км) достаточно линейной проекции на плоскость (Эциентрическая).  
+
+$$
+\Delta\phi = (\text{lat} - \text{centerLat})\frac{\pi}{180},\qquad
+\Delta\lambda = (\text{lon} - \text{centerLon})\frac{\pi}{180}
+$$
+
+$$
+x = R\cos(\text{centerLat})\,\Delta\lambda,\qquad
+y = R\,\Delta\phi
+$$  
+
+* $R$ – масштаб в **пикселях/радиан** (подбирается экспериментально; в коде `scale = 3000`).  
+* Затем координаты сдвигаются в центр канвы:  
+
+$$
+X = \frac{W}{2} + x,\qquad
+Y = \frac{H}{2} - y
+$$
+
+Для глобальных карт лучше использовать проекцию Меркатора, но в данном демо‑проекте это избыточно.
+</details>
+
+<details>
+<summary>🛠 Как добавить изображение самолёта вместо простого треугольника</summary>
+
+1. Добавьте в проект файл `plane.png` (пример: 24×24 px, прозрачный фон).  
+2. В `RefreshAircrafts()` замените создание `Polygon` на `Image`:
+
+```csharp
+var img = new Image
+{
+    Source = new BitmapImage(new Uri("pack://application:,,,/plane.png")),
+    Width = 24,
+    Height = 24,
+    RenderTransform = new RotateTransform(ac.Course, 12, 12) // центр вращения
+};
+Canvas.SetLeft(img, x - 12);
+Canvas.SetTop(img, y - 12);
+RadarCanvas.Children.Add(img);
+```
+
+3. Убедитесь, что изображение указано как **Resource** в свойствах файла.
+</details>
+
+<details>
+<summary>🧩 Как хранить/загружать пользовательские настройки между запусками</summary>
+
+```csharp
+// В проекте добавить файл Settings.settings (Project → Properties → Settings)
+Properties.Settings.Default.CenterLat = _centerLat;
+Properties.Settings.Default.CenterLon = _centerLon;
+Properties.Settings.Default.Save();
+```
+
+При старте:
+
+```csharp
+_centerLat = Properties.Settings.Default.CenterLat;
+_centerLon = Properties.Settings.Default.CenterLon;
+```
+
+Для COM‑порта, IP и т.д. добавьте соответствующие свойства в `Settings.settings`.
+</details>
+
+---
+
+## 🎉 Итоги  
+
+* **Полноценный прием** данных по COM/TCP/UDP.  
+* **Парсер** NMEA‑подобного формата `$FLYRF,…`.  
+* **Модель** `AircraftInfo` с поддержкой привязки к UI.  
+* **Графический radar‑круг** со сторонами света, делениями 10°/30°, динамической отрисовкой самолетов.  
+* **Настройки** (координаты, источник, время) через отдельный диалог.  
+
+С этим шаблоном вы сможете быстро добавить дополнительные функции:  
+* трассировка пути (`Polyline`),  
+* фильтрация по высоте/виду источника,  
+* масштабирование/зум,  
+* запись логов,  
+* интеграцию с картами (Bing/Google) и т.п.
+
+Удачной разработки! 🚀

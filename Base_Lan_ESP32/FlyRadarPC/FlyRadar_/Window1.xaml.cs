@@ -1,0 +1,106 @@
+﻿< Window x: Class = "FlyRadar.SettingsWindow"
+        xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Title = "Настройки" Height = "380" Width = "300"
+        WindowStartupLocation = "CenterOwner"
+        ResizeMode = "NoResize" >
+    < Grid Margin = "10" >
+ 
+         < Grid.RowDefinitions >
+ 
+             < RowDefinition Height = "Auto" />
+  
+              < RowDefinition Height = "Auto" />
+   
+               < RowDefinition Height = "Auto" />
+    
+                < RowDefinition Height = "Auto" />
+     
+                 < RowDefinition Height = "*" />
+      
+                  < RowDefinition Height = "Auto" />
+       
+               </ Grid.RowDefinitions >
+       
+
+               < !--Локальные координаты-- >
+       
+               < StackPanel Orientation = "Horizontal" Grid.Row = "0" Margin = "0,5" >
+            
+                        < Label Content = "Широта:" Width = "80" />
+               
+                           < TextBox x: Name = "TxtLat" Width = "150" />
+                   
+                           </ StackPanel >
+                   
+                           < StackPanel Orientation = "Horizontal" Grid.Row = "1" Margin = "0,5" >
+                        
+                                    < Label Content = "Долгота:" Width = "80" />
+                           
+                                       < TextBox x: Name = "TxtLon" Width = "150" />
+                               
+                                       </ StackPanel >
+                               
+
+                                       < !--Источник(COM / TCP / UDP)-- >
+                               
+                                       < GroupBox Header = "Источник" Grid.Row = "2" Margin = "0,10" >
+                                    
+                                                < StackPanel Margin = "5" >
+                                     
+                                                     < RadioButton x: Name = "RbSerial" Content = "COM‑порт" IsChecked = "True" />
+                                           
+                                                           < StackPanel Orientation = "Horizontal" Margin = "20,2" >
+                                              
+                                                                  < Label Content = "Имя:" Width = "70" />
+                                                 
+                                                                     < TextBox x: Name = "TxtComPort" Width = "120" Text = "COM3" />
+                                                       
+                                                                       </ StackPanel >
+                                                       
+
+                                                                       < RadioButton x: Name = "RbTcp" Content = "TCP" />
+                                                           
+                                                                           < StackPanel Orientation = "Horizontal" Margin = "20,2" >
+                                                              
+                                                                                  < Label Content = "IP:" Width = "70" />
+                                                                 
+                                                                                     < TextBox x: Name = "TxtTcpIp" Width = "120" Text = "127.0.0.1" />
+                                                                       
+                                                                                           < Label Content = "Порт:" Width = "40" />
+                                                                          
+                                                                                              < TextBox x: Name = "TxtTcpPort" Width = "60" Text = "5000" />
+                                                                                
+                                                                                                </ StackPanel >
+                                                                                
+
+                                                                                                < RadioButton x: Name = "RbUdp" Content = "UDP" />
+                                                                                    
+                                                                                                    < StackPanel Orientation = "Horizontal" Margin = "20,2" >
+                                                                                       
+                                                                                                           < Label Content = "Порт:" Width = "70" />
+                                                                                          
+                                                                                                              < TextBox x: Name = "TxtUdpPort" Width = "120" Text = "5001" />
+                                                                                                
+                                                                                                                </ StackPanel >
+                                                                                                
+                                                                                                            </ StackPanel >
+                                                                                                
+                                                                                                        </ GroupBox >
+                                                                                                
+
+                                                                                                        < !--Текущее время-- >
+                                                                                                
+                                                                                                        < StackPanel Orientation = "Horizontal" Grid.Row = "3" Margin = "0,5" >
+                                                                                                     
+                                                                                                                 < Label Content = "Время:" Width = "80" />
+                                                                                                        
+                                                                                                                    < TextBlock x: Name = "TxtNow" FontWeight = "Bold" />
+                                                                                                            
+                                                                                                                    </ StackPanel >
+                                                                                                            
+
+                                                                                                                    < Button Content = "OK" Grid.Row = "5" Width = "80"
+                HorizontalAlignment = "Right"
+                Click = "Ok_Click" />
+    </ Grid >
+</ Window >

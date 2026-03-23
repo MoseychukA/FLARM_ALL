@@ -1,0 +1,8 @@
+/*
+  Ethernet
+  Mod for Arduino Mega Server project
+  fix bug delay answer server
+
+  EthernetServer.cpp
+  EthernetServer.h
+*/

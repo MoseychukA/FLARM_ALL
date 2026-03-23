@@ -1,0 +1,439 @@
+Необходимо в файле void handleInput() отображать значения настроек TRACKER send, Bluetooth, NMEA Out, Полушарие (северное или южное), Долгота(восточная или западная)
+варианты в текстовом виде. 
+
+Варианты настроек находятся в файле void handleSettings().
+
+
+void handleInput() // Ввод основных настроек
+{
+    size_t size = 3580;
+    char* Input_temp = (char*)malloc(size);
+    if (Input_temp == NULL) {
+        return;
+    }
+
+    for (uint8_t i = 0; i < server.args(); i++)
+    {
+        if (server.argName(i).equals("tracker_send")) {
+            settings->tracker_send = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("bluetooth")) {
+            settings->bluetooth = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("nmea_out")) {
+            settings->nmea_out = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("input_N_S")) {
+            settings->input_N_S = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("local_latitude")) {
+            settings->local_latitude = server.arg(i).toFloat();
+        }
+        else if (server.argName(i).equals("input_E_W")) {
+            settings->input_E_W = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("local_longitude")) {
+            settings->local_longitude = server.arg(i).toFloat();
+        }
+        else if (server.argName(i).equals("local_ip")) {
+            int ip[4];
+            if (sscanf(server.arg(i).c_str(), "%d.%d.%d.%d", &ip[0], &ip[1], &ip[2], &ip[3]) == 4) {
+                for (int k = 0; k < 4; k++) settings->g_localIP[k] = (uint8_t)ip[k];
+            }
+        }
+        else if (server.argName(i).equals("gateway_ip")) {
+            int ipg[4];
+            if (sscanf(server.arg(i).c_str(), "%d.%d.%d.%d", &ipg[0], &ipg[1], &ipg[2], &ipg[3]) == 4) 
+            {
+                for (int k = 0; k < 4; k++) settings->g_gatewayIP[k] = (uint8_t)ipg[k];
+            }
+        }
+        else if (server.argName(i).equals("subnet_mask")) {
+            int ipm[4];
+            if (sscanf(server.arg(i).c_str(), "%d.%d.%d.%d", &ipm[0], &ipm[1], &ipm[2], &ipm[3]) == 4) {
+                for (int k = 0; k < 4; k++) settings->g_subnetMask[k] = (uint8_t)ipm[k];
+            }
+        }
+    }
+
+    snprintf_P(Input_temp, size,
+        PSTR("<html>\
+        <head>\
+        <meta http-equiv='refresh' content='15; url=/'>\
+        <meta name='viewport' content='width=device-width, initial-scale=1'>\
+        <title>FLYRF Settings</title>\
+        </head>\
+        <body>\
+        <h1 align=center>Новые настройки:</h1>\
+        <table width=100%%>\
+        <tr><th align=left>TRACKER send</th><td align=right>%d</td></tr>\
+        <tr><th align=left>Bluetooth</th><td align=right>%d</td></tr>\
+        <tr><th align=left>NMEA Out</th><td align=right>%d</td></tr>\
+        <tr><th align=left>Полушарие (северное или южное)</th><td align=right>%d</td></tr>\
+        <tr><th align=left>latitude</th><td align=right>%.05f</td></tr>\
+        <tr><th align=left>Долгота(восточная или западная)</th><td align=right>%d</td></tr>\
+        <tr><th align=left>longitude</th><td align=right>%.05f</td></tr>\
+        <tr><th align=left>Local IP</th><td align=right>%d.%d.%d.%d</td></tr>\
+        <tr><th align=left>Gateway IP</th><td align=right>%d.%d.%d.%d</td></tr>\
+        <tr><th align=left>Subnet Mask</th><td align=right>%d.%d.%d.%d</td></tr>\
+        </table>\
+        <hr>\
+        <p align=center><h2 align=center>Выполняется перезагрузка... Пожалуйста, подождите!</h2></p>\
+        </body>\
+        </html>"),
+        settings->tracker_send,
+        settings->bluetooth,
+        settings->nmea_out,
+        settings->input_N_S,
+        settings->local_latitude,
+        settings->input_E_W,
+        settings->local_longitude,
+        settings->g_localIP[0], settings->g_localIP[1], settings->g_localIP[2], settings->g_localIP[3],
+        settings->g_gatewayIP[0], settings->g_gatewayIP[1], settings->g_gatewayIP[2], settings->g_gatewayIP[3],
+        settings->g_subnetMask[0], settings->g_subnetMask[1], settings->g_subnetMask[2], settings->g_subnetMask[3]
+    );
+
+    SoC->swSer_enableRx(false);
+    server.send(200, "text/html", Input_temp);
+    delay(1000);
+    free(Input_temp);
+    EEPROM_store();
+    RF_Shutdown();
+    delay(1000);
+    SoC->reset();
+}
+
+void handleSettings() // Ручной ввод основных настроек
+{
+
+  size_t size = 5100;
+  char *offset;
+  size_t len = 0;
+  char *Settings_temp = (char *) malloc(size);
+
+  if (Settings_temp == NULL) {
+    return;
+  }
+
+  offset = Settings_temp;
+
+  /* Common part 2 */
+  snprintf_P ( offset, size,
+    PSTR("\
+<head>\
+<meta name='viewport' content='width=device-width, initial-scale=1'>\
+<title>Settings</title>\
+</head>\
+<body>\
+<h1 align=center>Настройки</h1>\
+<form action='/input' method='GET'>\
+<table width=100%%>\
+<tr>\
+<th align = left>TRACKER send</th>\
+<td align = right>\
+<select name = 'tracker_send'>\
+<option % s value = '%d'>Off</option>\
+<option % s value = '%d'>Single</option>\
+<option % s value = '%d'>Auto</option>\
+<option % s value = '%d'>Mini</option>\
+</select>\
+</td>\
+</tr>\
+"),
+  (settings->tracker_send == TRACKER_SEND_OFF ? "selected" : ""), TRACKER_SEND_OFF,
+  (settings->tracker_send == TRACKER_SEND_SINGLE ? "selected" : ""), TRACKER_SEND_SINGLE,
+  (settings->tracker_send == TRACKER_SEND_AUTO ? "selected" : ""), TRACKER_SEND_AUTO,
+  (settings->tracker_send == TRACKER_SEND_MINI ? "selected" : ""), TRACKER_SEND_MINI
+  );
+
+  len = strlen(offset);
+  offset += len;
+  size -= len;
+
+//#if !defined(EXCLUDE_BLUETOOTH)
+  /* SoC specific part 1 */
+  if (SoC->id == SOC_ESP32S3) 
+  {
+    snprintf_P ( offset, size,
+      PSTR("\
+<tr>\
+<th align=left>Built-in Bluetooth</th>\
+<td align=right>\
+<select name='bluetooth'>\
+<option %s value='%d'>Off</option>\
+<option %s value='%d'>SPP</option>\
+<option %s value='%d'>LE</option>\
+</select>\
+</td>\
+</tr>"),
+    (settings->bluetooth == BLUETOOTH_NONE ? "selected" : ""), BLUETOOTH_NONE,
+    (settings->bluetooth == BLUETOOTH_SPP  ? "selected" : ""), BLUETOOTH_SPP,
+    (settings->bluetooth == BLUETOOTH_LE_HM10_SERIAL ? "selected" : ""), BLUETOOTH_LE_HM10_SERIAL
+    );
+
+    len = strlen(offset);
+    offset += len;
+    size -= len;
+
+  }
+
+//#endif /* EXCLUDE_BLUETOOTH */
+
+  /* Common part 3 */
+  snprintf_P ( offset, size,
+    PSTR("\
+<tr>\
+<th align=left>NMEA output</th>\
+<td align=right>\
+<select name='nmea_out'>\
+<option %s value='%d'>Off</option>\
+<option %s value='%d'>Serial</option>\
+<option %s value='%d'>UDP</option>"),
+
+  (settings->nmea_out == NMEA_OFF  ? "selected" : ""), NMEA_OFF,
+  (settings->nmea_out == NMEA_UART ? "selected" : ""), NMEA_UART,
+  (settings->nmea_out == NMEA_UDP  ? "selected" : ""), NMEA_UDP);
+
+  len = strlen(offset);
+  offset += len;
+  size -= len;
+
+  /* Common part 4 */
+
+      snprintf_P(offset, size,
+          PSTR("\
+<option %s value='%d'>TCP</option>\
+<option %s value='%d'>Bluetooth</option>"),
+(settings->nmea_out == NMEA_TCP ? "selected" : ""), NMEA_TCP,
+(settings->nmea_out == NMEA_BLUETOOTH ? "selected" : ""), NMEA_BLUETOOTH);
+
+      len = strlen(offset);
+      offset += len;
+      size -= len;
+
+  snprintf_P(offset, size,
+      PSTR("\
+<tr>\
+<th align=left>Полушарие(северное или южное) </th>\
+<td align=right>\
+<select name='input_N_S'>\
+<option % s value='%d'>N</option>\
+<option % s value='%d'>S</option>\
+</select>\
+</td>\
+</tr>\
+<tr>\
+<th align=left>latitude(широта 0&#176; - 90&#176) </th>\
+<td align=right>\
+   <INPUT type='tel' name='local_latitude' pattern='[0-9]{1,2}\\.[0-9]{5}' size='10' maxlength='10' min='0' max='90' value='%.05f' title='Введите широту в формате: 1-2 цифры, точка, 5 цифр (например: 7.12345, 37.12345)'>\
+</td>\
+</tr>\
+<tr>\
+<th align=left>Долгота(восточная или западная)</th>\
+<td align=right>\
+<select name='input_E_W'>\
+<option % s value='%d'>E</option>\
+<option % s value='%d'>W</option>\
+</select>\
+</td>\
+</tr>\
+<tr>\
+<th align=left>longitude(долгота 0&#176 - 180&#176) Формат: от 1 до 3 цифр.5 цифр</th>\
+<td align=right>\
+<INPUT type='tel' name='local_longitude' pattern='[0-9]{1,3}\\.[0-9]{5}' size='11' maxlength='11' min='0' max='180' value='%.05f' title='Введите долготу в формате: 1-3 цифры, точка, 5 цифр (например: 7.12345, 37.12345, 137.12345)'>\
+</td>\
+</tr>\
+"),
+(settings->input_N_S == IMPUT_N ? "selected" : ""), IMPUT_N,
+(settings->input_N_S == IMPUT_S ? "selected" : ""), IMPUT_S,
+settings->local_latitude,
+(settings->input_E_W == IMPUT_E ? "selected" : ""), IMPUT_E,
+(settings->input_E_W == IMPUT_W ? "selected" : ""), IMPUT_W,
+settings->local_longitude
+);
+
+  len = strlen(offset);
+  offset += len;
+  size -= len;
+
+    snprintf_P(offset, size,
+      PSTR("<tr>\
+    <th align=left>Local IP address</th>\
+    <td align=right>\
+    <input type='text' name='local_ip' size='15' maxlength='15' pattern='[0-9]{1,3}(\\.[0-9]{1,3}){3}' \
+           value='%d.%d.%d.%d' placeholder='192.168.1.50'>\
+    </td></tr>\
+    <tr>\
+    <th align=left>Gateway IP address</th>\
+    <td align=right>\
+    <input type='text' name='gateway_ip' size='15' maxlength='15' pattern='[0-9]{1,3}(\\.[0-9]{1,3}){3}' \
+           value='%d.%d.%d.%d' placeholder='192.168.1.1'>\
+    </td></tr>\
+    <tr>\
+    <th align=left>Subnet mask</th>\
+    <td align=right>\
+    <input type='text' name='subnet_mask' size='15' maxlength='15' pattern='[0-9]{1,3}(\\.[0-9]{1,3}){3}' \
+           value='%d.%d.%d.%d' placeholder='255.255.255.0'>\
+    </td></tr>\
+    "),
+      // подставляем текущие переменные
+      settings->g_localIP[0], settings->g_localIP[1], settings->g_localIP[2], settings->g_localIP[3],
+      settings->g_gatewayIP[0], settings->g_gatewayIP[1], settings->g_gatewayIP[2], settings->g_gatewayIP[3],
+      settings->g_subnetMask[0], settings->g_subnetMask[1], settings->g_subnetMask[2], settings->g_subnetMask[3]);
+
+  len = strlen(offset);
+  offset += len;
+  size -= len;
+
+
+
+
+
+  /* Common part 8 */
+  snprintf_P ( offset, size,
+    PSTR("\
+</table>\
+<p align=center><INPUT type='submit' value='Сохранить и обновить'></p>\
+</form>\
+</body>\
+</html>")
+  );
+
+  SoC->swSer_enableRx(false);
+  server.sendHeader(String(F("Cache-Control")), String(F("no-cache, no-store, must-revalidate")));
+  server.sendHeader(String(F("Pragma")), String(F("no-cache")));
+  server.sendHeader(String(F("Expires")), String(F("-1")));
+  server.send ( 200, "text/html", Settings_temp );
+  SoC->swSer_enableRx(true);
+  free(Settings_temp);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Для того чтобы в подтверждающем сообщении handleInput() вместо цифровых кодов (0, 1, 2...) отображались понятные текстовые названия (Off, Single, N, S и т.д.), нам нужно изменить формат вывода в функции snprintf_P.
+
+Вместо спецификатора %d мы будем использовать %s и добавим логику выбора строки на основе текущего значения настройки.
+
+Вот исправленный код функции handleInput():
+
+void handleInput() // Ввод основных настроек
+{
+    size_t size = 3580;
+    char* Input_temp = (char*)malloc(size);
+    if (Input_temp == NULL) {
+        return;
+    }
+
+    // 1. Обработка входящих параметров
+    for (uint8_t i = 0; i < server.args(); i++)
+    {
+        if (server.argName(i).equals("tracker_send")) {
+            settings->tracker_send = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("bluetooth")) {
+            settings->bluetooth = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("nmea_out")) {
+            settings->nmea_out = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("input_N_S")) {
+            settings->input_N_S = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("local_latitude")) {
+            settings->local_latitude = server.arg(i).toFloat();
+        }
+        else if (server.argName(i).equals("input_E_W")) {
+            settings->input_E_W = server.arg(i).toInt();
+        }
+        else if (server.argName(i).equals("local_longitude")) {
+            settings->local_longitude = server.arg(i).toFloat();
+        }
+        else if (server.argName(i).equals("local_ip")) {
+            int ip[4];
+            if (sscanf(server.arg(i).c_str(), "%d.%d.%d.%d", &ip[0], &ip[1], &ip[2], &ip[3]) == 4) {
+                for (int k = 0; k < 4; k++) settings->g_localIP[k] = (uint8_t)ip[k];
+            }
+        }
+        else if (server.argName(i).equals("gateway_ip")) {
+            int ipg[4];
+            if (sscanf(server.arg(i).c_str(), "%d.%d.%d.%d", &ipg[0], &ipg[1], &ipg[2], &ipg[3]) == 4) 
+            {
+                for (int k = 0; k < 4; k++) settings->g_gatewayIP[k] = (uint8_t)ipg[k];
+            }
+        }
+        else if (server.argName(i).equals("subnet_mask")) {
+            int ipm[4];
+            if (sscanf(server.arg(i).c_str(), "%d.%d.%d.%d", &ipm[0], &ipm[1], &ipm[2], &ipm[3]) == 4) {
+                for (int k = 0; k < 4; k++) settings->g_subnetMask[k] = (uint8_t)ipm[k];
+            }
+        }
+    }
+
+    // 2. Формирование текстовых описаний для отображения
+    const char* txt_tracker = (settings->tracker_send == TRACKER_SEND_OFF) ? "Off" :
+                              (settings->tracker_send == TRACKER_SEND_SINGLE) ? "Single" :
+                              (settings->tracker_send == TRACKER_SEND_AUTO) ? "Auto" : "Mini";
+
+    const char* txt_bt = (settings->bluetooth == BLUETOOTH_NONE) ? "Off" :
+                         (settings->bluetooth == BLUETOOTH_SPP) ? "SPP" : "LE";
+
+    const char* txt_nmea = (settings->nmea_out == NMEA_OFF) ? "Off" :
+                           (settings->nmea_out == NMEA_UART) ? "Serial" :
+                           (settings->nmea_out == NMEA_UDP) ? "UDP" :
+                           (settings->nmea_out == NMEA_TCP) ? "TCP" : "Bluetooth";
+
+    const char* txt_ns = (settings->input_N_S == IMPUT_N) ? "N" : "S";
+    const char* txt_ew = (settings->input_E_W == IMPUT_E) ? "E" : "W";
+
+
+    // 3. Вывод HTML с заменой %d на %s там, где нужен текст
+    snprintf_P(Input_temp, size,
+        PSTR("<html>\
+        <head>\
+        <meta http-equiv='refresh' content='15; url=/'>\
+        <meta name='viewport' content='width=device-width, initial-scale=1'>\
+        <title>FLYRF Settings</title>\
+        </head>\
+        <body>\
+        <h1 align=center>Новые настройки:</h1>\
+        <table width=100%%>\
+        <tr><th align=left>TRACKER send</th><td align=right>%s</td></tr>\
+        <tr><th align=left>Bluetooth</th><td align=right>%s</td></tr>\
+        <tr><th align=left>NMEA Out</th><td align=right>%s</td></tr>\
+        <tr><th align=left>Полушарие</th><td align=right>%s</td></tr>\
+        <tr><th align=left>Latitude</th><td align=right>%.05f</td></tr>\
+        <tr><th align=left>Долгота</th><td align=right>%s</td></tr>\
+        <tr><th align=left>Longitude</th><td align=right>%.05f</td></tr>\
+        <tr><th align=left>Local IP</th><td align=right>%d.%d.%d.%d</td></tr>\
+        <tr><th align=left>Gateway IP</th><td align=right>%d.%d.%d.%d</td></tr>\
+        <tr><th align=left>Subnet Mask</th><td align=right>%d.%d.%d.%d</td></tr>\
+        </table>\
+        <hr>\
+        <p align=center><h2 align=center>Выполняется перезагрузка... Пожалуйста, подождите!</h2></p>\
+        </body>\
+        </html>"),
+        txt_tracker,   // %s
+        txt_bt,        // %s
+        txt_nmea,      // %s
+        txt_ns,        // %s
+        settings->local_latitude,
+        txt_ew,        // %s
+        settings->local_longitude,
+        settings->g_localIP[0], settings->g_localIP[1], settings->g_localIP[2], settings->g_localIP[3],
+        settings->g_gatewayIP[0], settings->g_gatewayIP[1], settings->g_gatewayIP[2], settings->g_gatewayIP[3],
+        settings->g_subnetMask[0], settings->g_subnetMask[1], settings->g_subnetMask[2], settings->g_subnetMask[3]
+    );
+
+    SoC->swSer_enableRx(false);
+    server.send(200, "text/html", Input_temp);
+    delay(1000);
+    free(Input_temp);
+    EEPROM_store();
+    RF_Shutdown();
+    delay(1000);
+    SoC->reset();
+}
+Что изменилось:
+Логика выбора строк: Перед вызовом snprintf_P я добавил переменные txt_tracker, txt_bt, txt_nmea и т.д. Они используют тернарный оператор (условие ? "если да" : "если нет") для выбора точно такого же текста, какой пользователь видел в выпадающих списках handleSettings().
+Спецификаторы %s: В строке PSTR для соответствующих пунктов таблицы %d заменен на %s, так как теперь мы передаем туда указатель на текстовую строку.
+Имена констант: Использованы ваши константы из файла настроек: TRACKER_SEND_OFF, BLUETOOTH_NONE, IMPUT_N и т.д. (включая опечатку IMPUT вместо INPUT, если она так определена в коде).
+Теперь после сохранения настроек пользователь увидит подтверждение в виде: TRACKER send: Auto, вместо TRACKER send: 2.
