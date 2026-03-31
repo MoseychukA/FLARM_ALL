@@ -1,0 +1,303 @@
+//=================================================================
+#define RS485_SERIAL   Serial2
+#define RS485_TX_PIN   18
+#define RS485_RX_PIN   17
+#define RS485_DE_PIN   21
+#define RS485_BAUD     115200// 256000 //921600
+#define RS485_CONFIG   SERIAL_8N1
+
+const uint32_t PACKET_HEADER = 0xAABBCCDD;
+const uint32_t PACKET_FOOTER = 0xDDCCBBAA;
+
+ufo_t ThisAircraft;
+extern ufo_t fo, Container[MAX_TRACKING_OBJECTS];
+
+typedef struct __attribute__((packed)) {
+    uint32_t addr;
+    int      squawk;
+    uint8_t  callsign[8];
+    float    altitude;
+    float    pressure_altitude;
+    float    course;
+    float    speed;
+    float    distance;
+    float    bearing;
+    int      vert_rate;
+    float    latitude;
+    float    longitude;
+    time_t   timestamp;
+    int8_t   rssi_LoRa;
+    int8_t   rssi_rp2040;
+    uint8_t  signal_source;
+} ufo_net_t;
+
+typedef struct __attribute__((packed)) {
+    uint8_t  new_button_M;
+    bool     new_message;
+    bool     message_received;
+    bool     confirm_message_M;
+    char     msg_resp_M[BUFFER_SIZE];
+    uint8_t  Time_Hour_M;
+    uint8_t  Time_Minute_M;
+    bool     new_SOS_flag_M;
+    bool     isValidGNSS_M;
+} aux_t;
+
+typedef struct __attribute__((packed)) {
+    ufo_net_t ThisAircraft;
+    ufo_net_t Container[MAX_TRACKING_OBJECTS];
+    aux_t     AuxData;
+    uint8_t   BUTTON1;
+    uint8_t   BUTTON2;
+} full_packet_net_t;
+
+aux_t AuxData;
+
+//============================================================================
+// Прототипы
+uint16_t crc16_ccitt(const uint8_t* data, size_t len);
+void sendPacket_RS485(const full_packet_net_t* pkt);
+bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2);
+void net_to_ufo_Container(const ufo_t* src, ufo_net_t* dst);
+void net_to_ufo_ThisAircraft(const ufo_t* src, ufo_net_t* dst);
+
+//===================================================================================================================
+
+// копирование полей чужого самолета
+void net_to_ufo_Container(const ufo_t* src, ufo_net_t* dst)
+{
+    dst->addr = src->addr;
+    dst->squawk = src->squawk;
+    memcpy(dst->callsign, src->callsign, 8);
+    dst->altitude = src->altitude;
+    dst->pressure_altitude = src->pressure_altitude;
+    dst->course = src->course;
+    dst->speed = src->speed;
+    dst->distance = src->distance;
+    dst->bearing = src->bearing;
+    dst->vert_rate = src->vert_rate;
+    dst->latitude = src->latitude;
+    dst->longitude = src->longitude;
+    dst->timestamp = src->timestamp;
+    dst->rssi_LoRa = src->rssi_LoRa;
+    dst->rssi_rp2040 = src->rssi_rp2040;
+    dst->signal_source = src->signal_source;
+}
+
+// копирование полей нашего самолета
+void net_to_ufo_ThisAircraft(const ufo_t* src, ufo_net_t* dst)
+{
+    dst->addr = src->addr;
+    dst->squawk = src->squawk;
+    memcpy(dst->callsign, src->callsign, 8);
+    dst->altitude = src->altitude;
+    dst->pressure_altitude = src->pressure_altitude;
+    dst->course = src->course;
+    dst->speed = src->speed;
+    dst->vert_rate = src->vert_rate;
+    dst->latitude = src->latitude;
+    dst->longitude = src->longitude;
+}
+
+
+
+
+
+
+static void rs485SetTX(bool enable)
+{
+    digitalWrite(RS485_DE_PIN, enable ? HIGH : LOW);
+    if (enable) delayMicroseconds(50);
+}
+
+void setupRS485()
+{
+    RS485_SERIAL.setRxBufferSize(1024);
+    RS485_SERIAL.setTxBufferSize(1024);
+    RS485_SERIAL.begin(RS485_BAUD, RS485_CONFIG, RS485_RX_PIN, RS485_TX_PIN);
+    pinMode(RS485_DE_PIN, OUTPUT);
+    digitalWrite(RS485_DE_PIN, LOW);
+    rs485SetTX(false);
+}
+
+
+uint16_t crc16_ccitt(const uint8_t* data, size_t len)
+{
+    uint16_t crc = 0x0000;
+    for (size_t i = 0; i < len; ++i) {
+        crc ^= (uint16_t)data[i] << 8;
+        for (uint8_t j = 0; j < 8; ++j)
+            crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : (crc << 1);
+    }
+    return crc;
+}
+
+
+// ============== ПЕРЕДАЧА ПАКЕТА ===================
+void sendPacket_RS485(const full_packet_net_t* pkt)
+{
+    const size_t plen = sizeof(full_packet_net_t);
+    static uint8_t buf[sizeof(full_packet_net_t)];
+    memcpy(buf, pkt, plen);
+    uint16_t crc = crc16_ccitt(buf, plen);
+
+    xSemaphoreTake(serialMutex, portMAX_DELAY);
+    rs485SetTX(true);
+    digitalWrite(LED, LOW);
+    RS485_SERIAL.write((uint8_t*)&PACKET_HEADER, sizeof(PACKET_HEADER));
+    RS485_SERIAL.write(buf, plen);
+    RS485_SERIAL.write((uint8_t*)&crc, sizeof(crc));
+    RS485_SERIAL.write((uint8_t*)&PACKET_FOOTER, sizeof(PACKET_FOOTER));
+    RS485_SERIAL.flush();
+    delayMicroseconds(200);
+    rs485SetTX(false);
+    digitalWrite(LED, HIGH);
+    xSemaphoreGive(serialMutex);
+
+}
+
+
+// ================ ПРИЁМ ОТВЕТНОГО ПАКЕТА ================
+// Порционный парсер + быстрый ресинк (аналогично Приемнику)
+bool receivePacket_RS485(full_packet_net_t* pkt, uint8_t* btn1, uint8_t* btn2)
+{
+    static uint8_t buffer[sizeof(full_packet_net_t) + 64];
+    static size_t idx = 0;
+
+    // --- "порция" чтения ---
+    const int READ_BUDGET = 256;
+    int read_left = READ_BUDGET;
+    xSemaphoreTake(serialMutex, portMAX_DELAY);
+    while (RS485_SERIAL.available() && read_left > 0)
+    {
+        int to_read = RS485_SERIAL.available();
+        if (to_read > read_left) to_read = read_left;
+        if (to_read + idx > (int)sizeof(buffer)) to_read = sizeof(buffer) - idx;
+        if (to_read <= 0) break;
+        int n = RS485_SERIAL.readBytes(&buffer[idx], to_read);
+        idx += n;
+        read_left -= n;
+    }
+    xSemaphoreGive(serialMutex);
+    if (idx < 4) return false;
+
+    // быстрый ресинк по 0xDD CC BB AA
+    size_t start = 0;
+    for (;;)
+    {
+        if (idx - start < 4)
+        {
+            if (start > 0) { memmove(buffer, buffer + start, idx - start); idx -= start; }
+            return false;
+        }
+        if (buffer[start] == 0xDD && buffer[start + 1] == 0xCC && buffer[start + 2] == 0xBB && buffer[start + 3] == 0xAA) break;
+        start++;
+    }
+    if (start > 0)
+    {
+        memmove(buffer, buffer + start, idx - start);
+        idx -= start;
+    }
+
+    const size_t frame_len = sizeof(full_packet_net_t) + 10;
+    if (idx < frame_len) return false;
+    const size_t footer_off = sizeof(full_packet_net_t) + 4 + 2;
+    bool footer_ok = (buffer[footer_off] == 0xAA && buffer[footer_off + 1] == 0xBB &&
+        buffer[footer_off + 2] == 0xCC && buffer[footer_off + 3] == 0xDD);
+    if (!footer_ok)
+    {
+        idx = 0;
+        return false;
+    }
+
+    uint8_t* data = &buffer[4];
+    uint16_t crc_rx = *(uint16_t*)&buffer[4 + sizeof(full_packet_net_t)];
+    uint16_t crc_calc = crc16_ccitt(data, sizeof(full_packet_net_t));
+    if (crc_rx != crc_calc) {
+        idx = 0;
+        return false;
+    }
+
+    memcpy(pkt, data, sizeof(full_packet_net_t));
+    if (btn1) *btn1 = pkt->BUTTON1;
+    if (btn2) *btn2 = pkt->BUTTON2;
+    idx -= frame_len;
+    if (idx > 0) memmove(buffer, buffer + frame_len, idx);
+
+    return true;
+}
+
+
+//// ================ ЗАДАЧА ПЕРЕДАЧИ ================
+
+unsigned long previousMillis = 0;            //  
+const long interval = 1000;                  //  
+unsigned long thresholdMillis = 0;            //  
+const long threshold_interval = 10660;                  //  
+
+
+void txTask_test()
+{
+    static full_packet_net_t packet = {};
+
+    net_to_ufo_ThisAircraft(&ThisAircraft, &packet.ThisAircraft);
+
+    for (int i = 0; i < MAX_TRACKING_OBJECTS; ++i)
+    {
+        net_to_ufo_Container(&Container[i], &packet.Container[i]);
+    }
+ 
+    // Доп.флаги
+    AuxData.new_message = service.getNewMessageFlag();               // Получить признак прихода нового сообщения 
+    AuxData.confirm_message_M = service.get_confirm_message();       // Разрешить отправить подтверждение прочтения сообщения.
+    AuxData.Time_Hour_M = service.get_time_hour();
+    AuxData.Time_Minute_M = service.get_time_minute();
+    AuxData.new_SOS_flag_M = digitalRead(SOC_GPIO_PIN_SOS);          // Получить признак состояния кнопки SOS;
+
+    if (service.getNewMessageFlag())
+    {
+        // Безопасное копирование в msg_resp_M
+        strlcpy(AuxData.msg_resp_M, CommandHandler.msg_tmp_all, sizeof(AuxData.msg_resp_M));
+
+        // Очистить исходный буфер
+        memset(CommandHandler.msg_tmp_all, 0, sizeof(CommandHandler.msg_tmp_all));
+
+        service.setNewMessageFlag(false);
+    }
+
+    AuxData.isValidGNSS_M = (bool)service.get_GNSS_on_off(); 
+
+    memcpy(&packet.AuxData, &AuxData, sizeof(aux_t));
+    packet.BUTTON1 = 0x01;
+    packet.BUTTON2 = 0x02;
+    sendPacket_RS485(&packet);
+ 
+}
+
+// ================ ЗАДАЧА ПРИЁМА ================
+ 
+ 
+void rxTask(void* param)
+{
+    esp_task_wdt_add(NULL); // текущая задача - loopTask
+    static full_packet_net_t recpkt;
+    uint8_t btn1, btn2;
+    for (;;)
+    {
+        esp_task_wdt_reset();
+        if (receivePacket_RS485(&recpkt, &btn1, &btn2))
+        {
+            // Обработка мгновенного сигнала new_button_M
+            if (recpkt.AuxData.new_button_M != 0)
+            {
+                service.set_num_button(recpkt.AuxData.new_button_M);
+               //   Serial.printf("Принят ответ: BUTTON1=%u BUTTON2=%u new_button_M=%u \r\n",  recpkt.BUTTON1, recpkt.BUTTON2, recpkt.AuxData.new_button_M);
+                  // Здесь можно сразу отреагировать на приём
+            }
+        }
+        vTaskDelay(pdMS_TO_TICKS(20));
+    }
+}
+
+
+//==================================================================================================================

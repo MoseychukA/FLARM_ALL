@@ -1,0 +1,163 @@
+📄 FlyRf_Lan.ino (минимальный старт)
+
+Создай файл с именем папки проекта, например:
+
+FlyRf_Lan_26_03_25_02.ino
+
+И вставь туда:
+
+#include <Arduino.h>
+
+// ===== Forward declarations (чтобы избежать ошибок линковки) =====
+void SystemSetup();
+void SystemLoop();
+
+// ===== Arduino entry points =====
+void setup()
+{
+    Serial.begin(115200);
+    delay(1000);
+
+    Serial.println();
+    Serial.println("=== FlyRf Receiver старт ===");
+
+    SystemSetup();
+}
+
+void loop()
+{
+    SystemLoop();
+}
+📄 System.cpp (логика верхнего уровня)
+
+Создай рядом файл System.cpp:
+
+#include <Arduino.h>
+
+// Заглушки — потом заменим на реальные модули
+void Display_setup();
+void Display_loop();
+
+void RF_setup();
+void RF_loop();
+
+void LAN_setup();
+void LAN_loop();
+
+void SystemSetup()
+{
+    Serial.println("[System] Init...");
+
+    Display_setup();
+    RF_setup();
+    LAN_setup();
+}
+
+void SystemLoop()
+{
+    RF_loop();
+    LAN_loop();
+    Display_loop();
+}
+📄 System.h
+#pragma once
+
+void SystemSetup();
+void SystemLoop();
+📄 Заглушки модулей (чтобы компилировалось)
+Display (ESP32RF.cpp / .h)
+// ESP32RF.h
+#pragma once
+void Display_setup();
+void Display_loop();
+// ESP32RF.cpp
+#include <Arduino.h>
+#include "ESP32RF.h"
+
+void Display_setup()
+{
+    Serial.println("[Display] init");
+}
+
+void Display_loop()
+{
+    // пока пусто
+}
+RF (прием LoRa / ADS-B позже)
+// RF.h
+#pragma once
+void RF_setup();
+void RF_loop();
+// RF.cpp
+#include <Arduino.h>
+#include "RF.h"
+
+void RF_setup()
+{
+    Serial.println("[RF] init");
+}
+
+void RF_loop()
+{
+    // здесь позже будет прием LoRa / dump1090
+}
+LAN (UDP/TCP позже)
+// LANRF.h
+#pragma once
+void LAN_setup();
+void LAN_loop();
+// LANRF.cpp
+#include <Arduino.h>
+#include "LANRF.h"
+
+void LAN_setup()
+{
+    Serial.println("[LAN] init");
+}
+
+void LAN_loop()
+{
+    // сеть позже
+}
+✅ Что это даст
+
+После этого:
+
+проект гарантированно компилируется
+есть четкая архитектура
+можно поэтапно добавлять:
+Container
+RP2040BridgeTask
+LoRa (RFM95)
+dump1090 поток
+NMEA вывод
+RS485 / Serial / UDP / TCP
+🚀 Следующий шаг
+
+Если хочешь, дальше логично идти так:
+
+👉 Шаг 2:
+
+создать Container (база самолетов)
+
+добавить структуру:
+
+struct Aircraft {
+    uint32_t icao;
+    float lat;
+    float lon;
+    int altitude;
+    float speed;
+    float course;
+};
+
+👉 Шаг 3:
+
+подключить RP2040BridgeTask → запись в Container
+
+Если скажешь “идем дальше” — я сразу соберу тебе:
+✔ Container + менеджер целей
+✔ потокобезопасную очередь
+✔ интеграцию в текущий скелет
+
+и уже начнем превращать это в реальный приемник ADS-B / FLARM.

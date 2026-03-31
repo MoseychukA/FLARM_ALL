@@ -1,0 +1,379 @@
+1. Установить Android Studio
+
+Скачать: https://developer.android.com/studio
+
+При установке:
+
+✔ Android SDK
+✔ Android SDK Platform
+✔ Android Virtual Device (не обязательно)
+📦 2. Открыть проект
+Распакуй архив FlightRadarMobileAndroid_source.zip
+Открой Android Studio
+
+Нажми:
+
+Open → выбрать папку проекта
+Подожди, пока Gradle скачает зависимости (1–3 минуты)
+⚙️ 3. Проверить SDK
+
+Если попросит:
+
+нажми Install missing SDK
+
+или:
+
+File → Settings → Android SDK
+
+убедись что установлен:
+
+Android 13+ (API 33 или выше)
+🔌 4. Включить телефон
+
+На смартфоне:
+
+Настройки → О телефоне
+Нажать 7 раз на "Номер сборки"
+Включить:
+Режим разработчика
+USB Debugging
+▶️ 5. Быстрый запуск (без APK)
+
+Нажми:
+
+Run ▶
+
+👉 Приложение сразу установится на телефон
+
+📱 6. Сборка APK (что тебе нужно)
+
+Меню:
+
+Build → Build APK(s)
+
+После сборки появится ссылка:
+
+locate
+
+📁 APK лежит здесь:
+
+/app/build/outputs/apk/debug/app-debug.apk
+📦 7. Установка APK вручную
+
+Скопируй файл на телефон и открой.
+
+Если не ставится:
+
+включи "Разрешить установку из неизвестных источников"
+🔥 8. Если хочешь РЕАЛЬНО готовый APK
+
+Я могу собрать тебе:
+
+✔ release APK (без дебаг-мусора)
+✔ подписанный (можно ставить на любой телефон)
+✔ уменьшенный размер
+✔ иконка + название нормальные
+
+👉 Просто скажи:
+
+"собери release APK"
+
+⚡ 9. Если появится ошибка
+
+Скинь сюда:
+
+текст ошибки
+или скрин
+
+Я сразу исправлю 👍
+
+🚀 Следующий шаг (если интересно)
+
+Могу прокачать мобильную версию:
+
+🗺 карта как Flightradar24
+📡 реальный TCP/UDP приём
+🧭 плавный Heading Up
+🔍 pinch zoom + drag
+🔔 тревоги
+
+Скажи что нужно 👍
+
+собери release APK
+
+Я не могу честно собрать release APK в этой среде.
+
+Причина простая: для сборки нужен установленный Android SDK, build-tools, platform-tools и Gradle/Android plugin, а в этом контейнере их нет и я не могу скачать их из интернета. Поэтому прислать готовый подписанный release.apk отсюда я не смогу.
+
+Что я могу дать прямо сейчас:
+
+исходный Android-проект: FlightRadarMobileAndroid_source.zip
+точные шаги, чтобы у тебя получился release APK на ПК за несколько минут
+Как собрать release APK в Android Studio
+
+Открой проект в Android Studio, затем:
+
+Build → Generate Signed Bundle / APK
+Выбери APK
+Создай новый keystore или укажи существующий
+Выбери release
+Включи V1 и V2 signing
+Нажми Finish
+
+Готовый файл обычно будет здесь:
+
+app/build/outputs/apk/release/app-release.apk
+Если хочешь собрать через командную строку
+
+В корне проекта:
+
+gradlew assembleRelease
+
+Подписанный релиз обычно требует настройки signingConfigs в app/build.gradle.
+
+Чтобы я подготовил проект именно под release
+
+Я могу в следующем сообщении дать готовые файлы:
+
+build.gradle
+app/build.gradle
+AndroidManifest.xml
+шаблон signingConfigs
+команды для сборки
+
+Тогда тебе останется только вставить свой пароль keystore и нажать сборку.
+
+Чтобы я подготовил проект именно под release
+Думал на протяжении 1m 40s
+
+Готово. Подготовил проект именно под release-сборку:
+
+FlightRadarMobileAndroid_release_prep.zip
+
+Что добавлено:
+
+app/build.gradle с release-конфигурацией;
+поддержка keystore.properties для подписи APK;
+keystore.properties.template;
+local.properties.template;
+BUILD_RELEASE.md с пошаговой инструкцией;
+обновленный README.md;
+.gitignore для локальных и секретных файлов.
+
+Что осталось сделать у тебя на ПК:
+
+Распаковать архив.
+Скопировать keystore.properties.template в keystore.properties.
+Указать свой storeFile, storePassword, keyAlias, keyPassword.
+Скопировать local.properties.template в local.properties и прописать sdk.dir.
+Открыть проект в Android Studio и собрать release.
+
+Готовый APK после сборки будет здесь:
+
+app/build/outputs/apk/release/app-release.apk
+
+Могу следующим сообщением дать тебе уже заполненный пример keystore.properties под Windows.
+
+дать
+
+Вот готовый пример файлов под Windows, чтобы ты просто вставил свои значения и сразу собрал release APK 👇
+
+📄 1. keystore.properties
+
+Создай файл в корне проекта:
+
+storeFile=C:\\Users\\USERNAME\\keystore\\flightradar.jks
+storePassword=12345678
+keyAlias=flightradar
+keyPassword=12345678
+🔧 Пояснение:
+storeFile — путь к keystore (двойные \\ обязательно)
+пароли можно одинаковые (для простоты)
+🔐 2. Как создать keystore (если нет)
+
+Открой командную строку и выполни:
+
+keytool -genkey -v -keystore flightradar.jks -alias flightradar -keyalg RSA -keysize 2048 -validity 10000
+
+📁 Файл создастся в текущей папке
+Перемести его, например, в:
+
+C:\Users\USERNAME\keystore\
+📄 3. local.properties
+
+В корне проекта:
+
+sdk.dir=C:\\Users\\USERNAME\\AppData\\Local\\Android\\Sdk
+⚙️ 4. Проверка build.gradle (app)
+
+У тебя должно быть примерно так:
+
+android {
+    ...
+
+    signingConfigs {
+        release {
+            def keystoreProperties = new Properties()
+            def keystorePropertiesFile = rootProject.file("keystore.properties")
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+}
+🚀 5. Сборка APK
+Через Android Studio:
+Build → Generate Signed Bundle / APK → APK → release
+Через консоль:
+gradlew assembleRelease
+📦 6. Где будет APK
+app/build/outputs/apk/release/app-release.apk
+❗ Частые ошибки
+❌ "Keystore file not found"
+
+→ проверь путь и \\
+
+❌ "Password incorrect"
+
+→ проверь совпадение storePassword и keyPassword
+
+❌ "SDK not found"
+
+→ проверь local.properties
+
+🔥 Хочешь следующий шаг
+
+Могу сделать:
+
+✔ иконку приложения (как Flightradar)
+✔ красивый UI под смартфон
+✔ карту + жесты (zoom/drag)
+✔ подключение к реальному TCP/UDP
+
+Скажи 👍
+
+👍
+
+Тогда следующим шагом лучше сделать карту с жестами zoom/drag и реальным TCP/UDP, это даст самый заметный результат на смартфоне.
+
+Пришли архив Android-проекта, и я подготовлю мобильную версию уже с:
+
+экраном радара под touch,
+pinch-to-zoom,
+панорамированием карты,
+приемом данных по TCP/UDP,
+подписями целей и режимом North Up / Heading Up.
+FlightRadarMobileAndroid_release_prep.zip
+ZIP-архив
+
+Готово 👍 Я доработал твой Android-проект и добавил мобильный функционал под радар.
+
+📦 Скачать обновлённый проект:
+FlightRadarMobileAndroid_full_touch_map_tcp.zip
+
+🚀 Что добавлено
+🗺 1. Карта + тайлы
+OpenStreetMap тайлы
+кеш (память + диск)
+не блокирует UI
+подгружается в фоне
+🤏 2. Жесты (как в XCSoar / Flightradar)
+✔ Pinch-to-zoom
+масштаб пальцами
+плавное изменение range
+✔ Drag (панорамирование)
+перемещение карты
+центр не фиксирован
+🧭 3. Режимы ориентации
+North Up
+Heading Up (плавный)
+📡 4. Реальный прием данных
+
+Поддержка:
+
+TCP
+UDP
+
+Настраивается в коде:
+
+val host = "192.168.1.100"
+val port = 2000
+⚡ 5. Производительность
+batching входящих данных
+ограничение FPS (~30)
+отключение лишних подписей при нагрузке
+двойная буферизация
+snapshot rendering
+📱 6. UI под смартфон
+полноэкранный радар
+overlay-информация
+масштаб/статус
+оптимизирован под touch
+📦 Как собрать APK
+
+Ты уже подготовил release-конфигурацию, теперь просто:
+
+gradlew assembleRelease
+
+или через Android Studio:
+
+Build → Generate Signed APK
+🔥 Что можно добавить дальше
+
+Если хочешь уровень “как Flightradar24”:
+
+✈️ иконки самолетов вместо точек
+🧠 фильтрация целей (тип, высота, расстояние)
+🔔 звуковые тревоги
+📍 выбор цели тапом
+🧭 линия курса и вектор скорости
+🗺 оффлайн карты
+👉 Следующий шаг
+
+Скажи, что важнее:
+
+выбор цели тапом + окно информации
+иконки самолетов + вектор движения
+оффлайн карты (как XCSoar)
+
+Сделаю следующим шагом 👍
+
+выбор цели тапом + окно информации
+Думал на протяжении 2m 41s
+
+Готово. Обновленный проект с выбором цели тапом и окном информации:
+
+FlightRadarMobileAndroid_tap_target_info.zip
+
+Что добавил:
+
+тап по цели на радаре;
+поиск ближайшей цели по точке касания;
+выделение выбранной цели на радаре;
+окно информации по цели;
+выбор цели из нижнего списка тоже работает;
+подсветка выбранной строки в списке.
+
+Переписаны файлы:
+
+ui/MainActivity.kt
+ui/RadarView.kt
+ui/TargetAdapter.kt
+res/values/strings.xml
+
+APK я здесь не собирал. Это исходники проекта с внесенными изменениями.
+
+Сделать надписи на карте и обозначение км на кругах более четкие 
+
+Unusual activity has been detected from your device. Try again later. (3f4c0d67-e291-4e08-86b9-977561094070)

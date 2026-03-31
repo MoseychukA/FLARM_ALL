@@ -1,0 +1,8 @@
+/* SPI (LoRa32 pins mapping) */
+#define GPIO_PIN_MOSI       11
+#define GPIO_PIN_MISO       13
+#define GPIO_PIN_SCK        12
+#define GPIO_PIN_SS         46
+#define GPIO_PIN_RST        7
+#define GPIO_PIN_SDA        8
+#define GPIO_PIN_SCL        9

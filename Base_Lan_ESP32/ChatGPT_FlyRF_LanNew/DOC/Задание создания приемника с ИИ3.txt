@@ -1,0 +1,219 @@
+
+В контейнере должна хранится следующая информация.
+
+typedef struct UFO {
+     time_t    timestamp;
+    uint8_t   protocol;
+    uint32_t  addr;
+    uint8_t   addr_type;
+    float     latitude;
+    float     longitude;
+    float     old_latitude;
+    float     old_longitude;
+    float     altitude;
+    float     pressure_altitude;
+    float     course;
+    float     speed;         /* скорость относительно земли в узлах */
+    uint8_t   aircraft_type;
+    char      callsign[8];    // Flight number
+    int       vert_rate;      // Vertical rate.
+    int       squawk;         // squawk
+    time_t    timemsg;        // Время передачи сообщения о координатах стороннего самолета
+
+    float     vs; /* feet per minute */
+
+    bool      stealth;
+    bool      no_track;
+
+    float     geoid_separation; /* metres */
+    uint16_t  hdop; /* cm */
+    int8_t    rssi_LoRa; /* SX1276 only */
+
+    float     distance;
+    float     bearing;
+    int8_t    alarm_level;
+
+    uint8_t   signal_source;
+    time_t    seen;           // Time at which the last packet was received
+    uint8_t   hour_msg;
+    uint8_t   min_msg;
+    uint16_t  delay_time_msg;
+    int8_t    rssi_rp2040;
+    float     local_latitude;
+    float     local_longitude;
+
+} ufo_t;
+
+#define MAX_TRACKING_OBJECTS             12    // Максимальное количество отслеживаемых летающих объектов
+
+unsigned long UpdateTrafficTimeMarker = 0;
+
+ufo_t fo, Container[MAX_TRACKING_OBJECTS], EmptyFO;
+
+
+
+ Программа добавления самолетов в базу контейнера.
+ Если самолет уже есть в базе - обновить информацию по этому самолету.
+ Если самолета нет в базе -добавить новую запись в базу.
+ Если в течении 25 секунд информация по самолету не обновлялась, удалить записи по этому самолету из базы.
+ 
+ Пример программы добавления самолета в базу
+bool Traffic_Add(ufo_t *fop)
+{
+  int i, oldest = 0;
+  uint32_t ts_min;
+  bool result = false;
+
+  if (fo.addr == settings->block_addr)
+  {
+      return false;
+  }
+
+  if (!fop->addr) return false;
+
+  // 1. Обновление
+  for (i = 0; i < MAX_TRACKING_OBJECTS; i++)
+  {
+      if (Container[i].addr == fop->addr)
+      {
+          Container[i] = *fop;
+          result = true;
+          goto AddFinish;
+      }
+  }
+  // 2. Пустой слот
+  for (i = 0; i < MAX_TRACKING_OBJECTS; i++)
+  {
+      if (Container[i].addr == 0)
+      {
+          Container[i] = *fop;
+          result = true;
+          goto AddFinish;
+      }
+  }
+  // 3. Перезапись самого старого/просроченного
+  oldest = 0; ts_min = Container[0].timestamp;
+  for (i = 1; i < MAX_TRACKING_OBJECTS; i++)
+  {
+      if (Container[i].timestamp < ts_min)
+      {
+          oldest = i;
+          ts_min = Container[i].timestamp;
+      }
+      if ((now() > Container[i].timestamp) && ((now() - Container[i].timestamp) > ENTRY_EXPIRATION_TIME))
+      {
+          oldest = i;
+          break;
+      }
+  }
+  Container[oldest] = *fop;
+  result = true;
+AddFinish:
+
+  return result;
+}
+
+Расшифровка принятого пакета FLARM 
+void ParseData()
+{
+    fo = EmptyFO;
+    size_t rx_size = RF_Payload_Size(settings->rf_protocol);
+    rx_size = rx_size > sizeof(fo.raw) ? sizeof(fo.raw) : rx_size;
+
+#if DEBUG
+    Hex2Bin(TxDataTemplate, RxBuffer);
+#endif
+
+    memset(fo.raw, 0, sizeof(fo.raw));
+    memcpy(fo.raw, RxBuffer, rx_size);
+
+    if (settings->nmea_p) {
+        StdOut.print(F("$PSRFI,"));
+        StdOut.print((unsigned long)now()); StdOut.print(F(","));
+        StdOut.print(Bin2Hex(fo.raw, rx_size)); StdOut.print(F(","));
+        StdOut.println(RF_last_rssi);
+    }
+
+    if (memcmp(RxBuffer, TxBuffer, rx_size) == 0)
+    {
+        if (settings->nmea_p)
+        {
+            StdOut.println(F("$PSRFE,RF loopback is detected on Rx"));
+        }
+        return;
+    }
+
+    if (protocol_decode && (*protocol_decode)((void*)RxBuffer, &ThisAircraft, &fo))
+    {
+        if (gnss.time.isValid())
+        {
+            fo.hour_msg = (int)gnss.time.hour();
+            fo.min_msg = (int)gnss.time.minute();
+        }
+        else
+        {
+            fo.hour_msg = 10;
+            fo.min_msg = 20;
+        }
+
+
+        fo.rssi_LoRa = RF_last_rssi;
+        fo.signal_source = 0;
+        if (service.lockContainer())
+        {
+            Traffic_Update(&fo);
+            Traffic_Add(&fo);
+            service.unlockContainer();
+        }
+
+    }
+
+}
+
+
+void Traffic_loop()
+{
+  if (isTimeToUpdateTraffic()) 
+  {
+    for (int i=0; i < MAX_TRACKING_OBJECTS; i++) 
+    {
+
+      if (Container[i].addr &&
+          (ThisAircraft.timestamp - Container[i].timestamp) <= ENTRY_EXPIRATION_TIME) 
+      {
+        if ((ThisAircraft.timestamp - Container[i].timestamp) >= TRAFFIC_VECTOR_UPDATE_INTERVAL) 
+        {
+          Traffic_Update(&Container[i]);
+        }
+      }
+      else
+      {
+        Container[i] = EmptyFO;
+      }
+    }
+
+    UpdateTrafficTimeMarker = millis();
+  }
+}
+
+void ClearExpired()
+{
+  for (int i=0; i < MAX_TRACKING_OBJECTS; i++) {
+    if (Container[i].addr && (ThisAircraft.timestamp - Container[i].timestamp) > ENTRY_EXPIRATION_TIME) {
+      Container[i] = EmptyFO;
+    }
+  }
+}
+
+int Traffic_Count()
+{
+  int count = 0;
+
+  for (int i=0; i < MAX_TRACKING_OBJECTS; i++) {
+    if (Container[i].addr) {
+      count++;
+    }
+  }
+
+  return count;
+}

@@ -1,0 +1,195 @@
+🚧 Шаг 2: Container (база самолетов)
+
+Сейчас сделаем:
+
+структуру цели
+хранение массива
+обновление по ICAO
+простой доступ для дисплея / NMEA
+📄 Container.h
+#pragma once
+#include <Arduino.h>
+
+#define MAX_AIRCRAFT 50
+
+struct Aircraft
+{
+    uint32_t icao;
+    float lat;
+    float lon;
+    int altitude;
+    float speed;
+    float course;
+    uint32_t lastUpdate;
+    bool valid;
+};
+
+class ContainerClass
+{
+public:
+    void init();
+    void update(Aircraft& ac);
+    Aircraft* getList();
+    int getCount();
+
+private:
+    Aircraft list[MAX_AIRCRAFT];
+};
+
+extern ContainerClass Container;
+📄 Container.cpp
+#include "Container.h"
+
+ContainerClass Container;
+
+void ContainerClass::init()
+{
+    for (int i = 0; i < MAX_AIRCRAFT; i++)
+    {
+        list[i].valid = false;
+    }
+}
+
+void ContainerClass::update(Aircraft& ac)
+{
+    // ищем существующий
+    for (int i = 0; i < MAX_AIRCRAFT; i++)
+    {
+        if (list[i].valid && list[i].icao == ac.icao)
+        {
+            list[i] = ac;
+            list[i].valid = true;
+            return;
+        }
+    }
+
+    // ищем свободное место
+    for (int i = 0; i < MAX_AIRCRAFT; i++)
+    {
+        if (!list[i].valid)
+        {
+            list[i] = ac;
+            list[i].valid = true;
+            return;
+        }
+    }
+
+    // если переполнено — перезаписываем самый старый
+    int oldest = 0;
+    for (int i = 1; i < MAX_AIRCRAFT; i++)
+    {
+        if (list[i].lastUpdate < list[oldest].lastUpdate)
+            oldest = i;
+    }
+
+    list[oldest] = ac;
+    list[oldest].valid = true;
+}
+
+Aircraft* ContainerClass::getList()
+{
+    return list;
+}
+
+int ContainerClass::getCount()
+{
+    int count = 0;
+    for (int i = 0; i < MAX_AIRCRAFT; i++)
+    {
+        if (list[i].valid) count++;
+    }
+    return count;
+}
+🔧 Подключаем в систему
+📄 System.cpp — добавь:
+#include "Container.h"
+
+И в SystemSetup():
+
+Container.init();
+🧪 Тест (очень важно)
+
+Добавим тестовую цель прямо в RF_loop():
+
+#include "Container.h"
+
+void RF_loop()
+{
+    static uint32_t t = 0;
+    if (millis() - t > 2000)
+    {
+        t = millis();
+
+        Aircraft ac;
+        ac.icao = 0x123456;
+        ac.lat = 50.0 + random(-100, 100) * 0.0001;
+        ac.lon = 8.0 + random(-100, 100) * 0.0001;
+        ac.altitude = 1000 + random(0, 100);
+        ac.speed = 120;
+        ac.course = 90;
+        ac.lastUpdate = millis();
+        ac.valid = true;
+
+        Container.update(ac);
+
+        Serial.println("[TEST] Aircraft updated");
+    }
+}
+🖥 Проверка через Display
+
+В Display_loop() временно добавь:
+
+#include "Container.h"
+
+void Display_loop()
+{
+    static uint32_t t = 0;
+    if (millis() - t > 3000)
+    {
+        t = millis();
+
+        Serial.println("---- Container ----");
+
+        Aircraft* list = Container.getList();
+
+        for (int i = 0; i < MAX_AIRCRAFT; i++)
+        {
+            if (list[i].valid)
+            {
+                Serial.printf("ICAO: %06X LAT: %.5f LON: %.5f ALT: %d\n",
+                    list[i].icao,
+                    list[i].lat,
+                    list[i].lon,
+                    list[i].altitude);
+            }
+        }
+    }
+}
+✅ Результат этапа
+
+После этого у тебя уже будет:
+
+✔ База целей (Container)
+✔ Обновление по ICAO
+✔ Тестовый самолет
+✔ Вывод в Serial
+
+🚀 Следующий шаг (очень важный)
+
+Дальше логично делать:
+
+👉 RP2040BridgeTask → парсинг dump1090 → Container
+
+или
+
+👉 LoRa (RFM95) → прием FLARM → Container
+
+❗ Важный вопрос
+
+Что будем подключать следующим шагом?
+
+ADS-B (dump1090 / RP2040Bridge)
+FLARM (LoRa RFM95)
+Сразу обе линии (чуть сложнее, но правильно архитектурно)
+
+Напиши номер — и я сделаю следующий блок уже под твою архитектуру (с учетом ESP32S3 и задач FreeRTOS).

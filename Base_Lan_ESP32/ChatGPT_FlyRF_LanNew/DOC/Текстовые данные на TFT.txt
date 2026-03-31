@@ -1,0 +1,262 @@
+//========================= Функции вывода информации о сторонних объектах на экран ==================
+
+static bool block_plane_display = false;
+int line_Sprite = 0;                      // текущая линия для вывода (строк без дыр)
+static int prev_lines_count = 0;
+
+// Вызывать эту функцию, чтобы полностью скрыть и отключить вывод авиа-треков и заголовка
+void clearPlaneDisplay()
+{
+    // 1. Очистить все авиа-спрайты, не удаляя их из памяти
+    for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+    {
+        if (airplane_alient_info[i]->created())
+        {
+            airplane_alient_info[i]->fillSprite(TFT_BLACK);
+            airplane_alient_info[i]->pushToSprite(&back, 0, 0, TFT_BLACK);
+        }
+    }
+
+    // 2. Очистить заголовок
+    if (info_header.created())
+    {
+        info_header.fillSprite(TFT_BLACK);
+        info_header.pushToSprite(&back, 0, 0, TFT_BLACK);
+    }
+
+    // 4. Сбросить/обнулить служебную переменную строк (если она есть)
+
+    prev_lines_count = 0;
+
+    // 5. Запретить дальнейший вывод
+    block_plane_display = true;
+}
+
+// Чтобы разрешить обратно отрисовку авиа-треков:
+void enablePlaneDisplay()
+{
+    block_plane_display = false;
+}
+
+
+void displayAllPlanes() // Вывести текстовую информацию по самолетам на дисплей
+{
+    if (block_plane_display)
+        return; // Блокировка активна — ничего не выводить!
+
+    line_Sprite = 0;
+    bool has_data_to_display = false;
+
+    // 1. Проверяем: есть ли что выводить?
+    for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+    {
+        if (Container[i].addr != 0)
+        {
+            if (settings->display_set == INFO_DISPLAY_COORDINATE)
+            {
+                if (Container[i].latitude != 0 && Container[i].longitude != 0)
+                {
+                    has_data_to_display = true;
+                    break;
+                }
+            }
+            else if (settings->display_set == INFO_DISPLAY_MAXI)
+            {
+                has_data_to_display = true;
+                break;
+            }
+        }
+    }
+
+    // 2. Управляем заголовком: создаём/рисуем или удаляем
+    if (has_data_to_display)
+    {
+        if (!info_header.created())
+        {
+            info_header.createSprite(480, 20);
+            info_header.setTextDatum(TL_DATUM);
+            info_header.setTextColor(TFT_WHITE, backColor);
+            info_header.setFreeFont(&FreeSerif9pt7b);
+        }
+        info_header.fillSprite(backColor);
+        info_header.drawString("  ICAO  |SQUAWK| FLIGHT |  ALT | SPEED |COURSE|LATITUDE|LONGITUDE| SIG", 0, 1, 2);
+        info_header.drawLine(0, 18, 479, 18, TFT_WHITE);
+        info_header.pushToSprite(&back, 0, 22);
+    }
+    else
+    {
+        if (info_header.created())
+        {
+            info_header.fillSprite(TFT_BLACK);
+            info_header.pushToSprite(&back, 0, 22);
+        }
+    }
+
+    // 3. Основной цикл по объектам
+    for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+    {
+        if (Container[i].addr != 0)
+        {
+            bool need_draw = false;
+            if (settings->display_set == INFO_DISPLAY_COORDINATE)
+            {
+                if (Container[i].latitude != 0 && Container[i].longitude != 0)
+                    need_draw = true;
+            }
+            else if (settings->display_set == INFO_DISPLAY_MAXI)
+            {
+                need_draw = true;
+            }
+
+            if (need_draw)
+            {
+                // Спрайт строки уже создан заранее в setup()
+
+                // Заполняем данными
+                airplane_alient_info[i]->fillSprite(backColor);
+
+                String addrStr = String(Container[i].addr, HEX);
+                addrStr.toUpperCase(); // перевели в ВЕРХНИЙ регистр
+                airplane_alient_info[i]->drawString(addrStr, 3, 2, 2);
+                if (Container[i].squawk != 0)
+                {
+                    airplane_alient_info[i]->drawString(String(Container[i].squawk), 65, 2, 2);
+                }
+                airplane_alient_info[i]->drawString(Container[i].callsign, 107, 2, 2);
+                if ((int)Container[i].altitude != 0)
+                {
+                    airplane_alient_info[i]->drawString(String((int)Container[i].altitude), 170, 2, 2);
+                }
+                if ((int)Container[i].speed != 0)
+                {
+                    airplane_alient_info[i]->drawString(String((int)Container[i].speed), 225, 2, 2);
+                }
+                if ((int)Container[i].course != 0)
+                {
+                    airplane_alient_info[i]->drawString(String((int)Container[i].course), 275, 2, 2);
+                }
+                if (Container[i].latitude != 0)
+                {
+                    airplane_alient_info[i]->drawString(String(Container[i].latitude, 5), 315, 2, 2);
+                }
+                if (Container[i].longitude != 0)
+                {
+                    airplane_alient_info[i]->drawString(String(Container[i].longitude, 5), 383, 2, 2);
+                }
+
+                if (Container[i].signal_source == 0)
+                {
+                    if (Container[i].rssi_LoRa == 0)
+                        airplane_alient_info[i]->drawString("--", 458, 2, 2);
+                    // airplane_alient_info[i]->drawString(String(Container[i].rssi_LoRa), 462, 2, 2);
+                    else
+                        airplane_alient_info[i]->drawString(String(Container[i].rssi_LoRa), 450, 2, 2);
+                }
+                else if (Container[i].signal_source == 1)
+                {
+                    // airplane_alient_info[i]->drawString("--", 450, 2, 2);
+                    if (Container[i].rssi_rp2040 == 0)
+                        airplane_alient_info[i]->drawString("--", 458, 2, 2);
+                    // airplane_alient_info[i]->drawString(String(Container[i].rssi_rp2040), 462, 2, 2);
+                    else
+                        airplane_alient_info[i]->drawString(String(Container[i].rssi_rp2040), 450, 2, 2);
+                }
+
+                // Отрисовываем спрайт строки (смещение учитывает заголовок)
+                airplane_alient_info[i]->pushToSprite(&back, 0, 41 + (line_Sprite * INFO_HEIGHT));
+
+                line_Sprite++;
+            }
+            else
+            {
+                if (airplane_alient_info[i]->created())
+                {
+                    airplane_alient_info[i]->fillSprite(TFT_BLACK);
+                }
+            }
+        }
+        else
+        {
+            if (airplane_alient_info[i]->created())
+            {
+                airplane_alient_info[i]->fillSprite(TFT_BLACK);
+            }
+        }
+    }
+
+    // 4. Очищаем только лишние строки (на случай уменьшения числа треков)
+    if (prev_lines_count > line_Sprite)
+    {
+        for (int l = line_Sprite; l < prev_lines_count; l++)
+        {
+            tft.fillRect(0, 41 + (l * INFO_HEIGHT), WIDTH, INFO_HEIGHT, TFT_BLACK);
+        }
+    }
+    prev_lines_count = line_Sprite;
+}
+
+//----------------------------------------------------------------------------------------------------------
+static void Draw_circular_scale()
+{
+    int koeff_line = 10;
+    /* Рисуем круглую шкалу серым цветом и символы сторон света белым*/
+    for (int i = 0; i < 36; i++)
+    {
+        // unsigned short color2 = TFT_DARKGREY;
+        if (i % 3 == 0)
+        {
+            backsprite.drawWedgeLine(fx[i * koeff_line], fy[i * koeff_line], px[i * koeff_line], py[i * koeff_line], 1, 1, TFT_DARKGREY);
+            backsprite.setTextColor(TFT_DARKGREY, TFT_BLACK);
+            if (i == 0)
+            {
+                backsprite.drawString("N", lx[i * koeff_line] + 1, ly[i * koeff_line], TFT_DARKGREY);
+            }
+            if (i == 9)
+            {
+                backsprite.drawString("E", lx[i * koeff_line], ly[i * koeff_line], TFT_DARKGREY);
+            }
+            if (i == 18)
+            {
+                backsprite.drawString("S", lx[i * koeff_line], ly[i * koeff_line], TFT_DARKGREY);
+            }
+            if (i == 27)
+            {
+                backsprite.drawString("W", lx[i * koeff_line], ly[i * koeff_line], TFT_DARKGREY);
+            }
+        }
+        else
+        {
+            backsprite.drawWedgeLine(fx[i * koeff_line], fy[i * koeff_line], px1[i * koeff_line], py1[i * koeff_line], 1, 1, TFT_DARKGREY);
+        }
+    }
+    esp_task_wdt_reset();
+
+    /*Рисуем малый серый круг*/
+    backsprite.drawCircle(cx, 240, 120, TFT_DARKGREY);
+
+}
+
+
+#define MESSAGE_X      2           // Позиция сообщения
+#define MESSAGE_Y      20
+#define MESSAGE_W      480          // Ширина области сообщения
+#define MESSAGE_H      40           // Высота области сообщения
+#define MESSAGE_COLOR  TFT_YELLOW    // Цвет текста
+#define BG_COLOR       TFT_BLACK    // Цвет фона для "стирания" сообщения
+
+unsigned long lastToggle = 0;
+const unsigned long showPeriod = 4000;     // 4 секунды показа
+const unsigned long hidePeriod = 1000;     // 1 секунда скрытия
+bool isMessageVisible = false;
+bool isMessageDeleted = false;
+
+
+
+// Скрыть сообщение (именно закрасить область)
+void hideMessage()
+{
+    if (rows_Message.created())
+    {
+        rows_Message.deleteSprite();
+    }
+}
