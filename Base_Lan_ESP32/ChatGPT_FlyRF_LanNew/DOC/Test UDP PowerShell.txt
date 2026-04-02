@@ -1,0 +1,9 @@
+PS C:\> $port = 10110
+PS C:\> $udp = New-Object System.Net.Sockets.UdpClient($port)
+PS C:\> $remote = New-Object System.Net.IPEndPoint([System.Net.IPAddress]::Any,0)
+PS C:\> while ($true) {
+>>     $bytes = $udp.Receive([ref]$remote)
+>>     $text = [System.Text.Encoding]::ASCII.GetString($bytes)
+>>     Write-Host "$($remote.Address):$($remote.Port)  $text"
+>> }
+

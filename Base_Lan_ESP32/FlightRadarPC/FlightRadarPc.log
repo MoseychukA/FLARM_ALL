@@ -9000,3 +9000,1627 @@
 [2026-03-31 12:55:40.652] RadarControl.OnPaint[2] DrawCenter
 [2026-03-31 12:55:40.653] RadarControl.OnPaint[2] EXIT ok
 [2026-03-31 12:59:05.104] Program.Main: Application.Run returned normally
+[2026-04-01 17:04:13.964] ========== APP START ==========
+[2026-04-01 17:04:17.030] Program.Main: before Application.Run
+[2026-04-01 17:04:34.081] ========== APP START ==========
+[2026-04-01 17:04:34.489] Program.Main: before Application.Run
+[2026-04-01 17:04:34.609] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:04:34.631] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:04:34.650] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:04:34.835] RadarControl.OnPaint[1] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:04:42.380] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:04:42.404] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:04:42.407] RadarControl.OnPaint[1] DrawRangeRings
+[2026-04-01 17:04:42.410] RadarControl.OnPaint[1] DrawGrid
+[2026-04-01 17:04:42.411] RadarControl.OnPaint[1] DrawTracks
+[2026-04-01 17:04:42.413] RadarControl.OnPaint[1] DrawTargets begin
+[2026-04-01 17:04:42.418] RadarControl.OnPaint[1] DrawTargets end
+[2026-04-01 17:04:42.419] RadarControl.OnPaint[1] DrawCenter
+[2026-04-01 17:04:42.420] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:04:42.423] RadarControl.OnPaint[1] EXIT ok
+[2026-04-01 17:04:42.581] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:04:51.224] RadarControl.OnPaint[2] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:04:51.247] RadarControl.OnPaint[2] DrawRangeRings
+[2026-04-01 17:04:51.249] RadarControl.OnPaint[2] DrawGrid
+[2026-04-01 17:04:51.250] RadarControl.OnPaint[2] DrawTracks
+[2026-04-01 17:04:51.250] RadarControl.OnPaint[2] DrawTargets begin
+[2026-04-01 17:04:51.251] RadarControl.OnPaint[2] DrawTargets end
+[2026-04-01 17:04:51.251] RadarControl.OnPaint[2] DrawCenter
+[2026-04-01 17:04:51.252] RadarControl.OnPaint[2] EXIT ok
+[2026-04-01 17:06:08.152] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:06:13.634] RadarControl.OnPaint[3] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:06:13.648] RadarControl.OnPaint[3] DrawRangeRings
+[2026-04-01 17:06:13.649] RadarControl.OnPaint[3] DrawGrid
+[2026-04-01 17:06:13.649] RadarControl.OnPaint[3] DrawTracks
+[2026-04-01 17:06:13.649] RadarControl.OnPaint[3] DrawTargets begin
+[2026-04-01 17:06:13.654] RadarControl.OnPaint[3] DrawTargets end
+[2026-04-01 17:06:13.655] RadarControl.OnPaint[3] DrawCenter
+[2026-04-01 17:06:13.656] RadarControl.OnPaint[3] EXIT ok
+[2026-04-01 17:06:13.805] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:06:13.815] RadarControl.OnPaint[4] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:06:13.830] RadarControl.OnPaint[4] DrawRangeRings
+[2026-04-01 17:06:13.831] RadarControl.OnPaint[4] DrawGrid
+[2026-04-01 17:06:13.832] RadarControl.OnPaint[4] DrawTracks
+[2026-04-01 17:06:13.833] RadarControl.OnPaint[4] DrawTargets begin
+[2026-04-01 17:06:13.833] RadarControl.OnPaint[4] DrawTargets end
+[2026-04-01 17:06:13.833] RadarControl.OnPaint[4] DrawCenter
+[2026-04-01 17:06:13.834] RadarControl.OnPaint[4] EXIT ok
+[2026-04-01 17:06:14.145] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:06:14.156] RadarControl.OnPaint[5] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:06:21.274] RadarControl.OnPaint[5] DrawRangeRings
+[2026-04-01 17:06:21.275] RadarControl.OnPaint[5] DrawGrid
+[2026-04-01 17:06:21.275] RadarControl.OnPaint[5] DrawTracks
+[2026-04-01 17:06:21.275] RadarControl.OnPaint[5] DrawTargets begin
+[2026-04-01 17:06:21.276] RadarControl.OnPaint[5] DrawTargets end
+[2026-04-01 17:06:21.276] RadarControl.OnPaint[5] DrawCenter
+[2026-04-01 17:06:21.276] RadarControl.OnPaint[5] EXIT ok
+[2026-04-01 17:06:21.504] RadarControl.SetTargets: count=6, selected=none
+[2026-04-01 17:06:21.518] RadarControl.OnPaint[6] ENTER width=743 height=743 targets=6 range=13,0
+[2026-04-01 17:06:21.532] RadarControl.OnPaint[6] DrawRangeRings
+[2026-04-01 17:06:21.533] RadarControl.OnPaint[6] DrawGrid
+[2026-04-01 17:06:21.534] RadarControl.OnPaint[6] DrawTracks
+[2026-04-01 17:06:21.534] RadarControl.OnPaint[6] DrawTargets begin
+[2026-04-01 17:06:21.535] RadarControl.OnPaint[6] DrawTargets end
+[2026-04-01 17:06:21.535] RadarControl.OnPaint[6] DrawCenter
+[2026-04-01 17:06:21.535] RadarControl.OnPaint[6] EXIT ok
+[2026-04-01 17:06:22.390] RadarControl.SetTargets: count=6, selected=none
+[2026-04-01 17:06:29.588] RadarControl.OnPaint[7] ENTER width=743 height=743 targets=6 range=13,0
+[2026-04-01 17:06:29.601] RadarControl.OnPaint[7] DrawRangeRings
+[2026-04-01 17:06:29.602] RadarControl.OnPaint[7] DrawGrid
+[2026-04-01 17:06:29.603] RadarControl.OnPaint[7] DrawTracks
+[2026-04-01 17:06:29.603] RadarControl.OnPaint[7] DrawTargets begin
+[2026-04-01 17:06:29.603] RadarControl.OnPaint[7] DrawTargets end
+[2026-04-01 17:06:29.604] RadarControl.OnPaint[7] DrawCenter
+[2026-04-01 17:06:29.604] RadarControl.OnPaint[7] EXIT ok
+[2026-04-01 17:06:29.714] RadarControl.SetTargets: count=5, selected=none
+[2026-04-01 17:06:36.958] RadarControl.OnPaint[8] ENTER width=743 height=743 targets=5 range=13,0
+[2026-04-01 17:06:36.971] RadarControl.OnPaint[8] DrawRangeRings
+[2026-04-01 17:06:36.972] RadarControl.OnPaint[8] DrawGrid
+[2026-04-01 17:06:36.973] RadarControl.OnPaint[8] DrawTracks
+[2026-04-01 17:06:36.973] RadarControl.OnPaint[8] DrawTargets begin
+[2026-04-01 17:06:36.973] RadarControl.OnPaint[8] DrawTargets end
+[2026-04-01 17:06:36.974] RadarControl.OnPaint[8] DrawCenter
+[2026-04-01 17:06:36.974] RadarControl.OnPaint[8] EXIT ok
+[2026-04-01 17:06:37.175] RadarControl.SetTargets: count=6, selected=none
+[2026-04-01 17:06:37.184] RadarControl.SetTargets: count=6, selected=none
+[2026-04-01 17:06:37.205] RadarControl.OnPaint[9] ENTER width=743 height=743 targets=6 range=13,0
+[2026-04-01 17:06:37.219] RadarControl.OnPaint[9] DrawRangeRings
+[2026-04-01 17:06:37.221] RadarControl.OnPaint[9] DrawGrid
+[2026-04-01 17:06:37.222] RadarControl.OnPaint[9] DrawTracks
+[2026-04-01 17:06:37.222] RadarControl.OnPaint[9] DrawTargets begin
+[2026-04-01 17:06:37.222] RadarControl.OnPaint[9] DrawTargets end
+[2026-04-01 17:06:37.223] RadarControl.OnPaint[9] DrawCenter
+[2026-04-01 17:06:37.223] RadarControl.OnPaint[9] EXIT ok
+[2026-04-01 17:06:37.321] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:06:37.333] RadarControl.OnPaint[10] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:06:37.347] RadarControl.OnPaint[10] DrawRangeRings
+[2026-04-01 17:06:37.348] RadarControl.OnPaint[10] DrawGrid
+[2026-04-01 17:06:37.349] RadarControl.OnPaint[10] DrawTracks
+[2026-04-01 17:06:37.349] RadarControl.OnPaint[10] DrawTargets begin
+[2026-04-01 17:06:37.350] RadarControl.OnPaint[10] DrawTargets end
+[2026-04-01 17:06:37.350] RadarControl.OnPaint[10] DrawCenter
+[2026-04-01 17:06:37.351] RadarControl.OnPaint[10] EXIT ok
+[2026-04-01 17:06:38.142] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:06:43.473] RadarControl.OnPaint[11] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:06:43.487] RadarControl.OnPaint[11] DrawRangeRings
+[2026-04-01 17:06:43.488] RadarControl.OnPaint[11] DrawGrid
+[2026-04-01 17:06:43.488] RadarControl.OnPaint[11] DrawTracks
+[2026-04-01 17:06:43.489] RadarControl.OnPaint[11] DrawTargets begin
+[2026-04-01 17:06:43.489] RadarControl.OnPaint[11] DrawTargets end
+[2026-04-01 17:06:43.489] RadarControl.OnPaint[11] DrawCenter
+[2026-04-01 17:06:43.490] RadarControl.OnPaint[11] EXIT ok
+[2026-04-01 17:06:43.620] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:06:43.631] RadarControl.OnPaint[12] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:06:43.644] RadarControl.OnPaint[12] DrawRangeRings
+[2026-04-01 17:06:43.645] RadarControl.OnPaint[12] DrawGrid
+[2026-04-01 17:06:43.646] RadarControl.OnPaint[12] DrawTracks
+[2026-04-01 17:06:43.646] RadarControl.OnPaint[12] DrawTargets begin
+[2026-04-01 17:06:43.646] RadarControl.OnPaint[12] DrawTargets end
+[2026-04-01 17:06:43.647] RadarControl.OnPaint[12] DrawCenter
+[2026-04-01 17:06:43.647] RadarControl.OnPaint[12] EXIT ok
+[2026-04-01 17:06:44.141] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:06:44.152] RadarControl.OnPaint[13] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:06:44.171] RadarControl.OnPaint[13] DrawRangeRings
+[2026-04-01 17:06:44.172] RadarControl.OnPaint[13] DrawGrid
+[2026-04-01 17:06:44.173] RadarControl.OnPaint[13] DrawTracks
+[2026-04-01 17:06:44.173] RadarControl.OnPaint[13] DrawTargets begin
+[2026-04-01 17:06:44.173] RadarControl.OnPaint[13] DrawTargets end
+[2026-04-01 17:06:44.173] RadarControl.OnPaint[13] DrawCenter
+[2026-04-01 17:06:44.174] RadarControl.OnPaint[13] EXIT ok
+[2026-04-01 17:06:45.383] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:06:45.400] RadarControl.OnPaint[14] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:06:45.422] RadarControl.OnPaint[14] DrawRangeRings
+[2026-04-01 17:06:45.424] RadarControl.OnPaint[14] DrawGrid
+[2026-04-01 17:06:45.425] RadarControl.OnPaint[14] DrawTracks
+[2026-04-01 17:06:45.425] RadarControl.OnPaint[14] DrawTargets begin
+[2026-04-01 17:06:45.426] RadarControl.OnPaint[14] DrawTargets end
+[2026-04-01 17:06:45.426] RadarControl.OnPaint[14] DrawCenter
+[2026-04-01 17:06:45.427] RadarControl.OnPaint[14] EXIT ok
+[2026-04-01 17:06:46.387] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:06:46.415] RadarControl.OnPaint[15] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:06:46.437] RadarControl.OnPaint[15] DrawRangeRings
+[2026-04-01 17:06:46.440] RadarControl.OnPaint[15] DrawGrid
+[2026-04-01 17:06:46.440] RadarControl.OnPaint[15] DrawTracks
+[2026-04-01 17:06:46.441] RadarControl.OnPaint[15] DrawTargets begin
+[2026-04-01 17:06:46.441] RadarControl.OnPaint[15] DrawTargets end
+[2026-04-01 17:06:46.442] RadarControl.OnPaint[15] DrawCenter
+[2026-04-01 17:06:46.443] RadarControl.OnPaint[15] EXIT ok
+[2026-04-01 17:06:46.642] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:06:46.659] RadarControl.OnPaint[16] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:06:46.682] RadarControl.OnPaint[16] DrawRangeRings
+[2026-04-01 17:06:46.683] RadarControl.OnPaint[16] DrawGrid
+[2026-04-01 17:06:46.684] RadarControl.OnPaint[16] DrawTracks
+[2026-04-01 17:06:46.685] RadarControl.OnPaint[16] DrawTargets begin
+[2026-04-01 17:06:46.685] RadarControl.OnPaint[16] DrawTargets end
+[2026-04-01 17:06:46.686] RadarControl.OnPaint[16] DrawCenter
+[2026-04-01 17:06:46.686] RadarControl.OnPaint[16] EXIT ok
+[2026-04-01 17:06:48.901] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:06.052] RadarControl.OnPaint[3] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:06.075] RadarControl.OnPaint[3] DrawRangeRings
+[2026-04-01 17:07:06.076] RadarControl.OnPaint[3] DrawGrid
+[2026-04-01 17:07:06.077] RadarControl.OnPaint[3] DrawTracks
+[2026-04-01 17:07:06.079] RadarControl.OnPaint[3] DrawTargets begin
+[2026-04-01 17:07:06.087] RadarControl.OnPaint[3] DrawTargets end
+[2026-04-01 17:07:06.087] RadarControl.OnPaint[3] DrawCenter
+[2026-04-01 17:07:06.087] RadarControl.OnPaint[3] EXIT ok
+[2026-04-01 17:07:06.460] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:06.479] RadarControl.OnPaint[4] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:06.501] RadarControl.OnPaint[4] DrawRangeRings
+[2026-04-01 17:07:06.502] RadarControl.OnPaint[4] DrawGrid
+[2026-04-01 17:07:06.503] RadarControl.OnPaint[4] DrawTracks
+[2026-04-01 17:07:06.503] RadarControl.OnPaint[4] DrawTargets begin
+[2026-04-01 17:07:06.504] RadarControl.OnPaint[4] DrawTargets end
+[2026-04-01 17:07:06.504] RadarControl.OnPaint[4] DrawCenter
+[2026-04-01 17:07:06.504] RadarControl.OnPaint[4] EXIT ok
+[2026-04-01 17:07:06.895] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:06.907] RadarControl.OnPaint[5] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:06.929] RadarControl.OnPaint[5] DrawRangeRings
+[2026-04-01 17:07:06.930] RadarControl.OnPaint[5] DrawGrid
+[2026-04-01 17:07:06.931] RadarControl.OnPaint[5] DrawTracks
+[2026-04-01 17:07:06.931] RadarControl.OnPaint[5] DrawTargets begin
+[2026-04-01 17:07:06.932] RadarControl.OnPaint[5] DrawTargets end
+[2026-04-01 17:07:06.932] RadarControl.OnPaint[5] DrawCenter
+[2026-04-01 17:07:06.933] RadarControl.OnPaint[5] EXIT ok
+[2026-04-01 17:07:08.144] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:08.160] RadarControl.OnPaint[6] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:08.182] RadarControl.OnPaint[6] DrawRangeRings
+[2026-04-01 17:07:08.183] RadarControl.OnPaint[6] DrawGrid
+[2026-04-01 17:07:08.184] RadarControl.OnPaint[6] DrawTracks
+[2026-04-01 17:07:08.184] RadarControl.OnPaint[6] DrawTargets begin
+[2026-04-01 17:07:08.184] RadarControl.OnPaint[6] DrawTargets end
+[2026-04-01 17:07:08.185] RadarControl.OnPaint[6] DrawCenter
+[2026-04-01 17:07:08.185] RadarControl.OnPaint[6] EXIT ok
+[2026-04-01 17:07:08.318] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:07:08.332] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:07:08.351] RadarControl.OnPaint[19] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:07:08.367] RadarControl.OnPaint[19] DrawRangeRings
+[2026-04-01 17:07:08.368] RadarControl.OnPaint[19] DrawGrid
+[2026-04-01 17:07:08.368] RadarControl.OnPaint[19] DrawTracks
+[2026-04-01 17:07:08.368] RadarControl.OnPaint[19] DrawTargets begin
+[2026-04-01 17:07:08.369] RadarControl.OnPaint[19] DrawTargets end
+[2026-04-01 17:07:08.369] RadarControl.OnPaint[19] DrawCenter
+[2026-04-01 17:07:08.369] RadarControl.OnPaint[19] EXIT ok
+[2026-04-01 17:07:09.393] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:09.404] RadarControl.OnPaint[7] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:09.422] RadarControl.OnPaint[7] DrawRangeRings
+[2026-04-01 17:07:09.424] RadarControl.OnPaint[7] DrawGrid
+[2026-04-01 17:07:09.424] RadarControl.OnPaint[7] DrawTracks
+[2026-04-01 17:07:09.425] RadarControl.OnPaint[7] DrawTargets begin
+[2026-04-01 17:07:09.425] RadarControl.OnPaint[7] DrawTargets end
+[2026-04-01 17:07:09.425] RadarControl.OnPaint[7] DrawCenter
+[2026-04-01 17:07:09.426] RadarControl.OnPaint[7] EXIT ok
+[2026-04-01 17:07:10.643] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:10.659] RadarControl.OnPaint[8] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:10.681] RadarControl.OnPaint[8] DrawRangeRings
+[2026-04-01 17:07:10.683] RadarControl.OnPaint[8] DrawGrid
+[2026-04-01 17:07:10.684] RadarControl.OnPaint[8] DrawTracks
+[2026-04-01 17:07:10.684] RadarControl.OnPaint[8] DrawTargets begin
+[2026-04-01 17:07:10.684] RadarControl.OnPaint[8] DrawTargets end
+[2026-04-01 17:07:10.685] RadarControl.OnPaint[8] DrawCenter
+[2026-04-01 17:07:10.685] RadarControl.OnPaint[8] EXIT ok
+[2026-04-01 17:07:11.645] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:11.661] RadarControl.OnPaint[9] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:11.681] RadarControl.OnPaint[9] DrawRangeRings
+[2026-04-01 17:07:11.683] RadarControl.OnPaint[9] DrawGrid
+[2026-04-01 17:07:11.684] RadarControl.OnPaint[9] DrawTracks
+[2026-04-01 17:07:11.684] RadarControl.OnPaint[9] DrawTargets begin
+[2026-04-01 17:07:11.685] RadarControl.OnPaint[9] DrawTargets end
+[2026-04-01 17:07:11.685] RadarControl.OnPaint[9] DrawCenter
+[2026-04-01 17:07:11.686] RadarControl.OnPaint[9] EXIT ok
+[2026-04-01 17:07:12.891] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:12.906] RadarControl.OnPaint[10] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:12.927] RadarControl.OnPaint[10] DrawRangeRings
+[2026-04-01 17:07:12.928] RadarControl.OnPaint[10] DrawGrid
+[2026-04-01 17:07:12.929] RadarControl.OnPaint[10] DrawTracks
+[2026-04-01 17:07:12.929] RadarControl.OnPaint[10] DrawTargets begin
+[2026-04-01 17:07:12.930] RadarControl.OnPaint[10] DrawTargets end
+[2026-04-01 17:07:12.930] RadarControl.OnPaint[10] DrawCenter
+[2026-04-01 17:07:12.931] RadarControl.OnPaint[10] EXIT ok
+[2026-04-01 17:07:14.143] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:14.156] RadarControl.OnPaint[11] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:14.178] RadarControl.OnPaint[11] DrawRangeRings
+[2026-04-01 17:07:14.179] RadarControl.OnPaint[11] DrawGrid
+[2026-04-01 17:07:14.180] RadarControl.OnPaint[11] DrawTracks
+[2026-04-01 17:07:14.180] RadarControl.OnPaint[11] DrawTargets begin
+[2026-04-01 17:07:14.181] RadarControl.OnPaint[11] DrawTargets end
+[2026-04-01 17:07:14.181] RadarControl.OnPaint[11] DrawCenter
+[2026-04-01 17:07:14.182] RadarControl.OnPaint[11] EXIT ok
+[2026-04-01 17:07:15.392] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:15.408] RadarControl.OnPaint[12] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:15.430] RadarControl.OnPaint[12] DrawRangeRings
+[2026-04-01 17:07:15.431] RadarControl.OnPaint[12] DrawGrid
+[2026-04-01 17:07:15.432] RadarControl.OnPaint[12] DrawTracks
+[2026-04-01 17:07:15.432] RadarControl.OnPaint[12] DrawTargets begin
+[2026-04-01 17:07:15.432] RadarControl.OnPaint[12] DrawTargets end
+[2026-04-01 17:07:15.432] RadarControl.OnPaint[12] DrawCenter
+[2026-04-01 17:07:15.433] RadarControl.OnPaint[12] EXIT ok
+[2026-04-01 17:07:16.642] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:16.657] RadarControl.OnPaint[13] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:16.676] RadarControl.OnPaint[13] DrawRangeRings
+[2026-04-01 17:07:16.677] RadarControl.OnPaint[13] DrawGrid
+[2026-04-01 17:07:16.678] RadarControl.OnPaint[13] DrawTracks
+[2026-04-01 17:07:16.678] RadarControl.OnPaint[13] DrawTargets begin
+[2026-04-01 17:07:16.678] RadarControl.OnPaint[13] DrawTargets end
+[2026-04-01 17:07:16.679] RadarControl.OnPaint[13] DrawCenter
+[2026-04-01 17:07:16.679] RadarControl.OnPaint[13] EXIT ok
+[2026-04-01 17:07:17.655] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:17.668] RadarControl.OnPaint[14] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:17.685] RadarControl.OnPaint[14] DrawRangeRings
+[2026-04-01 17:07:17.686] RadarControl.OnPaint[14] DrawGrid
+[2026-04-01 17:07:17.687] RadarControl.OnPaint[14] DrawTracks
+[2026-04-01 17:07:17.687] RadarControl.OnPaint[14] DrawTargets begin
+[2026-04-01 17:07:17.688] RadarControl.OnPaint[14] DrawTargets end
+[2026-04-01 17:07:17.688] RadarControl.OnPaint[14] DrawCenter
+[2026-04-01 17:07:17.689] RadarControl.OnPaint[14] EXIT ok
+[2026-04-01 17:07:18.892] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:18.901] RadarControl.OnPaint[15] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:18.918] RadarControl.OnPaint[15] DrawRangeRings
+[2026-04-01 17:07:18.919] RadarControl.OnPaint[15] DrawGrid
+[2026-04-01 17:07:18.919] RadarControl.OnPaint[15] DrawTracks
+[2026-04-01 17:07:18.921] RadarControl.OnPaint[15] DrawTargets begin
+[2026-04-01 17:07:18.921] RadarControl.OnPaint[15] DrawTargets end
+[2026-04-01 17:07:18.922] RadarControl.OnPaint[15] DrawCenter
+[2026-04-01 17:07:18.922] RadarControl.OnPaint[15] EXIT ok
+[2026-04-01 17:07:20.140] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:20.149] RadarControl.OnPaint[16] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:20.168] RadarControl.OnPaint[16] DrawRangeRings
+[2026-04-01 17:07:20.169] RadarControl.OnPaint[16] DrawGrid
+[2026-04-01 17:07:20.169] RadarControl.OnPaint[16] DrawTracks
+[2026-04-01 17:07:20.171] RadarControl.OnPaint[16] DrawTargets begin
+[2026-04-01 17:07:20.171] RadarControl.OnPaint[16] DrawTargets end
+[2026-04-01 17:07:20.171] RadarControl.OnPaint[16] DrawCenter
+[2026-04-01 17:07:20.172] RadarControl.OnPaint[16] EXIT ok
+[2026-04-01 17:07:21.391] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:21.404] RadarControl.OnPaint[17] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:21.426] RadarControl.OnPaint[17] DrawRangeRings
+[2026-04-01 17:07:21.428] RadarControl.OnPaint[17] DrawGrid
+[2026-04-01 17:07:21.428] RadarControl.OnPaint[17] DrawTracks
+[2026-04-01 17:07:21.429] RadarControl.OnPaint[17] DrawTargets begin
+[2026-04-01 17:07:21.429] RadarControl.OnPaint[17] DrawTargets end
+[2026-04-01 17:07:21.430] RadarControl.OnPaint[17] DrawCenter
+[2026-04-01 17:07:21.430] RadarControl.OnPaint[17] EXIT ok
+[2026-04-01 17:07:22.641] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:22.651] RadarControl.OnPaint[18] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:22.665] RadarControl.OnPaint[18] DrawRangeRings
+[2026-04-01 17:07:22.666] RadarControl.OnPaint[18] DrawGrid
+[2026-04-01 17:07:22.666] RadarControl.OnPaint[18] DrawTracks
+[2026-04-01 17:07:22.667] RadarControl.OnPaint[18] DrawTargets begin
+[2026-04-01 17:07:22.667] RadarControl.OnPaint[18] DrawTargets end
+[2026-04-01 17:07:22.667] RadarControl.OnPaint[18] DrawCenter
+[2026-04-01 17:07:22.668] RadarControl.OnPaint[18] EXIT ok
+[2026-04-01 17:07:23.661] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:23.669] RadarControl.OnPaint[19] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:23.685] RadarControl.OnPaint[19] DrawRangeRings
+[2026-04-01 17:07:23.686] RadarControl.OnPaint[19] DrawGrid
+[2026-04-01 17:07:23.687] RadarControl.OnPaint[19] DrawTracks
+[2026-04-01 17:07:23.687] RadarControl.OnPaint[19] DrawTargets begin
+[2026-04-01 17:07:23.688] RadarControl.OnPaint[19] DrawTargets end
+[2026-04-01 17:07:23.688] RadarControl.OnPaint[19] DrawCenter
+[2026-04-01 17:07:23.689] RadarControl.OnPaint[19] EXIT ok
+[2026-04-01 17:07:24.315] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:07:24.325] RadarControl.OnPaint[20] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:07:24.338] RadarControl.OnPaint[20] DrawRangeRings
+[2026-04-01 17:07:24.338] RadarControl.OnPaint[20] DrawGrid
+[2026-04-01 17:07:24.339] RadarControl.OnPaint[20] DrawTracks
+[2026-04-01 17:07:24.339] RadarControl.OnPaint[20] DrawTargets begin
+[2026-04-01 17:07:24.340] RadarControl.OnPaint[20] DrawTargets end
+[2026-04-01 17:07:24.340] RadarControl.OnPaint[20] DrawCenter
+[2026-04-01 17:07:24.340] RadarControl.OnPaint[20] EXIT ok
+[2026-04-01 17:07:24.374] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:07:24.384] RadarControl.OnPaint[21] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:07:24.397] RadarControl.OnPaint[21] DrawRangeRings
+[2026-04-01 17:07:24.398] RadarControl.OnPaint[21] DrawGrid
+[2026-04-01 17:07:24.399] RadarControl.OnPaint[21] DrawTracks
+[2026-04-01 17:07:24.399] RadarControl.OnPaint[21] DrawTargets begin
+[2026-04-01 17:07:24.399] RadarControl.OnPaint[21] DrawTargets end
+[2026-04-01 17:07:24.399] RadarControl.OnPaint[21] DrawCenter
+[2026-04-01 17:07:24.400] RadarControl.OnPaint[21] EXIT ok
+[2026-04-01 17:07:24.887] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:24.900] RadarControl.OnPaint[20] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:24.920] RadarControl.OnPaint[20] DrawRangeRings
+[2026-04-01 17:07:24.921] RadarControl.OnPaint[20] DrawGrid
+[2026-04-01 17:07:24.922] RadarControl.OnPaint[20] DrawTracks
+[2026-04-01 17:07:24.922] RadarControl.OnPaint[20] DrawTargets begin
+[2026-04-01 17:07:24.923] RadarControl.OnPaint[20] DrawTargets end
+[2026-04-01 17:07:24.923] RadarControl.OnPaint[20] DrawCenter
+[2026-04-01 17:07:24.924] RadarControl.OnPaint[20] EXIT ok
+[2026-04-01 17:07:26.140] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:26.151] RadarControl.OnPaint[21] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:26.173] RadarControl.OnPaint[21] DrawRangeRings
+[2026-04-01 17:07:26.175] RadarControl.OnPaint[21] DrawGrid
+[2026-04-01 17:07:26.176] RadarControl.OnPaint[21] DrawTracks
+[2026-04-01 17:07:26.176] RadarControl.OnPaint[21] DrawTargets begin
+[2026-04-01 17:07:26.176] RadarControl.OnPaint[21] DrawTargets end
+[2026-04-01 17:07:26.177] RadarControl.OnPaint[21] DrawCenter
+[2026-04-01 17:07:26.177] RadarControl.OnPaint[21] EXIT ok
+[2026-04-01 17:07:27.390] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:27.402] RadarControl.OnPaint[22] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:27.425] RadarControl.OnPaint[22] DrawRangeRings
+[2026-04-01 17:07:27.426] RadarControl.OnPaint[22] DrawGrid
+[2026-04-01 17:07:27.426] RadarControl.OnPaint[22] DrawTracks
+[2026-04-01 17:07:27.427] RadarControl.OnPaint[22] DrawTargets begin
+[2026-04-01 17:07:27.427] RadarControl.OnPaint[22] DrawTargets end
+[2026-04-01 17:07:27.427] RadarControl.OnPaint[22] DrawCenter
+[2026-04-01 17:07:27.428] RadarControl.OnPaint[22] EXIT ok
+[2026-04-01 17:07:28.639] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:28.698] RadarControl.OnPaint[23] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:28.719] RadarControl.OnPaint[23] DrawRangeRings
+[2026-04-01 17:07:28.720] RadarControl.OnPaint[23] DrawGrid
+[2026-04-01 17:07:28.721] RadarControl.OnPaint[23] DrawTracks
+[2026-04-01 17:07:28.722] RadarControl.OnPaint[23] DrawTargets begin
+[2026-04-01 17:07:28.722] RadarControl.OnPaint[23] DrawTargets end
+[2026-04-01 17:07:28.722] RadarControl.OnPaint[23] DrawCenter
+[2026-04-01 17:07:28.723] RadarControl.OnPaint[23] EXIT ok
+[2026-04-01 17:07:29.641] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:29.665] RadarControl.OnPaint[24] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:29.686] RadarControl.OnPaint[24] DrawRangeRings
+[2026-04-01 17:07:29.687] RadarControl.OnPaint[24] DrawGrid
+[2026-04-01 17:07:29.688] RadarControl.OnPaint[24] DrawTracks
+[2026-04-01 17:07:29.689] RadarControl.OnPaint[24] DrawTargets begin
+[2026-04-01 17:07:29.689] RadarControl.OnPaint[24] DrawTargets end
+[2026-04-01 17:07:29.689] RadarControl.OnPaint[24] DrawCenter
+[2026-04-01 17:07:29.690] RadarControl.OnPaint[24] EXIT ok
+[2026-04-01 17:07:29.889] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:29.900] RadarControl.OnPaint[25] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:29.915] RadarControl.OnPaint[25] DrawRangeRings
+[2026-04-01 17:07:29.916] RadarControl.OnPaint[25] DrawGrid
+[2026-04-01 17:07:29.916] RadarControl.OnPaint[25] DrawTracks
+[2026-04-01 17:07:29.917] RadarControl.OnPaint[25] DrawTargets begin
+[2026-04-01 17:07:29.917] RadarControl.OnPaint[25] DrawTargets end
+[2026-04-01 17:07:29.918] RadarControl.OnPaint[25] DrawCenter
+[2026-04-01 17:07:29.918] RadarControl.OnPaint[25] EXIT ok
+[2026-04-01 17:07:30.889] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:30.900] RadarControl.OnPaint[26] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:30.921] RadarControl.OnPaint[26] DrawRangeRings
+[2026-04-01 17:07:30.922] RadarControl.OnPaint[26] DrawGrid
+[2026-04-01 17:07:30.923] RadarControl.OnPaint[26] DrawTracks
+[2026-04-01 17:07:30.923] RadarControl.OnPaint[26] DrawTargets begin
+[2026-04-01 17:07:30.924] RadarControl.OnPaint[26] DrawTargets end
+[2026-04-01 17:07:30.924] RadarControl.OnPaint[26] DrawCenter
+[2026-04-01 17:07:30.925] RadarControl.OnPaint[26] EXIT ok
+[2026-04-01 17:07:32.139] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:32.148] RadarControl.OnPaint[27] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:32.163] RadarControl.OnPaint[27] DrawRangeRings
+[2026-04-01 17:07:32.164] RadarControl.OnPaint[27] DrawGrid
+[2026-04-01 17:07:32.165] RadarControl.OnPaint[27] DrawTracks
+[2026-04-01 17:07:32.165] RadarControl.OnPaint[27] DrawTargets begin
+[2026-04-01 17:07:32.165] RadarControl.OnPaint[27] DrawTargets end
+[2026-04-01 17:07:32.166] RadarControl.OnPaint[27] DrawCenter
+[2026-04-01 17:07:32.166] RadarControl.OnPaint[27] EXIT ok
+[2026-04-01 17:07:33.387] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:33.400] RadarControl.OnPaint[28] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:33.415] RadarControl.OnPaint[28] DrawRangeRings
+[2026-04-01 17:07:33.416] RadarControl.OnPaint[28] DrawGrid
+[2026-04-01 17:07:33.416] RadarControl.OnPaint[28] DrawTracks
+[2026-04-01 17:07:33.416] RadarControl.OnPaint[28] DrawTargets begin
+[2026-04-01 17:07:33.418] RadarControl.OnPaint[28] DrawTargets end
+[2026-04-01 17:07:33.418] RadarControl.OnPaint[28] DrawCenter
+[2026-04-01 17:07:33.419] RadarControl.OnPaint[28] EXIT ok
+[2026-04-01 17:07:34.636] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:34.647] RadarControl.OnPaint[29] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:34.665] RadarControl.OnPaint[29] DrawRangeRings
+[2026-04-01 17:07:34.667] RadarControl.OnPaint[29] DrawGrid
+[2026-04-01 17:07:34.668] RadarControl.OnPaint[29] DrawTracks
+[2026-04-01 17:07:34.668] RadarControl.OnPaint[29] DrawTargets begin
+[2026-04-01 17:07:34.668] RadarControl.OnPaint[29] DrawTargets end
+[2026-04-01 17:07:34.669] RadarControl.OnPaint[29] DrawCenter
+[2026-04-01 17:07:34.669] RadarControl.OnPaint[29] EXIT ok
+[2026-04-01 17:07:35.888] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:35.898] RadarControl.OnPaint[30] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:35.915] RadarControl.OnPaint[30] DrawRangeRings
+[2026-04-01 17:07:35.917] RadarControl.OnPaint[30] DrawGrid
+[2026-04-01 17:07:35.918] RadarControl.OnPaint[30] DrawTracks
+[2026-04-01 17:07:35.918] RadarControl.OnPaint[30] DrawTargets begin
+[2026-04-01 17:07:35.919] RadarControl.OnPaint[30] DrawTargets end
+[2026-04-01 17:07:35.919] RadarControl.OnPaint[30] DrawCenter
+[2026-04-01 17:07:35.919] RadarControl.OnPaint[30] EXIT ok
+[2026-04-01 17:07:36.887] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:36.896] RadarControl.OnPaint[31] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:36.912] RadarControl.OnPaint[31] DrawRangeRings
+[2026-04-01 17:07:36.913] RadarControl.OnPaint[31] DrawGrid
+[2026-04-01 17:07:36.913] RadarControl.OnPaint[31] DrawTracks
+[2026-04-01 17:07:36.914] RadarControl.OnPaint[31] DrawTargets begin
+[2026-04-01 17:07:36.914] RadarControl.OnPaint[31] DrawTargets end
+[2026-04-01 17:07:36.915] RadarControl.OnPaint[31] DrawCenter
+[2026-04-01 17:07:36.915] RadarControl.OnPaint[31] EXIT ok
+[2026-04-01 17:07:38.137] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:38.150] RadarControl.OnPaint[32] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:38.169] RadarControl.OnPaint[32] DrawRangeRings
+[2026-04-01 17:07:38.170] RadarControl.OnPaint[32] DrawGrid
+[2026-04-01 17:07:38.171] RadarControl.OnPaint[32] DrawTracks
+[2026-04-01 17:07:38.171] RadarControl.OnPaint[32] DrawTargets begin
+[2026-04-01 17:07:38.172] RadarControl.OnPaint[32] DrawTargets end
+[2026-04-01 17:07:38.172] RadarControl.OnPaint[32] DrawCenter
+[2026-04-01 17:07:38.173] RadarControl.OnPaint[32] EXIT ok
+[2026-04-01 17:07:39.387] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:39.400] RadarControl.OnPaint[33] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:39.417] RadarControl.OnPaint[33] DrawRangeRings
+[2026-04-01 17:07:39.418] RadarControl.OnPaint[33] DrawGrid
+[2026-04-01 17:07:39.419] RadarControl.OnPaint[33] DrawTracks
+[2026-04-01 17:07:39.419] RadarControl.OnPaint[33] DrawTargets begin
+[2026-04-01 17:07:39.420] RadarControl.OnPaint[33] DrawTargets end
+[2026-04-01 17:07:39.420] RadarControl.OnPaint[33] DrawCenter
+[2026-04-01 17:07:39.421] RadarControl.OnPaint[33] EXIT ok
+[2026-04-01 17:07:40.386] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:40.398] RadarControl.OnPaint[34] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:40.414] RadarControl.OnPaint[34] DrawRangeRings
+[2026-04-01 17:07:40.416] RadarControl.OnPaint[34] DrawGrid
+[2026-04-01 17:07:40.416] RadarControl.OnPaint[34] DrawTracks
+[2026-04-01 17:07:40.417] RadarControl.OnPaint[34] DrawTargets begin
+[2026-04-01 17:07:40.417] RadarControl.OnPaint[34] DrawTargets end
+[2026-04-01 17:07:40.417] RadarControl.OnPaint[34] DrawCenter
+[2026-04-01 17:07:40.419] RadarControl.OnPaint[34] EXIT ok
+[2026-04-01 17:07:41.384] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:41.397] RadarControl.OnPaint[35] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:41.417] RadarControl.OnPaint[35] DrawRangeRings
+[2026-04-01 17:07:41.418] RadarControl.OnPaint[35] DrawGrid
+[2026-04-01 17:07:41.419] RadarControl.OnPaint[35] DrawTracks
+[2026-04-01 17:07:41.419] RadarControl.OnPaint[35] DrawTargets begin
+[2026-04-01 17:07:41.420] RadarControl.OnPaint[35] DrawTargets end
+[2026-04-01 17:07:41.420] RadarControl.OnPaint[35] DrawCenter
+[2026-04-01 17:07:41.421] RadarControl.OnPaint[35] EXIT ok
+[2026-04-01 17:07:42.636] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:42.645] RadarControl.OnPaint[36] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:42.663] RadarControl.OnPaint[36] DrawRangeRings
+[2026-04-01 17:07:42.664] RadarControl.OnPaint[36] DrawGrid
+[2026-04-01 17:07:42.665] RadarControl.OnPaint[36] DrawTracks
+[2026-04-01 17:07:42.667] RadarControl.OnPaint[36] DrawTargets begin
+[2026-04-01 17:07:42.667] RadarControl.OnPaint[36] DrawTargets end
+[2026-04-01 17:07:42.668] RadarControl.OnPaint[36] DrawCenter
+[2026-04-01 17:07:42.668] RadarControl.OnPaint[36] EXIT ok
+[2026-04-01 17:07:43.632] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:43.644] RadarControl.OnPaint[37] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:43.663] RadarControl.OnPaint[37] DrawRangeRings
+[2026-04-01 17:07:43.664] RadarControl.OnPaint[37] DrawGrid
+[2026-04-01 17:07:43.664] RadarControl.OnPaint[37] DrawTracks
+[2026-04-01 17:07:43.665] RadarControl.OnPaint[37] DrawTargets begin
+[2026-04-01 17:07:43.665] RadarControl.OnPaint[37] DrawTargets end
+[2026-04-01 17:07:43.665] RadarControl.OnPaint[37] DrawCenter
+[2026-04-01 17:07:43.666] RadarControl.OnPaint[37] EXIT ok
+[2026-04-01 17:07:44.886] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:44.898] RadarControl.OnPaint[38] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:44.916] RadarControl.OnPaint[38] DrawRangeRings
+[2026-04-01 17:07:44.917] RadarControl.OnPaint[38] DrawGrid
+[2026-04-01 17:07:44.918] RadarControl.OnPaint[38] DrawTracks
+[2026-04-01 17:07:44.918] RadarControl.OnPaint[38] DrawTargets begin
+[2026-04-01 17:07:44.918] RadarControl.OnPaint[38] DrawTargets end
+[2026-04-01 17:07:44.919] RadarControl.OnPaint[38] DrawCenter
+[2026-04-01 17:07:44.919] RadarControl.OnPaint[38] EXIT ok
+[2026-04-01 17:07:46.133] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:46.146] RadarControl.OnPaint[39] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:46.168] RadarControl.OnPaint[39] DrawRangeRings
+[2026-04-01 17:07:46.169] RadarControl.OnPaint[39] DrawGrid
+[2026-04-01 17:07:46.170] RadarControl.OnPaint[39] DrawTracks
+[2026-04-01 17:07:46.170] RadarControl.OnPaint[39] DrawTargets begin
+[2026-04-01 17:07:46.170] RadarControl.OnPaint[39] DrawTargets end
+[2026-04-01 17:07:46.171] RadarControl.OnPaint[39] DrawCenter
+[2026-04-01 17:07:46.171] RadarControl.OnPaint[39] EXIT ok
+[2026-04-01 17:07:47.385] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:47.398] RadarControl.OnPaint[40] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:47.415] RadarControl.OnPaint[40] DrawRangeRings
+[2026-04-01 17:07:47.416] RadarControl.OnPaint[40] DrawGrid
+[2026-04-01 17:07:47.417] RadarControl.OnPaint[40] DrawTracks
+[2026-04-01 17:07:47.417] RadarControl.OnPaint[40] DrawTargets begin
+[2026-04-01 17:07:47.418] RadarControl.OnPaint[40] DrawTargets end
+[2026-04-01 17:07:47.418] RadarControl.OnPaint[40] DrawCenter
+[2026-04-01 17:07:47.418] RadarControl.OnPaint[40] EXIT ok
+[2026-04-01 17:07:48.635] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:07:48.645] RadarControl.OnPaint[41] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:07:48.661] RadarControl.OnPaint[41] DrawRangeRings
+[2026-04-01 17:07:48.662] RadarControl.OnPaint[41] DrawGrid
+[2026-04-01 17:07:48.662] RadarControl.OnPaint[41] DrawTracks
+[2026-04-01 17:07:48.663] RadarControl.OnPaint[41] DrawTargets begin
+[2026-04-01 17:07:48.663] RadarControl.OnPaint[41] DrawTargets end
+[2026-04-01 17:07:48.664] RadarControl.OnPaint[41] DrawCenter
+[2026-04-01 17:07:48.664] RadarControl.OnPaint[41] EXIT ok
+[2026-04-01 17:07:49.632] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:49.642] RadarControl.OnPaint[42] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:49.665] RadarControl.OnPaint[42] DrawRangeRings
+[2026-04-01 17:07:49.666] RadarControl.OnPaint[42] DrawGrid
+[2026-04-01 17:07:49.667] RadarControl.OnPaint[42] DrawTracks
+[2026-04-01 17:07:49.667] RadarControl.OnPaint[42] DrawTargets begin
+[2026-04-01 17:07:49.668] RadarControl.OnPaint[42] DrawTargets end
+[2026-04-01 17:07:49.668] RadarControl.OnPaint[42] DrawCenter
+[2026-04-01 17:07:49.669] RadarControl.OnPaint[42] EXIT ok
+[2026-04-01 17:07:50.884] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:50.896] RadarControl.OnPaint[43] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:50.916] RadarControl.OnPaint[43] DrawRangeRings
+[2026-04-01 17:07:50.917] RadarControl.OnPaint[43] DrawGrid
+[2026-04-01 17:07:50.918] RadarControl.OnPaint[43] DrawTracks
+[2026-04-01 17:07:50.918] RadarControl.OnPaint[43] DrawTargets begin
+[2026-04-01 17:07:50.919] RadarControl.OnPaint[43] DrawTargets end
+[2026-04-01 17:07:50.919] RadarControl.OnPaint[43] DrawCenter
+[2026-04-01 17:07:50.920] RadarControl.OnPaint[43] EXIT ok
+[2026-04-01 17:07:52.131] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:52.145] RadarControl.OnPaint[44] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:52.167] RadarControl.OnPaint[44] DrawRangeRings
+[2026-04-01 17:07:52.169] RadarControl.OnPaint[44] DrawGrid
+[2026-04-01 17:07:52.169] RadarControl.OnPaint[44] DrawTracks
+[2026-04-01 17:07:52.170] RadarControl.OnPaint[44] DrawTargets begin
+[2026-04-01 17:07:52.170] RadarControl.OnPaint[44] DrawTargets end
+[2026-04-01 17:07:52.171] RadarControl.OnPaint[44] DrawCenter
+[2026-04-01 17:07:52.171] RadarControl.OnPaint[44] EXIT ok
+[2026-04-01 17:07:53.384] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:53.401] RadarControl.OnPaint[45] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:53.423] RadarControl.OnPaint[45] DrawRangeRings
+[2026-04-01 17:07:53.424] RadarControl.OnPaint[45] DrawGrid
+[2026-04-01 17:07:53.425] RadarControl.OnPaint[45] DrawTracks
+[2026-04-01 17:07:53.425] RadarControl.OnPaint[45] DrawTargets begin
+[2026-04-01 17:07:53.426] RadarControl.OnPaint[45] DrawTargets end
+[2026-04-01 17:07:53.426] RadarControl.OnPaint[45] DrawCenter
+[2026-04-01 17:07:53.426] RadarControl.OnPaint[45] EXIT ok
+[2026-04-01 17:07:54.632] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:54.643] RadarControl.OnPaint[46] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:54.662] RadarControl.OnPaint[46] DrawRangeRings
+[2026-04-01 17:07:54.663] RadarControl.OnPaint[46] DrawGrid
+[2026-04-01 17:07:54.664] RadarControl.OnPaint[46] DrawTracks
+[2026-04-01 17:07:54.665] RadarControl.OnPaint[46] DrawTargets begin
+[2026-04-01 17:07:54.665] RadarControl.OnPaint[46] DrawTargets end
+[2026-04-01 17:07:54.665] RadarControl.OnPaint[46] DrawCenter
+[2026-04-01 17:07:54.666] RadarControl.OnPaint[46] EXIT ok
+[2026-04-01 17:07:55.630] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:55.640] RadarControl.OnPaint[47] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:55.661] RadarControl.OnPaint[47] DrawRangeRings
+[2026-04-01 17:07:55.662] RadarControl.OnPaint[47] DrawGrid
+[2026-04-01 17:07:55.663] RadarControl.OnPaint[47] DrawTracks
+[2026-04-01 17:07:55.663] RadarControl.OnPaint[47] DrawTargets begin
+[2026-04-01 17:07:55.664] RadarControl.OnPaint[47] DrawTargets end
+[2026-04-01 17:07:55.664] RadarControl.OnPaint[47] DrawCenter
+[2026-04-01 17:07:55.665] RadarControl.OnPaint[47] EXIT ok
+[2026-04-01 17:07:56.881] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:56.891] RadarControl.OnPaint[48] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:56.909] RadarControl.OnPaint[48] DrawRangeRings
+[2026-04-01 17:07:56.911] RadarControl.OnPaint[48] DrawGrid
+[2026-04-01 17:07:56.912] RadarControl.OnPaint[48] DrawTracks
+[2026-04-01 17:07:56.912] RadarControl.OnPaint[48] DrawTargets begin
+[2026-04-01 17:07:56.912] RadarControl.OnPaint[48] DrawTargets end
+[2026-04-01 17:07:56.913] RadarControl.OnPaint[48] DrawCenter
+[2026-04-01 17:07:56.913] RadarControl.OnPaint[48] EXIT ok
+[2026-04-01 17:07:58.132] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:58.145] RadarControl.OnPaint[49] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:58.166] RadarControl.OnPaint[49] DrawRangeRings
+[2026-04-01 17:07:58.168] RadarControl.OnPaint[49] DrawGrid
+[2026-04-01 17:07:58.168] RadarControl.OnPaint[49] DrawTracks
+[2026-04-01 17:07:58.169] RadarControl.OnPaint[49] DrawTargets begin
+[2026-04-01 17:07:58.169] RadarControl.OnPaint[49] DrawTargets end
+[2026-04-01 17:07:58.170] RadarControl.OnPaint[49] DrawCenter
+[2026-04-01 17:07:58.170] RadarControl.OnPaint[49] EXIT ok
+[2026-04-01 17:07:59.378] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:07:59.392] RadarControl.OnPaint[50] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:07:59.412] RadarControl.OnPaint[50] DrawRangeRings
+[2026-04-01 17:07:59.413] RadarControl.OnPaint[50] DrawGrid
+[2026-04-01 17:07:59.414] RadarControl.OnPaint[50] DrawTracks
+[2026-04-01 17:07:59.414] RadarControl.OnPaint[50] DrawTargets begin
+[2026-04-01 17:07:59.415] RadarControl.OnPaint[50] DrawTargets end
+[2026-04-01 17:07:59.415] RadarControl.OnPaint[50] DrawCenter
+[2026-04-01 17:07:59.415] RadarControl.OnPaint[50] EXIT ok
+[2026-04-01 17:08:00.631] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:00.644] RadarControl.OnPaint[51] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:00.665] RadarControl.OnPaint[51] DrawRangeRings
+[2026-04-01 17:08:00.666] RadarControl.OnPaint[51] DrawGrid
+[2026-04-01 17:08:00.667] RadarControl.OnPaint[51] DrawTracks
+[2026-04-01 17:08:00.667] RadarControl.OnPaint[51] DrawTargets begin
+[2026-04-01 17:08:00.668] RadarControl.OnPaint[51] DrawTargets end
+[2026-04-01 17:08:00.668] RadarControl.OnPaint[51] DrawCenter
+[2026-04-01 17:08:00.669] RadarControl.OnPaint[51] EXIT ok
+[2026-04-01 17:08:01.644] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:01.657] RadarControl.OnPaint[52] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:01.677] RadarControl.OnPaint[52] DrawRangeRings
+[2026-04-01 17:08:01.678] RadarControl.OnPaint[52] DrawGrid
+[2026-04-01 17:08:01.679] RadarControl.OnPaint[52] DrawTracks
+[2026-04-01 17:08:01.679] RadarControl.OnPaint[52] DrawTargets begin
+[2026-04-01 17:08:01.681] RadarControl.OnPaint[52] DrawTargets end
+[2026-04-01 17:08:01.681] RadarControl.OnPaint[52] DrawCenter
+[2026-04-01 17:08:01.681] RadarControl.OnPaint[52] EXIT ok
+[2026-04-01 17:08:02.881] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:02.896] RadarControl.OnPaint[53] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:02.917] RadarControl.OnPaint[53] DrawRangeRings
+[2026-04-01 17:08:02.919] RadarControl.OnPaint[53] DrawGrid
+[2026-04-01 17:08:02.919] RadarControl.OnPaint[53] DrawTracks
+[2026-04-01 17:08:02.920] RadarControl.OnPaint[53] DrawTargets begin
+[2026-04-01 17:08:02.920] RadarControl.OnPaint[53] DrawTargets end
+[2026-04-01 17:08:02.920] RadarControl.OnPaint[53] DrawCenter
+[2026-04-01 17:08:02.921] RadarControl.OnPaint[53] EXIT ok
+[2026-04-01 17:08:04.128] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:04.143] RadarControl.OnPaint[54] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:04.161] RadarControl.OnPaint[54] DrawRangeRings
+[2026-04-01 17:08:04.162] RadarControl.OnPaint[54] DrawGrid
+[2026-04-01 17:08:04.162] RadarControl.OnPaint[54] DrawTracks
+[2026-04-01 17:08:04.163] RadarControl.OnPaint[54] DrawTargets begin
+[2026-04-01 17:08:04.163] RadarControl.OnPaint[54] DrawTargets end
+[2026-04-01 17:08:04.164] RadarControl.OnPaint[54] DrawCenter
+[2026-04-01 17:08:04.164] RadarControl.OnPaint[54] EXIT ok
+[2026-04-01 17:08:05.380] RadarControl.SetTargets: count=5, selected=none
+[2026-04-01 17:08:05.393] RadarControl.OnPaint[55] ENTER width=743 height=743 targets=5 range=13,0
+[2026-04-01 17:08:05.415] RadarControl.OnPaint[55] DrawRangeRings
+[2026-04-01 17:08:05.416] RadarControl.OnPaint[55] DrawGrid
+[2026-04-01 17:08:05.417] RadarControl.OnPaint[55] DrawTracks
+[2026-04-01 17:08:05.417] RadarControl.OnPaint[55] DrawTargets begin
+[2026-04-01 17:08:05.418] RadarControl.OnPaint[55] DrawTargets end
+[2026-04-01 17:08:05.418] RadarControl.OnPaint[55] DrawCenter
+[2026-04-01 17:08:05.418] RadarControl.OnPaint[55] EXIT ok
+[2026-04-01 17:08:06.630] RadarControl.SetTargets: count=5, selected=none
+[2026-04-01 17:08:06.639] RadarControl.OnPaint[56] ENTER width=743 height=743 targets=5 range=13,0
+[2026-04-01 17:08:06.654] RadarControl.OnPaint[56] DrawRangeRings
+[2026-04-01 17:08:06.655] RadarControl.OnPaint[56] DrawGrid
+[2026-04-01 17:08:06.655] RadarControl.OnPaint[56] DrawTracks
+[2026-04-01 17:08:06.656] RadarControl.OnPaint[56] DrawTargets begin
+[2026-04-01 17:08:06.656] RadarControl.OnPaint[56] DrawTargets end
+[2026-04-01 17:08:06.657] RadarControl.OnPaint[56] DrawCenter
+[2026-04-01 17:08:06.657] RadarControl.OnPaint[56] EXIT ok
+[2026-04-01 17:08:07.711] RadarControl.SetTargets: count=5, selected=none
+[2026-04-01 17:08:07.724] RadarControl.OnPaint[57] ENTER width=743 height=743 targets=5 range=13,0
+[2026-04-01 17:08:07.745] RadarControl.OnPaint[57] DrawRangeRings
+[2026-04-01 17:08:07.746] RadarControl.OnPaint[57] DrawGrid
+[2026-04-01 17:08:07.747] RadarControl.OnPaint[57] DrawTracks
+[2026-04-01 17:08:07.747] RadarControl.OnPaint[57] DrawTargets begin
+[2026-04-01 17:08:07.748] RadarControl.OnPaint[57] DrawTargets end
+[2026-04-01 17:08:07.748] RadarControl.OnPaint[57] DrawCenter
+[2026-04-01 17:08:07.749] RadarControl.OnPaint[57] EXIT ok
+[2026-04-01 17:08:08.894] RadarControl.SetTargets: count=5, selected=none
+[2026-04-01 17:08:08.910] RadarControl.OnPaint[58] ENTER width=743 height=743 targets=5 range=13,0
+[2026-04-01 17:08:08.929] RadarControl.OnPaint[58] DrawRangeRings
+[2026-04-01 17:08:08.930] RadarControl.OnPaint[58] DrawGrid
+[2026-04-01 17:08:08.930] RadarControl.OnPaint[58] DrawTracks
+[2026-04-01 17:08:08.931] RadarControl.OnPaint[58] DrawTargets begin
+[2026-04-01 17:08:08.931] RadarControl.OnPaint[58] DrawTargets end
+[2026-04-01 17:08:08.931] RadarControl.OnPaint[58] DrawCenter
+[2026-04-01 17:08:08.932] RadarControl.OnPaint[58] EXIT ok
+[2026-04-01 17:08:10.129] RadarControl.SetTargets: count=5, selected=none
+[2026-04-01 17:08:10.144] RadarControl.OnPaint[59] ENTER width=743 height=743 targets=5 range=13,0
+[2026-04-01 17:08:10.163] RadarControl.OnPaint[59] DrawRangeRings
+[2026-04-01 17:08:10.164] RadarControl.OnPaint[59] DrawGrid
+[2026-04-01 17:08:10.165] RadarControl.OnPaint[59] DrawTracks
+[2026-04-01 17:08:10.165] RadarControl.OnPaint[59] DrawTargets begin
+[2026-04-01 17:08:10.165] RadarControl.OnPaint[59] DrawTargets end
+[2026-04-01 17:08:10.166] RadarControl.OnPaint[59] DrawCenter
+[2026-04-01 17:08:10.166] RadarControl.OnPaint[59] EXIT ok
+[2026-04-01 17:08:11.377] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:11.387] RadarControl.OnPaint[60] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:11.407] RadarControl.OnPaint[60] DrawRangeRings
+[2026-04-01 17:08:11.408] RadarControl.OnPaint[60] DrawGrid
+[2026-04-01 17:08:11.409] RadarControl.OnPaint[60] DrawTracks
+[2026-04-01 17:08:11.409] RadarControl.OnPaint[60] DrawTargets begin
+[2026-04-01 17:08:11.410] RadarControl.OnPaint[60] DrawTargets end
+[2026-04-01 17:08:11.410] RadarControl.OnPaint[60] DrawCenter
+[2026-04-01 17:08:11.410] RadarControl.OnPaint[60] EXIT ok
+[2026-04-01 17:08:12.629] RadarControl.SetTargets: count=5, selected=none
+[2026-04-01 17:08:12.644] RadarControl.OnPaint[61] ENTER width=743 height=743 targets=5 range=13,0
+[2026-04-01 17:08:12.664] RadarControl.OnPaint[61] DrawRangeRings
+[2026-04-01 17:08:12.665] RadarControl.OnPaint[61] DrawGrid
+[2026-04-01 17:08:12.666] RadarControl.OnPaint[61] DrawTracks
+[2026-04-01 17:08:12.666] RadarControl.OnPaint[61] DrawTargets begin
+[2026-04-01 17:08:12.667] RadarControl.OnPaint[61] DrawTargets end
+[2026-04-01 17:08:12.667] RadarControl.OnPaint[61] DrawCenter
+[2026-04-01 17:08:12.668] RadarControl.OnPaint[61] EXIT ok
+[2026-04-01 17:08:13.700] RadarControl.SetTargets: count=5, selected=none
+[2026-04-01 17:08:13.714] RadarControl.OnPaint[62] ENTER width=743 height=743 targets=5 range=13,0
+[2026-04-01 17:08:13.730] RadarControl.OnPaint[62] DrawRangeRings
+[2026-04-01 17:08:13.731] RadarControl.OnPaint[62] DrawGrid
+[2026-04-01 17:08:13.732] RadarControl.OnPaint[62] DrawTracks
+[2026-04-01 17:08:13.732] RadarControl.OnPaint[62] DrawTargets begin
+[2026-04-01 17:08:13.732] RadarControl.OnPaint[62] DrawTargets end
+[2026-04-01 17:08:13.733] RadarControl.OnPaint[62] DrawCenter
+[2026-04-01 17:08:13.733] RadarControl.OnPaint[62] EXIT ok
+[2026-04-01 17:08:14.902] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:14.911] RadarControl.OnPaint[63] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:14.933] RadarControl.OnPaint[63] DrawRangeRings
+[2026-04-01 17:08:14.935] RadarControl.OnPaint[63] DrawGrid
+[2026-04-01 17:08:14.935] RadarControl.OnPaint[63] DrawTracks
+[2026-04-01 17:08:14.935] RadarControl.OnPaint[63] DrawTargets begin
+[2026-04-01 17:08:14.936] RadarControl.OnPaint[63] DrawTargets end
+[2026-04-01 17:08:14.936] RadarControl.OnPaint[63] DrawCenter
+[2026-04-01 17:08:14.937] RadarControl.OnPaint[63] EXIT ok
+[2026-04-01 17:08:16.142] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:16.152] RadarControl.OnPaint[64] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:16.170] RadarControl.OnPaint[64] DrawRangeRings
+[2026-04-01 17:08:16.171] RadarControl.OnPaint[64] DrawGrid
+[2026-04-01 17:08:16.172] RadarControl.OnPaint[64] DrawTracks
+[2026-04-01 17:08:16.172] RadarControl.OnPaint[64] DrawTargets begin
+[2026-04-01 17:08:16.173] RadarControl.OnPaint[64] DrawTargets end
+[2026-04-01 17:08:16.173] RadarControl.OnPaint[64] DrawCenter
+[2026-04-01 17:08:16.174] RadarControl.OnPaint[64] EXIT ok
+[2026-04-01 17:08:17.374] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:17.388] RadarControl.OnPaint[65] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:17.408] RadarControl.OnPaint[65] DrawRangeRings
+[2026-04-01 17:08:17.409] RadarControl.OnPaint[65] DrawGrid
+[2026-04-01 17:08:17.410] RadarControl.OnPaint[65] DrawTracks
+[2026-04-01 17:08:17.410] RadarControl.OnPaint[65] DrawTargets begin
+[2026-04-01 17:08:17.410] RadarControl.OnPaint[65] DrawTargets end
+[2026-04-01 17:08:17.411] RadarControl.OnPaint[65] DrawCenter
+[2026-04-01 17:08:17.411] RadarControl.OnPaint[65] EXIT ok
+[2026-04-01 17:08:18.321] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:08:18.337] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:08:18.353] RadarControl.OnPaint[22] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:08:18.367] RadarControl.OnPaint[22] DrawRangeRings
+[2026-04-01 17:08:18.368] RadarControl.OnPaint[22] DrawGrid
+[2026-04-01 17:08:18.369] RadarControl.OnPaint[22] DrawTracks
+[2026-04-01 17:08:18.369] RadarControl.OnPaint[22] DrawTargets begin
+[2026-04-01 17:08:18.369] RadarControl.OnPaint[22] DrawTargets end
+[2026-04-01 17:08:18.369] RadarControl.OnPaint[22] DrawCenter
+[2026-04-01 17:08:18.370] RadarControl.OnPaint[22] EXIT ok
+[2026-04-01 17:08:18.627] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:18.642] RadarControl.OnPaint[66] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:18.663] RadarControl.OnPaint[66] DrawRangeRings
+[2026-04-01 17:08:18.665] RadarControl.OnPaint[66] DrawGrid
+[2026-04-01 17:08:18.665] RadarControl.OnPaint[66] DrawTracks
+[2026-04-01 17:08:18.665] RadarControl.OnPaint[66] DrawTargets begin
+[2026-04-01 17:08:18.666] RadarControl.OnPaint[66] DrawTargets end
+[2026-04-01 17:08:18.666] RadarControl.OnPaint[66] DrawCenter
+[2026-04-01 17:08:18.667] RadarControl.OnPaint[66] EXIT ok
+[2026-04-01 17:08:19.876] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:19.892] RadarControl.OnPaint[67] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:19.913] RadarControl.OnPaint[67] DrawRangeRings
+[2026-04-01 17:08:19.914] RadarControl.OnPaint[67] DrawGrid
+[2026-04-01 17:08:19.915] RadarControl.OnPaint[67] DrawTracks
+[2026-04-01 17:08:19.915] RadarControl.OnPaint[67] DrawTargets begin
+[2026-04-01 17:08:19.916] RadarControl.OnPaint[67] DrawTargets end
+[2026-04-01 17:08:19.917] RadarControl.OnPaint[67] DrawCenter
+[2026-04-01 17:08:19.917] RadarControl.OnPaint[67] EXIT ok
+[2026-04-01 17:08:20.940] RadarControl.SetTargets: count=4, selected=none
+[2026-04-01 17:08:20.954] RadarControl.OnPaint[68] ENTER width=743 height=743 targets=4 range=13,0
+[2026-04-01 17:08:20.975] RadarControl.OnPaint[68] DrawRangeRings
+[2026-04-01 17:08:20.977] RadarControl.OnPaint[68] DrawGrid
+[2026-04-01 17:08:20.978] RadarControl.OnPaint[68] DrawTracks
+[2026-04-01 17:08:20.978] RadarControl.OnPaint[68] DrawTargets begin
+[2026-04-01 17:08:20.978] RadarControl.OnPaint[68] DrawTargets end
+[2026-04-01 17:08:20.979] RadarControl.OnPaint[68] DrawCenter
+[2026-04-01 17:08:20.979] RadarControl.OnPaint[68] EXIT ok
+[2026-04-01 17:08:22.127] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:08:22.140] RadarControl.OnPaint[69] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:08:22.162] RadarControl.OnPaint[69] DrawRangeRings
+[2026-04-01 17:08:22.163] RadarControl.OnPaint[69] DrawGrid
+[2026-04-01 17:08:22.164] RadarControl.OnPaint[69] DrawTracks
+[2026-04-01 17:08:22.164] RadarControl.OnPaint[69] DrawTargets begin
+[2026-04-01 17:08:22.165] RadarControl.OnPaint[69] DrawTargets end
+[2026-04-01 17:08:22.165] RadarControl.OnPaint[69] DrawCenter
+[2026-04-01 17:08:22.165] RadarControl.OnPaint[69] EXIT ok
+[2026-04-01 17:08:23.376] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:08:23.389] RadarControl.OnPaint[70] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:08:23.404] RadarControl.OnPaint[70] DrawRangeRings
+[2026-04-01 17:08:23.405] RadarControl.OnPaint[70] DrawGrid
+[2026-04-01 17:08:23.405] RadarControl.OnPaint[70] DrawTracks
+[2026-04-01 17:08:23.406] RadarControl.OnPaint[70] DrawTargets begin
+[2026-04-01 17:08:23.406] RadarControl.OnPaint[70] DrawTargets end
+[2026-04-01 17:08:23.406] RadarControl.OnPaint[70] DrawCenter
+[2026-04-01 17:08:23.407] RadarControl.OnPaint[70] EXIT ok
+[2026-04-01 17:08:24.526] Program.Main: Application.Run returned normally
+[2026-04-01 17:08:24.626] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:08:24.635] RadarControl.OnPaint[71] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:08:24.650] RadarControl.OnPaint[71] DrawRangeRings
+[2026-04-01 17:08:24.652] RadarControl.OnPaint[71] DrawGrid
+[2026-04-01 17:08:24.652] RadarControl.OnPaint[71] DrawTracks
+[2026-04-01 17:08:24.652] RadarControl.OnPaint[71] DrawTargets begin
+[2026-04-01 17:08:24.653] RadarControl.OnPaint[71] DrawTargets end
+[2026-04-01 17:08:24.653] RadarControl.OnPaint[71] DrawCenter
+[2026-04-01 17:08:24.653] RadarControl.OnPaint[71] EXIT ok
+[2026-04-01 17:08:25.873] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:08:25.883] RadarControl.OnPaint[72] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:08:25.896] RadarControl.OnPaint[72] DrawRangeRings
+[2026-04-01 17:08:25.897] RadarControl.OnPaint[72] DrawGrid
+[2026-04-01 17:08:25.898] RadarControl.OnPaint[72] DrawTracks
+[2026-04-01 17:08:25.898] RadarControl.OnPaint[72] DrawTargets begin
+[2026-04-01 17:08:25.898] RadarControl.OnPaint[72] DrawTargets end
+[2026-04-01 17:08:25.898] RadarControl.OnPaint[72] DrawCenter
+[2026-04-01 17:08:25.899] RadarControl.OnPaint[72] EXIT ok
+[2026-04-01 17:08:26.910] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:08:26.921] RadarControl.OnPaint[73] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:08:26.935] RadarControl.OnPaint[73] DrawRangeRings
+[2026-04-01 17:08:26.936] RadarControl.OnPaint[73] DrawGrid
+[2026-04-01 17:08:26.937] RadarControl.OnPaint[73] DrawTracks
+[2026-04-01 17:08:26.937] RadarControl.OnPaint[73] DrawTargets begin
+[2026-04-01 17:08:26.937] RadarControl.OnPaint[73] DrawTargets end
+[2026-04-01 17:08:26.937] RadarControl.OnPaint[73] DrawCenter
+[2026-04-01 17:08:26.938] RadarControl.OnPaint[73] EXIT ok
+[2026-04-01 17:08:28.126] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:08:28.135] RadarControl.OnPaint[74] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:08:28.149] RadarControl.OnPaint[74] DrawRangeRings
+[2026-04-01 17:08:28.150] RadarControl.OnPaint[74] DrawGrid
+[2026-04-01 17:08:28.150] RadarControl.OnPaint[74] DrawTracks
+[2026-04-01 17:08:28.150] RadarControl.OnPaint[74] DrawTargets begin
+[2026-04-01 17:08:28.151] RadarControl.OnPaint[74] DrawTargets end
+[2026-04-01 17:08:28.151] RadarControl.OnPaint[74] DrawCenter
+[2026-04-01 17:08:28.151] RadarControl.OnPaint[74] EXIT ok
+[2026-04-01 17:08:36.322] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:08:36.338] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:08:36.351] RadarControl.OnPaint[75] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:08:36.364] RadarControl.OnPaint[75] DrawRangeRings
+[2026-04-01 17:08:36.365] RadarControl.OnPaint[75] DrawGrid
+[2026-04-01 17:08:36.366] RadarControl.OnPaint[75] DrawTracks
+[2026-04-01 17:08:36.366] RadarControl.OnPaint[75] DrawTargets begin
+[2026-04-01 17:08:36.366] RadarControl.OnPaint[75] DrawTargets end
+[2026-04-01 17:08:36.366] RadarControl.OnPaint[75] DrawCenter
+[2026-04-01 17:08:36.367] RadarControl.OnPaint[75] EXIT ok
+[2026-04-01 17:08:46.535] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:08:46.552] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:08:46.569] RadarControl.OnPaint[76] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:08:46.582] RadarControl.OnPaint[76] DrawRangeRings
+[2026-04-01 17:08:46.583] RadarControl.OnPaint[76] DrawGrid
+[2026-04-01 17:08:46.583] RadarControl.OnPaint[76] DrawTracks
+[2026-04-01 17:08:46.583] RadarControl.OnPaint[76] DrawTargets begin
+[2026-04-01 17:08:46.584] RadarControl.OnPaint[76] DrawTargets end
+[2026-04-01 17:08:46.584] RadarControl.OnPaint[76] DrawCenter
+[2026-04-01 17:08:46.584] RadarControl.OnPaint[76] EXIT ok
+[2026-04-01 17:09:00.618] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:09:00.627] RadarControl.OnPaint[77] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:09:00.641] RadarControl.OnPaint[77] DrawRangeRings
+[2026-04-01 17:09:00.642] RadarControl.OnPaint[77] DrawGrid
+[2026-04-01 17:09:00.643] RadarControl.OnPaint[77] DrawTracks
+[2026-04-01 17:09:00.643] RadarControl.OnPaint[77] DrawTargets begin
+[2026-04-01 17:09:00.643] RadarControl.OnPaint[77] DrawTargets end
+[2026-04-01 17:09:00.644] RadarControl.OnPaint[77] DrawCenter
+[2026-04-01 17:09:00.644] RadarControl.OnPaint[77] EXIT ok
+[2026-04-01 17:09:01.867] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:09:01.876] RadarControl.OnPaint[78] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:09:01.889] RadarControl.OnPaint[78] DrawRangeRings
+[2026-04-01 17:09:01.890] RadarControl.OnPaint[78] DrawGrid
+[2026-04-01 17:09:01.891] RadarControl.OnPaint[78] DrawTracks
+[2026-04-01 17:09:01.891] RadarControl.OnPaint[78] DrawTargets begin
+[2026-04-01 17:09:01.891] RadarControl.OnPaint[78] DrawTargets end
+[2026-04-01 17:09:01.892] RadarControl.OnPaint[78] DrawCenter
+[2026-04-01 17:09:01.892] RadarControl.OnPaint[78] EXIT ok
+[2026-04-01 17:09:03.116] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:09:03.125] RadarControl.OnPaint[79] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:09:03.139] RadarControl.OnPaint[79] DrawRangeRings
+[2026-04-01 17:09:03.140] RadarControl.OnPaint[79] DrawGrid
+[2026-04-01 17:09:03.141] RadarControl.OnPaint[79] DrawTracks
+[2026-04-01 17:09:03.141] RadarControl.OnPaint[79] DrawTargets begin
+[2026-04-01 17:09:03.141] RadarControl.OnPaint[79] DrawTargets end
+[2026-04-01 17:09:03.142] RadarControl.OnPaint[79] DrawCenter
+[2026-04-01 17:09:03.142] RadarControl.OnPaint[79] EXIT ok
+[2026-04-01 17:09:04.117] RadarControl.SetTargets: count=3, selected=none
+[2026-04-01 17:09:04.128] RadarControl.OnPaint[80] ENTER width=743 height=743 targets=3 range=13,0
+[2026-04-01 17:09:04.141] RadarControl.OnPaint[80] DrawRangeRings
+[2026-04-01 17:09:04.142] RadarControl.OnPaint[80] DrawGrid
+[2026-04-01 17:09:04.143] RadarControl.OnPaint[80] DrawTracks
+[2026-04-01 17:09:04.143] RadarControl.OnPaint[80] DrawTargets begin
+[2026-04-01 17:09:04.143] RadarControl.OnPaint[80] DrawTargets end
+[2026-04-01 17:09:04.143] RadarControl.OnPaint[80] DrawCenter
+[2026-04-01 17:09:04.144] RadarControl.OnPaint[80] EXIT ok
+[2026-04-01 17:09:18.453] Program.Main: Application.Run returned normally
+[2026-04-01 17:28:12.562] ========== APP START ==========
+[2026-04-01 17:28:12.565] Program.Main: before Application.Run
+[2026-04-01 17:28:12.957] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:28:12.970] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:28:12.980] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:28:13.108] RadarControl.OnPaint[1] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:28:13.147] RadarControl.OnPaint[1] DrawRangeRings
+[2026-04-01 17:28:13.149] RadarControl.OnPaint[1] DrawGrid
+[2026-04-01 17:28:13.150] RadarControl.OnPaint[1] DrawTracks
+[2026-04-01 17:28:13.152] RadarControl.OnPaint[1] DrawTargets begin
+[2026-04-01 17:28:13.154] RadarControl.OnPaint[1] DrawTargets end
+[2026-04-01 17:28:13.154] RadarControl.OnPaint[1] DrawCenter
+[2026-04-01 17:28:13.157] RadarControl.OnPaint[1] EXIT ok
+[2026-04-01 17:28:13.245] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:28:13.254] RadarControl.OnPaint[2] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:28:13.271] RadarControl.OnPaint[2] DrawRangeRings
+[2026-04-01 17:28:13.272] RadarControl.OnPaint[2] DrawGrid
+[2026-04-01 17:28:13.273] RadarControl.OnPaint[2] DrawTracks
+[2026-04-01 17:28:13.273] RadarControl.OnPaint[2] DrawTargets begin
+[2026-04-01 17:28:13.273] RadarControl.OnPaint[2] DrawTargets end
+[2026-04-01 17:28:13.273] RadarControl.OnPaint[2] DrawCenter
+[2026-04-01 17:28:13.274] RadarControl.OnPaint[2] EXIT ok
+[2026-04-01 17:28:13.491] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:28:13.515] RadarControl.OnPaint[3] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:28:13.529] RadarControl.OnPaint[3] DrawRangeRings
+[2026-04-01 17:28:13.531] RadarControl.OnPaint[3] DrawGrid
+[2026-04-01 17:28:13.532] RadarControl.OnPaint[3] DrawTracks
+[2026-04-01 17:28:13.532] RadarControl.OnPaint[3] DrawTargets begin
+[2026-04-01 17:28:13.537] RadarControl.OnPaint[3] DrawTargets end
+[2026-04-01 17:28:13.537] RadarControl.OnPaint[3] DrawCenter
+[2026-04-01 17:28:13.537] RadarControl.OnPaint[3] EXIT ok
+[2026-04-01 17:28:14.738] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:28:14.749] RadarControl.OnPaint[4] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:28:14.762] RadarControl.OnPaint[4] DrawRangeRings
+[2026-04-01 17:28:14.763] RadarControl.OnPaint[4] DrawGrid
+[2026-04-01 17:28:14.764] RadarControl.OnPaint[4] DrawTracks
+[2026-04-01 17:28:14.765] RadarControl.OnPaint[4] DrawTargets begin
+[2026-04-01 17:28:14.765] RadarControl.OnPaint[4] DrawTargets end
+[2026-04-01 17:28:14.765] RadarControl.OnPaint[4] DrawCenter
+[2026-04-01 17:28:14.766] RadarControl.OnPaint[4] EXIT ok
+[2026-04-01 17:28:15.989] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:28:15.997] RadarControl.OnPaint[5] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:28:16.011] RadarControl.OnPaint[5] DrawRangeRings
+[2026-04-01 17:28:16.012] RadarControl.OnPaint[5] DrawGrid
+[2026-04-01 17:28:16.013] RadarControl.OnPaint[5] DrawTracks
+[2026-04-01 17:28:16.013] RadarControl.OnPaint[5] DrawTargets begin
+[2026-04-01 17:28:16.013] RadarControl.OnPaint[5] DrawTargets end
+[2026-04-01 17:28:16.013] RadarControl.OnPaint[5] DrawCenter
+[2026-04-01 17:28:16.014] RadarControl.OnPaint[5] EXIT ok
+[2026-04-01 17:28:20.262] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:28:20.273] RadarControl.OnPaint[6] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:28:20.287] RadarControl.OnPaint[6] DrawRangeRings
+[2026-04-01 17:28:20.288] RadarControl.OnPaint[6] DrawGrid
+[2026-04-01 17:28:20.288] RadarControl.OnPaint[6] DrawTracks
+[2026-04-01 17:28:20.289] RadarControl.OnPaint[6] DrawTargets begin
+[2026-04-01 17:28:20.289] RadarControl.OnPaint[6] DrawTargets end
+[2026-04-01 17:28:20.289] RadarControl.OnPaint[6] DrawCenter
+[2026-04-01 17:28:20.289] RadarControl.OnPaint[6] EXIT ok
+[2026-04-01 17:28:20.485] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:28:20.494] RadarControl.OnPaint[7] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:28:20.507] RadarControl.OnPaint[7] DrawRangeRings
+[2026-04-01 17:28:20.508] RadarControl.OnPaint[7] DrawGrid
+[2026-04-01 17:28:20.509] RadarControl.OnPaint[7] DrawTracks
+[2026-04-01 17:28:20.509] RadarControl.OnPaint[7] DrawTargets begin
+[2026-04-01 17:28:20.509] RadarControl.OnPaint[7] DrawTargets end
+[2026-04-01 17:28:20.509] RadarControl.OnPaint[7] DrawCenter
+[2026-04-01 17:28:20.510] RadarControl.OnPaint[7] EXIT ok
+[2026-04-01 17:28:35.239] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:28:35.251] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:28:35.269] RadarControl.OnPaint[8] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:28:35.282] RadarControl.OnPaint[8] DrawRangeRings
+[2026-04-01 17:28:35.283] RadarControl.OnPaint[8] DrawGrid
+[2026-04-01 17:28:35.284] RadarControl.OnPaint[8] DrawTracks
+[2026-04-01 17:28:35.284] RadarControl.OnPaint[8] DrawTargets begin
+[2026-04-01 17:28:35.284] RadarControl.OnPaint[8] DrawTargets end
+[2026-04-01 17:28:35.284] RadarControl.OnPaint[8] DrawCenter
+[2026-04-01 17:28:35.285] RadarControl.OnPaint[8] EXIT ok
+[2026-04-01 17:29:00.857] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:29:00.875] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 17:29:00.899] RadarControl.OnPaint[9] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 17:29:00.921] RadarControl.OnPaint[9] DrawRangeRings
+[2026-04-01 17:29:00.923] RadarControl.OnPaint[9] DrawGrid
+[2026-04-01 17:29:00.924] RadarControl.OnPaint[9] DrawTracks
+[2026-04-01 17:29:00.924] RadarControl.OnPaint[9] DrawTargets begin
+[2026-04-01 17:29:00.924] RadarControl.OnPaint[9] DrawTargets end
+[2026-04-01 17:29:00.924] RadarControl.OnPaint[9] DrawCenter
+[2026-04-01 17:29:00.925] RadarControl.OnPaint[9] EXIT ok
+[2026-04-01 17:29:03.976] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:03.987] RadarControl.OnPaint[10] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:04.001] RadarControl.OnPaint[10] DrawRangeRings
+[2026-04-01 17:29:04.002] RadarControl.OnPaint[10] DrawGrid
+[2026-04-01 17:29:04.003] RadarControl.OnPaint[10] DrawTracks
+[2026-04-01 17:29:04.003] RadarControl.OnPaint[10] DrawTargets begin
+[2026-04-01 17:29:04.004] RadarControl.OnPaint[10] DrawTargets end
+[2026-04-01 17:29:04.004] RadarControl.OnPaint[10] DrawCenter
+[2026-04-01 17:29:04.004] RadarControl.OnPaint[10] EXIT ok
+[2026-04-01 17:29:05.231] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:05.241] RadarControl.OnPaint[11] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:05.255] RadarControl.OnPaint[11] DrawRangeRings
+[2026-04-01 17:29:05.256] RadarControl.OnPaint[11] DrawGrid
+[2026-04-01 17:29:05.257] RadarControl.OnPaint[11] DrawTracks
+[2026-04-01 17:29:05.257] RadarControl.OnPaint[11] DrawTargets begin
+[2026-04-01 17:29:05.257] RadarControl.OnPaint[11] DrawTargets end
+[2026-04-01 17:29:05.257] RadarControl.OnPaint[11] DrawCenter
+[2026-04-01 17:29:05.258] RadarControl.OnPaint[11] EXIT ok
+[2026-04-01 17:29:06.480] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:06.490] RadarControl.OnPaint[12] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:06.504] RadarControl.OnPaint[12] DrawRangeRings
+[2026-04-01 17:29:06.505] RadarControl.OnPaint[12] DrawGrid
+[2026-04-01 17:29:06.505] RadarControl.OnPaint[12] DrawTracks
+[2026-04-01 17:29:06.505] RadarControl.OnPaint[12] DrawTargets begin
+[2026-04-01 17:29:06.506] RadarControl.OnPaint[12] DrawTargets end
+[2026-04-01 17:29:06.506] RadarControl.OnPaint[12] DrawCenter
+[2026-04-01 17:29:06.506] RadarControl.OnPaint[12] EXIT ok
+[2026-04-01 17:29:07.730] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:07.744] RadarControl.OnPaint[13] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:07.757] RadarControl.OnPaint[13] DrawRangeRings
+[2026-04-01 17:29:07.758] RadarControl.OnPaint[13] DrawGrid
+[2026-04-01 17:29:07.758] RadarControl.OnPaint[13] DrawTracks
+[2026-04-01 17:29:07.758] RadarControl.OnPaint[13] DrawTargets begin
+[2026-04-01 17:29:07.760] RadarControl.OnPaint[13] DrawTargets end
+[2026-04-01 17:29:07.760] RadarControl.OnPaint[13] DrawCenter
+[2026-04-01 17:29:07.760] RadarControl.OnPaint[13] EXIT ok
+[2026-04-01 17:29:08.728] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:08.738] RadarControl.OnPaint[14] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:08.751] RadarControl.OnPaint[14] DrawRangeRings
+[2026-04-01 17:29:08.752] RadarControl.OnPaint[14] DrawGrid
+[2026-04-01 17:29:08.753] RadarControl.OnPaint[14] DrawTracks
+[2026-04-01 17:29:08.753] RadarControl.OnPaint[14] DrawTargets begin
+[2026-04-01 17:29:08.753] RadarControl.OnPaint[14] DrawTargets end
+[2026-04-01 17:29:08.753] RadarControl.OnPaint[14] DrawCenter
+[2026-04-01 17:29:08.754] RadarControl.OnPaint[14] EXIT ok
+[2026-04-01 17:29:09.977] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:09.987] RadarControl.OnPaint[15] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:10.000] RadarControl.OnPaint[15] DrawRangeRings
+[2026-04-01 17:29:10.001] RadarControl.OnPaint[15] DrawGrid
+[2026-04-01 17:29:10.002] RadarControl.OnPaint[15] DrawTracks
+[2026-04-01 17:29:10.002] RadarControl.OnPaint[15] DrawTargets begin
+[2026-04-01 17:29:10.003] RadarControl.OnPaint[15] DrawTargets end
+[2026-04-01 17:29:10.003] RadarControl.OnPaint[15] DrawCenter
+[2026-04-01 17:29:10.004] RadarControl.OnPaint[15] EXIT ok
+[2026-04-01 17:29:11.231] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:11.240] RadarControl.OnPaint[16] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:11.254] RadarControl.OnPaint[16] DrawRangeRings
+[2026-04-01 17:29:11.255] RadarControl.OnPaint[16] DrawGrid
+[2026-04-01 17:29:11.256] RadarControl.OnPaint[16] DrawTracks
+[2026-04-01 17:29:11.256] RadarControl.OnPaint[16] DrawTargets begin
+[2026-04-01 17:29:11.256] RadarControl.OnPaint[16] DrawTargets end
+[2026-04-01 17:29:11.257] RadarControl.OnPaint[16] DrawCenter
+[2026-04-01 17:29:11.257] RadarControl.OnPaint[16] EXIT ok
+[2026-04-01 17:29:12.479] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:12.490] RadarControl.OnPaint[17] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:12.504] RadarControl.OnPaint[17] DrawRangeRings
+[2026-04-01 17:29:12.505] RadarControl.OnPaint[17] DrawGrid
+[2026-04-01 17:29:12.505] RadarControl.OnPaint[17] DrawTracks
+[2026-04-01 17:29:12.505] RadarControl.OnPaint[17] DrawTargets begin
+[2026-04-01 17:29:12.506] RadarControl.OnPaint[17] DrawTargets end
+[2026-04-01 17:29:12.506] RadarControl.OnPaint[17] DrawCenter
+[2026-04-01 17:29:12.506] RadarControl.OnPaint[17] EXIT ok
+[2026-04-01 17:29:13.489] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:13.498] RadarControl.OnPaint[18] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:13.512] RadarControl.OnPaint[18] DrawRangeRings
+[2026-04-01 17:29:13.513] RadarControl.OnPaint[18] DrawGrid
+[2026-04-01 17:29:13.513] RadarControl.OnPaint[18] DrawTracks
+[2026-04-01 17:29:13.513] RadarControl.OnPaint[18] DrawTargets begin
+[2026-04-01 17:29:13.514] RadarControl.OnPaint[18] DrawTargets end
+[2026-04-01 17:29:13.514] RadarControl.OnPaint[18] DrawCenter
+[2026-04-01 17:29:13.514] RadarControl.OnPaint[18] EXIT ok
+[2026-04-01 17:29:14.163] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:14.173] RadarControl.OnPaint[19] ENTER width=743 height=743 targets=2 range=10,4
+[2026-04-01 17:29:14.220] RadarControl.OnPaint[19] DrawRangeRings
+[2026-04-01 17:29:14.221] RadarControl.OnPaint[19] DrawGrid
+[2026-04-01 17:29:14.222] RadarControl.OnPaint[19] DrawTracks
+[2026-04-01 17:29:14.222] RadarControl.OnPaint[19] DrawTargets begin
+[2026-04-01 17:29:14.222] RadarControl.OnPaint[19] DrawTargets end
+[2026-04-01 17:29:14.223] RadarControl.OnPaint[19] DrawCenter
+[2026-04-01 17:29:14.223] RadarControl.OnPaint[19] EXIT ok
+[2026-04-01 17:29:14.224] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:14.235] RadarControl.OnPaint[20] ENTER width=743 height=743 targets=2 range=8,3
+[2026-04-01 17:29:14.252] RadarControl.OnPaint[20] DrawRangeRings
+[2026-04-01 17:29:14.253] RadarControl.OnPaint[20] DrawGrid
+[2026-04-01 17:29:14.254] RadarControl.OnPaint[20] DrawTracks
+[2026-04-01 17:29:14.254] RadarControl.OnPaint[20] DrawTargets begin
+[2026-04-01 17:29:14.254] RadarControl.OnPaint[20] DrawTargets end
+[2026-04-01 17:29:14.254] RadarControl.OnPaint[20] DrawCenter
+[2026-04-01 17:29:14.255] RadarControl.OnPaint[20] EXIT ok
+[2026-04-01 17:29:14.294] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:14.307] RadarControl.OnPaint[21] ENTER width=743 height=743 targets=2 range=6,7
+[2026-04-01 17:29:14.321] RadarControl.OnPaint[21] DrawRangeRings
+[2026-04-01 17:29:14.322] RadarControl.OnPaint[21] DrawGrid
+[2026-04-01 17:29:14.322] RadarControl.OnPaint[21] DrawTracks
+[2026-04-01 17:29:14.323] RadarControl.OnPaint[21] DrawTargets begin
+[2026-04-01 17:29:14.323] RadarControl.OnPaint[21] DrawTargets end
+[2026-04-01 17:29:14.323] RadarControl.OnPaint[21] DrawCenter
+[2026-04-01 17:29:14.324] RadarControl.OnPaint[21] EXIT ok
+[2026-04-01 17:29:14.727] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:14.737] RadarControl.OnPaint[22] ENTER width=743 height=743 targets=2 range=6,7
+[2026-04-01 17:29:14.751] RadarControl.OnPaint[22] DrawRangeRings
+[2026-04-01 17:29:14.752] RadarControl.OnPaint[22] DrawGrid
+[2026-04-01 17:29:14.753] RadarControl.OnPaint[22] DrawTracks
+[2026-04-01 17:29:14.753] RadarControl.OnPaint[22] DrawTargets begin
+[2026-04-01 17:29:14.753] RadarControl.OnPaint[22] DrawTargets end
+[2026-04-01 17:29:14.753] RadarControl.OnPaint[22] DrawCenter
+[2026-04-01 17:29:14.753] RadarControl.OnPaint[22] EXIT ok
+[2026-04-01 17:29:14.802] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:14.811] RadarControl.OnPaint[23] ENTER width=743 height=743 targets=2 range=5,3
+[2026-04-01 17:29:14.825] RadarControl.OnPaint[23] DrawRangeRings
+[2026-04-01 17:29:14.826] RadarControl.OnPaint[23] DrawGrid
+[2026-04-01 17:29:14.826] RadarControl.OnPaint[23] DrawTracks
+[2026-04-01 17:29:14.826] RadarControl.OnPaint[23] DrawTargets begin
+[2026-04-01 17:29:14.826] RadarControl.OnPaint[23] DrawTargets end
+[2026-04-01 17:29:14.828] RadarControl.OnPaint[23] DrawCenter
+[2026-04-01 17:29:14.828] RadarControl.OnPaint[23] EXIT ok
+[2026-04-01 17:29:14.858] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:14.870] RadarControl.OnPaint[24] ENTER width=743 height=743 targets=2 range=4,3
+[2026-04-01 17:29:14.888] RadarControl.OnPaint[24] DrawRangeRings
+[2026-04-01 17:29:14.889] RadarControl.OnPaint[24] DrawGrid
+[2026-04-01 17:29:14.890] RadarControl.OnPaint[24] DrawTracks
+[2026-04-01 17:29:14.890] RadarControl.OnPaint[24] DrawTargets begin
+[2026-04-01 17:29:14.891] RadarControl.OnPaint[24] DrawTargets end
+[2026-04-01 17:29:14.891] RadarControl.OnPaint[24] DrawCenter
+[2026-04-01 17:29:14.891] RadarControl.OnPaint[24] EXIT ok
+[2026-04-01 17:29:14.921] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:14.934] RadarControl.OnPaint[25] ENTER width=743 height=743 targets=2 range=3,4
+[2026-04-01 17:29:14.951] RadarControl.OnPaint[25] DrawRangeRings
+[2026-04-01 17:29:14.952] RadarControl.OnPaint[25] DrawGrid
+[2026-04-01 17:29:14.953] RadarControl.OnPaint[25] DrawTracks
+[2026-04-01 17:29:14.953] RadarControl.OnPaint[25] DrawTargets begin
+[2026-04-01 17:29:14.954] RadarControl.OnPaint[25] DrawTargets end
+[2026-04-01 17:29:14.954] RadarControl.OnPaint[25] DrawCenter
+[2026-04-01 17:29:14.954] RadarControl.OnPaint[25] EXIT ok
+[2026-04-01 17:29:15.427] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:15.435] RadarControl.OnPaint[26] ENTER width=743 height=743 targets=2 range=2,7
+[2026-04-01 17:29:15.449] RadarControl.OnPaint[26] DrawRangeRings
+[2026-04-01 17:29:15.450] RadarControl.OnPaint[26] DrawGrid
+[2026-04-01 17:29:15.450] RadarControl.OnPaint[26] DrawTracks
+[2026-04-01 17:29:15.451] RadarControl.OnPaint[26] DrawTargets begin
+[2026-04-01 17:29:15.451] RadarControl.OnPaint[26] DrawTargets end
+[2026-04-01 17:29:15.451] RadarControl.OnPaint[26] DrawCenter
+[2026-04-01 17:29:15.452] RadarControl.OnPaint[26] EXIT ok
+[2026-04-01 17:29:15.486] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:15.495] RadarControl.OnPaint[27] ENTER width=743 height=743 targets=2 range=2,2
+[2026-04-01 17:29:15.507] RadarControl.OnPaint[27] DrawRangeRings
+[2026-04-01 17:29:15.508] RadarControl.OnPaint[27] DrawGrid
+[2026-04-01 17:29:15.509] RadarControl.OnPaint[27] DrawTracks
+[2026-04-01 17:29:15.509] RadarControl.OnPaint[27] DrawTargets begin
+[2026-04-01 17:29:15.509] RadarControl.OnPaint[27] DrawTargets end
+[2026-04-01 17:29:15.510] RadarControl.OnPaint[27] DrawCenter
+[2026-04-01 17:29:15.510] RadarControl.OnPaint[27] EXIT ok
+[2026-04-01 17:29:15.977] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:15.986] RadarControl.OnPaint[28] ENTER width=743 height=743 targets=2 range=2,2
+[2026-04-01 17:29:15.999] RadarControl.OnPaint[28] DrawRangeRings
+[2026-04-01 17:29:16.000] RadarControl.OnPaint[28] DrawGrid
+[2026-04-01 17:29:16.000] RadarControl.OnPaint[28] DrawTracks
+[2026-04-01 17:29:16.001] RadarControl.OnPaint[28] DrawTargets begin
+[2026-04-01 17:29:16.001] RadarControl.OnPaint[28] DrawTargets end
+[2026-04-01 17:29:16.001] RadarControl.OnPaint[28] DrawCenter
+[2026-04-01 17:29:16.002] RadarControl.OnPaint[28] EXIT ok
+[2026-04-01 17:29:16.968] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:16.976] RadarControl.OnPaint[29] ENTER width=743 height=743 targets=2 range=2,7
+[2026-04-01 17:29:16.991] RadarControl.OnPaint[29] DrawRangeRings
+[2026-04-01 17:29:16.992] RadarControl.OnPaint[29] DrawGrid
+[2026-04-01 17:29:16.992] RadarControl.OnPaint[29] DrawTracks
+[2026-04-01 17:29:16.992] RadarControl.OnPaint[29] DrawTargets begin
+[2026-04-01 17:29:16.993] RadarControl.OnPaint[29] DrawTargets end
+[2026-04-01 17:29:16.993] RadarControl.OnPaint[29] DrawCenter
+[2026-04-01 17:29:16.993] RadarControl.OnPaint[29] EXIT ok
+[2026-04-01 17:29:17.022] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:17.031] RadarControl.OnPaint[30] ENTER width=743 height=743 targets=2 range=3,4
+[2026-04-01 17:29:17.045] RadarControl.OnPaint[30] DrawRangeRings
+[2026-04-01 17:29:17.046] RadarControl.OnPaint[30] DrawGrid
+[2026-04-01 17:29:17.046] RadarControl.OnPaint[30] DrawTracks
+[2026-04-01 17:29:17.048] RadarControl.OnPaint[30] DrawTargets begin
+[2026-04-01 17:29:17.048] RadarControl.OnPaint[30] DrawTargets end
+[2026-04-01 17:29:17.048] RadarControl.OnPaint[30] DrawCenter
+[2026-04-01 17:29:17.049] RadarControl.OnPaint[30] EXIT ok
+[2026-04-01 17:29:17.050] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:17.060] RadarControl.OnPaint[31] ENTER width=743 height=743 targets=2 range=4,3
+[2026-04-01 17:29:17.075] RadarControl.OnPaint[31] DrawRangeRings
+[2026-04-01 17:29:17.077] RadarControl.OnPaint[31] DrawGrid
+[2026-04-01 17:29:17.077] RadarControl.OnPaint[31] DrawTracks
+[2026-04-01 17:29:17.077] RadarControl.OnPaint[31] DrawTargets begin
+[2026-04-01 17:29:17.078] RadarControl.OnPaint[31] DrawTargets end
+[2026-04-01 17:29:17.078] RadarControl.OnPaint[31] DrawCenter
+[2026-04-01 17:29:17.079] RadarControl.OnPaint[31] EXIT ok
+[2026-04-01 17:29:17.122] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:17.137] RadarControl.OnPaint[32] ENTER width=743 height=743 targets=2 range=4,3
+[2026-04-01 17:29:17.152] RadarControl.OnPaint[32] DrawRangeRings
+[2026-04-01 17:29:17.153] RadarControl.OnPaint[32] DrawGrid
+[2026-04-01 17:29:17.153] RadarControl.OnPaint[32] DrawTracks
+[2026-04-01 17:29:17.153] RadarControl.OnPaint[32] DrawTargets begin
+[2026-04-01 17:29:17.154] RadarControl.OnPaint[32] DrawTargets end
+[2026-04-01 17:29:17.154] RadarControl.OnPaint[32] DrawCenter
+[2026-04-01 17:29:17.154] RadarControl.OnPaint[32] EXIT ok
+[2026-04-01 17:29:17.472] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:17.486] RadarControl.OnPaint[33] ENTER width=743 height=743 targets=2 range=5,3
+[2026-04-01 17:29:17.499] RadarControl.OnPaint[33] DrawRangeRings
+[2026-04-01 17:29:17.500] RadarControl.OnPaint[33] DrawGrid
+[2026-04-01 17:29:17.500] RadarControl.OnPaint[33] DrawTracks
+[2026-04-01 17:29:17.500] RadarControl.OnPaint[33] DrawTargets begin
+[2026-04-01 17:29:17.501] RadarControl.OnPaint[33] DrawTargets end
+[2026-04-01 17:29:17.501] RadarControl.OnPaint[33] DrawCenter
+[2026-04-01 17:29:17.501] RadarControl.OnPaint[33] EXIT ok
+[2026-04-01 17:29:17.529] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:17.537] RadarControl.OnPaint[34] ENTER width=743 height=743 targets=2 range=6,7
+[2026-04-01 17:29:17.551] RadarControl.OnPaint[34] DrawRangeRings
+[2026-04-01 17:29:17.552] RadarControl.OnPaint[34] DrawGrid
+[2026-04-01 17:29:17.552] RadarControl.OnPaint[34] DrawTracks
+[2026-04-01 17:29:17.553] RadarControl.OnPaint[34] DrawTargets begin
+[2026-04-01 17:29:17.553] RadarControl.OnPaint[34] DrawTargets end
+[2026-04-01 17:29:17.553] RadarControl.OnPaint[34] DrawCenter
+[2026-04-01 17:29:17.554] RadarControl.OnPaint[34] EXIT ok
+[2026-04-01 17:29:17.555] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:17.566] RadarControl.OnPaint[35] ENTER width=743 height=743 targets=2 range=8,3
+[2026-04-01 17:29:17.581] RadarControl.OnPaint[35] DrawRangeRings
+[2026-04-01 17:29:17.582] RadarControl.OnPaint[35] DrawGrid
+[2026-04-01 17:29:17.583] RadarControl.OnPaint[35] DrawTracks
+[2026-04-01 17:29:17.583] RadarControl.OnPaint[35] DrawTargets begin
+[2026-04-01 17:29:17.583] RadarControl.OnPaint[35] DrawTargets end
+[2026-04-01 17:29:17.583] RadarControl.OnPaint[35] DrawCenter
+[2026-04-01 17:29:17.584] RadarControl.OnPaint[35] EXIT ok
+[2026-04-01 17:29:17.975] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:17.983] RadarControl.OnPaint[36] ENTER width=743 height=743 targets=2 range=10,4
+[2026-04-01 17:29:17.998] RadarControl.OnPaint[36] DrawRangeRings
+[2026-04-01 17:29:17.998] RadarControl.OnPaint[36] DrawGrid
+[2026-04-01 17:29:17.999] RadarControl.OnPaint[36] DrawTracks
+[2026-04-01 17:29:17.999] RadarControl.OnPaint[36] DrawTargets begin
+[2026-04-01 17:29:18.000] RadarControl.OnPaint[36] DrawTargets end
+[2026-04-01 17:29:18.000] RadarControl.OnPaint[36] DrawCenter
+[2026-04-01 17:29:18.000] RadarControl.OnPaint[36] EXIT ok
+[2026-04-01 17:29:18.028] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:18.036] RadarControl.OnPaint[37] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 17:29:18.051] RadarControl.OnPaint[37] DrawRangeRings
+[2026-04-01 17:29:18.052] RadarControl.OnPaint[37] DrawGrid
+[2026-04-01 17:29:18.053] RadarControl.OnPaint[37] DrawTracks
+[2026-04-01 17:29:18.053] RadarControl.OnPaint[37] DrawTargets begin
+[2026-04-01 17:29:18.053] RadarControl.OnPaint[37] DrawTargets end
+[2026-04-01 17:29:18.053] RadarControl.OnPaint[37] DrawCenter
+[2026-04-01 17:29:18.054] RadarControl.OnPaint[37] EXIT ok
+[2026-04-01 17:29:18.055] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:18.063] RadarControl.OnPaint[38] ENTER width=743 height=743 targets=2 range=16,3
+[2026-04-01 17:29:18.079] RadarControl.OnPaint[38] DrawRangeRings
+[2026-04-01 17:29:18.080] RadarControl.OnPaint[38] DrawGrid
+[2026-04-01 17:29:18.081] RadarControl.OnPaint[38] DrawTracks
+[2026-04-01 17:29:18.081] RadarControl.OnPaint[38] DrawTargets begin
+[2026-04-01 17:29:18.082] RadarControl.OnPaint[38] DrawTargets end
+[2026-04-01 17:29:18.082] RadarControl.OnPaint[38] DrawCenter
+[2026-04-01 17:29:18.082] RadarControl.OnPaint[38] EXIT ok
+[2026-04-01 17:29:18.479] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:18.521] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:18.529] RadarControl.OnPaint[39] ENTER width=743 height=743 targets=2 range=20,3
+[2026-04-01 17:29:18.542] RadarControl.OnPaint[39] DrawRangeRings
+[2026-04-01 17:29:18.544] RadarControl.OnPaint[39] DrawGrid
+[2026-04-01 17:29:18.544] RadarControl.OnPaint[39] DrawTracks
+[2026-04-01 17:29:18.544] RadarControl.OnPaint[39] DrawTargets begin
+[2026-04-01 17:29:18.545] RadarControl.OnPaint[39] DrawTargets end
+[2026-04-01 17:29:18.545] RadarControl.OnPaint[39] DrawCenter
+[2026-04-01 17:29:18.545] RadarControl.OnPaint[39] EXIT ok
+[2026-04-01 17:29:18.574] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:18.584] RadarControl.OnPaint[40] ENTER width=743 height=743 targets=2 range=25,4
+[2026-04-01 17:29:18.694] RadarControl.OnPaint[40] DrawRangeRings
+[2026-04-01 17:29:18.695] RadarControl.OnPaint[40] DrawGrid
+[2026-04-01 17:29:18.696] RadarControl.OnPaint[40] DrawTracks
+[2026-04-01 17:29:18.696] RadarControl.OnPaint[40] DrawTargets begin
+[2026-04-01 17:29:18.696] RadarControl.OnPaint[40] DrawTargets end
+[2026-04-01 17:29:18.697] RadarControl.OnPaint[40] DrawCenter
+[2026-04-01 17:29:18.697] RadarControl.OnPaint[40] EXIT ok
+[2026-04-01 17:29:19.020] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:19.030] RadarControl.OnPaint[41] ENTER width=743 height=743 targets=2 range=31,7
+[2026-04-01 17:29:19.045] RadarControl.OnPaint[41] DrawRangeRings
+[2026-04-01 17:29:19.046] RadarControl.OnPaint[41] DrawGrid
+[2026-04-01 17:29:19.047] RadarControl.OnPaint[41] DrawTracks
+[2026-04-01 17:29:19.047] RadarControl.OnPaint[41] DrawTargets begin
+[2026-04-01 17:29:19.047] RadarControl.OnPaint[41] DrawTargets end
+[2026-04-01 17:29:19.047] RadarControl.OnPaint[41] DrawCenter
+[2026-04-01 17:29:19.049] RadarControl.OnPaint[41] EXIT ok
+[2026-04-01 17:29:19.074] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:19.083] RadarControl.OnPaint[42] ENTER width=743 height=743 targets=2 range=39,7
+[2026-04-01 17:29:19.096] RadarControl.OnPaint[42] DrawRangeRings
+[2026-04-01 17:29:19.098] RadarControl.OnPaint[42] DrawGrid
+[2026-04-01 17:29:19.099] RadarControl.OnPaint[42] DrawTracks
+[2026-04-01 17:29:19.099] RadarControl.OnPaint[42] DrawTargets begin
+[2026-04-01 17:29:19.099] RadarControl.OnPaint[42] DrawTargets end
+[2026-04-01 17:29:19.100] RadarControl.OnPaint[42] DrawCenter
+[2026-04-01 17:29:19.100] RadarControl.OnPaint[42] EXIT ok
+[2026-04-01 17:29:19.101] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:19.112] RadarControl.OnPaint[43] ENTER width=743 height=743 targets=2 range=49,6
+[2026-04-01 17:29:19.165] RadarControl.OnPaint[43] DrawRangeRings
+[2026-04-01 17:29:19.166] RadarControl.OnPaint[43] DrawGrid
+[2026-04-01 17:29:19.168] RadarControl.OnPaint[43] DrawTracks
+[2026-04-01 17:29:19.168] RadarControl.OnPaint[43] DrawTargets begin
+[2026-04-01 17:29:19.168] RadarControl.OnPaint[43] DrawTargets end
+[2026-04-01 17:29:19.169] RadarControl.OnPaint[43] DrawCenter
+[2026-04-01 17:29:19.169] RadarControl.OnPaint[43] EXIT ok
+[2026-04-01 17:29:19.729] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:19.739] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:19.748] RadarControl.OnPaint[44] ENTER width=743 height=743 targets=2 range=62,0
+[2026-04-01 17:29:19.762] RadarControl.OnPaint[44] DrawRangeRings
+[2026-04-01 17:29:19.764] RadarControl.OnPaint[44] DrawGrid
+[2026-04-01 17:29:19.764] RadarControl.OnPaint[44] DrawTracks
+[2026-04-01 17:29:19.764] RadarControl.OnPaint[44] DrawTargets begin
+[2026-04-01 17:29:19.765] RadarControl.OnPaint[44] DrawTargets end
+[2026-04-01 17:29:19.765] RadarControl.OnPaint[44] DrawCenter
+[2026-04-01 17:29:19.765] RadarControl.OnPaint[44] EXIT ok
+[2026-04-01 17:29:19.795] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:19.804] RadarControl.OnPaint[45] ENTER width=743 height=743 targets=2 range=77,5
+[2026-04-01 17:29:19.818] RadarControl.OnPaint[45] DrawRangeRings
+[2026-04-01 17:29:19.820] RadarControl.OnPaint[45] DrawGrid
+[2026-04-01 17:29:19.822] RadarControl.OnPaint[45] DrawTracks
+[2026-04-01 17:29:19.823] RadarControl.OnPaint[45] DrawTargets begin
+[2026-04-01 17:29:19.823] RadarControl.OnPaint[45] DrawTargets end
+[2026-04-01 17:29:19.823] RadarControl.OnPaint[45] DrawCenter
+[2026-04-01 17:29:19.824] RadarControl.OnPaint[45] EXIT ok
+[2026-04-01 17:29:19.853] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:19.864] RadarControl.OnPaint[46] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:19.901] RadarControl.OnPaint[46] DrawRangeRings
+[2026-04-01 17:29:19.902] RadarControl.OnPaint[46] DrawGrid
+[2026-04-01 17:29:19.902] RadarControl.OnPaint[46] DrawTracks
+[2026-04-01 17:29:19.903] RadarControl.OnPaint[46] DrawTargets begin
+[2026-04-01 17:29:19.903] RadarControl.OnPaint[46] DrawTargets end
+[2026-04-01 17:29:19.903] RadarControl.OnPaint[46] DrawCenter
+[2026-04-01 17:29:19.904] RadarControl.OnPaint[46] EXIT ok
+[2026-04-01 17:29:20.725] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:20.736] RadarControl.OnPaint[47] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:20.750] RadarControl.OnPaint[47] DrawRangeRings
+[2026-04-01 17:29:20.751] RadarControl.OnPaint[47] DrawGrid
+[2026-04-01 17:29:20.752] RadarControl.OnPaint[47] DrawTracks
+[2026-04-01 17:29:20.752] RadarControl.OnPaint[47] DrawTargets begin
+[2026-04-01 17:29:20.752] RadarControl.OnPaint[47] DrawTargets end
+[2026-04-01 17:29:20.752] RadarControl.OnPaint[47] DrawCenter
+[2026-04-01 17:29:20.753] RadarControl.OnPaint[47] EXIT ok
+[2026-04-01 17:29:21.114] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:21.122] RadarControl.OnPaint[48] ENTER width=743 height=743 targets=2 range=77,5
+[2026-04-01 17:29:21.136] RadarControl.OnPaint[48] DrawRangeRings
+[2026-04-01 17:29:21.137] RadarControl.OnPaint[48] DrawGrid
+[2026-04-01 17:29:21.138] RadarControl.OnPaint[48] DrawTracks
+[2026-04-01 17:29:21.138] RadarControl.OnPaint[48] DrawTargets begin
+[2026-04-01 17:29:21.139] RadarControl.OnPaint[48] DrawTargets end
+[2026-04-01 17:29:21.139] RadarControl.OnPaint[48] DrawCenter
+[2026-04-01 17:29:21.139] RadarControl.OnPaint[48] EXIT ok
+[2026-04-01 17:29:21.214] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:21.227] RadarControl.OnPaint[49] ENTER width=743 height=743 targets=2 range=62,0
+[2026-04-01 17:29:21.242] RadarControl.OnPaint[49] DrawRangeRings
+[2026-04-01 17:29:21.243] RadarControl.OnPaint[49] DrawGrid
+[2026-04-01 17:29:21.244] RadarControl.OnPaint[49] DrawTracks
+[2026-04-01 17:29:21.244] RadarControl.OnPaint[49] DrawTargets begin
+[2026-04-01 17:29:21.244] RadarControl.OnPaint[49] DrawTargets end
+[2026-04-01 17:29:21.244] RadarControl.OnPaint[49] DrawCenter
+[2026-04-01 17:29:21.245] RadarControl.OnPaint[49] EXIT ok
+[2026-04-01 17:29:21.975] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:21.984] RadarControl.OnPaint[50] ENTER width=743 height=743 targets=2 range=62,0
+[2026-04-01 17:29:21.997] RadarControl.OnPaint[50] DrawRangeRings
+[2026-04-01 17:29:21.998] RadarControl.OnPaint[50] DrawGrid
+[2026-04-01 17:29:21.999] RadarControl.OnPaint[50] DrawTracks
+[2026-04-01 17:29:21.999] RadarControl.OnPaint[50] DrawTargets begin
+[2026-04-01 17:29:22.000] RadarControl.OnPaint[50] DrawTargets end
+[2026-04-01 17:29:22.000] RadarControl.OnPaint[50] DrawCenter
+[2026-04-01 17:29:22.000] RadarControl.OnPaint[50] EXIT ok
+[2026-04-01 17:29:23.228] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:23.239] RadarControl.OnPaint[51] ENTER width=743 height=743 targets=2 range=62,0
+[2026-04-01 17:29:23.252] RadarControl.OnPaint[51] DrawRangeRings
+[2026-04-01 17:29:23.253] RadarControl.OnPaint[51] DrawGrid
+[2026-04-01 17:29:23.254] RadarControl.OnPaint[51] DrawTracks
+[2026-04-01 17:29:23.254] RadarControl.OnPaint[51] DrawTargets begin
+[2026-04-01 17:29:23.254] RadarControl.OnPaint[51] DrawTargets end
+[2026-04-01 17:29:23.254] RadarControl.OnPaint[51] DrawCenter
+[2026-04-01 17:29:23.255] RadarControl.OnPaint[51] EXIT ok
+[2026-04-01 17:29:24.478] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:24.487] RadarControl.OnPaint[52] ENTER width=743 height=743 targets=2 range=62,0
+[2026-04-01 17:29:24.502] RadarControl.OnPaint[52] DrawRangeRings
+[2026-04-01 17:29:24.503] RadarControl.OnPaint[52] DrawGrid
+[2026-04-01 17:29:24.503] RadarControl.OnPaint[52] DrawTracks
+[2026-04-01 17:29:24.503] RadarControl.OnPaint[52] DrawTargets begin
+[2026-04-01 17:29:24.504] RadarControl.OnPaint[52] DrawTargets end
+[2026-04-01 17:29:24.504] RadarControl.OnPaint[52] DrawCenter
+[2026-04-01 17:29:24.504] RadarControl.OnPaint[52] EXIT ok
+[2026-04-01 17:29:25.332] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:25.345] RadarControl.OnPaint[53] ENTER width=743 height=743 targets=2 range=77,5
+[2026-04-01 17:29:25.360] RadarControl.OnPaint[53] DrawRangeRings
+[2026-04-01 17:29:25.361] RadarControl.OnPaint[53] DrawGrid
+[2026-04-01 17:29:25.361] RadarControl.OnPaint[53] DrawTracks
+[2026-04-01 17:29:25.361] RadarControl.OnPaint[53] DrawTargets begin
+[2026-04-01 17:29:25.361] RadarControl.OnPaint[53] DrawTargets end
+[2026-04-01 17:29:25.362] RadarControl.OnPaint[53] DrawCenter
+[2026-04-01 17:29:25.362] RadarControl.OnPaint[53] EXIT ok
+[2026-04-01 17:29:25.410] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:25.420] RadarControl.OnPaint[54] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:25.434] RadarControl.OnPaint[54] DrawRangeRings
+[2026-04-01 17:29:25.435] RadarControl.OnPaint[54] DrawGrid
+[2026-04-01 17:29:25.436] RadarControl.OnPaint[54] DrawTracks
+[2026-04-01 17:29:25.436] RadarControl.OnPaint[54] DrawTargets begin
+[2026-04-01 17:29:25.436] RadarControl.OnPaint[54] DrawTargets end
+[2026-04-01 17:29:25.437] RadarControl.OnPaint[54] DrawCenter
+[2026-04-01 17:29:25.437] RadarControl.OnPaint[54] EXIT ok
+[2026-04-01 17:29:25.727] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:25.738] RadarControl.OnPaint[55] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:25.752] RadarControl.OnPaint[55] DrawRangeRings
+[2026-04-01 17:29:25.754] RadarControl.OnPaint[55] DrawGrid
+[2026-04-01 17:29:25.754] RadarControl.OnPaint[55] DrawTracks
+[2026-04-01 17:29:25.754] RadarControl.OnPaint[55] DrawTargets begin
+[2026-04-01 17:29:25.755] RadarControl.OnPaint[55] DrawTargets end
+[2026-04-01 17:29:25.755] RadarControl.OnPaint[55] DrawCenter
+[2026-04-01 17:29:25.755] RadarControl.OnPaint[55] EXIT ok
+[2026-04-01 17:29:26.724] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:26.734] RadarControl.OnPaint[56] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:26.748] RadarControl.OnPaint[56] DrawRangeRings
+[2026-04-01 17:29:26.748] RadarControl.OnPaint[56] DrawGrid
+[2026-04-01 17:29:26.749] RadarControl.OnPaint[56] DrawTracks
+[2026-04-01 17:29:26.749] RadarControl.OnPaint[56] DrawTargets begin
+[2026-04-01 17:29:26.750] RadarControl.OnPaint[56] DrawTargets end
+[2026-04-01 17:29:26.750] RadarControl.OnPaint[56] DrawCenter
+[2026-04-01 17:29:26.750] RadarControl.OnPaint[56] EXIT ok
+[2026-04-01 17:29:27.975] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:27.984] RadarControl.OnPaint[57] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:27.998] RadarControl.OnPaint[57] DrawRangeRings
+[2026-04-01 17:29:27.999] RadarControl.OnPaint[57] DrawGrid
+[2026-04-01 17:29:27.999] RadarControl.OnPaint[57] DrawTracks
+[2026-04-01 17:29:27.999] RadarControl.OnPaint[57] DrawTargets begin
+[2026-04-01 17:29:28.000] RadarControl.OnPaint[57] DrawTargets end
+[2026-04-01 17:29:28.000] RadarControl.OnPaint[57] DrawCenter
+[2026-04-01 17:29:28.000] RadarControl.OnPaint[57] EXIT ok
+[2026-04-01 17:29:29.223] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:29.233] RadarControl.OnPaint[58] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:29.247] RadarControl.OnPaint[58] DrawRangeRings
+[2026-04-01 17:29:29.248] RadarControl.OnPaint[58] DrawGrid
+[2026-04-01 17:29:29.248] RadarControl.OnPaint[58] DrawTracks
+[2026-04-01 17:29:29.248] RadarControl.OnPaint[58] DrawTargets begin
+[2026-04-01 17:29:29.249] RadarControl.OnPaint[58] DrawTargets end
+[2026-04-01 17:29:29.249] RadarControl.OnPaint[58] DrawCenter
+[2026-04-01 17:29:29.249] RadarControl.OnPaint[58] EXIT ok
+[2026-04-01 17:29:30.474] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:30.484] RadarControl.OnPaint[59] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:30.497] RadarControl.OnPaint[59] DrawRangeRings
+[2026-04-01 17:29:30.499] RadarControl.OnPaint[59] DrawGrid
+[2026-04-01 17:29:30.499] RadarControl.OnPaint[59] DrawTracks
+[2026-04-01 17:29:30.500] RadarControl.OnPaint[59] DrawTargets begin
+[2026-04-01 17:29:30.500] RadarControl.OnPaint[59] DrawTargets end
+[2026-04-01 17:29:30.500] RadarControl.OnPaint[59] DrawCenter
+[2026-04-01 17:29:30.501] RadarControl.OnPaint[59] EXIT ok
+[2026-04-01 17:29:31.727] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:31.736] RadarControl.OnPaint[60] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:31.749] RadarControl.OnPaint[60] DrawRangeRings
+[2026-04-01 17:29:31.750] RadarControl.OnPaint[60] DrawGrid
+[2026-04-01 17:29:31.751] RadarControl.OnPaint[60] DrawTracks
+[2026-04-01 17:29:31.751] RadarControl.OnPaint[60] DrawTargets begin
+[2026-04-01 17:29:31.751] RadarControl.OnPaint[60] DrawTargets end
+[2026-04-01 17:29:31.751] RadarControl.OnPaint[60] DrawCenter
+[2026-04-01 17:29:31.752] RadarControl.OnPaint[60] EXIT ok
+[2026-04-01 17:29:32.723] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:32.733] RadarControl.OnPaint[61] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:32.747] RadarControl.OnPaint[61] DrawRangeRings
+[2026-04-01 17:29:32.748] RadarControl.OnPaint[61] DrawGrid
+[2026-04-01 17:29:32.748] RadarControl.OnPaint[61] DrawTracks
+[2026-04-01 17:29:32.748] RadarControl.OnPaint[61] DrawTargets begin
+[2026-04-01 17:29:32.749] RadarControl.OnPaint[61] DrawTargets end
+[2026-04-01 17:29:32.749] RadarControl.OnPaint[61] DrawCenter
+[2026-04-01 17:29:32.749] RadarControl.OnPaint[61] EXIT ok
+[2026-04-01 17:29:33.973] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:33.984] RadarControl.OnPaint[62] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:33.997] RadarControl.OnPaint[62] DrawRangeRings
+[2026-04-01 17:29:33.998] RadarControl.OnPaint[62] DrawGrid
+[2026-04-01 17:29:33.998] RadarControl.OnPaint[62] DrawTracks
+[2026-04-01 17:29:33.998] RadarControl.OnPaint[62] DrawTargets begin
+[2026-04-01 17:29:33.999] RadarControl.OnPaint[62] DrawTargets end
+[2026-04-01 17:29:33.999] RadarControl.OnPaint[62] DrawCenter
+[2026-04-01 17:29:34.000] RadarControl.OnPaint[62] EXIT ok
+[2026-04-01 17:29:35.226] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:35.241] RadarControl.OnPaint[63] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:35.255] RadarControl.OnPaint[63] DrawRangeRings
+[2026-04-01 17:29:35.256] RadarControl.OnPaint[63] DrawGrid
+[2026-04-01 17:29:35.256] RadarControl.OnPaint[63] DrawTracks
+[2026-04-01 17:29:35.257] RadarControl.OnPaint[63] DrawTargets begin
+[2026-04-01 17:29:35.257] RadarControl.OnPaint[63] DrawTargets end
+[2026-04-01 17:29:35.257] RadarControl.OnPaint[63] DrawCenter
+[2026-04-01 17:29:35.258] RadarControl.OnPaint[63] EXIT ok
+[2026-04-01 17:29:36.475] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:36.486] RadarControl.OnPaint[64] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:36.499] RadarControl.OnPaint[64] DrawRangeRings
+[2026-04-01 17:29:36.500] RadarControl.OnPaint[64] DrawGrid
+[2026-04-01 17:29:36.501] RadarControl.OnPaint[64] DrawTracks
+[2026-04-01 17:29:36.501] RadarControl.OnPaint[64] DrawTargets begin
+[2026-04-01 17:29:36.502] RadarControl.OnPaint[64] DrawTargets end
+[2026-04-01 17:29:36.502] RadarControl.OnPaint[64] DrawCenter
+[2026-04-01 17:29:36.502] RadarControl.OnPaint[64] EXIT ok
+[2026-04-01 17:29:37.725] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:37.735] RadarControl.OnPaint[65] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:37.749] RadarControl.OnPaint[65] DrawRangeRings
+[2026-04-01 17:29:37.750] RadarControl.OnPaint[65] DrawGrid
+[2026-04-01 17:29:37.750] RadarControl.OnPaint[65] DrawTracks
+[2026-04-01 17:29:37.750] RadarControl.OnPaint[65] DrawTargets begin
+[2026-04-01 17:29:37.751] RadarControl.OnPaint[65] DrawTargets end
+[2026-04-01 17:29:37.751] RadarControl.OnPaint[65] DrawCenter
+[2026-04-01 17:29:37.751] RadarControl.OnPaint[65] EXIT ok
+[2026-04-01 17:29:38.722] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:38.733] RadarControl.OnPaint[66] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:38.746] RadarControl.OnPaint[66] DrawRangeRings
+[2026-04-01 17:29:38.747] RadarControl.OnPaint[66] DrawGrid
+[2026-04-01 17:29:38.747] RadarControl.OnPaint[66] DrawTracks
+[2026-04-01 17:29:38.747] RadarControl.OnPaint[66] DrawTargets begin
+[2026-04-01 17:29:38.748] RadarControl.OnPaint[66] DrawTargets end
+[2026-04-01 17:29:38.748] RadarControl.OnPaint[66] DrawCenter
+[2026-04-01 17:29:38.748] RadarControl.OnPaint[66] EXIT ok
+[2026-04-01 17:29:39.972] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:39.981] RadarControl.OnPaint[67] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:39.994] RadarControl.OnPaint[67] DrawRangeRings
+[2026-04-01 17:29:39.995] RadarControl.OnPaint[67] DrawGrid
+[2026-04-01 17:29:39.996] RadarControl.OnPaint[67] DrawTracks
+[2026-04-01 17:29:39.996] RadarControl.OnPaint[67] DrawTargets begin
+[2026-04-01 17:29:39.996] RadarControl.OnPaint[67] DrawTargets end
+[2026-04-01 17:29:39.996] RadarControl.OnPaint[67] DrawCenter
+[2026-04-01 17:29:39.997] RadarControl.OnPaint[67] EXIT ok
+[2026-04-01 17:29:41.225] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:41.235] RadarControl.OnPaint[68] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:41.248] RadarControl.OnPaint[68] DrawRangeRings
+[2026-04-01 17:29:41.249] RadarControl.OnPaint[68] DrawGrid
+[2026-04-01 17:29:41.250] RadarControl.OnPaint[68] DrawTracks
+[2026-04-01 17:29:41.250] RadarControl.OnPaint[68] DrawTargets begin
+[2026-04-01 17:29:41.250] RadarControl.OnPaint[68] DrawTargets end
+[2026-04-01 17:29:41.250] RadarControl.OnPaint[68] DrawCenter
+[2026-04-01 17:29:41.251] RadarControl.OnPaint[68] EXIT ok
+[2026-04-01 17:29:42.470] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:42.479] RadarControl.OnPaint[69] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:42.493] RadarControl.OnPaint[69] DrawRangeRings
+[2026-04-01 17:29:42.494] RadarControl.OnPaint[69] DrawGrid
+[2026-04-01 17:29:42.495] RadarControl.OnPaint[69] DrawTracks
+[2026-04-01 17:29:42.495] RadarControl.OnPaint[69] DrawTargets begin
+[2026-04-01 17:29:42.495] RadarControl.OnPaint[69] DrawTargets end
+[2026-04-01 17:29:42.495] RadarControl.OnPaint[69] DrawCenter
+[2026-04-01 17:29:42.496] RadarControl.OnPaint[69] EXIT ok
+[2026-04-01 17:29:43.723] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:43.734] RadarControl.OnPaint[70] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:43.747] RadarControl.OnPaint[70] DrawRangeRings
+[2026-04-01 17:29:43.748] RadarControl.OnPaint[70] DrawGrid
+[2026-04-01 17:29:43.749] RadarControl.OnPaint[70] DrawTracks
+[2026-04-01 17:29:43.749] RadarControl.OnPaint[70] DrawTargets begin
+[2026-04-01 17:29:43.749] RadarControl.OnPaint[70] DrawTargets end
+[2026-04-01 17:29:43.749] RadarControl.OnPaint[70] DrawCenter
+[2026-04-01 17:29:43.750] RadarControl.OnPaint[70] EXIT ok
+[2026-04-01 17:29:44.973] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:44.983] RadarControl.OnPaint[71] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:44.998] RadarControl.OnPaint[71] DrawRangeRings
+[2026-04-01 17:29:44.998] RadarControl.OnPaint[71] DrawGrid
+[2026-04-01 17:29:44.999] RadarControl.OnPaint[71] DrawTracks
+[2026-04-01 17:29:44.999] RadarControl.OnPaint[71] DrawTargets begin
+[2026-04-01 17:29:44.999] RadarControl.OnPaint[71] DrawTargets end
+[2026-04-01 17:29:45.000] RadarControl.OnPaint[71] DrawCenter
+[2026-04-01 17:29:45.000] RadarControl.OnPaint[71] EXIT ok
+[2026-04-01 17:29:45.971] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:45.980] RadarControl.OnPaint[72] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:45.994] RadarControl.OnPaint[72] DrawRangeRings
+[2026-04-01 17:29:45.995] RadarControl.OnPaint[72] DrawGrid
+[2026-04-01 17:29:45.995] RadarControl.OnPaint[72] DrawTracks
+[2026-04-01 17:29:45.995] RadarControl.OnPaint[72] DrawTargets begin
+[2026-04-01 17:29:45.996] RadarControl.OnPaint[72] DrawTargets end
+[2026-04-01 17:29:45.996] RadarControl.OnPaint[72] DrawCenter
+[2026-04-01 17:29:45.996] RadarControl.OnPaint[72] EXIT ok
+[2026-04-01 17:29:47.224] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 17:29:47.235] RadarControl.OnPaint[73] ENTER width=743 height=743 targets=2 range=96,9
+[2026-04-01 17:29:47.253] RadarControl.OnPaint[73] DrawRangeRings
+[2026-04-01 17:29:47.254] RadarControl.OnPaint[73] DrawGrid
+[2026-04-01 17:29:47.254] RadarControl.OnPaint[73] DrawTracks
+[2026-04-01 17:29:47.255] RadarControl.OnPaint[73] DrawTargets begin
+[2026-04-01 17:29:47.255] RadarControl.OnPaint[73] DrawTargets end
+[2026-04-01 17:29:47.255] RadarControl.OnPaint[73] DrawCenter
+[2026-04-01 17:29:47.256] RadarControl.OnPaint[73] EXIT ok
+[2026-04-01 17:29:48.144] Program.Main: Application.Run returned normally
+[2026-04-01 21:06:03.394] ========== APP START ==========
+[2026-04-01 21:06:03.435] Program.Main: before Application.Run
+[2026-04-01 21:06:04.046] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 21:06:04.059] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 21:06:04.067] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 21:06:04.196] RadarControl.OnPaint[1] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 21:06:04.232] RadarControl.OnPaint[1] DrawRangeRings
+[2026-04-01 21:06:04.234] RadarControl.OnPaint[1] DrawGrid
+[2026-04-01 21:06:04.236] RadarControl.OnPaint[1] DrawTracks
+[2026-04-01 21:06:04.237] RadarControl.OnPaint[1] DrawTargets begin
+[2026-04-01 21:06:04.241] RadarControl.OnPaint[1] DrawTargets end
+[2026-04-01 21:06:04.241] RadarControl.OnPaint[1] DrawCenter
+[2026-04-01 21:06:04.243] RadarControl.OnPaint[1] EXIT ok
+[2026-04-01 21:06:04.335] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 21:06:04.344] RadarControl.OnPaint[2] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 21:06:04.359] RadarControl.OnPaint[2] DrawRangeRings
+[2026-04-01 21:06:04.360] RadarControl.OnPaint[2] DrawGrid
+[2026-04-01 21:06:04.360] RadarControl.OnPaint[2] DrawTracks
+[2026-04-01 21:06:04.361] RadarControl.OnPaint[2] DrawTargets begin
+[2026-04-01 21:06:04.361] RadarControl.OnPaint[2] DrawTargets end
+[2026-04-01 21:06:04.361] RadarControl.OnPaint[2] DrawCenter
+[2026-04-01 21:06:04.362] RadarControl.OnPaint[2] EXIT ok
+[2026-04-01 21:06:05.082] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 21:06:05.092] RadarControl.OnPaint[3] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 21:06:05.106] RadarControl.OnPaint[3] DrawRangeRings
+[2026-04-01 21:06:05.107] RadarControl.OnPaint[3] DrawGrid
+[2026-04-01 21:06:05.107] RadarControl.OnPaint[3] DrawTracks
+[2026-04-01 21:06:05.108] RadarControl.OnPaint[3] DrawTargets begin
+[2026-04-01 21:06:05.113] RadarControl.OnPaint[3] DrawTargets end
+[2026-04-01 21:06:05.113] RadarControl.OnPaint[3] DrawCenter
+[2026-04-01 21:06:05.114] RadarControl.OnPaint[3] EXIT ok
+[2026-04-01 21:06:06.080] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 21:06:06.089] RadarControl.OnPaint[4] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 21:06:06.103] RadarControl.OnPaint[4] DrawRangeRings
+[2026-04-01 21:06:06.104] RadarControl.OnPaint[4] DrawGrid
+[2026-04-01 21:06:06.105] RadarControl.OnPaint[4] DrawTracks
+[2026-04-01 21:06:06.106] RadarControl.OnPaint[4] DrawTargets begin
+[2026-04-01 21:06:06.106] RadarControl.OnPaint[4] DrawTargets end
+[2026-04-01 21:06:06.107] RadarControl.OnPaint[4] DrawCenter
+[2026-04-01 21:06:06.107] RadarControl.OnPaint[4] EXIT ok
+[2026-04-01 21:06:07.081] RadarControl.SetTargets: count=2, selected=none
+[2026-04-01 21:06:07.092] RadarControl.OnPaint[5] ENTER width=743 height=743 targets=2 range=13,0
+[2026-04-01 21:06:07.106] RadarControl.OnPaint[5] DrawRangeRings
+[2026-04-01 21:06:07.107] RadarControl.OnPaint[5] DrawGrid
+[2026-04-01 21:06:07.108] RadarControl.OnPaint[5] DrawTracks
+[2026-04-01 21:06:07.108] RadarControl.OnPaint[5] DrawTargets begin
+[2026-04-01 21:06:07.109] RadarControl.OnPaint[5] DrawTargets end
+[2026-04-01 21:06:07.109] RadarControl.OnPaint[5] DrawCenter
+[2026-04-01 21:06:07.109] RadarControl.OnPaint[5] EXIT ok
+[2026-04-01 21:06:17.981] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 21:06:17.991] RadarControl.SetTargets: count=0, selected=none
+[2026-04-01 21:06:18.008] RadarControl.OnPaint[6] ENTER width=743 height=743 targets=0 range=13,0
+[2026-04-01 21:06:18.022] RadarControl.OnPaint[6] DrawRangeRings
+[2026-04-01 21:06:18.023] RadarControl.OnPaint[6] DrawGrid
+[2026-04-01 21:06:18.023] RadarControl.OnPaint[6] DrawTracks
+[2026-04-01 21:06:18.024] RadarControl.OnPaint[6] DrawTargets begin
+[2026-04-01 21:06:18.024] RadarControl.OnPaint[6] DrawTargets end
+[2026-04-01 21:06:18.024] RadarControl.OnPaint[6] DrawCenter
+[2026-04-01 21:06:18.024] RadarControl.OnPaint[6] EXIT ok
+[2026-04-01 21:06:31.232] Program.Main: Application.Run returned normally
