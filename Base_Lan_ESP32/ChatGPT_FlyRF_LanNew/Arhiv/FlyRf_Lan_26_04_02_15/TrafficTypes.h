@@ -1,0 +1,25 @@
+#pragma once
+
+#include <Arduino.h>
+
+enum TrafficSource : uint8_t
+{
+    TRAFFIC_SOURCE_UNKNOWN = 0,
+    TRAFFIC_SOURCE_FLARM_LORA = 1,
+    TRAFFIC_SOURCE_ADSB_DUMP1090 = 2
+};
+
+struct TrafficCandidate
+{
+    uint32_t address;
+    float lat;
+    float lon;
+    int altitude;
+    float speed;
+    float course;
+    uint32_t timestampMs;
+    int rssi;
+    float snr;
+    TrafficSource source;
+    bool valid;
+};
