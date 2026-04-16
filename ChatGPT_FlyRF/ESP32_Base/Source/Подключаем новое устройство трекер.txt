@@ -1,0 +1,375 @@
+Подключаем новое устройство трекер в наш проект.
+
+Параметры подключения:
+
+#define PIN_TRACKER_RX 38 // Трекер
+#define PIN_TRACKER_TX 39 // Трекер
+#define SERIAL_TRACKER_SPEED          19200    // скорость работы с SERIAL_TRACKER
+#define BUFFER_SIZE                    390     // Размер буфера входящих сообщений
+
+SERIAL_TRACKER.begin(SERIAL_TRACKER_SPEED, EspSoftwareSerial::SWSERIAL_8N1, GPIO_PIN_TRACKER_RX, GPIO_PIN_TRACKER_TX,false,256);
+SERIAL_TRACKER.enableIntTx(false);
+
+
+Перечень команд поступающих из трекера
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+// отправить команду на контроллер. список поддерживаемых команд
+//--------------------------------------------------------------------------------------------------------------------------------------
+const char VERSION_COMMAND[]      PROGMEM = "VER";      // отдать информацию о версии.                 Пример #1#GET#VER
+const char VERSION_COMMAND_M[]    PROGMEM = "ver";      // отдать информацию о версии.                 Пример #1#GET#VER
+const char TEXT_COMMAND[]         PROGMEM = "TXT";      // отправить текст на треккер.                 Пример #1#SET#TXT#далее следует строка текста
+const char TEXT_COMMAND_M[]       PROGMEM = "txt";      // отправить текст на треккер.                 Пример #1#SET#TXT#далее следует строка текста
+const char SET_FLY[]              PROGMEM = "FLY";      // Установить параметры стороннего самолета    Пример #2#SET#FLY#3BC002,1002,TS00002,2002,2002.0,500.0,45.0,20,56.058714,37.410581,2,10,12
+const char SET_FLY_M[]            PROGMEM = "fly";      // Установить параметры стороннего самолета    Пример #2#SET#FLY#3BC002,1002,TS00002,2002,2002.0,500.0,45.0,20,56.058714,37.410581,2,10,12
+const char GET_FLY[]              PROGMEM = "FLY";      // Получить параметры нашего самолета          Пример #1#SET#FLY#3B3CB1,1234,SMD6406,100,105,600,180,40,56.005065,37.177184,7#10,15
+const char GET_FLY_M[]            PROGMEM = "fly";      // Установить параметры нашего самолета        Пример #1#SET#FLY#3B3CB1,1234,SMD6406,100,105,600,180,40,56.005065,37.177184,7#10,15
+const char GET_BASE[]             PROGMEM = "BASE";     // Получить содержимое базы сторонних самолетов Пример 
+const char GET_BASE_M[]           PROGMEM = "base";     // Получить содержимое базы сторонних самолетов Пример 
+const char SET_GSM[]              PROGMEM = "GSM";      // Установить параметры передачи данных по GSM Пример (заглушка уточним)
+const char SET_GSM_M[]            PROGMEM = "gsm";      // Установить параметры передачи данных по GSM Пример  (заглушка уточним)
+const char SET_BT_OK[]            PROGMEM = "BTOK";     // Установить подтверждение прочтения сообщения по GSM Пример  (заглушка уточним)
+const char SET_BT_OK_M[]          PROGMEM = "btok";     // Установить подтверждение прочтения сообщения по GSM Пример  (заглушка уточним)
+//--------------------------------------------------------------------------------------------------------------------------------------
+
+строка начинается с символа #
+после # идет номер сообщения. Диапазон сообщений 1-99
+следующий # за ним следует команда типа GET (получить) или SET (установить, записать)
+после команды идет разделяющий # затем сама команда типа примера TXT
+следующий разделяющий # и за ним следует текст сообщения длиной 172 символа.
+По окончании текста # указываем время передачи сообщения в виде час,минута.
+В нормальном режиме указываем время полученное с GPS. В тестовом режиме указываем время от 10,10 до 10,20.
+Сообщение действительно в течении 20 минут. Если время прихода сообщения больше срока указанногов сообщении - сообщение игнорируется.
+
+Передача текстовых данных параметров стороннего самолета
+
+#  
+1    // Номер сообщения
+#
+SET  // Признак записи, передачи КОМАНДЫ
+#
+FLY  // Команда передачи данных параметров стороннего самолета
+#
+addr,                   // Адрес устройства (строка, в программе переводится в HEX 6 знаков)
+Squawk,                 // Номер, назначаемый диспетчером для обмена с локатором. 4 знака
+flight,                 // Номер рейса (7 знаков)
+altitude,               // Высота геоид (GPS) float не более 7 знаков
+pressure_altitude,      // Высота по датчику давления
+speed,                  // Скорость 
+course,                 // Курс в градусах 
+vert_rate,              // Скорость подъема или снижения 
+latitude,               // Широта
+longitude,              // Долгота
+aircraft_type,           // Тип воздушного судна 1 знак
+час,
+минута
+
+Все данные отделяются запятой
+#1#SET#FLY#адрес,Squawk,номер рейса,altitude,pressure_altitude,speed,course,vert_rate,latitude,longitude,aircraft_type,hour,minute
+
+Пример:
+#1#SET#FLY#3B3CB1,1234,SMD6406,100,105,600,180,40,56.005065,37.177184,7,10,15
+
+
+При верных параметрах формируем ответ OK команда и передаем в канал TX
+Пример: OK FLY
+
+Неверные параметры:
+#1#SET#FLY#3B3CB1,1234,SMD6406,100,105,600,180,40,56.005065,37.177184 (нет типа воздушного судна)
+При не верных параметрах формируем ответ ERR команда |BAD_PARAMS
+Пример: 
+ERR FLY|BAD_PARAMS
+
+Если сообщение больше 178 символов - отправляем ответное сообщение "The text is very long. !Maximum 172 characters"
+
+При неизвестной команде отправляем "UNKNOWN COMMAND"
+
+Программа реального подсчета количества символов включая кириллицу.
+int CommandHandlerClass::mb_strlen(char* source, int letter_n) 
+{
+    int i, k;
+    int target = 0;
+    unsigned char n;
+    char m[2] = { '0', '\0' };
+    k = strlen(source);
+    i = 0;
+
+    while (i < k) 
+    {
+        n = source[i]; i++;
+
+        if (n >= 0xBF)
+        {
+            switch (n)
+            {
+                case 0xD0:
+                {
+                    n = source[i]; i++;
+                    if (n == 0x81) { n = 0xA8; break; }
+                    if (n >= 0x90 && n <= 0xBF) n = n + 0x2F;
+                    break;
+                }
+                case 0xD1:
+                {
+                    n = source[i]; i++;
+                    if (n == 0x91) { n = 0xB7; break; }
+                    if (n >= 0x80 && n <= 0x8F) n = n + 0x6F;
+                    break;
+                }
+            }
+        }
+        m[0] = n; target = target + 1;
+        if (target == letter_n)
+            break;
+    }
+    return target; // i;
+}
+
+Программа записи параметров стороннего самолета.
+bool CommandHandlerClass::setFly(const char* param)
+{
+    /*
+     Разбираем параметр данных самолета на составные части
+     #1#SET#FLY#адрес,squawk,номер рейса,altitude,pressure_altitude,speed,course,vert_rate,latitude,longitude,aircraft_type,hour,minute
+    */
+    // буфер под промежуточные данные
+    char workBuff[13] = { 0 };
+    char* writePtr = workBuff;
+
+    fo_msg = EmptyFO;
+
+    const char* delim = strchr(param, ',');  // Определяем первые данные
+    if (!delim || (delim - param > 6))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.addr = strtoul(writePtr, NULL, 16); // Извлечение адреса из строки
+ 
+    param = delim + 1;                  // Извлечение squawk из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 4))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.squawk = atoi(writePtr);
+ 
+    param = delim + 1;                   // Извлечение номера рейса из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 8))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    strncpy(fo_msg.callsign, writePtr, strlen(writePtr));  //strlenПреобразование принятую строку
+  
+    param = delim + 1;               // Вариант измерения высоты геоид
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 8))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.altitude = atof(writePtr);
+ 
+    param = delim + 1;               // Извлечение pressure_altitude из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 8))
+        return false;
+
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.pressure_altitude = atof(writePtr);
+ 
+    param = delim + 1;               // Извлечение speed из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 6))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.speed = atof(writePtr);
+ 
+    param = delim + 1;               // Извлечение course из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 6))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.course = atof(writePtr);
+ 
+    param = delim + 1;               // Извлечение vert_rate из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 4))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.vert_rate = atoi(writePtr);
+ 
+    param = delim + 1;               // Извлечение latitude из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 10))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.latitude = atof(writePtr);
+ 
+    param = delim + 1;               // Извлечение longitude из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 10))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.longitude = atof(writePtr);
+ 
+    param = delim + 1;               // Извлечение aircraft_type из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 2))
+        return false;
+    while (param < delim)
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.aircraft_type = atoi(workBuff);
+
+    param = delim + 1;               // Извлечение часов  из строки
+    delim = strchr(param, ',');
+    if (!delim || (delim - param > 3))
+        return false;
+    while (param < delim) 
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    writePtr = workBuff;
+    fo_msg.hour_msg = atoi(workBuff);  // Получить часы
+ 
+    param = delim + 1; // перемещаемся на следующий компонент - минута
+    while (*param && writePtr < &(workBuff[2]))
+        *writePtr++ = *param++;
+    *writePtr = 0;
+    fo_msg.min_msg = atoi(workBuff);   // Получить минуты
+
+    fo_msg.timestamp = now(); //  
+    fo_msg.signal_source = 2;
+ 
+    int minute_all = 0;
+    int minute_msg = 0;
+
+    if (gnss.time.isValid())
+    {
+        minute_all = ((int)gnss.time.hour() * 60) + gnss.time.minute();
+    }
+    else
+    {
+        minute_all = (10 * 60) + 20;
+    }
+
+    // Определить не просрочено ли время прихода сообщения.
+    minute_msg = (fo_msg.hour_msg * 60) + fo_msg.min_msg;
+
+    if ((minute_all - minute_msg) <= 10 && minute_msg < minute_all || (minute_all - minute_msg) == 0)
+    {
+        // Расчет расстояния, курса и уровня опастности сближения нашего и стороннего самолета
+        if (fo_msg.latitude != 0 && fo_msg.longitude != 0) // Расчет возможен если получены координаты нашего и стороннего самолета
+        {
+            Traffic_Update(&fo_msg);   // Определяем дистанцию и курс стороннего самолета
+        }
+
+        // Остальные параметры записываем в базу 
+        Traffic_Msg_Add(&fo_msg);
+        return true;
+    }
+    /* Пример строки
+    #1#SET#FLY#адрес, squawk, номер рейса, altitude, pressure_altitude, speed, course, vert_rate, latitude, longitude, aircraft_type, hour, minute
+
+    */
+
+    return false;
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+bool CommandHandlerClass::getFly(Stream* pStream) // получение информацию с базы данных
+{
+    pStream->println(CORE_COMMAND_ANSWER_OK);
+    send_ThisAircraft();
+    return true;
+}
+
+void CommandHandlerClass::send_ThisAircraft()
+{
+    char FLYBuffer[128];
+ 
+            snprintf_P(FLYBuffer, sizeof(FLYBuffer),
+                PSTR("$%06X,%d,%d,%d,%d,%6f,%6f,%d""*"),
+                ThisAircraft.addr,                   // Адрес нашего устройства, которому отправлен запрос
+                (int)ThisAircraft.altitude,          // Высота геоид (GPS)
+                (int)ThisAircraft.pressure_altitude, // Высота по датчику давления
+                (int)ThisAircraft.speed,             // Скорость  km/h IAS
+                (int)ThisAircraft.course,            // Курс в градусах
+                ThisAircraft.latitude,               // Широта
+                ThisAircraft.longitude,              // Долгота
+                ThisAircraft.aircraft_type           // Тип воздушного судна
+             );   
+                                                     // *
+                                                     // Контрольная сумма пакета
+            NMEA_add_checksum(FLYBuffer, sizeof(FLYBuffer) - strlen(FLYBuffer));
+            SERIAL_TRACKER.print(FLYBuffer);
+ 
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+bool CommandHandlerClass::getBase(Stream* pStream) // получение информацию с базы данных
+{
+    pStream->println(CORE_COMMAND_ANSWER_OK);
+    send_base();
+    return true;
+}
+
+void CommandHandlerClass::send_base()
+{
+   // char FLYBuffer[128];
+
+    for (int i = 0; i < MAX_TRACKING_OBJECTS; i++)
+    {
+        if (Container[i].addr)  // Если есть самолет в базе
+        {
+            char FLYBuffer[128];
+            snprintf_P(FLYBuffer, sizeof(FLYBuffer),
+                PSTR("$%06X,%d,%8s,%d,%d,%d,%d,%d,%6f,%6f,%d,%d,%d,%d""*"),
+                Container[i].addr,                   // Адрес устройства стороннего самолета
+                Container[i].squawk,                 // Номер, назначаемый диспетчером для обмена с локатором.
+                Container[i].callsign,                 // Номер рейса
+                (int)Container[i].altitude,          // Высота геоид (GPS)
+                (int)Container[i].pressure_altitude, // Высота по датчику давления
+                (int)Container[i].speed,             // Скорость  km/h IAS
+                (int)Container[i].course,            // Курс в градусах
+                Container[i].vert_rate,              // Скорость подъема или снижения ft/m
+                Container[i].latitude,               // Широта
+                Container[i].longitude,              // Долгота
+                Container[i].aircraft_type,          // Тип воздушного судна
+                Container[i].signal_source,          // Источник данных (0-LoRa, 1- DUMP1090, 2 - текстовая строка из GSM или Иридиум)
+                Container[i].hour_msg,               // Время час
+                Container[i].min_msg                 // Время минуты 
+            );                    // 
+                                                 // *
+                                                 // Контрольная сумма пакета
+            NMEA_add_checksum(FLYBuffer, sizeof(FLYBuffer) - strlen(FLYBuffer));
+            SERIAL_TRACKER.print(FLYBuffer);
+        }
+    }
+}
