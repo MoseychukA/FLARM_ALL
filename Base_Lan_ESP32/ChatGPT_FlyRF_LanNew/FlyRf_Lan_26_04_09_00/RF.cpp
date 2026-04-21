@@ -606,10 +606,17 @@ static void sx12xx_setvars()
     {
         LMIC.datarate = LMIC.protocol->bitrate;
         LMIC.syncword = LMIC.protocol->syncword[0];
+        Serial.print("LMIC.datarate ");
+        Serial.println(LMIC.datarate);
+        Serial.print("LMIC.syncword ");
+        Serial.println(LMIC.syncword);
     }
     else
     {
         LMIC.datarate = DR_FSK;
+        Serial.print("LMIC.datarate ");
+        Serial.println(LMIC.datarate);
+
     }
 
 #if defined(USE_BASICMAC)
@@ -968,13 +975,13 @@ void ParseData()
     memset(fo.raw, 0, sizeof(fo.raw));
     memcpy(fo.raw, RxBuffer, rx_size);
 
-    if (settings->nmea_p) 
-    {
+    //if (settings->nmea_p) 
+    //{
         Serial.print(F("$PSRFI,"));
         Serial.print((unsigned long)now()); Serial.print(F(","));
         Serial.print(Bin2Hex(fo.raw, rx_size)); Serial.print(F(","));
         Serial.println(RF_last_rssi);
-    }
+    //}
 
     //if (memcmp(RxBuffer, TxBuffer, rx_size) == 0)
     //{
@@ -1010,7 +1017,7 @@ void ParseData()
 
         if (settings->serial_out == OUTPUT_MODE_FLARM)
         {
-            printDecodedLoRaPacketToSerial(&fo, RF_last_rssi, rx_size);
+          //  printDecodedLoRaPacketToSerial(&fo, RF_last_rssi, rx_size);
         }
 
         if (fo.addr == ThisAircraft.addr)
