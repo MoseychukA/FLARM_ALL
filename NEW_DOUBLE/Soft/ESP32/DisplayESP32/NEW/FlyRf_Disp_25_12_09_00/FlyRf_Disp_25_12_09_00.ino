@@ -45,10 +45,10 @@
 //================================= Управление включения устройства =============================
 
 // Пин,на котором нужен 5‑секундный импульс
-#define PULSE_PIN GPIO_NUM_20             // GPIO20 (проверьте,что он поддерживает RTC GPIO)
-#define TRIGGER_PIN GPIO_NUM_18          // Пин,по которому снаружи подаётся низкий уровень при отключении питания
+#define PULSE_PIN GPIO_NUM_20             // GPIO20 
+#define TRIGGER_PIN GPIO_NUM_18           // Пин,по которому снаружи подаётся низкий уровень при отключении питания
 #define POWER_ON_PIN GPIO_NUM_17          // Поддержка ключа питания
-const unsigned long PULSE_ON_MS = 3500;   // 5 сек (включение)
+//const unsigned long PULSE_ON_MS = 3500;   // 5 сек (включение)
 const unsigned long PULSE_OFF_MS = 6000;  // 6 сек (выключение)
 #define DEBOUNCE_DELAY 30                 // Задержка антидребезга в мс
 bool wasDisabled = false;
@@ -793,8 +793,8 @@ void loop()
         if (digitalRead(TRIGGER_PIN) == LOW)
         {
            // Состояние стабильно
-            wasDisabled = true; // Чтобы не повторять процесс
-            SoC->View_powerOff(); // вызов сообщения об отключении питания устройства
+            wasDisabled = true;            // Чтобы не повторять процесс
+            SoC->View_powerOff();          // вызов сообщения об отключении питания устройства
             digitalWrite(PULSE_PIN, HIGH);
             delay(PULSE_OFF_MS);
             digitalWrite(PULSE_PIN, LOW);

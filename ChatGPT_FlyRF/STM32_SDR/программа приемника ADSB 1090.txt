@@ -1,0 +1,46 @@
+Микроконтроллер STM32F103CBT6 Arduino IDE библиотека TFT TFT_eSPI.
+Требуется создать программу приемника ADSB 1090 мГц.
+Приемник R820T2. На выходе подключена микросхема AD8310ARMZ.
+Выходной сигнал подключен к PA0
+Имя проекта ADS-B_SDR_STM32F103_26_05_31_00
+Каждый новый вариант проекта имя увеличивать на единицу.
+Результат выводить на TFT дисплей и Serial.
+Тач XPT2046 
+PB13/T_SCK
+PB12/T_CS
+PB15/T_MOSI
+PB14/T_MISO
+
+TFT дисплей ILI9341
+#define TFT_BL   PB9            // LED back-light control pin
+#define TFT_BACKLIGHT_ON LOW  // Level to turn ON back-light (HIGH or LOW)
+#define TFT_SPI_PORT 2 // SPI port 2 maximum clock rate is 27MHz
+#define TFT_MOSI PB15
+#define TFT_MISO PB14
+#define TFT_SCLK PB13
+#define TFT_CS   PA8    
+#define TFT_DC   PC14   
+#define TFT_RST  PC13   
+
+SOUNDER PB8 уровень включения HIGH
+
+Фрагмент setup
+void setup()
+{
+    Serial.begin(Serial_SPEED);
+    while (!Serial && millis() < 1000);
+    Serial.flush();
+    delay(1000);
+
+    Serial.println("Start system");
+    Serial.println();
+
+
+  String ver_soft = __FILE__;
+  int val_srt = ver_soft.lastIndexOf('\\');
+  ver_soft.remove(0, val_srt+1);
+  val_srt = ver_soft.lastIndexOf('.');
+  ver_soft.remove(val_srt);
+  Serial.println(ver_soft);
+}
+
