@@ -1,0 +1,31 @@
+
+Относительно д.Лугинино
+ID - 6C6C90 latitude - 55.95527 longitude - 37.23188 altitude - 215 distance - 70218 m
+ID - 6C6C90 latitude - 55.95527 longitude - 37.23188 altitude - 216 distance - 70260 m
+ID - 6C6C90 latitude - 55.95527 longitude - 37.23188 altitude - 217 distance - 70260 m
+ID - 6C6C90 latitude - 55.95527 longitude - 37.23188 altitude - 216 distance - 70260 m
+ID - 6C6C90 latitude - 55.95527 longitude - 37.23188 altitude - 216 distance - 70269 m
+
+
+Имитация в районе Черноголовки.
+ID - 6C6C90 latitude - 56.01418 longitude - 38.35617 altitude - 438 distance - 377 m
+ID - 6C6C90 latitude - 56.01418 longitude - 38.35617 altitude - 438 distance - 447 m
+ID - 6C6C90 latitude - 56.01418 longitude - 38.35617 altitude - 438 distance - 447 m
+ID - 6C6C90 latitude - 56.01367 longitude - 38.35639 altitude - 438 distance - 448 m
+ID - 6C6C90 latitude - 56.01367 longitude - 38.35639 altitude - 438 distance - 448 m
+ID - 6C6C90 latitude - 56.01367 longitude - 38.35639 altitude - 438 distance - 519 m
+ID - 6C6C90 latitude - 56.01367 longitude - 38.35639 altitude - 438 distance - 519 m
+ID - 6C6C90 latitude - 56.01313 longitude - 38.35617 altitude - 438 distance - 550 m
+ID - 6C6C90 latitude - 56.01313 longitude - 38.35617 altitude - 438 distance - 550 m
+ID - 6C6C90 latitude - 56.01313 longitude - 38.35617 altitude - 438 distance - 601 m
+ID - 6C6C90 latitude - 56.01281 longitude - 38.35535 altitude - 438 distance - 662 m
+ID - 6C6C90 latitude - 56.01281 longitude - 38.35535 altitude - 438 distance - 662 m
+ID - 6C6C90 latitude - 56.01281 longitude - 38.35535 altitude - 438 distance - 662 m
+ID - 6C6C90 latitude - 56.01281 longitude - 38.35535 altitude - 438 distance - 707 m
+ID - 6C6C90 latitude - 56.01281 longitude - 38.35535 altitude - 438 distance - 707 m
+ID - 6C6C90 latitude - 56.01247 longitude - 38.35441 altitude - 438 distance - 774 m
+ID - 6C6C90 latitude - 56.01247 longitude - 38.35441 altitude - 438 distance - 724 m
+ID - 6C6C90 latitude - 56.01247 longitude - 38.35441 altitude - 438 distance - 724 m
+ID - 6C6C90 latitude - 56.01214 longitude - 38.35386 altitude - 438 distance - 769 m
+ID - 6C6C90 latitude - 56.01214 longitude - 38.35386 altitude - 438 distance - 769 m
+ID - 6C6C90 latitude - 56.01214 longitude - 38.35386 altitude - 438 distance - 769 m

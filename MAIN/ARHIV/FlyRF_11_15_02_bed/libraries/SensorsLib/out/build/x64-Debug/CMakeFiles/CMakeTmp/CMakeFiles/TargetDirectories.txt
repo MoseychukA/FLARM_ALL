@@ -1,3 +1,0 @@
-D:/1 GIT FLARM_ALL/MAIN/ARHIV/FlyRF_11_15_02_bed/libraries/SensorsLib/out/build/x64-Debug/CMakeFiles/CMakeTmp/CMakeFiles/cmTC_23ff3.dir
-D:/1 GIT FLARM_ALL/MAIN/ARHIV/FlyRF_11_15_02_bed/libraries/SensorsLib/out/build/x64-Debug/CMakeFiles/CMakeTmp/CMakeFiles/edit_cache.dir
-D:/1 GIT FLARM_ALL/MAIN/ARHIV/FlyRF_11_15_02_bed/libraries/SensorsLib/out/build/x64-Debug/CMakeFiles/CMakeTmp/CMakeFiles/rebuild_cache.dir
