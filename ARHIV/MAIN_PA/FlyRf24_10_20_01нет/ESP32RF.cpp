@@ -239,7 +239,7 @@ static void ESP32_setup()
       hw_info.model = SOFTRF_MODEL_PRIME_MK2;
 
 #else
-#error "This ESP32 family build variant is not supported!"
+//#error "This ESP32 family build variant is not supported!"
 #endif
       break;
     }

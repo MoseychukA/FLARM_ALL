@@ -20,7 +20,7 @@
 #include "SPI.h"
 #include <TFT_eSPI.h>             // Поддержка TFT дисплея  
 #include "TFTModule.h" 
-#include "Configuration_ESP32.h"
+#include "Configuration_ESP32.h" 
 #include <esp_task_wdt.h>
 #include "CoreCommandBuffer.h"    // обработчик входящих по UART команд
 #include "SettingsMain.h"
