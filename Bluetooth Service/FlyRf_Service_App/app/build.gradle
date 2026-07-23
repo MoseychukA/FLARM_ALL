@@ -1,0 +1,16 @@
+plugins {
+    id "com.android.application"
+}
+
+android {
+    namespace "com.flyrf.service"
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.flyrf.service"
+        minSdk 23
+        targetSdk 34
+        versionCode 2
+        versionName "1.1"
+    }
+}

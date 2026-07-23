@@ -1,0 +1,110 @@
+Модуль ESP32S3 Arduino IDE
+Проект выносного дисплея FlyRf_Disp_26_05_18_00
+Необходимо добавить функцию включения и отключения питания.
+Взять за образец сторонний проект FlyRf_Disp_25_12_09_00
+
+//================================= Управление включения устройства =============================
+
+// Пин,на котором нужен 5‑секундный импульс
+#define PULSE_PIN GPIO_NUM_20             // GPIO20 
+#define TRIGGER_PIN GPIO_NUM_18           // Пин,по которому снаружи подаётся низкий уровень при отключении питания
+#define POWER_ON_PIN GPIO_NUM_17          // Поддержка ключа питания
+const unsigned long PULSE_OFF_MS = 6000;  // 6 сек (выключение)
+#define DEBOUNCE_DELAY 30                 // Задержка антидребезга в мс
+bool wasDisabled = false;
+
+//========================================================================================
+
+Фрагменты программы для образца
+
+Включение - при старте нужно установить уровни 
+void setup()
+pinMode(POWER_ON_PIN, OUTPUT);
+digitalWrite(POWER_ON_PIN, HIGH);
+pinMode(PULSE_PIN, OUTPUT);
+digitalWrite(PULSE_PIN, LOW);
+pinMode(TRIGGER_PIN, INPUT_PULLUP); // 
+
+
+
+void loop()
+    if (!wasDisabled && digitalRead(TRIGGER_PIN) == LOW)
+    {
+        digitalWrite(POWER_ON_PIN, HIGH);
+        delay(DEBOUNCE_DELAY);
+        if (digitalRead(TRIGGER_PIN) == LOW)
+        {
+           // Состояние стабильно
+            wasDisabled = true;            // Чтобы не повторять процесс
+            View_powerOff();          // вызов сообщения об отключении питания устройства
+            digitalWrite(PULSE_PIN, HIGH);
+            delay(PULSE_OFF_MS);
+            digitalWrite(PULSE_PIN, LOW);
+            delay(100);
+            digitalWrite(POWER_ON_PIN, LOW);
+         }
+    }
+    else
+    {
+
+        SoC->Display_loop();
+
+        WiFi_loop();
+        Web_loop();
+        OTA_loop();
+
+        set_packet(); // Получить и записать информацию с базового модуля.
+
+        unsigned long currentMillis = millis();
+
+        if (currentMillis - previousMillis >= interval)
+        {
+            previousMillis = currentMillis;
+
+            if (/*hasActiveLink && packetUpdated &&*/ settings->serial_out == SEND_SERIAL_INFO)
+            {
+                Serial.print("ThisAircraft:");
+                printThisThisAircraft(&ThisAircraft);
+                Serial.println("--------------------------------------------------------------------");
+                printContainer(Container, MAX_TRACKING_OBJECTS);
+                printAux(&AuxData);
+                Serial.println("====================================================================");
+                Serial.println();
+            }
+
+            if (ina219_ok)
+            {
+                digitalWrite(POWER_ON_PIN, LOW);
+                delay(20);
+                float shunt_voltage_mV = ina219.getShuntVoltage_mV(); // Напряжение на шунте (милливольты)
+                float bus_voltage_V = ina219.getBusVoltage_V();       // Напряжение на шине (вольты)
+                float current_mA = ina219.getCurrent_mA();            // Ток (миллиамперы)
+                float load_voltage = bus_voltage_V + (shunt_voltage_mV / 1000); // Точное напряжение на нагрузке
+                int voltage_percent = voltageToPercent(load_voltage);
+                digitalWrite(POWER_ON_PIN, HIGH);
+                service.set_voltage_value(load_voltage);
+                service.set_current_value(current_mA);
+            }
+        }
+
+        Traffic_loop();
+        Time_loop();
+        ClearExpired();
+    }
+	
+	
+TFT дисплей
+
+static void View_powerOff()
+{
+    tft.fillScreen(TFT_NAVY);
+
+    tft.loadFont(AA_FONT_TIME28I);     // Must load the font first
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);  // Set the font colour AND the background colour
+    tft.setCursor(130, 130);
+    tft.println("ОТКЛЮЧАЕТСЯ");
+    tft.setCursor(153, 180);
+    tft.println("ОЖИДАЙТЕ");
+
+}
+	

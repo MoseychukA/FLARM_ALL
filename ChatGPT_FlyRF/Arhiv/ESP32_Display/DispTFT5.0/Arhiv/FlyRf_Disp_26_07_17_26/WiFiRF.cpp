@@ -1,0 +1,157 @@
+/*
+  Модуль WiFiRF.cpp
+  Назначение:
+  - Базовая Wi-Fi и UDP-подсистема устройства.
+
+  Основные задачи модуля:
+  - Поднимать точку доступа Wi-Fi и сохранять параметры сети.
+  - Обеспечивать готовность UDP-канала для передачи NMEA и служебных данных.
+  - Отдавать строковые представления имени точки доступа и MAC-адреса.
+*/
+
+#include "WiFiRF.h"
+#include "Log.h"
+#include "DeviceInfo.h"
+#include "EEPROMRF.h"
+
+String host_name;  // Текстовая строка или буфер: хранит входное сообщение, сформированный ответ либо промежуточный текст.
+static bool g_wifiReady = false;  
+static IPAddress g_apIP(192,168,1,1);
+static IPAddress g_udpBroadcastIP(192,168,1,255);
+static WiFiUDP g_udp;  
+
+//------------------------------------------------------------------------------
+// Назначение функции: Инициализирует wi fi, подготавливает связанные объекты и включает работу соответствующего узла.
+// Локальные переменные: localIP — рабочая переменная модуля: хранит промежуточное значение, используемое в текущей логике файла; 
+// gateway — навигационный или геометрический параметр: координаты, угол, дальность, размер или положение объекта;
+// subnet — рабочая переменная модуля: хранит промежуточное значение, используемое в текущей логике файла;
+// ok — рабочая переменная модуля: хранит промежуточное значение, используемое в текущей логике файла.
+//------------------------------------------------------------------------------
+void WiFi_setup()
+{
+    host_name = String(FLYRF_WIFI_AP_SSID_PREFIX) + "-" + DeviceInfo_chipIdHex();
+
+    const IPAddress localIP(192,168,1,1);
+    const IPAddress gateway(192,168,1,1);
+    const IPAddress subnet(255,255,255,0);
+
+    auto startAp = [&](void) -> bool
+    {
+        WiFi.persistent(false);
+        WiFi.setSleep(false);
+        WiFi.setTxPower(WIFI_POWER_19_5dBm);
+        WiFi.disconnect(true, true);
+        delay(150);
+
+        WiFi.mode(WIFI_OFF);
+        delay(150);
+        WiFi.mode(WIFI_AP);
+        delay(150);
+
+        const bool cfgOk = WiFi.softAPConfig(localIP, gateway, subnet);
+        delay(100);
+        const bool apOk = WiFi.softAP(host_name.c_str(), FLYRF_WIFI_AP_PASSWORD, 1, 0, 4);
+        delay(250);
+
+        g_apIP = WiFi.softAPIP();
+        if (g_apIP == IPAddress((uint32_t)0))
+        {
+            g_apIP = localIP;
+        }
+        g_udpBroadcastIP = IPAddress(g_apIP[0], g_apIP[1], g_apIP[2], 255);
+        g_udp.stop();
+        g_udp.begin(WiFi_defaultNmeaUdpPort());
+        g_wifiReady = cfgOk && apOk;
+        return g_wifiReady;
+    };
+
+    bool ok = startAp();
+    if (!ok)
+    {
+        Serial.println(F("[WIFI] AP start retry"));
+        delay(300);
+        ok = startAp();
+    }
+
+    Serial.print(F("[WIFI] SSID: "));
+    Serial.println(host_name);
+    Serial.print(F("[WIFI] PASS: "));
+    Serial.println(FLYRF_WIFI_AP_PASSWORD);
+    Serial.print(F("[WIFI] AP IP: "));
+    Serial.println(g_apIP);
+    Serial.print(F("[WIFI] Ready: "));
+    Serial.println(ok ? F("YES") : F("NO"));
+}
+
+//------------------------------------------------------------------------------
+// Назначение функции: Обслуживает wifi в основном цикле: проверяет события, обновляет состояние и запускает нужные действия.
+
+//------------------------------------------------------------------------------
+void WiFi_loop() {}
+
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_fini` и обрабатывает wifi fini в контексте модуля WiFiRF.cpp.
+
+//------------------------------------------------------------------------------
+void WiFi_fini()
+{
+    g_udp.stop();
+    WiFi.softAPdisconnect(true);
+    WiFi.mode(WIFI_OFF);
+    g_wifiReady = false;
+}
+
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_ssid` и обрабатывает wifi ssid в контексте модуля WiFiRF.cpp.
+
+//------------------------------------------------------------------------------
+const char* WiFi_ssid(void) { return host_name.c_str(); }
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_password` и обрабатывает wifi password в контексте модуля WiFiRF.cpp.
+
+//------------------------------------------------------------------------------
+const char* WiFi_password(void) { return FLYRF_WIFI_AP_PASSWORD; }
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_apIP` и обрабатывает wifi ap IP-адрес в контексте модуля WiFiRF.cpp.
+
+//------------------------------------------------------------------------------
+IPAddress WiFi_apIP(void) { return g_apIP; }
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_macAddressStr` и обрабатывает wifi mac адрес str в контексте модуля WiFiRF.cpp.
+
+//------------------------------------------------------------------------------
+String WiFi_macAddressStr(void) { return WiFi.softAPmacAddress(); }
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_ready` и обрабатывает wifi ready в контексте модуля WiFiRF.cpp.
+
+//------------------------------------------------------------------------------
+bool WiFi_ready(void) { return g_wifiReady; }
+
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_defaultNmeaUdpPort` и обрабатывает wifi default nmea udp порт в контексте модуля WiFiRF.cpp.
+
+//------------------------------------------------------------------------------
+uint16_t WiFi_defaultNmeaUdpPort(void) { return (uint16_t)FLYRF_DEFAULT_NMEA_UDP_PORT; }
+
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_udpBroadcastIP` и обрабатывает wifi udp broadcast IP-адрес в контексте модуля WiFiRF.cpp.
+
+//------------------------------------------------------------------------------
+IPAddress WiFi_udpBroadcastIP(void) { return g_udpBroadcastIP; }
+
+//------------------------------------------------------------------------------
+// Назначение функции: Выполняет логику функции `WiFi_transmitUDP` и обрабатывает wifi transmit udp в контексте модуля WiFiRF.cpp.
+// Локальные переменные: uint16_t — рабочая переменная модуля: хранит промежуточное значение, используемое в текущей логике файла; 
+// written — рабочая переменная модуля: хранит промежуточное значение, используемое в текущей логике файла; 
+// size — рабочая переменная модуля: хранит промежуточное значение, используемое в текущей логике файла; 
+// ok — рабочая переменная модуля: хранит промежуточное значение, используемое в текущей логике файла.
+//------------------------------------------------------------------------------
+bool WiFi_transmitUDP(uint16_t port, const uint8_t* data, size_t size)
+{
+    if (!g_wifiReady || data == nullptr || size == 0) return false;
+    const uint16_t targetPort = (port != 0U) ? port : WiFi_defaultNmeaUdpPort();
+    if (!g_udp.beginPacket(g_udpBroadcastIP, targetPort)) return false;
+    const size_t written = g_udp.write(data, size);
+    const bool ok = g_udp.endPacket() == 1;
+    return ok && written == size;
+}

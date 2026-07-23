@@ -1,0 +1,52 @@
+Настройки OGNTP
+
+const rf_proto_desc_t ogntp_proto_desc = {
+  "OGNTP",
+  .type            = RF_PROTOCOL_OGNTP,
+  .modulation_type = RF_MODULATION_TYPE_2FSK,
+  .preamble_type   = OGNTP_PREAMBLE_TYPE,
+  .preamble_size   = OGNTP_PREAMBLE_SIZE,
+  .syncword        = OGNTP_SYNCWORD,
+  .syncword_size   = OGNTP_SYNCWORD_SIZE,
+  .net_id          = 0x0000, /* not in use */
+  .payload_type    = RF_PAYLOAD_INVERTED,
+  .payload_size    = OGNTP_PAYLOAD_SIZE,
+  .payload_offset  = 0,
+  .crc_type        = OGNTP_CRC_TYPE,
+  .crc_size        = OGNTP_CRC_SIZE,
+
+  .bitrate         = RF_BITRATE_100KBPS,
+  .deviation       = RF_FREQUENCY_DEVIATION_50KHZ,
+  .whitening       = RF_WHITENING_MANCHESTER,
+  .bandwidth       = RF_RX_BANDWIDTH_SS_125KHZ,
+
+  .air_time        = OGNTP_AIR_TIME,
+
+#if defined(USE_TIME_SLOTS)
+  .tm_type         = RF_TIMING_2SLOTS_PPS_SYNC,
+#else
+  .tm_type         = RF_TIMING_INTERVAL,
+#endif
+  .tx_interval_min = OGNTP_TX_INTERVAL_MIN,
+  .tx_interval_max = OGNTP_TX_INTERVAL_MAX,
+  .slot0           = {400,  800},
+  .slot1           = {800, 1200}
+};
+
+
+#ifndef PROTOCOL_OGNTP_H
+#define PROTOCOL_OGNTP_H
+
+#define OGNTP_PREAMBLE_TYPE   RF_PREAMBLE_TYPE_AA
+#define OGNTP_PREAMBLE_SIZE   1 /* Warmup: 6 bits, preamble: 8 bits, value:  0xAA */
+/* IEEE  Manchester(0AF3656C) = AA 66 55 A5 96 99 96 5A */
+#define OGNTP_SYNCWORD        {0xAA, 0x66, 0x55, 0xA5, 0x96, 0x99, 0x96, 0x5A}
+#define OGNTP_SYNCWORD_SIZE   8
+#define OGNTP_PAYLOAD_SIZE    20
+#define OGNTP_CRC_TYPE        RF_CHECKSUM_TYPE_GALLAGER
+#define OGNTP_CRC_SIZE        6
+
+#define OGNTP_AIR_TIME        6 /* in ms */
+
+#define OGNTP_TX_INTERVAL_MIN 600 /* in ms */
+#define OGNTP_TX_INTERVAL_MAX 1400

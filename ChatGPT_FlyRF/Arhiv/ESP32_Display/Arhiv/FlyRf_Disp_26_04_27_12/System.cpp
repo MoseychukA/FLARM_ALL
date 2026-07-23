@@ -1,0 +1,61 @@
+#include "System.h"
+#include <Arduino.h>
+#include "HardwareConfig.h"
+#include "DeviceInfo.h"
+#include "EEPROMRF.h"
+#include "Container.h"
+#include "WiFiRF.h"
+#include "WebRF.h"
+#include "RS485Display.h"
+#include "ESP32RF.h"
+
+static uint32_t g_lastLoopMs = 0;
+
+void SystemSetup()
+{
+    Serial.println();
+    Serial.print(F("[SETUP] Version: "));
+    Serial.println(DeviceInfo_programVersion());
+
+    pinMode(POWER_ON_PIN, OUTPUT);
+    digitalWrite(POWER_ON_PIN, HIGH);
+    pinMode(POWER_TRACKER_PIN, OUTPUT);
+    digitalWrite(POWER_TRACKER_PIN, LOW);
+    pinMode(POWER_IN_PIN, INPUT_PULLUP);
+    pinMode(BUTTON_2_PIN, INPUT_PULLUP);
+    pinMode(LED_PIN, OUTPUT);
+    digitalWrite(LED_PIN, HIGH);
+#ifdef LED_LCD_PIN
+    pinMode(LED_LCD_PIN, OUTPUT);
+    digitalWrite(LED_LCD_PIN, HIGH);
+#endif
+
+    EEPROM_setup();
+    TrafficDB.init();
+    RS485Display_setup();
+    WiFi_setup();
+    Web_setup();
+    Display_setup();
+    Serial.println(F("[SETUP] READY"));
+}
+
+void SystemLoop()
+{
+    RS485Display_loop();
+    WiFi_loop();
+    Web_loop();
+    Traffic_loop();
+    Display_loop();
+
+    const uint32_t now = millis();
+    if ((uint32_t)(now - g_lastLoopMs) > 500)
+    {
+        g_lastLoopMs = now;
+        digitalWrite(LED_PIN, (RS485Display_lastRxMs() && (now - RS485Display_lastRxMs() < 3000)) ? HIGH : LOW);
+    }
+}
+
+float SystemDisplayCourseDeg()
+{
+    return ThisAircraft.course;
+}

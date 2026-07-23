@@ -1,0 +1,79 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.flyrf.service"
+4    android:versionCode="2"
+5    android:versionName="1.1" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="23"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-permission
+11-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:2:5-95
+12        android:name="android.permission.BLUETOOTH"
+12-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:2:22-65
+13        android:maxSdkVersion="30" />
+13-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:2:66-92
+14    <uses-permission
+14-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:3:5-101
+15        android:name="android.permission.BLUETOOTH_ADMIN"
+15-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:3:22-71
+16        android:maxSdkVersion="30" />
+16-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:3:72-98
+17    <uses-permission
+17-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:4:5-106
+18        android:name="android.permission.ACCESS_FINE_LOCATION"
+18-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:4:22-76
+19        android:maxSdkVersion="30" />
+19-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:4:77-103
+20    <uses-permission
+20-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:5:5-120
+21        android:name="android.permission.BLUETOOTH_SCAN"
+21-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:5:22-70
+22        android:usesPermissionFlags="neverForLocation" />
+22-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:5:71-117
+23    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+23-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:6:5-76
+23-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:6:22-73
+24
+25    <uses-feature
+25-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:7:5-90
+26        android:name="android.hardware.bluetooth_le"
+26-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:7:19-63
+27        android:required="true" />
+27-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:7:64-87
+28
+29    <application
+29-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:9:5-23:19
+30        android:allowBackup="false"
+30-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:10:9-36
+31        android:debuggable="true"
+32        android:extractNativeLibs="false"
+33        android:icon="@drawable/ic_launcher"
+33-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:11:9-45
+34        android:label="FlyRF Service"
+34-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:13:9-38
+35        android:roundIcon="@drawable/ic_launcher"
+35-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:12:9-50
+36        android:theme="@style/AppTheme" >
+36-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:14:9-40
+37        <activity
+37-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:15:9-22:20
+38            android:name="com.flyrf.service.MainActivity"
+38-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:16:13-41
+39            android:exported="true" >
+39-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:17:13-36
+40            <intent-filter>
+40-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:18:13-21:29
+41                <action android:name="android.intent.action.MAIN" />
+41-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:19:17-69
+41-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:19:25-66
+42
+43                <category android:name="android.intent.category.LAUNCHER" />
+43-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:20:17-77
+43-->C:\Users\Alex\Documents\New project\FlyRf_Service_App\app\src\main\AndroidManifest.xml:20:27-74
+44            </intent-filter>
+45        </activity>
+46    </application>
+47
+48</manifest>
